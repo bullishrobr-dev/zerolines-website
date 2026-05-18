@@ -35,6 +35,12 @@
     }
   }
   </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "Organization", "@id": "https://zerolines.life/#organization", "name": "Zero Lines", "url": "https://zerolines.life/", "logo": "https://zerolines.life/assets/logo.png", "sameAs": [], "contactPoint": {"@type": "ContactPoint", "contactType": "Customer Service", "email": "info@zerolines.life", "availableLanguage": ["English", "Spanish"]}}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "WebPage", "@id": "https://zerolines.life/blog/index.html", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".zl-blog-content > p:first-of-type", ".zl-blog-toc"]}}
+  </script>
 </head>
 <body class="zl-blog-body">
   <div id="zl-scroll-progress"></div>
@@ -48,13 +54,13 @@
       </button>
       <nav class="zl-blog-header-nav">
         <a href="/">Home</a>
-        <a href="/#/science">Science</a>
-        <a href="/#/protocol">Protocol</a>
-        <a href="/#/products">Products</a>
-        <a href="/#/story">Story</a>
-        <a href="/#/testimonials">Testimonials</a>
-        <a href="/#/contact">Contact</a>
         <a href="/blog/" class="active">Journal</a>
+        <a href="/blog/category-science.html">Science</a>
+        <a href="/blog/category-routine.html">Routine</a>
+        <a href="/blog/category-ingredients.html">Ingredients</a>
+        <a href="/blog/category-lifestyle.html">Lifestyle</a>
+        <a href="/blog/category-brand-story.html">Brand Story</a>
+        <input type="text" class="zl-blog-search" placeholder="Search articles..." aria-label="Search articles" oninput="handleSearch(this.value)">
         <a href="/#/quiz" class="zl-blog-header-cta">Analyse Your Skin</a>
       </nav>
     </div>
@@ -72,6 +78,51 @@
       <button class="zl-blog-category-btn" onclick="filterPosts('routine')">Routine</button>
       <button class="zl-blog-category-btn" onclick="filterPosts('lifestyle')">Lifestyle</button>
       <button class="zl-blog-category-btn" onclick="filterPosts('brand')">Brand Story</button>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="zl-blog-newsletter">
+    <div class="zl-blog-newsletter-inner">
+      <h2 class="zl-blog-newsletter-title">Join the Inner Circle</h2>
+      <p class="zl-blog-newsletter-text">Early access to new research, skin science insights, and exclusive offers. No spam.</p>
+      <form class="zl-blog-newsletter-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Subscribed!';">
+        <input type="email" placeholder="Your email address" aria-label="Email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Most Read -->
+  <section class="zl-blog-most-read">
+    <div class="zl-blog-section-header">
+      <h2 class="zl-blog-section-title">Most Read</h2>
+    </div>
+    <div class="zl-blog-landing-grid zl-blog-landing-grid--compact">
+      <a href="complete-guide-skin-aging.html" class="zl-blog-landing-card" data-category="science">
+        <img src="https://images.unsplash.com/photo-1515894203077-9cd36032142f?w=600&h=400&fit=crop&q=80" alt="Skin aging science" class="zl-blog-landing-card-image" loading="lazy">
+        <div class="zl-blog-landing-card-content">
+          <div class="zl-blog-landing-card-meta"><span>Science</span><span>Jan 8, 2026</span><span>7 min read</span></div>
+          <h2 class="zl-blog-landing-card-title">The Complete Guide to Skin Aging: What Actually Happens After 30</h2>
+          <p class="zl-blog-landing-card-excerpt">Collagen loss, cellular senescence, and the four mechanisms that drive visible ageing — explained without the jargon.</p>
+        </div>
+      </a>
+      <a href="zero-lines-protocol.html" class="zl-blog-landing-card" data-category="routine">
+        <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=600&h=400&fit=crop&q=80" alt="Skincare protocol" class="zl-blog-landing-card-image" loading="lazy">
+        <div class="zl-blog-landing-card-content">
+          <div class="zl-blog-landing-card-meta"><span>Routine</span><span>Jan 12, 2026</span><span>8 min read</span></div>
+          <h2 class="zl-blog-landing-card-title">The Zero Lines Protocol: A 6-Step System for Skin Longevity</h2>
+          <p class="zl-blog-landing-card-excerpt">How six bioactive formulations work in sequence to restore cellular communication, barrier integrity, and collagen density.</p>
+        </div>
+      </a>
+      <a href="spf-every-day-habit.html" class="zl-blog-landing-card" data-category="lifestyle">
+        <img src="https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=600&h=400&fit=crop&q=80" alt="Sun protection" class="zl-blog-landing-card-image" loading="lazy">
+        <div class="zl-blog-landing-card-content">
+          <div class="zl-blog-landing-card-meta"><span>Lifestyle</span><span>Feb 16, 2026</span><span>5 min read</span></div>
+          <h2 class="zl-blog-landing-card-title">SPF Every Day: The Habit That Prevents 80% of Visible Aging</h2>
+          <p class="zl-blog-landing-card-excerpt">UV exposure is responsible for up to 80% of visible facial ageing. Yet most people still treat sunscreen as a beach accessory, not a daily essential.</p>
+        </div>
+      </a>
     </div>
   </section>
 
@@ -305,6 +356,48 @@
 
   </main>
 
+  <!-- Editor's Pick -->
+  <section class="zl-blog-editors-pick">
+    <div class="zl-blog-section-header">
+      <h2 class="zl-blog-section-title">Editor's Pick</h2>
+    </div>
+    <div class="zl-blog-landing-grid zl-blog-landing-grid--compact">
+      <a href="collagen-decline-biological-clock.html" class="zl-blog-landing-card" data-category="science">
+        <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=600&h=400&fit=crop&q=80" alt="Collagen science" class="zl-blog-landing-card-image" loading="lazy">
+        <div class="zl-blog-landing-card-content">
+          <div class="zl-blog-landing-card-meta"><span>Science</span><span>Jan 29, 2026</span><span>7 min read</span></div>
+          <h2 class="zl-blog-landing-card-title">Collagen Decline: The Biological Clock You Can Slow Down</h2>
+          <p class="zl-blog-landing-card-excerpt">We lose 1% of collagen per year after 30. But that decline is not inevitable — here's what the research says about slowing it.</p>
+        </div>
+      </a>
+      <a href="inside-the-lab.html" class="zl-blog-landing-card" data-category="brand">
+        <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&h=400&fit=crop&q=80" alt="Laboratory" class="zl-blog-landing-card-image" loading="lazy">
+        <div class="zl-blog-landing-card-content">
+          <div class="zl-blog-landing-card-meta"><span>Brand Story</span><span>May 7, 2026</span><span>7 min read</span></div>
+          <h2 class="zl-blog-landing-card-title">Inside the Lab: Four Years of Formulation at Zero Lines</h2>
+          <p class="zl-blog-landing-card-excerpt">From the first prototype to the final six-formulation protocol — the iterations, the failures, and the breakthroughs that defined the journey.</p>
+        </div>
+      </a>
+      <a href="why-pyrenean-mineral-water.html" class="zl-blog-landing-card" data-category="ingredients">
+        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&h=400&fit=crop&q=80" alt="Mountain spring water" class="zl-blog-landing-card-image" loading="lazy">
+        <div class="zl-blog-landing-card-content">
+          <div class="zl-blog-landing-card-meta"><span>Ingredients</span><span>Jan 15, 2026</span><span>6 min read</span></div>
+          <h2 class="zl-blog-landing-card-title">Why Pyrenean Mineral Water Is the Most Underrated Skincare Ingredient</h2>
+          <p class="zl-blog-landing-card-excerpt">High-altitude spring water from the Pyrenees carries a mineral profile unlike anything in tap or filtered water. Here's why that matters for your skin.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Quiz CTA -->
+  <section class="zl-blog-quiz-cta">
+    <div class="zl-blog-quiz-cta-inner">
+      <h2 class="zl-blog-quiz-cta-title">See Your Skin Like Never Before</h2>
+      <p class="zl-blog-quiz-cta-text">Our AI-powered skin analysis evaluates your unique skin profile in minutes — revealing what your skin truly needs and which Zero Lines protocol is right for you.</p>
+      <a href="/#/quiz" class="zl-blog-quiz-cta-button">Analyse Your Skin</a>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer class="zl-blog-footer">
     <div class="zl-blog-footer-inner">
@@ -329,6 +422,9 @@
   </footer>
 
   <script>
+    var currentCategory = 'all';
+    var currentQuery = '';
+
     // Scroll progress + back-to-top
     (function() {
       var bar = document.getElementById('zl-scroll-progress');
@@ -346,20 +442,35 @@
       update();
     })();
 
+    // Apply combined category + search filters
+    function applyFilters() {
+      var cards = document.querySelectorAll('.zl-blog-landing-card');
+      var query = currentQuery.toLowerCase().trim();
+      cards.forEach(function(card) {
+        var cat = card.dataset.category || '';
+        var title = (card.querySelector('.zl-blog-landing-card-title') || {}).textContent || '';
+        var excerpt = (card.querySelector('.zl-blog-landing-card-excerpt') || {}).textContent || '';
+        var categoryText = (card.querySelector('.zl-blog-landing-card-meta span') || {}).textContent || '';
+        var matchesCategory = currentCategory === 'all' || cat === currentCategory;
+        var matchesSearch = !query || title.toLowerCase().includes(query) || excerpt.toLowerCase().includes(query) || categoryText.toLowerCase().includes(query);
+        card.style.display = matchesCategory && matchesSearch ? 'block' : 'none';
+      });
+    }
+
     // Category filter
     function filterPosts(category) {
-      var cards = document.querySelectorAll('.zl-blog-landing-card');
       var buttons = document.querySelectorAll('.zl-blog-category-btn');
       buttons.forEach(function(btn) {
         btn.classList.toggle('active', btn.textContent.toLowerCase().trim() === (category === 'all' ? 'all' : category));
       });
-      cards.forEach(function(card) {
-        if (category === 'all' || card.dataset.category === category) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
-        }
-      });
+      currentCategory = category;
+      applyFilters();
+    }
+
+    // Search filter
+    function handleSearch(value) {
+      currentQuery = value;
+      applyFilters();
     }
 
     // Fade up animation
