@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — Zero Lines</title>
+  <meta name="description" content="Answers to your questions about Zero Lines skincare science, the PRNS Protocol, ingredients, and orders.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/index-BELDyRU9.css?v=6">
+  <style>
+    :root {
+      --bg-primary: #0A0A0A;
+      --bg-secondary: #111111;
+      --bg-elevated: #161616;
+      --text-primary: #F5F5F5;
+      --text-secondary: #888888;
+      --text-tertiary: #555555;
+      --accent: #0ABAB5;
+      --accent-muted: rgba(10,186,181,0.12);
+      --border: rgba(255,255,255,0.08);
+      --border-medium: rgba(255,255,255,0.15);
+      --ease-luxury: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.75;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== HERO ===== */
+    .faq-hero {
+      position: relative;
+      min-height: 70vh;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .faq-hero__media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .faq-hero__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.45;
+      transform: scale(1.05);
+      animation: heroZoom 20s ease-out forwards;
+    }
+    @keyframes heroZoom {
+      to { transform: scale(1); }
+    }
+    .faq-hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.85) 70%, var(--bg-primary) 100%);
+      z-index: 1;
+    }
+    .faq-hero__content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 6rem 2rem 5rem;
+      max-width: 700px;
+    }
+    .faq-hero__eyebrow {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.3s var(--ease-luxury) forwards;
+    }
+    .faq-hero__title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin: 0 0 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.5s var(--ease-luxury) forwards;
+    }
+    .faq-hero__title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .faq-hero__subtitle {
+      font-size: 1.0625rem;
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.7s var(--ease-luxury) forwards;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== NAVIGATION ===== */
+    .faq-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-nav__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .faq-nav__inner::-webkit-scrollbar { display: none; }
+    .faq-nav__link {
+      padding: 1.25rem 1rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: color 0.3s ease, border-color 0.3s ease;
+    }
+    .faq-nav__link:hover,
+    .faq-nav__link.active {
+      color: var(--text-primary);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ===== SECTIONS ===== */
+    .faq-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+    .faq-section__header {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-bottom: 3.5rem;
+      align-items: center;
+    }
+    @media (min-width: 768px) {
+      .faq-section__header {
+        grid-template-columns: 1fr 280px;
+        gap: 3rem;
+      }
+    }
+    .faq-section__label {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .faq-section__title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin: 0 0 1rem;
+    }
+    .faq-section__desc {
+      color: var(--text-secondary);
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      margin: 0;
+    }
+    .faq-section__image {
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+    .faq-section__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease-luxury);
+    }
+    .faq-section__image:hover img {
+      transform: scale(1.04);
+    }
+
+    /* ===== ACCORDION ===== */
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-item__question {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding: 1.75rem 0;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 1.0625rem;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    .faq-item__question:hover {
+      color: var(--accent);
+    }
+    .faq-item__question span {
+      flex: 1;
+      line-height: 1.5;
+    }
+    .faq-item__icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      position: relative;
+      margin-top: 2px;
+    }
+    .faq-item__icon::before,
+    .faq-item__icon::after {
+      content: '';
+      position: absolute;
+      background: currentColor;
+      transition: transform 0.4s var(--ease-luxury);
+    }
+    .faq-item__icon::before {
+      width: 12px;
+      height: 1.5px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .faq-item__icon::after {
+      width: 1.5px;
+      height: 12px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .faq-item.open .faq-item__icon::after {
+      transform: translate(-50%, -50%) scaleY(0);
+    }
+    .faq-item__answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s var(--ease-luxury), opacity 0.4s ease;
+      opacity: 0;
+    }
+    .faq-item.open .faq-item__answer {
+      opacity: 1;
+    }
+    .faq-item__answer-inner {
+      padding: 0 0 2rem;
+      color: var(--text-secondary);
+      font-size: 0.9375rem;
+      line-height: 1.8;
+      max-width: 640px;
+    }
+    .faq-item__answer-inner p {
+      margin: 0 0 1rem;
+    }
+    .faq-item__answer-inner p:last-child {
+      margin-bottom: 0;
+    }
+    .faq-item__answer-inner strong {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* ===== CTA SECTION ===== */
+    .faq-cta {
+      position: relative;
+      padding: 8rem 2rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    .faq-cta__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .faq-cta__bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.25;
+    }
+    .faq-cta__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, var(--bg-primary) 0%, rgba(10,10,10,0.7) 50%, var(--bg-primary) 100%);
+      z-index: 1;
+    }
+    .faq-cta__content {
+      position: relative;
+      z-index: 2;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .faq-cta__title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      margin: 0 0 1rem;
+      letter-spacing: -0.02em;
+    }
+    .faq-cta__text {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+    .faq-cta__btn {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: var(--accent);
+      color: var(--bg-primary);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .faq-cta__btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(10,186,181,0.25);
+    }
+
+    /* ===== FOOTER ===== */
+    .page-footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .page-footer__links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .page-footer__links a {
+      color: var(--text-tertiary);
+      text-decoration: none;
+      font-size: 0.8125rem;
+      transition: color 0.3s ease;
+    }
+    .page-footer__links a:hover {
+      color: var(--text-primary);
+    }
+    .page-footer__copy {
+      color: var(--text-tertiary);
+      font-size: 0.75rem;
+    }
+    .page-footer__back {
+      display: inline-block;
+      margin-bottom: 2rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      transition: opacity 0.3s ease;
+    }
+    .page-footer__back:hover {
+      opacity: 0.7;
+    }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s var(--ease-luxury), transform 0.8s var(--ease-luxury);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="faq-hero">
+    <div class="faq-hero__media">
+      <img src="./assets/science-bubbles-macro.jpg" alt="Microscopic water bubbles — Zero Lines skincare science">
+    </div>
+    <div class="faq-hero__overlay"></div>
+    <div class="faq-hero__content">
+      <p class="faq-hero__eyebrow">Questions & Answers</p>
+      <h1 class="faq-hero__title">Everything You Want to <em>Know</em></h1>
+      <p class="faq-hero__subtitle">Clarity is part of the protocol. Here are the answers to the questions we hear most — about the science, the ritual, and the journey ahead.</p>
+    </div>
+  </header>
+
+  <!-- STICKY NAV -->
+  <nav class="faq-nav">
+    <div class="faq-nav__inner">
+      <a href="#science" class="faq-nav__link active">The Science</a>
+      <a href="#protocol" class="faq-nav__link">The Protocol</a>
+      <a href="#ingredients" class="faq-nav__link">Ingredients</a>
+      <a href="#orders" class="faq-nav__link">Orders</a>
+      <a href="#about" class="faq-nav__link">About</a>
+    </div>
+  </nav>
+
+  <!-- SECTION: THE SCIENCE -->
+  <section class="faq-section" id="science">
+    <div class="faq-section__header reveal">
+      <div>
+        <p class="faq-section__label">01 — The Science</p>
+        <h2 class="faq-section__title">How Zero Lines Actually Works</h2>
+        <p class="faq-section__desc">The PRNS Protocol isn't marketing language. It's a structured approach to skin cell signalling that has been studied, tested, and refined over two years of development.</p>
+      </div>
+      <div class="faq-section__image">
+        <img src="./assets/science-cellular.jpg" alt="Cellular structure visualization">
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>What is the PRNS Protocol, in plain terms?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p><strong>PRNS stands for Peptide-Responsive Nutrient System.</strong> In the simplest terms, it's a method of delivering ingredients to your skin in a specific order — so that each step prepares your skin to receive the next.</p>
+          <p>Traditional skincare often piles active ingredients together without considering how they interact. The PRNS Protocol sequences them: first, gentle renewal (exfoliation); second, deep structural signalling (serum); third, protective sealing (day or night cream). Each step creates the optimal conditions for the next.</p>
+          <p>The result isn't just individual benefits from each product — it's a compounding effect where the whole becomes significantly more than the sum of its parts.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>Is there clinical evidence behind the formulations?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p>Yes. Every active ingredient in the Zero Lines range has been selected based on peer-reviewed clinical studies. We do not use ingredients because they are trendy — we use them because independent research demonstrates measurable effects on skin structure and function.</p>
+          <p>Our signal peptide complex is based on research showing enhanced collagen and elastin production over 8–12 weeks of consistent application. Our botanical peptide blend draws from studies on mechanical surface tension reduction. The ceramide complex in our barrier formulations is supported by extensive dermatological literature on transepidermal water loss reduction.</p>
+          <p>We publish our ingredient rationale and reference the key studies on our <a href="./index.html#/science" style="color:var(--accent);text-decoration:none;">Science page</a>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>What is the difference between the Flash Effect and the Longevity Effect?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p><strong>The Flash Effect</strong> is what you see within hours to days: smoother skin surface, refined texture, reduced appearance of fine lines, and a more even tone. This comes primarily from our botanical peptide blend and hydration architecture — the skin's surface reflects light more uniformly.</p>
+          <p><strong>The Longevity Effect</strong> is what happens beneath the surface over weeks and months: increased collagen density, improved elastin organisation, stronger barrier function, and measurably improved skin elasticity. This comes from our signal peptide complex and sustained nutrient delivery.</p>
+          <p>Most skincare products deliver one or the other. The PRNS Protocol is engineered to deliver both simultaneously — so you see results now, while building healthier skin for the future.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>How long until I see results?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p>The Flash Effect is typically visible within the first 1–3 applications: smoother texture, more hydrated appearance, and a subtle luminosity. These are real, measurable changes — not optical illusions from silicones or fillers.</p>
+          <p>The Longevity Effect builds progressively. Most users report noticeable firmness and elasticity improvements within 4–6 weeks. The most significant structural changes — increased collagen density, improved barrier function — are typically measured at 8–12 weeks of consistent use.</p>
+          <p>Skin is living tissue. It responds to signals over time. The PRNS Protocol is designed for the patient user who understands that the most meaningful changes happen beneath what the eye can immediately see.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>Why do you focus on skin structure rather than just wrinkles?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p>Because wrinkles are a symptom, not the disease. The visible lines and sagging that concern most people are the result of deeper structural changes: collagen depletion, elastin fragmentation, barrier dysfunction, and slowed cellular turnover.</p>
+          <p>If you only address the surface — filling lines temporarily, masking texture with silicones — you are managing symptoms while the underlying structure continues to degrade. Zero Lines addresses the architecture: strengthening the matrix that gives skin its shape, resilience, and capacity for self-repair.</p>
+          <p>This is why our results are not temporary optical effects. They are structural improvements that persist because the skin itself has become healthier.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: THE PROTOCOL -->
+  <section class="faq-section" id="protocol" style="background:var(--bg-secondary);">
+    <div class="faq-section__header reveal">
+      <div>
+        <p class="faq-section__label">02 — The Protocol</p>
+        <h2 class="faq-section__title">Using Zero Lines Correctly</h2>
+        <p class="faq-section__desc">The PRNS Protocol is a ritual, not a routine. The order, timing, and consistency of application all contribute to the final result. Here is how to get the most from your products.</p>
+      </div>
+      <div class="faq-section__image">
+        <img src="./assets/atmosphere-application-ritual.jpg" alt="Skincare application ritual">
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>What is the exact order of the protocol?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p><strong>Morning (Daily):</strong></p>
+          <p>1. Cleanse with your regular cleanser<br>
+          2. Apply <strong>Bio-Active Renewal Serum</strong> to damp skin<br>
+          3. Wait 60–90 seconds for absorption<br>
+          4. Apply <strong>Barrier Support Day Cream</strong></p>
+          <p><strong>Evening (Daily):</strong></p>
+          <p>1. Cleanse thoroughly<br>
+          2. Apply <strong>Bio-Active Renewal Serum</strong><br>
+          3. Wait 60–90 seconds<br>
+          4. Apply <strong>Intensive Repair Night Cream</strong></p>
+          <p><strong>Weekly (1–2 times):</strong></p>
+          <p>After evening cleansing, apply <strong>Bio-Renewal Peeling Gel</strong> to dry skin. Leave for 10 minutes, then rinse and continue with serum and night cream. Do not use the peeling gel on consecutive days.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>Do I need to use all four products?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p>The four products are designed to work as an integrated system. Each one creates the conditions for the next to perform optimally. Using the full protocol will deliver the most significant and lasting results.</p>
+          <p>That said, we understand that some users prefer to start gradually. The serum is the structural cornerstone of the protocol — if you begin with one product, start there. The day and night creams can be introduced next, and the peeling gel added when your skin has adapted to the daily routine.</p>
+          <p>We do not recommend using the peeling gel without the serum and cream, as the skin needs the subsequent nourishment and protection after exfoliation.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>How much product should I use?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p><strong>Serum:</strong> 2–3 drops for the face, 1 additional drop for the neck and décolletage. The serum spreads easily on damp skin. More is not better — the active concentration is calibrated for this amount.</p>
+          <p><strong>Day Cream:</strong> A pea-sized amount for the face. Warm between your fingertips before pressing gently into the skin. Add a second pea for the neck if desired.</p>
+          <p><strong>Night Cream:</strong> A slightly larger amount than the day cream — approximately two pea-sized portions. The night formulation is richer and designed to sustain the skin through 8 hours of repair activity.</p>
+          <p><strong>Peeling Gel:</strong> A thin, even layer across the face, avoiding the eye area. You do not need a thick coating — the enzymes work at the surface level and do not require occlusion.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>Can I use other products alongside Zero Lines?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p>Yes, with consideration. The PRNS Protocol is a complete system, but it can coexist with other products if you understand the sequencing.</p>
+          <p><strong>Compatible:</strong> Gentle cleansers, sunscreen (always apply after the day cream), eye creams, and hydrating mists. These do not interfere with the active ingredients.</p>
+          <p><strong>Use with caution:</strong> Retinoids, high-concentration vitamin C, and other strong actives. These can be used, but not in the same application as the Zero Lines serum. If you use a retinoid, apply it on alternate nights, or use it after the night cream has fully absorbed (30+ minutes).</p>
+          <p><strong>Avoid combining:</strong> Other exfoliating acids or peels on the same day as the Bio-Renewal Peeling Gel. This risks over-exfoliation and compromised barrier function.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>What happens if I miss a day?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p>Nothing dramatic. Skin biology operates on timescales of weeks, not hours. Missing one day will not reset your progress.</p>
+          <p>However, consistency does matter. The signalling peptides in the serum work best when they encounter the skin regularly — this maintains the "conversation" between the formula and your cells. Think of it like exercise: one missed session is irrelevant, but irregular patterns slow cumulative progress.</p>
+          <p>If you miss several days, simply resume the protocol. There is no need to "make up" for lost time by using extra product. The formulations are calibrated for daily use, and exceeding the recommended amount does not accelerate results.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: INGREDIENTS -->
+  <section class="faq-section" id="ingredients">
+    <div class="faq-section__header reveal">
+      <div>
+        <p class="faq-section__label">03 — Ingredients & Safety</p>
+        <h2 class="faq-section__title">What Goes Into the Formula</h2>
+        <p class="faq-section__desc">Transparency is non-negotiable. Every ingredient is chosen for a specific biological purpose, and we tell you exactly what it does and why it is there.</p>
+      </div>
+      <div class="faq-section__image">
+        <img src="./assets/atmosphere-botanical-petal.jpg" alt="Botanical ingredients">
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>Are Zero Lines products suitable for sensitive skin?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p>Yes. The formulations are designed with sensitivity in mind. We avoid common irritants: no artificial fragrances, no drying alcohols, no sulphates, no parabens, and no silicones that mask skin issues rather than address them.</p>
+          <p>That said, "sensitive skin" is not a single condition. If you have a history of reacting to active ingredients, we recommend patch testing: apply a small amount of serum behind your ear or on your inner forearm for 24 hours before full facial use.</p>
+          <p>The Peeling Gel contains natural enzymes that are gentler than acid exfoliants, but if your skin is extremely reactive, start with once weekly rather than twice, and observe how your skin responds.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>Are the products safe during pregnancy?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p>Zero Lines products do not contain retinoids, hydroquinone, salicylic acid, or other ingredients typically contraindicated during pregnancy. Our active ingredients are peptides, ceramides, botanical extracts, and hydration factors — all generally recognised as safe.</p>
+          <p>However, pregnancy changes skin sensitivity and reactivity in unpredictable ways. We strongly recommend consulting your obstetrician or dermatologist before introducing any new skincare during pregnancy or breastfeeding. Bring the ingredient list with you — it is published in full on each product page.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>Where does the water in your formulas come from?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p>We use Pyrenean mineral water — sourced from natural springs in the Catalan Pyrenees, not far from our Barcelona laboratory. This water has a unique mineral profile that supports skin hydration at a cellular level.</p>
+          <p>Most skincare uses purified tap water or distilled water, which is chemically inert but offers no biological benefit. Pyrenean water contains trace minerals that have been shown to support skin barrier function and cellular energy metabolism. It is one of the details that distinguishes a functional formula from an exceptional one.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>Do you test on animals?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p>No. Zero Lines does not test on animals, and we do not work with suppliers who do. All our formulations are tested on human volunteers under dermatological supervision.</p>
+          <p>Our testing protocol involves patch testing, instrumental measurement (corneometry, cutometry, and VISIA analysis), and self-assessment questionnaires. This gives us far more relevant data than animal testing ever could — human skin is the only skin our products will ever touch.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>Are your products vegan?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p>The majority of our ingredients are plant-derived or synthetically produced. However, our peptide complexes are bio-engineered using fermentation processes that may involve trace dairy-derived substrates in the growth medium.</p>
+          <p>We are actively working toward a fully vegan formulation and expect to achieve this certification within the next production cycle. If vegan status is essential for you, please contact us and we will notify you the moment our certification is complete.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: ORDERS -->
+  <section class="faq-section" id="orders" style="background:var(--bg-secondary);">
+    <div class="faq-section__header reveal">
+      <div>
+        <p class="faq-section__label">04 — Orders & Availability</p>
+        <h2 class="faq-section__title">When & Where You Can Buy</h2>
+        <p class="faq-section__desc">Zero Lines is preparing for launch. Here is everything you need to know about availability, shipping, and how to secure your place in line.</p>
+      </div>
+      <div class="faq-section__image">
+        <img src="./assets/atmosphere-daily-ritual.jpg" alt="Daily skincare ritual">
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>When will Zero Lines be available to purchase?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p>We are currently in the final stages of production and regulatory compliance. The full PRNS Protocol — all four products — will be available for purchase in the coming months.</p>
+          <p>We are not rushing. The integrity of the formula, the stability of the packaging, and the quality of the manufacturing process all take precedence over arbitrary deadlines. When we announce a date, it will be because everything is ready — not because of market pressure.</p>
+          <p>Sign up for our newsletter to be the first to know when pre-orders open.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>Will you ship internationally?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p>Yes. We will ship to the European Union, United Kingdom, United States, Canada, Switzerland, Norway, and selected countries in Asia and the Middle East from launch day.</p>
+          <p>Shipping rates will be calculated at checkout based on destination and order weight. EU customers will not pay additional customs fees. Customers outside the EU may be subject to local import duties and taxes, which are the responsibility of the recipient.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>Can I pre-order or join a waitlist?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p>A waitlist will open soon. Joining the waitlist gives you early access to pre-orders, exclusive launch pricing, and priority shipping.</p>
+          <p>We will never spam you. Waitlist members receive only essential updates: the pre-order opening date, early access windows, and occasional behind-the-scenes content about the formulation and manufacturing process.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>What is your return policy?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p>We offer a 30-day satisfaction guarantee. If you are not satisfied with your purchase for any reason, contact us within 30 days of delivery for a full refund. You do not need to return opened or used products — we trust our customers and do not believe in creating friction around honest feedback.</p>
+          <p>This policy reflects our confidence in the formulations. We have tested them extensively, and we believe the results speak for themselves. If they do not work for your skin, we would rather learn from that than keep your money.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: ABOUT -->
+  <section class="faq-section" id="about">
+    <div class="faq-section__header reveal">
+      <div>
+        <p class="faq-section__label">05 — About Zero Lines</p>
+        <h2 class="faq-section__title">The Story & The Philosophy</h2>
+        <p class="faq-section__desc">Zero Lines was founded on a single conviction: that the skincare industry has been asking the wrong questions for decades. Here is what we believe — and what we refuse to compromise.</p>
+      </div>
+      <div class="faq-section__image">
+        <img src="./assets/hero-editorial-1.jpg" alt="Zero Lines editorial">
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>Why "Zero Lines"? What does the name mean?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p>The name is intentionally provocative — and intentionally misunderstood. Most people assume "Zero Lines" refers to zero wrinkles. It does not.</p>
+          <p>"Zero Lines" refers to the line between skincare and medicine, between beauty and biology, between what the industry sells and what skin actually needs. We erase that line. We do not believe in cosmetic approaches that ignore biology, or medical approaches that ignore the experience of using a product.</p>
+          <p>The zero is also a circle — a symbol of wholeness, of systems thinking, of the closed loop between formulation science and skin response. We do not treat skin as a surface to be decorated. We treat it as a system to be supported.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>Where are Zero Lines products made?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p>All Zero Lines products are developed, formulated, and manufactured in Barcelona, Spain. Our laboratory operates under EU cosmetic regulation (EC) No 1223/2009, which is among the strictest regulatory frameworks in the world.</p>
+          <p>The company is headquartered in Gibraltar, with our research and production facility in Barcelona. This dual location reflects our identity: Gibraltar as a place of strategic international connection, Barcelona as a city with deep traditions in both pharmaceutical science and design culture.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>Who is behind Zero Lines?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p>Zero Lines was founded by a team of biochemists, dermatological researchers, and formulation specialists who spent years inside the skincare industry before deciding it needed to change. We have worked for major cosmetic houses, pharmaceutical companies, and independent laboratories.</p>
+          <p>What unites us is a shared frustration: the gap between what science knows and what the industry sells. We started Zero Lines to close that gap — to create products that are as honest as they are effective, as beautiful as they are biologically sound.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-item__question" aria-expanded="false">
+        <span>How can I get in touch?</span>
+        <span class="faq-item__icon"></span>
+      </button>
+      <div class="faq-item__answer">
+        <div class="faq-item__answer-inner">
+          <p>We read every message. For questions, press inquiries, partnerships, or just to share your experience with the protocol, email us at <strong>hello@zerolines.com</strong>.</p>
+          <p>Our laboratory in Barcelona welcomes visits from press, potential retail partners, and researchers. If you would like to arrange a visit, mention it in your email and we will coordinate.</p>
+          <p>Response time is typically within 24 hours during business days. We are a small team, but we are committed to genuine human connection — not automated responses.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="faq-cta">
+    <div class="faq-cta__bg">
+      <img src="./assets/atmosphere-spa-ritual.jpg" alt="Spa ritual atmosphere">
+    </div>
+    <div class="faq-cta__overlay"></div>
+    <div class="faq-cta__content reveal">
+      <h2 class="faq-cta__title">Still Curious?</h2>
+      <p class="faq-cta__text">The best way to understand Zero Lines is to experience it. Be among the first to receive the protocol when it launches.</p>
+      <a href="./index.html#/contact" class="faq-cta__btn">Contact Us</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="page-footer">
+    <a href="./index.html" class="page-footer__back">← Back to Zero Lines</a>
+    <div class="page-footer__links">
+      <a href="./privacy.html">Privacy</a>
+      <a href="./terms.html">Terms</a>
+      <a href="./accessibility.html">Accessibility</a>
+      <a href="./cookies.html">Cookies</a>
+      <a href="./shipping-returns.html">Shipping</a>
+    </div>
+    <p class="page-footer__copy">© 2026 Zero Lines. Gibraltar & Barcelona.</p>
+  </footer>
+
+  <script>
+    // Accordion
+    document.querySelectorAll('.faq-item__question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        const answer = item.querySelector('.faq-item__answer');
+
+        // Close all others
+        document.querySelectorAll('.faq-item.open').forEach(openItem => {
+          if (openItem !== item) {
+            openItem.classList.remove('open');
+            openItem.querySelector('.faq-item__question').setAttribute('aria-expanded', 'false');
+            openItem.querySelector('.faq-item__answer').style.maxHeight = '';
+          }
+        });
+
+        if (isOpen) {
+          item.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+          answer.style.maxHeight = '';
+        } else {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      });
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Sticky nav active state
+    const sections = document.querySelectorAll('.faq-section[id]');
+    const navLinks = document.querySelectorAll('.faq-nav__link');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - 120) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

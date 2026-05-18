@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zero Lines — Advanced Skincare Solutions | Cellular Science. Alpine Precision.</title>
+    <meta name="description" content="Zero Lines is a clinical-luxury skincare house offering advanced skincare solutions. Six bioactive formulations powered by hydrolyzed collagen, botanical extracts, and Pyrenean mineral water from Andorra." />
+    <meta property="og:title" content="Zero Lines — Advanced Skincare Solutions" />
+    <meta property="og:description" content="Botanical science meets alpine precision. Six bioactive formulations with Pyrenean mineral water for skin comfort and renewal." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="./assets/hero-editorial-1.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <script type="module" crossorigin src="./assets/index-CdnbiGbM.js?v=6"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BELDyRU9.css?v=6">
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- Page type & scroll state for CSS selectors -->
+    <script>
+      (function() {
+        function getRoute() {
+          var hash = window.location.hash || '';
+          var path = window.location.pathname || '';
+          // Hash router: route is in hash; pathname is always '/'
+          if (hash && hash !== '#' && hash !== '#/') {
+            return hash.replace(/^#/, '');
+          }
+          return path;
+        }
+        function isHomepage() {
+          var route = getRoute();
+          return route === '/' || route === '' || route === '/index.html' || route === '#/index.html';
+        }
+        function updateBodyClass() {
+          var home = isHomepage();
+          if (home) {
+            document.body.classList.add('homepage');
+            document.body.classList.remove('inner-page');
+          } else {
+            document.body.classList.add('inner-page');
+            document.body.classList.remove('homepage');
+            document.body.classList.remove('scrolled');
+          }
+        }
+        updateBodyClass();
+        window.addEventListener('hashchange', updateBodyClass);
+        // Also watch for pathname changes (unlikely with hash router but safe)
+        var lastRoute = getRoute();
+        setInterval(function() {
+          var current = getRoute();
+          if (current !== lastRoute) {
+            lastRoute = current;
+            updateBodyClass();
+          }
+        }, 300);
+        // Scroll handler for homepage
+        function onScroll() {
+          if (isHomepage()) {
+            if (window.scrollY > 80) {
+              document.body.classList.add('scrolled');
+            } else {
+              document.body.classList.remove('scrolled');
+            }
+          }
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      })();
+    </script>
+
+    <!-- Protocol Step Background Images — Product Pages Only -->
+    <script>
+      (function() {
+        if (!window.location.pathname.startsWith('/products/')) return;
+        function addProtocolBackgrounds() {
+          var stepImages = {
+            '01': '/assets/product-peeling.jpg',
+            '02': '/assets/product-syringe-hero.jpg',
+            '03': '/assets/product-serum.jpg',
+            '04': '/assets/product-day-cream.jpg',
+            '05': '/assets/product-night-cream.jpg',
+            '06': '/assets/product-syringe.jpg',
+            '1': '/assets/product-peeling.jpg',
+            '2': '/assets/product-syringe-hero.jpg',
+            '3': '/assets/product-serum.jpg',
+            '4': '/assets/product-day-cream.jpg',
+            '5': '/assets/product-night-cream.jpg',
+            '6': '/assets/product-syringe.jpg',
+          };
+          var protocolHeading = Array.from(document.querySelectorAll('h2, h3, h4, p, div, span'))
+            .find(function(el) { return /step\s*\d+\s*of\s*6/i.test(el.textContent) || /you are at step/i.test(el.textContent); });
+          if (!protocolHeading) return;
+          var section = protocolHeading.parentElement;
+          for (var i = 0; i < 6; i++) {
+            if (!section) break;
+            if (section.querySelectorAll('a, div, article').length >= 6) break;
+            section = section.parentElement;
+          }
+          if (!section) section = document.body;
+          var candidates = Array.from(section.querySelectorAll('a, div, article'))
+            .filter(function(el) {
+              var text = el.textContent;
+              return (/(^|\s)0?[1-6](\s|$|·)/.test(text) || /^\s*[1-6]\s*·/.test(text) || /^\s*[1-6]\s*$/.test(text.trim()))
+                && el.children.length >= 1
+                && el.offsetHeight > 60
+                && el.offsetHeight < 400;
+            });
+          var cards = candidates.slice(0, 6);
+          if (cards.length !== 6) return;
+          cards.forEach(function(card) {
+            if (card.querySelector('img[data-protocol-bg]')) return;
+            var text = card.textContent;
+            var imgSrc = null;
+            for (var num in stepImages) {
+              var regex = new RegExp('\\b0?' + num + '\\b');
+              if (regex.test(text)) { imgSrc = stepImages[num]; break; }
+            }
+            if (!imgSrc) return;
+            var img = document.createElement('img');
+            img.src = imgSrc;
+            img.setAttribute('data-protocol-bg', 'true');
+            img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.15;pointer-events:none;z-index:0;border-radius:inherit;';
+            card.style.position = 'relative';
+            card.style.overflow = 'hidden';
+            card.insertBefore(img, card.firstChild);
+            Array.from(card.children).forEach(function(child) {
+              if (child !== img && !child.hasAttribute('data-protocol-bg')) {
+                var current = window.getComputedStyle(child).position;
+                if (current === 'static') child.style.position = 'relative';
+                child.style.zIndex = '1';
+              }
+            });
+          });
+        }
+        setTimeout(addProtocolBackgrounds, 1500);
+        setTimeout(addProtocolBackgrounds, 3000);
+      })();
+    </script>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" style="
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      z-index:9999;
+      background:rgba(10,10,10,0.97);
+      backdrop-filter:blur(20px);
+      border-top:1px solid rgba(255,255,255,0.08);
+      padding:1.5rem 2rem;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      gap:2rem;
+      flex-wrap:wrap;
+    ">
+      <p style="
+        color:#888;
+        font-family:'Inter',sans-serif;
+        font-size:0.8125rem;
+        line-height:1.6;
+        margin:0;
+        max-width:600px;
+      ">
+        We use cookies to enhance your experience and understand how our site is used.
+        <a href="cookies.html" style="color:#0ABAB5;text-decoration:none;">Learn more</a>
+      </p>
+      <div style="display:flex;gap:0.75rem;">
+        <button id="cookie-decline" style="
+          padding:0.6rem 1.25rem;
+          background:transparent;
+          border:1px solid rgba(255,255,255,0.15);
+          border-radius:6px;
+          color:#888;
+          font-family:'Inter',sans-serif;
+          font-size:0.75rem;
+          font-weight:500;
+          letter-spacing:0.05em;
+          text-transform:uppercase;
+          cursor:pointer;
+          transition:all 0.3s;
+        ">Essential Only</button>
+        <button id="cookie-accept" style="
+          padding:0.6rem 1.25rem;
+          background:#0ABAB5;
+          border:none;
+          border-radius:6px;
+          color:#0A0A0A;
+          font-family:'Inter',sans-serif;
+          font-size:0.75rem;
+          font-weight:600;
+          letter-spacing:0.05em;
+          text-transform:uppercase;
+          cursor:pointer;
+          transition:all 0.3s;
+        ">Accept All</button>
+      </div>
+    </div>
+    <script>
+      (function() {
+        var banner = document.getElementById('cookie-banner');
+        var acceptBtn = document.getElementById('cookie-accept');
+        var declineBtn = document.getElementById('cookie-decline');
+        var consent = localStorage.getItem('zl_cookie_consent');
+        if (!consent) {
+          banner.style.display = 'flex';
+        }
+        acceptBtn.addEventListener('click', function() {
+          localStorage.setItem('zl_cookie_consent', 'all');
+          banner.style.display = 'none';
+        });
+        declineBtn.addEventListener('click', function() {
+          localStorage.setItem('zl_cookie_consent', 'essential');
+          banner.style.display = 'none';
+        });
+      })();
+    </script>
+
+    <!-- ===== ZERO LINES ANIMATION SYSTEM ===== -->
+    <div id="zl-scroll-progress"></div>
+    <div id="zl-cursor" class="zl-cursor"></div>
+
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js" onerror="window.zlLenisFailed=true"></script>
+    <script>
+    (function() {
+      'use strict';
+
+      // ============================================================
+      // 1. SMOOTH SCROLL (Lenis with fallback)
+      // ============================================================
+      var lenis = null;
+      if (typeof Lenis !== 'undefined' && !window.zlLenisFailed) {
+        lenis = new Lenis({
+          duration: 1.2,
+          easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+          orientation: 'vertical',
+          gestureOrientation: 'vertical',
+          smoothWheel: true,
+          wheelMultiplier: 1,
+          touchMultiplier: 2,
+        });
+        function raf(time) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+        window.zlLenis = lenis;
+      }
+
+      // ============================================================
+      // 2. SCROLL PROGRESS BAR
+      // ============================================================
+      var progressBar = document.getElementById('zl-scroll-progress');
+      function updateProgress() {
+        if (!progressBar) return;
+        var scrollTop = window.scrollY || document.documentElement.scrollTop;
+        var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        progressBar.style.width = progress + '%';
+      }
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      updateProgress();
+
+      // ============================================================
+      // 3. NAVBAR HIDE ON SCROLL DOWN / SHOW ON SCROLL UP
+      // ============================================================
+      var lastScrollY = 0;
+      var navHideThreshold = 100;
+      var ticking = false;
+      function updateNavbar() {
+        var currentY = window.scrollY;
+        if (currentY < navHideThreshold) {
+          document.body.classList.remove('nav-is-hiding');
+          document.body.classList.add('nav-is-showing');
+        } else if (currentY > lastScrollY && currentY > navHideThreshold) {
+          // Scrolling down
+          document.body.classList.add('nav-is-hiding');
+          document.body.classList.remove('nav-is-showing');
+        } else if (currentY < lastScrollY) {
+          // Scrolling up
+          document.body.classList.remove('nav-is-hiding');
+          document.body.classList.add('nav-is-showing');
+        }
+        lastScrollY = currentY;
+        ticking = false;
+      }
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          requestAnimationFrame(updateNavbar);
+          ticking = true;
+        }
+      }, { passive: true });
+      document.body.classList.add('nav-is-showing');
+
+      // ============================================================
+      // 4. INTERSECTION OBSERVER — REVEAL ANIMATIONS
+      // ============================================================
+      var revealObserver = null;
+      function initRevealObserver() {
+        if (revealObserver) revealObserver.disconnect();
+        revealObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              // Optionally unobserve after first reveal:
+              // revealObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+        // Observe image reveal containers
+        document.querySelectorAll('.zl-reveal-img').forEach(function(el) {
+          revealObserver.observe(el);
+        });
+        // Observe text reveal containers
+        document.querySelectorAll('.zl-reveal-text').forEach(function(el) {
+          revealObserver.observe(el);
+        });
+        // Observe fade-up elements
+        document.querySelectorAll('.zl-fade-up').forEach(function(el) {
+          revealObserver.observe(el);
+        });
+      }
+
+      // ============================================================
+      // 5. IMAGE REVEAL AUTO-WRAPPER
+      // ============================================================
+      function wrapImagesForReveal() {
+        // Wrap images that look like they should reveal
+        var selectors = [
+          'section img[src*="product-"]',
+          'section img[src*="hero-"]',
+          'section img[src*="editorial"]',
+          '.content-max-width img',
+          '[class*="grid"] img'
+        ];
+        selectors.forEach(function(sel) {
+          document.querySelectorAll(sel).forEach(function(img) {
+            if (img.closest('.zl-reveal-img')) return; // already wrapped
+            if (img.width < 100) return; // skip tiny icons
+            var parent = img.parentElement;
+            if (!parent) return;
+            // Create wrapper
+            var wrapper = document.createElement('div');
+            wrapper.className = 'zl-reveal-img';
+            parent.insertBefore(wrapper, img);
+            wrapper.appendChild(img);
+          });
+        });
+      }
+
+      // ============================================================
+      // 6. TEXT REVEAL AUTO-WRAPPER
+      // ============================================================
+      function wrapTextForReveal() {
+        // Wrap major headings for word-by-word reveal
+        // Skip hero H1 (first h1 in hero section) — too large for word splitting
+        var allHeadings = document.querySelectorAll('h2.text-h2, h2.font-serif, h3.text-h3');
+        allHeadings.forEach(function(h) {
+          if (h.closest('.zl-reveal-text')) return;
+          if (!h.textContent.trim()) return;
+          // Skip very short headings
+          if (h.textContent.trim().split(/\s+/).length < 2) return;
+          var words = h.textContent.trim().split(/\s+/);
+          h.innerHTML = '';
+          words.forEach(function(word, i) {
+            var span = document.createElement('span');
+            span.className = 'word';
+            span.style.display = 'inline-block';
+            span.style.overflow = 'hidden';
+            span.style.verticalAlign = 'bottom';
+            span.style.marginRight = '0.25em';
+            var inner = document.createElement('span');
+            inner.className = 'word-inner';
+            inner.style.display = 'inline-block';
+            inner.textContent = word;
+            span.appendChild(inner);
+            h.appendChild(span);
+          });
+          h.classList.add('zl-reveal-text');
+        });
+      }
+
+      // ============================================================
+      // 7. CUSTOM CURSOR
+      // ============================================================
+      var cursor = document.getElementById('zl-cursor');
+      var cursorX = 0, cursorY = 0;
+      var targetX = 0, targetY = 0;
+      var isTouch = window.matchMedia('(pointer: coarse)').matches;
+
+      if (cursor && !isTouch) {
+        document.body.classList.add('has-custom-cursor');
+        document.addEventListener('mousemove', function(e) {
+          targetX = e.clientX;
+          targetY = e.clientY;
+          if (!cursor.classList.contains('is-active')) {
+            cursor.classList.add('is-active');
+          }
+        }, { passive: true });
+
+        function animateCursor() {
+          cursorX += (targetX - cursorX) * 0.15;
+          cursorY += (targetY - cursorY) * 0.15;
+          cursor.style.left = cursorX + 'px';
+          cursor.style.top = cursorY + 'px';
+          requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Hover detection
+        var hoverTargets = 'a, button, [role="button"], input, textarea, select, label, .zl-magnetic';
+        document.addEventListener('mouseover', function(e) {
+          if (e.target.closest(hoverTargets)) {
+            cursor.classList.add('is-hovering');
+          }
+        }, { passive: true });
+        document.addEventListener('mouseout', function(e) {
+          if (e.target.closest(hoverTargets)) {
+            cursor.classList.remove('is-hovering');
+          }
+        }, { passive: true });
+
+        // Hide cursor when leaving window
+        document.addEventListener('mouseleave', function() {
+          cursor.classList.remove('is-active');
+        });
+        document.addEventListener('mouseenter', function() {
+          cursor.classList.add('is-active');
+        });
+      }
+
+      // ============================================================
+      // 8. MAGNETIC BUTTONS
+      // ============================================================
+      function initMagneticButtons() {
+        if (isTouch) return;
+        var magneticSelectors = '.btn-primary, .text-cta, a[class*="btn"]';
+        document.querySelectorAll(magneticSelectors).forEach(function(btn) {
+          if (btn.classList.contains('zl-magnetic-initialized')) return;
+          btn.classList.add('zl-magnetic', 'zl-magnetic-initialized');
+
+          btn.addEventListener('mousemove', function(e) {
+            var rect = btn.getBoundingClientRect();
+            var x = e.clientX - rect.left - rect.width / 2;
+            var y = e.clientY - rect.top - rect.height / 2;
+            btn.style.transform = 'translate(' + (x * 0.25) + 'px, ' + (y * 0.25) + 'px)';
+          }, { passive: true });
+
+          btn.addEventListener('mouseleave', function() {
+            btn.style.transform = 'translate(0, 0)';
+          }, { passive: true });
+        });
+      }
+
+      // ============================================================
+      // 9. PARALLAX HERO
+      // ============================================================
+      function initParallax() {
+        var heroBg = document.querySelector('section img[src*="atmosphere-hero"]');
+        if (!heroBg) return;
+        var heroSection = heroBg.closest('section');
+        if (!heroSection) return;
+        heroBg.classList.add('zl-parallax-bg');
+
+        var parallaxTicking = false;
+        function updateParallax() {
+          var rect = heroSection.getBoundingClientRect();
+          var scrollProgress = -rect.top / rect.height;
+          if (scrollProgress > -1 && scrollProgress < 2) {
+            var yOffset = scrollProgress * 80;
+            heroBg.style.transform = 'translateY(' + yOffset + 'px) scale(1.05)';
+          }
+          parallaxTicking = false;
+        }
+        window.addEventListener('scroll', function() {
+          if (!parallaxTicking) {
+            requestAnimationFrame(updateParallax);
+            parallaxTicking = true;
+          }
+        }, { passive: true });
+      }
+
+      // ============================================================
+      // 10. INITIALIZATION
+      // ============================================================
+      function initAnimations() {
+        wrapImagesForReveal();
+        wrapTextForReveal();
+        initRevealObserver();
+        initMagneticButtons();
+        initParallax();
+      }
+
+      // Run after React renders
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          setTimeout(initAnimations, 1500);
+          setTimeout(initAnimations, 3000);
+        });
+      } else {
+        setTimeout(initAnimations, 1500);
+        setTimeout(initAnimations, 3000);
+      }
+
+      // Re-init on hash change (SPA navigation)
+      window.addEventListener('hashchange', function() {
+        setTimeout(initAnimations, 800);
+        setTimeout(initAnimations, 2000);
+      });
+
+    })();
+    </script>
+  </body>
+</html>

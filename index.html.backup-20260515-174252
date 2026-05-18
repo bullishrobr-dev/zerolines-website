@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zero Lines — Advanced Skincare Solutions | Cellular Science. Alpine Precision.</title>
+    <meta name="description" content="Zero Lines is a clinical-luxury skincare house offering advanced skincare solutions. Six bioactive formulations powered by hydrolyzed collagen, botanical extracts, and Pyrenean mineral water from Andorra." />
+    <meta property="og:title" content="Zero Lines — Advanced Skincare Solutions" />
+    <meta property="og:description" content="Botanical science meets alpine precision. Six bioactive formulations with Pyrenean mineral water for skin comfort and renewal." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="./assets/hero-editorial-1.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <script type="module" crossorigin src="./assets/index-CdnbiGbM.js?v=4"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BELDyRU9.css?v=4">
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- Page type & scroll state for CSS selectors -->
+    <script>
+      (function() {
+        function getRoute() {
+          var hash = window.location.hash || '';
+          var path = window.location.pathname || '';
+          // Hash router: route is in hash; pathname is always '/'
+          if (hash && hash !== '#' && hash !== '#/') {
+            return hash.replace(/^#/, '');
+          }
+          return path;
+        }
+        function isHomepage() {
+          var route = getRoute();
+          return route === '/' || route === '' || route === '/index.html' || route === '#/index.html';
+        }
+        function updateBodyClass() {
+          var home = isHomepage();
+          if (home) {
+            document.body.classList.add('homepage');
+            document.body.classList.remove('inner-page');
+          } else {
+            document.body.classList.add('inner-page');
+            document.body.classList.remove('homepage');
+            document.body.classList.remove('scrolled');
+          }
+        }
+        updateBodyClass();
+        window.addEventListener('hashchange', updateBodyClass);
+        // Also watch for pathname changes (unlikely with hash router but safe)
+        var lastRoute = getRoute();
+        setInterval(function() {
+          var current = getRoute();
+          if (current !== lastRoute) {
+            lastRoute = current;
+            updateBodyClass();
+          }
+        }, 300);
+        // Scroll handler for homepage
+        function onScroll() {
+          if (isHomepage()) {
+            if (window.scrollY > 80) {
+              document.body.classList.add('scrolled');
+            } else {
+              document.body.classList.remove('scrolled');
+            }
+          }
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      })();
+    </script>
+
+    <!-- Protocol Step Background Images — Product Pages Only -->
+    <script>
+      (function() {
+        if (!window.location.pathname.startsWith('/products/')) return;
+        function addProtocolBackgrounds() {
+          var stepImages = {
+            '01': '/assets/product-peeling.jpg',
+            '02': '/assets/product-syringe-hero.jpg',
+            '03': '/assets/product-serum.jpg',
+            '04': '/assets/product-day-cream.jpg',
+            '05': '/assets/product-night-cream.jpg',
+            '06': '/assets/product-syringe.jpg',
+            '1': '/assets/product-peeling.jpg',
+            '2': '/assets/product-syringe-hero.jpg',
+            '3': '/assets/product-serum.jpg',
+            '4': '/assets/product-day-cream.jpg',
+            '5': '/assets/product-night-cream.jpg',
+            '6': '/assets/product-syringe.jpg',
+          };
+          var protocolHeading = Array.from(document.querySelectorAll('h2, h3, h4, p, div, span'))
+            .find(function(el) { return /step\s*\d+\s*of\s*6/i.test(el.textContent) || /you are at step/i.test(el.textContent); });
+          if (!protocolHeading) return;
+          var section = protocolHeading.parentElement;
+          for (var i = 0; i < 6; i++) {
+            if (!section) break;
+            if (section.querySelectorAll('a, div, article').length >= 6) break;
+            section = section.parentElement;
+          }
+          if (!section) section = document.body;
+          var candidates = Array.from(section.querySelectorAll('a, div, article'))
+            .filter(function(el) {
+              var text = el.textContent;
+              return (/(^|\s)0?[1-6](\s|$|·)/.test(text) || /^\s*[1-6]\s*·/.test(text) || /^\s*[1-6]\s*$/.test(text.trim()))
+                && el.children.length >= 1
+                && el.offsetHeight > 60
+                && el.offsetHeight < 400;
+            });
+          var cards = candidates.slice(0, 6);
+          if (cards.length !== 6) return;
+          cards.forEach(function(card) {
+            if (card.querySelector('img[data-protocol-bg]')) return;
+            var text = card.textContent;
+            var imgSrc = null;
+            for (var num in stepImages) {
+              var regex = new RegExp('\\b0?' + num + '\\b');
+              if (regex.test(text)) { imgSrc = stepImages[num]; break; }
+            }
+            if (!imgSrc) return;
+            var img = document.createElement('img');
+            img.src = imgSrc;
+            img.setAttribute('data-protocol-bg', 'true');
+            img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.15;pointer-events:none;z-index:0;border-radius:inherit;';
+            card.style.position = 'relative';
+            card.style.overflow = 'hidden';
+            card.insertBefore(img, card.firstChild);
+            Array.from(card.children).forEach(function(child) {
+              if (child !== img && !child.hasAttribute('data-protocol-bg')) {
+                var current = window.getComputedStyle(child).position;
+                if (current === 'static') child.style.position = 'relative';
+                child.style.zIndex = '1';
+              }
+            });
+          });
+        }
+        setTimeout(addProtocolBackgrounds, 1500);
+        setTimeout(addProtocolBackgrounds, 3000);
+      })();
+    </script>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" style="
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      z-index:9999;
+      background:rgba(10,10,10,0.97);
+      backdrop-filter:blur(20px);
+      border-top:1px solid rgba(255,255,255,0.08);
+      padding:1.5rem 2rem;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      gap:2rem;
+      flex-wrap:wrap;
+    ">
+      <p style="
+        color:#888;
+        font-family:'Inter',sans-serif;
+        font-size:0.8125rem;
+        line-height:1.6;
+        margin:0;
+        max-width:600px;
+      ">
+        We use cookies to enhance your experience and understand how our site is used.
+        <a href="cookies.html" style="color:#0ABAB5;text-decoration:none;">Learn more</a>
+      </p>
+      <div style="display:flex;gap:0.75rem;">
+        <button id="cookie-decline" style="
+          padding:0.6rem 1.25rem;
+          background:transparent;
+          border:1px solid rgba(255,255,255,0.15);
+          border-radius:6px;
+          color:#888;
+          font-family:'Inter',sans-serif;
+          font-size:0.75rem;
+          font-weight:500;
+          letter-spacing:0.05em;
+          text-transform:uppercase;
+          cursor:pointer;
+          transition:all 0.3s;
+        ">Essential Only</button>
+        <button id="cookie-accept" style="
+          padding:0.6rem 1.25rem;
+          background:#0ABAB5;
+          border:none;
+          border-radius:6px;
+          color:#0A0A0A;
+          font-family:'Inter',sans-serif;
+          font-size:0.75rem;
+          font-weight:600;
+          letter-spacing:0.05em;
+          text-transform:uppercase;
+          cursor:pointer;
+          transition:all 0.3s;
+        ">Accept All</button>
+      </div>
+    </div>
+    <script>
+      (function() {
+        var banner = document.getElementById('cookie-banner');
+        var acceptBtn = document.getElementById('cookie-accept');
+        var declineBtn = document.getElementById('cookie-decline');
+        var consent = localStorage.getItem('zl_cookie_consent');
+        if (!consent) {
+          banner.style.display = 'flex';
+        }
+        acceptBtn.addEventListener('click', function() {
+          localStorage.setItem('zl_cookie_consent', 'all');
+          banner.style.display = 'none';
+        });
+        declineBtn.addEventListener('click', function() {
+          localStorage.setItem('zl_cookie_consent', 'essential');
+          banner.style.display = 'none';
+        });
+      })();
+    </script>
+  </body>
+</html>
