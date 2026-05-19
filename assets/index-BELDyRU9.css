@@ -2816,141 +2816,263 @@ footer .flex a[aria-label] {
 }
 
 /* ============================================================
-   PRODUCT PAGE VISUAL ENHANCEMENTS
-   Adds image bands, FAQ polish, and section accents
+   EDITORIAL LUXURY REDESIGN
+   Cinematic hero + editorial split sections + FAQ polish
    ============================================================ */
 
-/* ---- Full-width image bands between sections ---- */
-.zl-product-image-band {
+/* ---- Cinematic Hero Section (70vh) ---- */
+.zl-product-hero {
   width: 100%;
-  height: 400px;
+  height: 70vh;
+  min-height: 480px;
+  max-height: 800px;
   overflow: hidden;
   position: relative;
 }
 
-.zl-product-image-band::after {
-  content: '';
+.zl-product-hero-img {
+  width: 100%;
+  height: 120%;
+  object-fit: cover;
+  display: block;
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
-  right: 0;
-  height: 120px;
-  background: linear-gradient(to top, rgba(0,0,0,0.25), transparent);
-  pointer-events: none;
+  will-change: transform;
+  transform: translateY(-5%) scale(1.05);
+}
+
+.zl-product-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.5) 100%);
   z-index: 1;
 }
 
-.zl-product-image-band img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 10s ease-out;
-}
-
-.zl-product-image-band.is-visible img {
-  transform: scale(1);
-}
-
-.zl-product-image-band:hover img {
-  transform: scale(1.04);
-}
-
-.zl-product-image-band-caption {
+.zl-product-hero-content {
   position: absolute;
-  bottom: 1.5rem;
-  left: 1.5rem;
-  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.9);
-  background: rgba(0,0,0,0.35);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 0.5rem 1.25rem;
-  border-radius: 100px;
+  bottom: 3.5rem;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  text-align: center;
+  padding: 0 2rem;
   opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.5s ease 0.3s;
+  transform: translateY(20px);
+  transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
 }
 
-.zl-product-image-band.is-visible .zl-product-image-band-caption {
+.zl-product-hero.is-visible .zl-product-hero-content {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* ---- FAQ Section Enhancements ---- */
+.zl-product-hero-label {
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.zl-product-hero-title {
+  font-family: var(--font-serif, 'Georgia', 'Times New Roman', serif);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 400;
+  font-style: italic;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-shadow: 0 2px 30px rgba(0,0,0,0.25);
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ---- Editorial Split Section (50/50) ---- */
+.zl-product-editorial {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 520px;
+  background: #fafafa;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.zl-product-editorial.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.zl-product-editorial-img-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.zl-product-editorial-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.zl-product-editorial.is-visible .zl-product-editorial-img-wrap img {
+  transform: scale(1);
+}
+
+.zl-product-editorial-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 5rem;
+}
+
+.zl-editorial-accent {
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent, #0ABAB5), transparent);
+  margin-bottom: 1.5rem;
+  opacity: 0.6;
+}
+
+.zl-product-editorial-label {
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #a3a3a3;
+  margin-bottom: 1.25rem;
+  display: block;
+}
+
+.zl-product-editorial-headline {
+  font-family: var(--font-serif, 'Georgia', 'Times New Roman', serif);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 400;
+  font-style: italic;
+  color: #171717;
+  line-height: 1.25;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+.zl-product-editorial-body {
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #525252;
+  max-width: 420px;
+}
+
+/* Alternate: image on right */
+.zl-product-editorial.zl-editorial-reversed {
+  direction: rtl;
+}
+
+.zl-product-editorial.zl-editorial-reversed > * {
+  direction: ltr;
+}
+
+/* ---- FAQ Section/* ---- FAQ Section — Refined Luxury Card Design ---- */
 .zl-product-faq-section {
   position: relative;
 }
 
-.zl-product-faq-section .content-max-width {
-  position: relative;
+.zl-product-faq-section .text-h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 3rem;
+  color: #171717;
 }
 
 .zl-product-faq-item {
-  border-left: 3px solid rgba(10, 186, 181, 0.15) !important;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  border-radius: 16px;
+  margin-bottom: 12px !important;
+  padding: 24px 28px !important;
+  border-left: none !important;
   border-bottom: none !important;
-  transition: all 0.35s var(--ease-luxury, cubic-bezier(0.4,0,0.2,1)) !important;
-  padding: 1.125rem 1.25rem !important;
-  margin: 0.375rem 0 !important;
-  border-radius: 0 10px 10px 0;
-  background: rgba(10, 186, 181, 0.02);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Elegant top accent line — reveals on open */
+.zl-product-faq-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0ABAB5, #14b8a6);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.zl-product-faq-item.is-open::before {
+  transform: scaleX(1);
 }
 
 .zl-product-faq-item:hover {
-  border-left-color: var(--accent, #0ABAB5) !important;
-  background: rgba(10, 186, 181, 0.05);
-  transform: translateX(2px);
-}
-
-.zl-product-faq-item:hover h4 {
-  color: var(--accent, #0ABAB5) !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+  border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 .zl-product-faq-item h4 {
-  transition: color 0.3s ease !important;
-  font-weight: 500 !important;
+  font-size: 1.0625rem !important;
+  font-weight: 600 !important;
+  color: #262626 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.4 !important;
+  transition: color 0.35s ease !important;
+}
+
+.zl-product-faq-item:hover h4 {
+  color: #0d9488 !important;
 }
 
 .zl-product-faq-item.is-open {
-  border-left-color: var(--accent, #0ABAB5) !important;
-  background: rgba(10, 186, 181, 0.06);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border-color: rgba(10, 186, 181, 0.15) !important;
 }
 
 .zl-product-faq-item.is-open h4 {
-  color: var(--accent, #0ABAB5) !important;
+  color: #0f766e !important;
 }
 
 /* FAQ answer text styling */
 .zl-product-faq-item .text-body {
-  color: var(--text-secondary) !important;
+  color: #525252 !important;
+  font-size: 0.9375rem !important;
   line-height: 1.75 !important;
-  padding-top: 0.5rem;
+  padding-top: 0.75rem !important;
 }
 
-/* FAQ chevron accent when open */
+/* FAQ icon — refined color transition */
+.zl-product-faq-item svg {
+  stroke: #737373 !important;
+  stroke-width: 1.5 !important;
+}
+
+.zl-product-faq-item:hover svg {
+  stroke: #0d9488 !important;
+}
+
 .zl-product-faq-item.is-open svg {
-  stroke: var(--accent, #0ABAB5) !important;
-}
-
-/* FAQ section title accent */
-.zl-product-faq-section .text-h2 {
-  position: relative;
-  display: inline-block;
-}
-
-.zl-product-faq-section .text-h2::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: 48px;
-  height: 2px;
-  background: var(--accent, #0ABAB5);
-  opacity: 0.4;
+  stroke: #0d9488 !important;
 }
 
 /* ---- Section decorative accents ---- */
@@ -3030,23 +3152,54 @@ footer .flex a[aria-label] {
 
 /* ---- Mobile product enhancements ---- */
 @media (max-width: 768px) {
-  .zl-product-image-band {
-    height: 260px;
+  .zl-product-hero {
+    height: 50vh;
+    min-height: 360px;
   }
-  .zl-product-image-band-caption {
-    bottom: 1rem;
-    left: 1rem;
-    font-size: 0.625rem;
-    padding: 0.4rem 1rem;
+  .zl-product-hero-content {
+    bottom: 2rem;
+    padding: 0 1.5rem;
+  }
+  .zl-product-hero-title {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+  }
+  .zl-product-editorial {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .zl-product-editorial-img-wrap {
+    height: 300px;
+  }
+  .zl-product-editorial-text {
+    padding: 2.5rem 1.5rem;
+  }
+  .zl-product-faq-section .text-h2 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
   }
   .zl-product-faq-item {
-    padding-left: 0.875rem !important;
-    margin-left: -0.875rem !important;
+    padding: 18px 20px !important;
+    margin-bottom: 10px !important;
+    border-radius: 12px;
+  }
+  .zl-product-faq-item h4 {
+    font-size: 0.9375rem !important;
+  }
+  .zl-product-faq-item .text-body {
+    font-size: 0.875rem !important;
+    line-height: 1.7 !important;
   }
 }
 
 @media (max-width: 480px) {
-  .zl-product-image-band {
-    height: 220px;
+  .zl-product-hero {
+    min-height: 320px;
+  }
+  .zl-product-editorial-img-wrap {
+    height: 240px;
+  }
+  .zl-product-faq-item {
+    padding: 16px 18px !important;
+    border-radius: 12px;
   }
 }

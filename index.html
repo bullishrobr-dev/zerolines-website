@@ -635,51 +635,87 @@
       })();
     </script>
 
-    <!-- Product Page Visual Enhancer — Images, FAQ Polish, Section Accents -->
+    <!-- Editorial Luxury Redesign — Cinematic Hero + Split Sections + FAQ -->
     <script>
       (function() {
         var productImageMap = {
           'day-cream': {
-            bands: [
-              { src: './assets/atmosphere-morning-ritual.jpg', caption: 'Morning Ritual' },
-              { src: './assets/atmosphere-cream-texture.jpg', caption: 'Silk Texture' },
-              { src: './assets/science-skin-macro-droplets.jpg', caption: 'Cellular Hydration' }
-            ]
+            hero: {
+              src: './assets/atmosphere-morning-ritual.jpg',
+              label: 'The Ritual',
+              title: 'Where morning becomes transformation'
+            },
+            editorial: {
+              src: './assets/atmosphere-cream-texture.jpg',
+              label: 'Texture',
+              headline: 'Weightless silk. Boundless protection.',
+              body: 'Our Cellular Day Cream melts into skin with the fluidity of silk, forming an invisible shield against environmental stressors. Each application is a moment of luxury — a whisper-thin veil of protection that lets your skin breathe while it defends.'
+            }
           },
           'night-cream': {
-            bands: [
-              { src: './assets/atmosphere-spa-ritual.jpg', caption: 'Evening Renewal' },
-              { src: './assets/atmosphere-cream-texture.jpg', caption: 'Rich Texture' },
-              { src: './assets/science-skin-macro-droplets.jpg', caption: 'Overnight Repair' }
-            ]
+            hero: {
+              src: './assets/night-sleeping-woman.jpg',
+              label: 'The Restoration',
+              title: 'While the world sleeps, your skin awakens'
+            },
+            editorial: {
+              src: './assets/science-skin-macro-droplets.jpg',
+              label: 'Science',
+              headline: 'Overnight immersion. Dawn-to-dusk radiance.',
+              body: 'Harnessing the restorative power of Alpine spring minerals, our night cream works in harmony with your skin\'s natural circadian rhythm. Deep hydration meets cellular renewal — so you wake to skin that feels reborn.'
+            }
           },
           'peeling-gel': {
-            bands: [
-              { src: './assets/atmosphere-application-ritual.jpg', caption: 'Weekly Renewal' },
-              { src: './assets/atmosphere-teal-gel-swatch.jpg', caption: 'Botanical Gel' },
-              { src: './assets/science-bubbles-macro.jpg', caption: 'Gentle Activation' }
-            ]
+            hero: {
+              src: './assets/hero-mirror-ritual.jpg',
+              label: 'The Renewal',
+              title: 'Reveal what lies beneath'
+            },
+            editorial: {
+              src: './assets/atmosphere-teal-gel-swatch.jpg',
+              label: 'Texture',
+              headline: 'Gentle power. Profound clarity.',
+              body: 'A gel so refined it feels like water, yet so effective it transforms texture in minutes. Botanical enzymes dissolve dullness without a trace of abrasion — revealing the luminous skin that was waiting underneath.'
+            }
           },
           'serum': {
-            bands: [
-              { src: './assets/atmosphere-morning-ritual.jpg', caption: 'Daily Treatment' },
-              { src: './assets/atmosphere-serum-texture.jpg', caption: 'Liquid Gold' },
-              { src: './assets/science-peptide-molecular.jpg', caption: 'Peptide Science' }
-            ]
+            hero: {
+              src: './assets/hero-serum-application.jpg',
+              label: 'The Precision',
+              title: 'One drop. Infinite potential.'
+            },
+            editorial: {
+              src: './assets/atmosphere-serum-texture.jpg',
+              label: 'Texture',
+              headline: 'Liquid light. Molecular intention.',
+              body: 'Each pearl of serum carries a payload of actives calibrated to penetrate at the cellular level. Weightless, potent, precise — it is skincare distilled to its purest, most effective form.'
+            }
           },
           'syringe': {
-            bands: [
-              { src: './assets/atmosphere-application-ritual.jpg', caption: 'Precision Application' },
-              { src: './assets/product-syringe-hero.jpg', caption: 'Clinical Delivery' },
-              { src: './assets/science-peptide-molecular.jpg', caption: 'Bioactive Complex' }
-            ]
+            hero: {
+              src: './assets/hero-serum-dropper.jpg',
+              label: 'The Correction',
+              title: 'Precision, measured in microns'
+            },
+            editorial: {
+              src: './assets/product-syringe-hero.jpg',
+              label: 'The Instrument',
+              headline: 'Targeted intervention. Transformative results.',
+              body: 'Inspired by clinical precision, our concentrated corrector delivers actives exactly where they are needed. One weekly application — a single, deliberate moment — that rewrites the story of your skin.'
+            }
           },
           'syringe-refill': {
-            bands: [
-              { src: './assets/atmosphere-application-ritual.jpg', caption: 'Sustainable Continuation' },
-              { src: './assets/product-syringe.jpg', caption: 'The Ecosystem' },
-              { src: './assets/science-peptide-molecular.jpg', caption: 'Pure Formulation' }
-            ]
+            hero: {
+              src: './assets/atmosphere-botanical-petal.jpg',
+              label: 'The Source',
+              title: 'Nature, perfected by science'
+            },
+            editorial: {
+              src: './assets/story-alpine-spring-water.jpg',
+              label: 'Origin',
+              headline: 'From mountain spring to molecular mastery.',
+              body: 'Every refill begins with water so pure it has never known pollution — drawn from Alpine springs at 2,000 meters. We combine this elemental purity with cutting-edge biotechnology, creating a formula that honors both earth and innovation.'
+            }
           }
         };
 
@@ -694,9 +730,9 @@
           return m ? m[1] : null;
         }
 
-        function createImageBand(data) {
-          var band = document.createElement('div');
-          band.className = 'zl-product-image-band zl-reveal-img';
+        function createHeroSection(data) {
+          var hero = document.createElement('div');
+          hero.className = 'zl-product-hero zl-reveal-img';
 
           var picture = document.createElement('picture');
           var source = document.createElement('source');
@@ -704,22 +740,111 @@
           source.type = 'image/webp';
           var img = document.createElement('img');
           img.src = data.src;
-          img.alt = data.caption || '';
-          img.loading = 'lazy';
+          img.alt = data.title || '';
+          img.className = 'zl-product-hero-img';
+          img.loading = 'eager';
           img.decoding = 'async';
 
           picture.appendChild(source);
           picture.appendChild(img);
-          band.appendChild(picture);
+          hero.appendChild(picture);
 
-          if (data.caption) {
-            var caption = document.createElement('span');
-            caption.className = 'zl-product-image-band-caption';
-            caption.textContent = data.caption;
-            band.appendChild(caption);
+          var overlay = document.createElement('div');
+          overlay.className = 'zl-product-hero-overlay';
+          hero.appendChild(overlay);
+
+          var content = document.createElement('div');
+          content.className = 'zl-product-hero-content';
+
+          if (data.label) {
+            var label = document.createElement('span');
+            label.className = 'zl-product-hero-label';
+            label.textContent = data.label;
+            content.appendChild(label);
           }
 
-          return band;
+          if (data.title) {
+            var title = document.createElement('h2');
+            title.className = 'zl-product-hero-title';
+            title.textContent = data.title;
+            content.appendChild(title);
+          }
+
+          hero.appendChild(content);
+          return hero;
+        }
+
+        function createEditorialSplit(data, reversed) {
+          var section = document.createElement('div');
+          section.className = 'zl-product-editorial zl-reveal-img' + (reversed ? ' zl-editorial-reversed' : '');
+
+          var imgWrap = document.createElement('div');
+          imgWrap.className = 'zl-product-editorial-img-wrap';
+          var picture = document.createElement('picture');
+          var source = document.createElement('source');
+          source.srcset = data.src.replace(/\.jpg$/, '.webp');
+          source.type = 'image/webp';
+          var img = document.createElement('img');
+          img.src = data.src;
+          img.alt = data.headline || '';
+          img.loading = 'lazy';
+          img.decoding = 'async';
+          picture.appendChild(source);
+          picture.appendChild(img);
+          imgWrap.appendChild(picture);
+
+          var text = document.createElement('div');
+          text.className = 'zl-product-editorial-text';
+
+          var accent = document.createElement('div');
+          accent.className = 'zl-editorial-accent';
+          text.appendChild(accent);
+
+          if (data.label) {
+            var label = document.createElement('span');
+            label.className = 'zl-product-editorial-label';
+            label.textContent = data.label;
+            text.appendChild(label);
+          }
+
+          if (data.headline) {
+            var headline = document.createElement('h3');
+            headline.className = 'zl-product-editorial-headline';
+            headline.textContent = data.headline;
+            text.appendChild(headline);
+          }
+
+          if (data.body) {
+            var body = document.createElement('p');
+            body.className = 'zl-product-editorial-body';
+            body.textContent = data.body;
+            text.appendChild(body);
+          }
+
+          section.appendChild(imgWrap);
+          section.appendChild(text);
+          return section;
+        }
+
+        function initParallax() {
+          var heroes = document.querySelectorAll('.zl-product-hero-img');
+          if (!heroes.length) return;
+
+          function update() {
+            heroes.forEach(function(img) {
+              var parent = img.closest('.zl-product-hero');
+              if (!parent) return;
+              var rect = parent.getBoundingClientRect();
+              var vh = window.innerHeight;
+              var progress = (vh - rect.top) / (vh + rect.height);
+              progress = Math.max(0, Math.min(1, progress));
+              var translateY = -8 + (progress * 16);
+              img.style.transform = 'translateY(' + translateY.toFixed(2) + '%) scale(1.05)';
+            });
+          }
+
+          window.addEventListener('scroll', update, { passive: true });
+          update();
         }
 
         function enhanceFAQ(section) {
@@ -727,7 +852,11 @@
           if (!items.length) return;
           items.forEach(function(item) {
             item.classList.add('zl-product-faq-item');
-            // Observe style changes to detect open/close
+
+            var content = item.querySelector('[style*="max-height"]');
+            var isOpen = content && !content.style.maxHeight.match(/^0(px)?$/);
+            item.classList.toggle('is-open', !!isOpen);
+
             var observer = new MutationObserver(function() {
               var content = item.querySelector('[style*="max-height"]');
               var isOpen = content && !content.style.maxHeight.match(/^0(px)?$/);
@@ -763,23 +892,23 @@
           var main = document.querySelector('main');
           if (!main) return;
 
-          // Wait for content to be fully rendered
           var sections = main.querySelectorAll('section');
-          if (sections.length < 8) return;
+          if (sections.length < 6) return;
 
-          // Don't run twice
           if (main.dataset.zlProductEnhanced) return;
           main.dataset.zlProductEnhanced = 'true';
 
-          // Insert image bands after specific sections
-          var bandIndices = [1, 4, 6]; // after approach, usage, comparison
-          data.bands.forEach(function(bandData, i) {
-            var idx = bandIndices[i];
-            if (idx !== undefined && sections[idx]) {
-              var band = createImageBand(bandData);
-              sections[idx].parentNode.insertBefore(band, sections[idx].nextSibling);
-            }
-          });
+          // Insert cinematic hero after first section
+          if (data.hero && sections[0]) {
+            var hero = createHeroSection(data.hero);
+            sections[0].parentNode.insertBefore(hero, sections[0].nextSibling);
+          }
+
+          // Insert editorial split after third section
+          if (data.editorial && sections[2]) {
+            var editorial = createEditorialSplit(data.editorial, false);
+            sections[2].parentNode.insertBefore(editorial, sections[2].nextSibling);
+          }
 
           // Enhance each section
           sections.forEach(function(section) {
@@ -801,7 +930,8 @@
             }
           });
 
-          // Re-init reveal observer for new elements
+          // Init parallax and reveal observer
+          initParallax();
           if (typeof initRevealObserver === 'function') initRevealObserver();
         }
 
@@ -809,8 +939,7 @@
           var main = document.querySelector('main');
           if (main) {
             delete main.dataset.zlProductEnhanced;
-            // Remove previously inserted image bands
-            main.querySelectorAll('.zl-product-image-band').forEach(function(b) { b.remove(); });
+            main.querySelectorAll('.zl-product-hero, .zl-product-editorial').forEach(function(b) { b.remove(); });
           }
         }
 
