@@ -2230,12 +2230,93 @@ body.quiz-page #zl-quiz-footer {
   display: block;
 }
 
+/* On quiz page, hide the React nav so only the quiz header shows */
+body.quiz-page #root nav,
+body.quiz-page #root header,
+body.quiz-page #root [class*="navbar"] {
+  display: none !important;
+}
+
+/* Unify quiz header with main nav styling */
+.zl-quiz-header {
+  height: 64px;
+  background: rgba(253,252,250,0.95);
+}
+
+.zl-quiz-header-links {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.zl-quiz-header-links a {
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: #1A1A1A;
+  padding: 0.25rem 0;
+}
+
+.zl-quiz-header-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: #0ABAB5;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.zl-quiz-header-links a:hover::after,
+.zl-quiz-header-links a.active::after {
+  width: 100%;
+}
+
+.zl-quiz-header-links a.active::after {
+  bottom: -2px;
+  height: 1.5px;
+  border-radius: 0;
+}
+
+/* Quiz header CTA */
+.zl-quiz-header-cta {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.625rem 1.5rem;
+  background: #0ABAB5;
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(10, 186, 181, 0.25);
+  margin-left: 1.5rem;
+}
+
+.zl-quiz-header-cta:hover {
+  background: #08A09C;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(10, 186, 181, 0.35);
+}
+
 @media (max-width: 768px) {
   .zl-quiz-header-links {
     display: none;
   }
   .zl-quiz-header-inner {
     justify-content: center;
+    padding: 0 1.25rem;
+  }
+  .zl-quiz-header-cta {
+    display: none;
   }
   .zl-quiz-footer-links {
     gap: 1rem;
