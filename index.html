@@ -635,6 +635,208 @@
       })();
     </script>
 
+    <!-- Product Page Visual Enhancer — Images, FAQ Polish, Section Accents -->
+    <script>
+      (function() {
+        var productImageMap = {
+          'day-cream': {
+            bands: [
+              { src: './assets/atmosphere-morning-ritual.jpg', caption: 'Morning Ritual' },
+              { src: './assets/atmosphere-cream-texture.jpg', caption: 'Silk Texture' },
+              { src: './assets/science-skin-macro-droplets.jpg', caption: 'Cellular Hydration' }
+            ]
+          },
+          'night-cream': {
+            bands: [
+              { src: './assets/atmosphere-spa-ritual.jpg', caption: 'Evening Renewal' },
+              { src: './assets/atmosphere-cream-texture.jpg', caption: 'Rich Texture' },
+              { src: './assets/science-skin-macro-droplets.jpg', caption: 'Overnight Repair' }
+            ]
+          },
+          'peeling-gel': {
+            bands: [
+              { src: './assets/atmosphere-application-ritual.jpg', caption: 'Weekly Renewal' },
+              { src: './assets/atmosphere-teal-gel-swatch.jpg', caption: 'Botanical Gel' },
+              { src: './assets/science-bubbles-macro.jpg', caption: 'Gentle Activation' }
+            ]
+          },
+          'serum': {
+            bands: [
+              { src: './assets/atmosphere-morning-ritual.jpg', caption: 'Daily Treatment' },
+              { src: './assets/atmosphere-serum-texture.jpg', caption: 'Liquid Gold' },
+              { src: './assets/science-peptide-molecular.jpg', caption: 'Peptide Science' }
+            ]
+          },
+          'syringe': {
+            bands: [
+              { src: './assets/atmosphere-application-ritual.jpg', caption: 'Precision Application' },
+              { src: './assets/product-syringe-hero.jpg', caption: 'Clinical Delivery' },
+              { src: './assets/science-peptide-molecular.jpg', caption: 'Bioactive Complex' }
+            ]
+          },
+          'syringe-refill': {
+            bands: [
+              { src: './assets/atmosphere-application-ritual.jpg', caption: 'Sustainable Continuation' },
+              { src: './assets/product-syringe.jpg', caption: 'The Ecosystem' },
+              { src: './assets/science-peptide-molecular.jpg', caption: 'Pure Formulation' }
+            ]
+          }
+        };
+
+        function isProductPage() {
+          var hash = window.location.hash || '';
+          return /^#\/products\//.test(hash);
+        }
+
+        function getProductSlug() {
+          var hash = window.location.hash || '';
+          var m = hash.match(/#\/products\/([^\/]+)/);
+          return m ? m[1] : null;
+        }
+
+        function createImageBand(data) {
+          var band = document.createElement('div');
+          band.className = 'zl-product-image-band zl-reveal-img';
+
+          var picture = document.createElement('picture');
+          var source = document.createElement('source');
+          source.srcset = data.src.replace(/\.jpg$/, '.webp');
+          source.type = 'image/webp';
+          var img = document.createElement('img');
+          img.src = data.src;
+          img.alt = data.caption || '';
+          img.loading = 'lazy';
+          img.decoding = 'async';
+
+          picture.appendChild(source);
+          picture.appendChild(img);
+          band.appendChild(picture);
+
+          if (data.caption) {
+            var caption = document.createElement('span');
+            caption.className = 'zl-product-image-band-caption';
+            caption.textContent = data.caption;
+            band.appendChild(caption);
+          }
+
+          return band;
+        }
+
+        function enhanceFAQ(section) {
+          var items = section.querySelectorAll('.border-b.cursor-pointer');
+          if (!items.length) return;
+          items.forEach(function(item) {
+            item.classList.add('zl-product-faq-item');
+            // Observe style changes to detect open/close
+            var observer = new MutationObserver(function() {
+              var content = item.querySelector('[style*="max-height"]');
+              var isOpen = content && !content.style.maxHeight.match(/^0(px)?$/);
+              item.classList.toggle('is-open', !!isOpen);
+            });
+            var contentDiv = item.querySelector('div.overflow-hidden');
+            if (contentDiv) observer.observe(contentDiv, { attributes: true });
+          });
+          section.classList.add('zl-product-faq-section');
+        }
+
+        function enhanceIngredients(section) {
+          var dots = section.querySelectorAll('.rounded-full');
+          dots.forEach(function(dot) {
+            var w = dot.style.width;
+            var h = dot.style.height;
+            if (w === '8px' || h === '8px') {
+              dot.classList.add('zl-ingredient-dot-enhanced');
+            }
+          });
+        }
+
+        function enhanceCTA(section) {
+          section.classList.add('zl-product-cta-enhanced');
+        }
+
+        function runEnhancements() {
+          if (!isProductPage()) return;
+          var slug = getProductSlug();
+          var data = productImageMap[slug];
+          if (!data) return;
+
+          var main = document.querySelector('main');
+          if (!main) return;
+
+          // Wait for content to be fully rendered
+          var sections = main.querySelectorAll('section');
+          if (sections.length < 8) return;
+
+          // Don't run twice
+          if (main.dataset.zlProductEnhanced) return;
+          main.dataset.zlProductEnhanced = 'true';
+
+          // Insert image bands after specific sections
+          var bandIndices = [1, 4, 6]; // after approach, usage, comparison
+          data.bands.forEach(function(bandData, i) {
+            var idx = bandIndices[i];
+            if (idx !== undefined && sections[idx]) {
+              var band = createImageBand(bandData);
+              sections[idx].parentNode.insertBefore(band, sections[idx].nextSibling);
+            }
+          });
+
+          // Enhance each section
+          sections.forEach(function(section) {
+            var h2 = section.querySelector('h2');
+            if (!h2) return;
+            var text = h2.textContent;
+
+            if (text.includes('Frequently Asked')) {
+              enhanceFAQ(section);
+            }
+            if (text.includes('How it works') || text.includes('Key ingredient')) {
+              enhanceIngredients(section);
+            }
+            if (text.includes('shield your skin') || text.includes('renew while you') ||
+                text.includes('begin your skin') || text.includes('begin your daily') ||
+                text.includes('your key to the') || text.includes('continue your') ||
+                text.includes('continue your correction')) {
+              enhanceCTA(section);
+            }
+          });
+
+          // Re-init reveal observer for new elements
+          if (typeof initRevealObserver === 'function') initRevealObserver();
+        }
+
+        function cleanup() {
+          var main = document.querySelector('main');
+          if (main) {
+            delete main.dataset.zlProductEnhanced;
+            // Remove previously inserted image bands
+            main.querySelectorAll('.zl-product-image-band').forEach(function(b) { b.remove(); });
+          }
+        }
+
+        function schedule() {
+          if (!isProductPage()) {
+            cleanup();
+            return;
+          }
+          setTimeout(runEnhancements, 1200);
+          setTimeout(runEnhancements, 2500);
+          setTimeout(runEnhancements, 4000);
+        }
+
+        window.addEventListener('hashchange', function() {
+          cleanup();
+          schedule();
+        });
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', schedule);
+        } else {
+          schedule();
+        }
+      })();
+    </script>
+
     <!-- Cookie Consent Banner -->
     <div id="cookie-banner">
       <p>

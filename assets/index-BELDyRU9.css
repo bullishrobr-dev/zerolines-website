@@ -2814,3 +2814,239 @@ footer .flex a[aria-label] {
     padding: 0.375rem 0.75rem;
   }
 }
+
+/* ============================================================
+   PRODUCT PAGE VISUAL ENHANCEMENTS
+   Adds image bands, FAQ polish, and section accents
+   ============================================================ */
+
+/* ---- Full-width image bands between sections ---- */
+.zl-product-image-band {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  position: relative;
+}
+
+.zl-product-image-band::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to top, rgba(0,0,0,0.25), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.zl-product-image-band img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 10s ease-out;
+}
+
+.zl-product-image-band.is-visible img {
+  transform: scale(1);
+}
+
+.zl-product-image-band:hover img {
+  transform: scale(1.04);
+}
+
+.zl-product-image-band-caption {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.9);
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0.5rem 1.25rem;
+  border-radius: 100px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.5s ease 0.3s;
+}
+
+.zl-product-image-band.is-visible .zl-product-image-band-caption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- FAQ Section Enhancements ---- */
+.zl-product-faq-section {
+  position: relative;
+}
+
+.zl-product-faq-section .content-max-width {
+  position: relative;
+}
+
+.zl-product-faq-item {
+  border-left: 3px solid rgba(10, 186, 181, 0.15) !important;
+  border-bottom: none !important;
+  transition: all 0.35s var(--ease-luxury, cubic-bezier(0.4,0,0.2,1)) !important;
+  padding: 1.125rem 1.25rem !important;
+  margin: 0.375rem 0 !important;
+  border-radius: 0 10px 10px 0;
+  background: rgba(10, 186, 181, 0.02);
+}
+
+.zl-product-faq-item:hover {
+  border-left-color: var(--accent, #0ABAB5) !important;
+  background: rgba(10, 186, 181, 0.05);
+  transform: translateX(2px);
+}
+
+.zl-product-faq-item:hover h4 {
+  color: var(--accent, #0ABAB5) !important;
+}
+
+.zl-product-faq-item h4 {
+  transition: color 0.3s ease !important;
+  font-weight: 500 !important;
+}
+
+.zl-product-faq-item.is-open {
+  border-left-color: var(--accent, #0ABAB5) !important;
+  background: rgba(10, 186, 181, 0.06);
+}
+
+.zl-product-faq-item.is-open h4 {
+  color: var(--accent, #0ABAB5) !important;
+}
+
+/* FAQ answer text styling */
+.zl-product-faq-item .text-body {
+  color: var(--text-secondary) !important;
+  line-height: 1.75 !important;
+  padding-top: 0.5rem;
+}
+
+/* FAQ chevron accent when open */
+.zl-product-faq-item.is-open svg {
+  stroke: var(--accent, #0ABAB5) !important;
+}
+
+/* FAQ section title accent */
+.zl-product-faq-section .text-h2 {
+  position: relative;
+  display: inline-block;
+}
+
+.zl-product-faq-section .text-h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 48px;
+  height: 2px;
+  background: var(--accent, #0ABAB5);
+  opacity: 0.4;
+}
+
+/* ---- Section decorative accents ---- */
+.zl-product-section-accent {
+  width: 48px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent, #0ABAB5), transparent);
+  margin: 0 auto 1.5rem;
+  opacity: 0.5;
+}
+
+/* ---- Ingredient dot enhancement ---- */
+.zl-ingredient-dot-enhanced {
+  width: 10px !important;
+  height: 10px !important;
+  background: var(--accent, #0ABAB5) !important;
+  box-shadow: 0 0 0 3px rgba(10, 186, 181, 0.15) !important;
+  transition: all 0.3s ease !important;
+}
+
+.zl-ingredient-dot-enhanced:hover {
+  box-shadow: 0 0 0 6px rgba(10, 186, 181, 0.2) !important;
+  transform: scale(1.2);
+}
+
+/* ---- Product CTA section background ---- */
+.zl-product-cta-enhanced {
+  position: relative;
+  overflow: hidden;
+}
+
+.zl-product-cta-enhanced::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(10, 186, 181, 0.07) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.zl-product-cta-enhanced::after {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  left: -10%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(184, 149, 74, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.zl-product-cta-enhanced > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Product hero subtle glow ---- */
+.zl-product-hero-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(10, 186, 181, 0.06) 0%, transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+  animation: zlProductGlow 8s ease-in-out infinite alternate;
+}
+
+@keyframes zlProductGlow {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+  100% { transform: translate(30px, -20px) scale(1.1); opacity: 0.9; }
+}
+
+/* ---- Mobile product enhancements ---- */
+@media (max-width: 768px) {
+  .zl-product-image-band {
+    height: 260px;
+  }
+  .zl-product-image-band-caption {
+    bottom: 1rem;
+    left: 1rem;
+    font-size: 0.625rem;
+    padding: 0.4rem 1rem;
+  }
+  .zl-product-faq-item {
+    padding-left: 0.875rem !important;
+    margin-left: -0.875rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .zl-product-image-band {
+    height: 220px;
+  }
+}
