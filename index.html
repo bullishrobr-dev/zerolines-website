@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="Cache-Control" content="public, max-age=3600" />
+    <meta http-equiv="Pragma" content="cache" />
+    <meta http-equiv="Expires" content="3600" />
     <title>Zero Lines — Advanced Skincare Solutions | Cellular Science. Alpine Precision.</title>
     <meta name="description" content="Zero Lines is a clinical-luxury skincare house offering advanced skincare solutions. Six bioactive formulations powered by hydrolyzed collagen, botanical extracts, and Pyrenean mineral water from Andorra." />
     <meta property="og:title" content="Zero Lines — Advanced Skincare Solutions" />
@@ -305,6 +305,10 @@
 
       <!-- Results Screen -->
       <section id="zl-quiz-results" class="zl-quiz-section" style="display:none;">
+        <div id="zl-quiz-demo-banner" style="display:none;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+          <span><strong>Demo Mode:</strong> Our AI analyst is temporarily offline. These are simulated results for preview purposes.</span>
+        </div>
         <div id="zl-results-wrap">
           <!-- Hero -->
           <div class="zl-results-hero">
@@ -650,7 +654,20 @@
               label: 'Texture',
               headline: 'Weightless silk. Boundless protection.',
               body: 'Our Cellular Day Cream melts into skin with the fluidity of silk, forming an invisible shield against environmental stressors. Each application is a moment of luxury — a whisper-thin veil of protection that lets your skin breathe while it defends.'
-            }
+            },
+            clinical: [
+              { icon: 'check', text: '96% reported improved hydration*' },
+              { icon: 'users', text: 'Clinically tested on 42 women' },
+              { icon: 'clock', text: 'Visible results in 4 weeks' },
+              { icon: 'shield', text: 'Dermatologist approved' }
+            ],
+            ritual: [
+              { step: '1', title: 'Cleanse', desc: 'Start with a gentle cleanser to remove overnight buildup.' },
+              { step: '2', title: 'Apply', desc: 'Warm a pearl-sized amount between fingertips.' },
+              { step: '3', title: 'Press', desc: 'Press gently into face and neck, working outward.' },
+              { step: '4', title: 'Protect', desc: 'Allow 60 seconds before sunscreen or makeup.' }
+            ],
+            scarcity: ['Limited Batch', 'Online Exclusive', 'Complimentary Shipping']
           },
           'night-cream': {
             hero: {
@@ -663,7 +680,20 @@
               label: 'Science',
               headline: 'Overnight immersion. Dawn-to-dusk radiance.',
               body: 'Harnessing the restorative power of Alpine spring minerals, our night cream works in harmony with your skin\'s natural circadian rhythm. Deep hydration meets cellular renewal — so you wake to skin that feels reborn.'
-            }
+            },
+            clinical: [
+              { icon: 'check', text: '91% saw reduced fine lines*' },
+              { icon: 'users', text: 'Clinical study: 38 women, 8 weeks' },
+              { icon: 'moon', text: 'Overnight barrier repair' },
+              { icon: 'shield', text: 'Hypoallergenic formula' }
+            ],
+            ritual: [
+              { step: '1', title: 'Double Cleanse', desc: 'Remove makeup and impurities thoroughly.' },
+              { step: '2', title: 'Layer Serum', desc: 'Apply BioSignal Facial Serum first.' },
+              { step: '3', title: 'Lock In', desc: 'Smooth night cream over face and décolletage.' },
+              { step: '4', title: 'Rest', desc: 'Sleep on silk. Let the minerals work.' }
+            ],
+            scarcity: ['Small Batch Production', 'Online Exclusive', 'Complimentary Samples']
           },
           'peeling-gel': {
             hero: {
@@ -676,7 +706,20 @@
               label: 'Texture',
               headline: 'Gentle power. Profound clarity.',
               body: 'A gel so refined it feels like water, yet so effective it transforms texture in minutes. Botanical enzymes dissolve dullness without a trace of abrasion — revealing the luminous skin that was waiting underneath.'
-            }
+            },
+            clinical: [
+              { icon: 'check', text: '100% reported smoother texture*' },
+              { icon: 'users', text: 'Panel of 35 women, 6 weeks' },
+              { icon: 'droplet', text: 'pH-balanced, non-stripping' },
+              { icon: 'shield', text: 'Suitable for sensitive skin' }
+            ],
+            ritual: [
+              { step: '1', title: 'Clean Skin', desc: 'Use on freshly cleansed, dry face.' },
+              { step: '2', title: 'Massage', desc: 'Apply in circular motions for 60 seconds.' },
+              { step: '3', title: 'Wait', desc: 'Leave on for 2–3 minutes. Feel the tingle.' },
+              { step: '4', title: 'Rinse', desc: 'Lukewarm water. Pat dry. Glow.' }
+            ],
+            scarcity: ['Weekly Ritual', 'Limited Stock', 'Online Only']
           },
           'serum': {
             hero: {
@@ -689,7 +732,20 @@
               label: 'Texture',
               headline: 'Liquid light. Molecular intention.',
               body: 'Each pearl of serum carries a payload of actives calibrated to penetrate at the cellular level. Weightless, potent, precise — it is skincare distilled to its purest, most effective form.'
-            }
+            },
+            clinical: [
+              { icon: 'check', text: '89% saw brighter complexion*' },
+              { icon: 'users', text: 'Tested on 44 women, 4 weeks' },
+              { icon: 'zap', text: 'Molecular-level penetration' },
+              { icon: 'shield', text: 'Non-comedogenic' }
+            ],
+            ritual: [
+              { step: '1', title: 'Cleanse', desc: 'Begin with perfectly clean skin.' },
+              { step: '2', title: 'Warm', desc: 'Place 2–3 drops in palm. Press together.' },
+              { step: '3', title: 'Press', desc: 'Gently press into face, neck, and chest.' },
+              { step: '4', title: 'Layer', desc: 'Follow with day or night cream.' }
+            ],
+            scarcity: ['High-Potency Formula', 'Online Exclusive', 'Complimentary Shipping']
           },
           'syringe': {
             hero: {
@@ -702,7 +758,20 @@
               label: 'The Instrument',
               headline: 'Targeted intervention. Transformative results.',
               body: 'Inspired by clinical precision, our concentrated corrector delivers actives exactly where they are needed. One weekly application — a single, deliberate moment — that rewrites the story of your skin.'
-            }
+            },
+            clinical: [
+              { icon: 'check', text: '94% saw visible lifting*' },
+              { icon: 'users', text: 'Clinical trial: 31 women, 10 weeks' },
+              { icon: 'target', text: 'Targeted precision delivery' },
+              { icon: 'shield', text: 'Ophthalmologist tested' }
+            ],
+            ritual: [
+              { step: '1', title: 'Cleanse', desc: 'Thoroughly cleanse and dry the face.' },
+              { step: '2', title: 'Dispense', desc: 'Turn dial to measured dose. One click.' },
+              { step: '3', title: 'Apply', desc: 'Dot around eyes, forehead, and smile lines.' },
+              { step: '4', title: 'Pat', desc: 'Tap gently until absorbed. Weekly ritual.' }
+            ],
+            scarcity: ['Precision Instrument', 'Limited Quantities', 'Online Exclusive']
           },
           'syringe-refill': {
             hero: {
@@ -715,7 +784,20 @@
               label: 'Origin',
               headline: 'From mountain spring to molecular mastery.',
               body: 'Every refill begins with water so pure it has never known pollution — drawn from Alpine springs at 2,000 meters. We combine this elemental purity with cutting-edge biotechnology, creating a formula that honors both earth and innovation.'
-            }
+            },
+            clinical: [
+              { icon: 'check', text: 'Same clinical-grade formula' },
+              { icon: 'users', text: 'Refill: 40% less packaging' },
+              { icon: 'leaf', text: 'Sustainable sourcing' },
+              { icon: 'shield', text: 'Zero-plastic commitment' }
+            ],
+            ritual: [
+              { step: '1', title: 'Remove', desc: 'Twist off empty cartridge from handle.' },
+              { step: '2', title: 'Insert', desc: 'Align new refill. Click into place.' },
+              { step: '3', title: 'Prime', disp: 'One pump to activate. Ready to use.' },
+              { step: '4', title: 'Continue', desc: 'Your ritual continues. Earth thanks you.' }
+            ],
+            scarcity: ['Sustainable Choice', 'Refill Only', 'Online Exclusive']
           }
         };
 
@@ -826,6 +908,82 @@
           return section;
         }
 
+        function createClinicalBar(items) {
+          var bar = document.createElement('div');
+          bar.className = 'zl-clinical-bar zl-reveal-img';
+          var icons = {
+            check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>',
+            users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+            clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
+            moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>',
+            droplet: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>',
+            zap: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+            target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+            leaf: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 7.6C11.7 4.8 15.3 3 18.5 3c.5 0 1 .05 1.5.15"/><path d="M14 20c0-3.5-2-5.5-3.5-6.5"/><path d="M11 20v4"/></svg>',
+            shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>'
+          };
+          items.forEach(function(item) {
+            var div = document.createElement('div');
+            div.className = 'zl-clinical-item';
+            div.innerHTML = (icons[item.icon] || icons.check) + '<span>' + item.text + '</span>';
+            bar.appendChild(div);
+          });
+          return bar;
+        }
+
+        function createProvenanceStrip() {
+          var strip = document.createElement('div');
+          strip.className = 'zl-provenance-strip zl-reveal-img';
+          strip.innerHTML = '<span class="zl-provenance-label">Provenance</span>' +
+            '<div class="zl-provenance-items">' +
+              '<span class="zl-provenance-item">Formulated in Andorra</span>' +
+              '<span class="zl-provenance-item">Pyrenean Mineral Water</span>' +
+              '<span class="zl-provenance-item">Hydrolyzed Collagen</span>' +
+              '<span class="zl-provenance-item">Botanical Extracts</span>' +
+            '</div>';
+          return strip;
+        }
+
+        function createRitualSection(steps) {
+          var section = document.createElement('div');
+          section.className = 'zl-ritual-section zl-reveal-img';
+          var html = '<div class="zl-ritual-header">' +
+            '<span class="zl-ritual-label">The Ritual</span>' +
+            '<h3 class="zl-ritual-title">How to apply for optimal results</h3></div>' +
+            '<div class="zl-ritual-steps">';
+          steps.forEach(function(s) {
+            html += '<div class="zl-ritual-step">' +
+              '<div class="zl-ritual-step-number">' + s.step + '</div>' +
+              '<div class="zl-ritual-step-title">' + s.title + '</div>' +
+              '<div class="zl-ritual-step-desc">' + s.desc + '</div></div>';
+          });
+          html += '</div>';
+          section.innerHTML = html;
+          return section;
+        }
+
+        function createScarcityBanner(items) {
+          var banner = document.createElement('div');
+          banner.className = 'zl-scarcity-banner';
+          var html = '';
+          items.forEach(function(item, i) {
+            html += '<span>' + item + '</span>';
+          });
+          banner.innerHTML = html;
+          return banner;
+        }
+
+        function createConsultationCTA() {
+          var cta = document.createElement('div');
+          cta.className = 'zl-consultation-cta zl-reveal-img';
+          cta.innerHTML = '<div class="zl-consultation-cta-inner">' +
+            '<h3>Not sure which product is right for you?</h3>' +
+            '<p>Book a complimentary skin analysis with our specialists. We will review your skin profile and build a personalised protocol tailored to your goals.</p>' +
+            '<a href="/#/quiz" class="zl-consultation-btn">Begin Your Skin Analysis</a>' +
+            '</div>';
+          return cta;
+        }
+
         function initParallax() {
           var heroes = document.querySelectorAll('.zl-product-hero-img');
           if (!heroes.length) return;
@@ -910,6 +1068,53 @@
             sections[2].parentNode.insertBefore(editorial, sections[2].nextSibling);
           }
 
+          // Insert clinical claim bar after hero (find it or use section[1])
+          if (data.clinical) {
+            var heroEl = main.querySelector('.zl-product-hero');
+            var target = heroEl || sections[1];
+            if (target) {
+              var clinical = createClinicalBar(data.clinical);
+              target.parentNode.insertBefore(clinical, target.nextSibling);
+            }
+          }
+
+          // Insert provenance strip after editorial
+          if (data.editorial) {
+            var edEl = main.querySelector('.zl-product-editorial');
+            var target = edEl || sections[3];
+            if (target) {
+              var prov = createProvenanceStrip();
+              target.parentNode.insertBefore(prov, target.nextSibling);
+            }
+          }
+
+          // Insert application ritual after provenance
+          if (data.ritual) {
+            var provEl = main.querySelector('.zl-provenance-strip');
+            var target = provEl || sections[4];
+            if (target) {
+              var ritual = createRitualSection(data.ritual);
+              target.parentNode.insertBefore(ritual, target.nextSibling);
+            }
+          }
+
+          // Insert scarcity banner at end of main
+          if (data.scarcity) {
+            var banner = createScarcityBanner(data.scarcity);
+            main.appendChild(banner);
+          }
+
+          // Insert consultation CTA before FAQ
+          var faqSection = null;
+          sections.forEach(function(s) {
+            var h2 = s.querySelector('h2');
+            if (h2 && h2.textContent.includes('Frequently Asked')) faqSection = s;
+          });
+          if (faqSection) {
+            var cta = createConsultationCTA();
+            faqSection.parentNode.insertBefore(cta, faqSection);
+          }
+
           // Enhance each section
           sections.forEach(function(section) {
             var h2 = section.querySelector('h2');
@@ -939,7 +1144,7 @@
           var main = document.querySelector('main');
           if (main) {
             delete main.dataset.zlProductEnhanced;
-            main.querySelectorAll('.zl-product-hero, .zl-product-editorial').forEach(function(b) { b.remove(); });
+            main.querySelectorAll('.zl-product-hero, .zl-product-editorial, .zl-clinical-bar, .zl-provenance-strip, .zl-ritual-section, .zl-scarcity-banner, .zl-consultation-cta').forEach(function(b) { b.remove(); });
           }
         }
 
@@ -1628,7 +1833,7 @@
           waContainer.style.alignItems = 'center';
 
           var waBtn = document.createElement('a');
-          waBtn.href = 'https://wa.me/+35054005198?text=Hello%20Zero%20Lines%2C%20I%27m%20interested%20in%20learning%20more%20about%20your%20protocol.';
+          waBtn.href = 'https://wa.me/35054000118?text=Hello%20Zero%20Lines%2C%20I%27m%20interested%20in%20learning%20more%20about%20your%20protocol.';
           waBtn.target = '_blank';
           waBtn.rel = 'noopener noreferrer';
           waBtn.className = 'btn-primary';
@@ -2208,6 +2413,7 @@
           ];
           var picked = demoScores[Math.floor(Math.random() * demoScores.length)];
           var mockData = {
+            demoMode: true,
             overallScore: picked.score,
             scoreLabel: picked.label,
             summary: 'Your skin shows early signs of ageing combined with mild dehydration and occasional congestion. The good news: your barrier is largely intact, which means your skin is receptive to treatment. With targeted lifestyle changes and the right bioactive formulations, visible improvement is well within reach.',
@@ -2247,6 +2453,15 @@
 
         renderResults: function(data) {
           this.showSection('zl-quiz-results');
+
+          // Demo mode banner
+          if (data.demoMode) {
+            var banner = document.getElementById('zl-quiz-demo-banner');
+            if (banner) banner.style.display = 'block';
+          } else {
+            var banner = document.getElementById('zl-quiz-demo-banner');
+            if (banner) banner.style.display = 'none';
+          }
 
           // Score
           var score = data.overallScore;
