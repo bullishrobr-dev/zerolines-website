@@ -46,23 +46,23 @@
   <div id="zl-scroll-progress"></div>
 
   <!-- Header -->
-  <header class="zl-blog-header">
+    <header class="zl-blog-header">
     <div class="zl-blog-header-inner">
       <a href="/" class="zl-blog-header-logo">ZERO LINES</a>
       <button class="zl-blog-nav-toggle" onclick="document.querySelector('.zl-blog-header-nav').classList.toggle('is-open')" aria-label="Menu">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
       <nav class="zl-blog-header-nav">
-        <a href="/">Home</a>
+        <a href="/#/science">Science</a>
+        <a href="/#/protocol">Protocol</a>
+        <a href="/#/products">Products</a>
+        <a href="/#/story">Story</a>
+        <a href="/#/quiz">Analyzer</a>
+        <a href="/#/testimonials">Testimonials</a>
+        <a href="/#/contact">Contact</a>
         <a href="/blog/" class="active">Journal</a>
-        <a href="/blog/category-science.html">Science</a>
-        <a href="/blog/category-routine.html">Routine</a>
-        <a href="/blog/category-ingredients.html">Ingredients</a>
-        <a href="/blog/category-lifestyle.html">Lifestyle</a>
-        <a href="/blog/category-brand-story.html">Brand Story</a>
-        <input type="text" class="zl-blog-search" placeholder="Search articles..." aria-label="Search articles" oninput="handleSearch(this.value)">
-        <a href="/#/quiz" class="zl-blog-header-cta">Analyse Your Skin</a>
       </nav>
+      <a href="/#/quiz" class="zl-blog-header-cta">Analyse Your Skin</a>
     </div>
   </header>
 
@@ -78,6 +78,10 @@
       <button class="zl-blog-category-btn" onclick="filterPosts('routine')">Routine</button>
       <button class="zl-blog-category-btn" onclick="filterPosts('lifestyle')">Lifestyle</button>
       <button class="zl-blog-category-btn" onclick="filterPosts('brand')">Brand Story</button>
+    </div>
+    <div class="zl-blog-search-bar">
+      <svg class="zl-blog-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" class="zl-blog-search-input" placeholder="Search articles..." aria-label="Search articles" oninput="handleSearch(this.value)">
     </div>
   </section>
 
@@ -96,7 +100,10 @@
   <!-- Most Read -->
   <section class="zl-blog-most-read">
     <div class="zl-blog-section-header">
-      <h2 class="zl-blog-section-title">Most Read</h2>
+      <div>
+        <p class="zl-blog-section-eyebrow">Trending Now</p>
+        <h2 class="zl-blog-section-title">Most Read</h2>
+      </div>
     </div>
     <div class="zl-blog-landing-grid zl-blog-landing-grid--compact">
       <a href="complete-guide-skin-aging.html" class="zl-blog-landing-card" data-category="science">
@@ -359,7 +366,10 @@
   <!-- Editor's Pick -->
   <section class="zl-blog-editors-pick">
     <div class="zl-blog-section-header">
-      <h2 class="zl-blog-section-title">Editor's Pick</h2>
+      <div>
+        <p class="zl-blog-section-eyebrow">Curated by Our Team</p>
+        <h2 class="zl-blog-section-title">Editor's Pick</h2>
+      </div>
     </div>
     <div class="zl-blog-landing-grid zl-blog-landing-grid--compact">
       <a href="collagen-decline-biological-clock.html" class="zl-blog-landing-card" data-category="science">
