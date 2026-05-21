@@ -1174,20 +1174,9 @@
           if (typeof initRevealObserver === 'function') initRevealObserver();
         }
 
-        function onProductNavigate() {
-          cleanup();
-          forceScrollTop();
-          if (isProductPage()) {
-            zlInjectTimer = setTimeout(runEnhancements, 800);
-          }
-        }
-
-        // Hash-based navigation
-        window.addEventListener('hashchange', function() {
-          onProductNavigate();
-        });
-
-        // Intercept product link clicks (React Router <Link> compatible)
+        // Force full page reload on any product-to-product navigation.
+        // This is the only bulletproof way to guarantee correct photos,
+        // clean animation state, and scroll-to-top on every transition.
         document.addEventListener('click', function(e) {
           var a = e.target.closest('a');
           if (!a) return;
@@ -1195,14 +1184,18 @@
           var match = href.match(/#?\/?products\/([^\/]+)/);
           if (!match) return;
           var targetSlug = match[1];
-          if (targetSlug && targetSlug !== getProductSlug()) {
-            onProductNavigate();
+          var currentSlug = getProductSlug();
+          if (targetSlug && targetSlug !== currentSlug) {
+            e.preventDefault();
+            e.stopPropagation();
+            window.location.href = window.location.protocol + '//' + window.location.host + window.location.pathname + '#/products/' + targetSlug;
+            window.location.reload();
           }
         });
 
-        // Initial load
+        // Initial load — single injection, no retries, no polling
         if (isProductPage()) {
-          zlInjectTimer = setTimeout(runEnhancements, 800);
+          runEnhancements();
         }
       })();
     </script>
