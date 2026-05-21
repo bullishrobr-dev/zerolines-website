@@ -1042,7 +1042,8 @@
         }
 
         var zlPendingTimeouts = [];
-        var zlLastSlug = null;
+        var zlCurrentSlug = null;
+        var zlScrollLock = 0;
 
         function cleanup() {
           zlPendingTimeouts.forEach(clearTimeout);
@@ -1052,6 +1053,12 @@
             delete main.dataset.zlProductEnhanced;
             main.querySelectorAll('.zl-product-hero, .zl-product-editorial, .zl-clinical-bar, .zl-provenance-strip, .zl-ritual-section, .zl-scarcity-banner, .zl-consultation-cta').forEach(function(b) { b.remove(); });
           }
+        }
+
+        function forceScrollTop() {
+          window.scrollTo(0, 0);
+          if (document.documentElement) document.documentElement.scrollTop = 0;
+          if (document.body) document.body.scrollTop = 0;
         }
 
         function runEnhancements() {
@@ -1069,13 +1076,11 @@
           // Already enhanced for this exact slug — nothing to do
           if (main.dataset.zlProductEnhanced === slug) return;
 
-          // If enhanced for a different slug, strip old injections first
-          if (main.dataset.zlProductEnhanced) {
-            main.querySelectorAll('.zl-product-hero, .zl-product-editorial, .zl-clinical-bar, .zl-provenance-strip, .zl-ritual-section, .zl-scarcity-banner, .zl-consultation-cta').forEach(function(b) { b.remove(); });
-          }
+          // Strip any stale injections first (from a previous product)
+          main.querySelectorAll('.zl-product-hero, .zl-product-editorial, .zl-clinical-bar, .zl-provenance-strip, .zl-ritual-section, .zl-scarcity-banner, .zl-consultation-cta').forEach(function(b) { b.remove(); });
 
           main.dataset.zlProductEnhanced = slug;
-          zlLastSlug = slug;
+          zlCurrentSlug = slug;
 
           // Insert cinematic hero after first section
           if (data.hero && sections[0]) {
@@ -1160,8 +1165,8 @@
           initParallax();
           if (typeof initRevealObserver === 'function') initRevealObserver();
 
-          // Force scroll to top now that content is fully injected
-          window.scrollTo({top: 0, behavior: 'instant'});
+          // Scroll to top after injection completes
+          forceScrollTop();
         }
 
         function schedule() {
@@ -1169,36 +1174,58 @@
             cleanup();
             return;
           }
-          zlPendingTimeouts.push(setTimeout(runEnhancements, 600));
-          zlPendingTimeouts.push(setTimeout(runEnhancements, 1400));
-          zlPendingTimeouts.push(setTimeout(runEnhancements, 2600));
+          zlPendingTimeouts.push(setTimeout(runEnhancements, 300));
+          zlPendingTimeouts.push(setTimeout(runEnhancements, 700));
+          zlPendingTimeouts.push(setTimeout(runEnhancements, 1300));
+          zlPendingTimeouts.push(setTimeout(runEnhancements, 2100));
         }
 
-        // Catch clicks on product stepper / nav links BEFORE the browser navigates
+        // === PRIMARY MECHANISM: poll URL every 200ms ===
+        // This catches navigation via hashchange, pushState, Link clicks,
+        // back/forward buttons, and any other method React Router might use.
+        function zlSync() {
+          var slug = getProductSlug();
+          if (slug !== zlCurrentSlug) {
+            // Route changed — wipe everything and start fresh
+            cleanup();
+            zlCurrentSlug = slug;
+            forceScrollTop();
+            zlScrollLock = 8; // keep forcing scroll for 8 * 200ms = 1.6s
+            if (slug) schedule();
+          }
+          if (zlScrollLock > 0) {
+            zlScrollLock--;
+            forceScrollTop();
+          }
+        }
+        setInterval(zlSync, 200);
+
+        // === SECONDARY: immediate response on hashchange ===
+        window.addEventListener('hashchange', function() {
+          cleanup();
+          forceScrollTop();
+          zlScrollLock = 8;
+          schedule();
+        });
+
+        // === TERTIARY: intercept ANY click that looks like a product link ===
         document.addEventListener('click', function(e) {
-          var a = e.target.closest('a[href^="#/products/"]');
+          var a = e.target.closest('a');
           if (!a) return;
           var href = a.getAttribute('href') || '';
-          var targetSlug = href.replace('#/products/', '').replace(/\/$/, '');
-          var currentSlug = getProductSlug();
-          // Only act if actually changing products
-          if (targetSlug && targetSlug !== currentSlug) {
+          // Match both #/products/xxx and /products/xxx patterns
+          var match = href.match(/#?\/?products\/([^\/]+)/);
+          if (!match) return;
+          var targetSlug = match[1];
+          if (targetSlug && targetSlug !== zlCurrentSlug) {
             cleanup();
-            window.scrollTo({top: 0, behavior: 'instant'});
+            forceScrollTop();
+            zlScrollLock = 8;
           }
         });
 
-        window.addEventListener('hashchange', function() {
-          cleanup();
-          window.scrollTo({top: 0, behavior: 'instant'});
-          schedule();
-        });
-
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', schedule);
-        } else {
-          schedule();
-        }
+        zlCurrentSlug = getProductSlug();
+        schedule();
       })();
     </script>
 
