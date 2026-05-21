@@ -1167,16 +1167,41 @@
             }
           });
 
-          // Parallax is idempotent (guarded by _zlParallaxActive flag)
-          initParallax();
-          // Reveal observer is handled by global initAnimations at 900ms after hashchange,
-          // but call it here too as a fallback for direct loads.
-          if (typeof initRevealObserver === 'function') initRevealObserver();
+          // Note: initAnimations() is called after this function to set up
+          // reveal observers, parallax, magnetic buttons, etc. We do NOT
+          // call them here to avoid conflicts with the global animation init.
         }
 
-        // Force full page reload on any product-to-product navigation.
-        // This is the only bulletproof way to guarantee correct photos,
-        // clean animation state, and scroll-to-top on every transition.
+        // === ROUTE DETECTION + INJECTION CONTROL ===
+        // React Router HashRouter uses history.pushState() which does NOT
+        // fire hashchange. We poll the URL every 300ms to detect ALL route
+        // changes (Link clicks, back/forward, manual URL edits).
+        var zlLastSlug = null;
+
+        function zlInjectAndAnimate() {
+          runEnhancements();
+          // Re-init global animations since hashchange won't fire with React Router
+          if (typeof initAnimations === 'function') initAnimations();
+        }
+
+        setInterval(function() {
+          var slug = getProductSlug();
+          if (slug !== zlLastSlug) {
+            zlLastSlug = slug;
+            cleanup();
+            forceScrollTop();
+            // Page transition wipe (same visual as hashchange handler)
+            if (typeof triggerPageTransition === 'function') {
+              triggerPageTransition(function() { window.scrollTo(0, 0); });
+            }
+            if (slug) {
+              zlInjectTimer = setTimeout(zlInjectAndAnimate, 1000);
+            }
+          }
+        }, 300);
+
+        // Fallback: intercept clicks and force early cleanup + scroll
+        // (React Router may beat us to the render, but this gives instant feedback)
         document.addEventListener('click', function(e) {
           var a = e.target.closest('a');
           if (!a) return;
@@ -1184,18 +1209,16 @@
           var match = href.match(/#?\/?products\/([^\/]+)/);
           if (!match) return;
           var targetSlug = match[1];
-          var currentSlug = getProductSlug();
-          if (targetSlug && targetSlug !== currentSlug) {
-            e.preventDefault();
-            e.stopPropagation();
-            window.location.href = window.location.protocol + '//' + window.location.host + window.location.pathname + '#/products/' + targetSlug;
-            window.location.reload();
+          if (targetSlug && targetSlug !== zlLastSlug) {
+            cleanup();
+            forceScrollTop();
           }
         });
 
-        // Initial load — single injection, no retries, no polling
-        if (isProductPage()) {
-          runEnhancements();
+        // Initial load
+        zlLastSlug = getProductSlug();
+        if (zlLastSlug) {
+          zlInjectTimer = setTimeout(zlInjectAndAnimate, 1200);
         }
       })();
     </script>
