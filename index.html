@@ -1588,8 +1588,10 @@
       // 9. PARALLAX HERO + AMBIENT DRIFT
       // ============================================================
       function initParallax() {
+        if (window._zlHeroParallaxActive) return;
         var heroBg = document.querySelector('section img[src*="atmosphere-hero"]');
         if (!heroBg) return;
+        window._zlHeroParallaxActive = true;
         var heroSection = heroBg.closest('section');
         if (!heroSection) return;
         heroBg.classList.add('zl-parallax-bg');
@@ -1978,6 +1980,8 @@
       // 15. BUTTON RIPPLE EFFECT
       // ============================================================
       function initButtonRipple() {
+        if (window._zlButtonRippleActive) return;
+        window._zlButtonRippleActive = true;
         document.addEventListener('click', function(e) {
           var btn = e.target.closest('.btn-primary, button[type="submit"]');
           if (!btn) return;
