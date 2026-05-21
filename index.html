@@ -1044,8 +1044,7 @@
         }
 
         // === ROUTE DETECTION + INJECTION CONTROL ===
-        // React Router HashRouter uses history.pushState() which does NOT
-        // fire hashchange. We poll the URL to detect ALL route changes.
+        var zlInjectTimer = null;
         var zlLastSlug = null;
         var zlRetryCount = 0;
 
@@ -1077,9 +1076,9 @@
 
           var sections = main.querySelectorAll('section');
           if (sections.length < 6) {
-            if (zlRetryCount < 15) {
+            if (zlRetryCount < 100) {
               zlRetryCount++;
-              zlInjectTimer = setTimeout(runEnhancements, 200);
+              zlInjectTimer = setTimeout(runEnhancements, 100);
             }
             return;
           }
@@ -1091,19 +1090,16 @@
 
           main.dataset.zlProductEnhanced = slug;
 
-          // Insert cinematic hero after first section
           if (data.hero && sections[0]) {
             var hero = createHeroSection(data.hero);
             sections[0].parentNode.insertBefore(hero, sections[0].nextSibling);
           }
 
-          // Insert editorial split after third section
           if (data.editorial && sections[2]) {
             var editorial = createEditorialSplit(data.editorial, false);
             sections[2].parentNode.insertBefore(editorial, sections[2].nextSibling);
           }
 
-          // Insert clinical claim bar after hero (find it or use section[1])
           if (data.clinical) {
             var heroEl = main.querySelector('.zl-product-hero');
             var target = heroEl || sections[1];
@@ -1113,7 +1109,6 @@
             }
           }
 
-          // Insert provenance strip after editorial
           if (data.editorial) {
             var edEl = main.querySelector('.zl-product-editorial');
             var target = edEl || sections[3];
@@ -1123,7 +1118,6 @@
             }
           }
 
-          // Insert application ritual after provenance
           if (data.ritual) {
             var provEl = main.querySelector('.zl-provenance-strip');
             var target = provEl || sections[4];
@@ -1133,13 +1127,11 @@
             }
           }
 
-          // Insert scarcity banner at end of main
           if (data.scarcity) {
             var banner = createScarcityBanner(data.scarcity);
             main.appendChild(banner);
           }
 
-          // Insert consultation CTA before FAQ
           var faqSection = null;
           sections.forEach(function(s) {
             var h2 = s.querySelector('h2');
@@ -1150,28 +1142,17 @@
             faqSection.parentNode.insertBefore(cta, faqSection);
           }
 
-          // Enhance each section
           sections.forEach(function(section) {
             var h2 = section.querySelector('h2');
             if (!h2) return;
             var text = h2.textContent;
-
-            if (text.includes('Frequently Asked')) {
-              enhanceFAQ(section);
-            }
-            if (text.includes('How it works') || text.includes('Key ingredient')) {
-              enhanceIngredients(section);
-            }
+            if (text.includes('Frequently Asked')) enhanceFAQ(section);
+            if (text.includes('How it works') || text.includes('Key ingredient')) enhanceIngredients(section);
             if (text.includes('shield your skin') || text.includes('renew while you') ||
                 text.includes('begin your skin') || text.includes('begin your daily') ||
                 text.includes('your key to the') || text.includes('continue your') ||
-                text.includes('continue your correction')) {
-              enhanceCTA(section);
-            }
+                text.includes('continue your correction')) enhanceCTA(section);
           });
-
-          // Note: initAnimations() is called after this function to set up
-          // reveal observers, parallax, magnetic buttons, etc.
         }
 
         function zlInjectAndAnimate() {
@@ -1187,14 +1168,14 @@
             cleanup();
             forceScrollTop();
             if (slug) {
-              zlInjectTimer = setTimeout(zlInjectAndAnimate, 300);
+              zlInjectTimer = setTimeout(zlInjectAndAnimate, 800);
             } else {
-              setTimeout(function() { if (typeof initAnimations === 'function') initAnimations(); }, 300);
+              setTimeout(function() { if (typeof initAnimations === 'function') initAnimations(); }, 800);
             }
           }
         }, 200);
 
-        // Click fallback: instant cleanup + scroll before React renders
+        // Click fallback: instant scroll feedback
         document.addEventListener('click', function(e) {
           var a = e.target.closest('a');
           if (!a) return;
@@ -1203,7 +1184,6 @@
           if (!match) return;
           var targetSlug = match[1];
           if (targetSlug && targetSlug !== zlLastSlug) {
-            cleanup();
             forceScrollTop();
           }
         });
