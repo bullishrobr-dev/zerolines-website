@@ -749,7 +749,7 @@
           },
           'syringe': {
             hero: {
-              src: './assets/hero-syringe-precision.jpg',
+              src: './assets/hero-syringe-beforeafter.jpg',
               label: 'The Correction',
               title: 'Precision, measured in microns'
             },
@@ -1041,6 +1041,19 @@
           section.classList.add('zl-product-cta-enhanced');
         }
 
+        var zlPendingTimeouts = [];
+        var zlLastSlug = null;
+
+        function cleanup() {
+          zlPendingTimeouts.forEach(clearTimeout);
+          zlPendingTimeouts = [];
+          var main = document.querySelector('main');
+          if (main) {
+            delete main.dataset.zlProductEnhanced;
+            main.querySelectorAll('.zl-product-hero, .zl-product-editorial, .zl-clinical-bar, .zl-provenance-strip, .zl-ritual-section, .zl-scarcity-banner, .zl-consultation-cta').forEach(function(b) { b.remove(); });
+          }
+        }
+
         function runEnhancements() {
           if (!isProductPage()) return;
           var slug = getProductSlug();
@@ -1053,8 +1066,16 @@
           var sections = main.querySelectorAll('section');
           if (sections.length < 6) return;
 
-          if (main.dataset.zlProductEnhanced) return;
-          main.dataset.zlProductEnhanced = 'true';
+          // Already enhanced for this exact slug — nothing to do
+          if (main.dataset.zlProductEnhanced === slug) return;
+
+          // If enhanced for a different slug, strip old injections first
+          if (main.dataset.zlProductEnhanced) {
+            main.querySelectorAll('.zl-product-hero, .zl-product-editorial, .zl-clinical-bar, .zl-provenance-strip, .zl-ritual-section, .zl-scarcity-banner, .zl-consultation-cta').forEach(function(b) { b.remove(); });
+          }
+
+          main.dataset.zlProductEnhanced = slug;
+          zlLastSlug = slug;
 
           // Insert cinematic hero after first section
           if (data.hero && sections[0]) {
@@ -1138,14 +1159,9 @@
           // Init parallax and reveal observer
           initParallax();
           if (typeof initRevealObserver === 'function') initRevealObserver();
-        }
 
-        function cleanup() {
-          var main = document.querySelector('main');
-          if (main) {
-            delete main.dataset.zlProductEnhanced;
-            main.querySelectorAll('.zl-product-hero, .zl-product-editorial, .zl-clinical-bar, .zl-provenance-strip, .zl-ritual-section, .zl-scarcity-banner, .zl-consultation-cta').forEach(function(b) { b.remove(); });
-          }
+          // Force scroll to top now that content is fully injected
+          window.scrollTo({top: 0, behavior: 'instant'});
         }
 
         function schedule() {
@@ -1153,10 +1169,24 @@
             cleanup();
             return;
           }
-          setTimeout(runEnhancements, 1200);
-          setTimeout(runEnhancements, 2500);
-          setTimeout(runEnhancements, 4000);
+          zlPendingTimeouts.push(setTimeout(runEnhancements, 600));
+          zlPendingTimeouts.push(setTimeout(runEnhancements, 1400));
+          zlPendingTimeouts.push(setTimeout(runEnhancements, 2600));
         }
+
+        // Catch clicks on product stepper / nav links BEFORE the browser navigates
+        document.addEventListener('click', function(e) {
+          var a = e.target.closest('a[href^="#/products/"]');
+          if (!a) return;
+          var href = a.getAttribute('href') || '';
+          var targetSlug = href.replace('#/products/', '').replace(/\/$/, '');
+          var currentSlug = getProductSlug();
+          // Only act if actually changing products
+          if (targetSlug && targetSlug !== currentSlug) {
+            cleanup();
+            window.scrollTo({top: 0, behavior: 'instant'});
+          }
+        });
 
         window.addEventListener('hashchange', function() {
           cleanup();
