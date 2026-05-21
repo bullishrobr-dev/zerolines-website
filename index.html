@@ -1043,13 +1043,15 @@
           section.classList.add('zl-product-cta-enhanced');
         }
 
-        var zlInjectTimer = null;
+        // === ROUTE DETECTION + INJECTION CONTROL ===
+        // React Router HashRouter uses history.pushState() which does NOT
+        // fire hashchange. We poll the URL to detect ALL route changes.
+        var zlLastSlug = null;
+        var zlRetryCount = 0;
 
         function cleanup() {
-          if (zlInjectTimer) {
-            clearTimeout(zlInjectTimer);
-            zlInjectTimer = null;
-          }
+          if (zlInjectTimer) { clearTimeout(zlInjectTimer); zlInjectTimer = null; }
+          zlRetryCount = 0;
           var main = document.querySelector('main');
           if (main) {
             delete main.dataset.zlProductEnhanced;
@@ -1075,15 +1077,16 @@
 
           var sections = main.querySelectorAll('section');
           if (sections.length < 6) {
-            // React may still be rendering — retry once
-            zlInjectTimer = setTimeout(runEnhancements, 1000);
+            if (zlRetryCount < 15) {
+              zlRetryCount++;
+              zlInjectTimer = setTimeout(runEnhancements, 200);
+            }
             return;
           }
+          zlRetryCount = 0;
 
-          // Already enhanced for this exact slug — nothing to do
           if (main.dataset.zlProductEnhanced === slug) return;
 
-          // Strip any stale injections first (from a previous product)
           main.querySelectorAll('.zl-product-hero, .zl-product-editorial, .zl-clinical-bar, .zl-provenance-strip, .zl-ritual-section, .zl-scarcity-banner, .zl-consultation-cta').forEach(function(b) { b.remove(); });
 
           main.dataset.zlProductEnhanced = slug;
@@ -1168,40 +1171,30 @@
           });
 
           // Note: initAnimations() is called after this function to set up
-          // reveal observers, parallax, magnetic buttons, etc. We do NOT
-          // call them here to avoid conflicts with the global animation init.
+          // reveal observers, parallax, magnetic buttons, etc.
         }
-
-        // === ROUTE DETECTION + INJECTION CONTROL ===
-        // React Router HashRouter uses history.pushState() which does NOT
-        // fire hashchange. We poll the URL every 300ms to detect ALL route
-        // changes (Link clicks, back/forward, manual URL edits).
-        var zlLastSlug = null;
 
         function zlInjectAndAnimate() {
           runEnhancements();
-          // Re-init global animations since hashchange won't fire with React Router
           if (typeof initAnimations === 'function') initAnimations();
         }
 
+        // Poll every 200ms for route changes
         setInterval(function() {
           var slug = getProductSlug();
           if (slug !== zlLastSlug) {
             zlLastSlug = slug;
             cleanup();
             forceScrollTop();
-            // Page transition wipe (same visual as hashchange handler)
-            if (typeof triggerPageTransition === 'function') {
-              triggerPageTransition(function() { window.scrollTo(0, 0); });
-            }
             if (slug) {
-              zlInjectTimer = setTimeout(zlInjectAndAnimate, 1000);
+              zlInjectTimer = setTimeout(zlInjectAndAnimate, 300);
+            } else {
+              setTimeout(function() { if (typeof initAnimations === 'function') initAnimations(); }, 300);
             }
           }
-        }, 300);
+        }, 200);
 
-        // Fallback: intercept clicks and force early cleanup + scroll
-        // (React Router may beat us to the render, but this gives instant feedback)
+        // Click fallback: instant cleanup + scroll before React renders
         document.addEventListener('click', function(e) {
           var a = e.target.closest('a');
           if (!a) return;
@@ -1218,7 +1211,7 @@
         // Initial load
         zlLastSlug = getProductSlug();
         if (zlLastSlug) {
-          zlInjectTimer = setTimeout(zlInjectAndAnimate, 1200);
+          zlInjectTimer = setTimeout(zlInjectAndAnimate, 800);
         }
       })();
     </script>
