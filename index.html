@@ -985,11 +985,13 @@
         }
 
         function initParallax() {
+          if (window._zlParallaxActive) return;
           var heroes = document.querySelectorAll('.zl-product-hero-img');
           if (!heroes.length) return;
+          window._zlParallaxActive = true;
 
           function update() {
-            heroes.forEach(function(img) {
+            document.querySelectorAll('.zl-product-hero-img').forEach(function(img) {
               var parent = img.closest('.zl-product-hero');
               if (!parent) return;
               var rect = parent.getBoundingClientRect();
@@ -1041,13 +1043,13 @@
           section.classList.add('zl-product-cta-enhanced');
         }
 
-        var zlPendingTimeouts = [];
-        var zlCurrentSlug = null;
-        var zlScrollLock = 0;
+        var zlInjectTimer = null;
 
         function cleanup() {
-          zlPendingTimeouts.forEach(clearTimeout);
-          zlPendingTimeouts = [];
+          if (zlInjectTimer) {
+            clearTimeout(zlInjectTimer);
+            zlInjectTimer = null;
+          }
           var main = document.querySelector('main');
           if (main) {
             delete main.dataset.zlProductEnhanced;
@@ -1062,6 +1064,7 @@
         }
 
         function runEnhancements() {
+          zlInjectTimer = null;
           if (!isProductPage()) return;
           var slug = getProductSlug();
           var data = productImageMap[slug];
@@ -1071,7 +1074,11 @@
           if (!main) return;
 
           var sections = main.querySelectorAll('section');
-          if (sections.length < 6) return;
+          if (sections.length < 6) {
+            // React may still be rendering — retry once
+            zlInjectTimer = setTimeout(runEnhancements, 1000);
+            return;
+          }
 
           // Already enhanced for this exact slug — nothing to do
           if (main.dataset.zlProductEnhanced === slug) return;
@@ -1080,7 +1087,6 @@
           main.querySelectorAll('.zl-product-hero, .zl-product-editorial, .zl-clinical-bar, .zl-provenance-strip, .zl-ritual-section, .zl-scarcity-banner, .zl-consultation-cta').forEach(function(b) { b.remove(); });
 
           main.dataset.zlProductEnhanced = slug;
-          zlCurrentSlug = slug;
 
           // Insert cinematic hero after first section
           if (data.hero && sections[0]) {
@@ -1161,71 +1167,43 @@
             }
           });
 
-          // Init parallax and reveal observer
+          // Parallax is idempotent (guarded by _zlParallaxActive flag)
           initParallax();
+          // Reveal observer is handled by global initAnimations at 900ms after hashchange,
+          // but call it here too as a fallback for direct loads.
           if (typeof initRevealObserver === 'function') initRevealObserver();
-
-          // Scroll to top after injection completes
-          forceScrollTop();
         }
 
-        function schedule() {
-          if (!isProductPage()) {
-            cleanup();
-            return;
-          }
-          zlPendingTimeouts.push(setTimeout(runEnhancements, 300));
-          zlPendingTimeouts.push(setTimeout(runEnhancements, 700));
-          zlPendingTimeouts.push(setTimeout(runEnhancements, 1300));
-          zlPendingTimeouts.push(setTimeout(runEnhancements, 2100));
-        }
-
-        // === PRIMARY MECHANISM: poll URL every 200ms ===
-        // This catches navigation via hashchange, pushState, Link clicks,
-        // back/forward buttons, and any other method React Router might use.
-        function zlSync() {
-          var slug = getProductSlug();
-          if (slug !== zlCurrentSlug) {
-            // Route changed — wipe everything and start fresh
-            cleanup();
-            zlCurrentSlug = slug;
-            forceScrollTop();
-            zlScrollLock = 8; // keep forcing scroll for 8 * 200ms = 1.6s
-            if (slug) schedule();
-          }
-          if (zlScrollLock > 0) {
-            zlScrollLock--;
-            forceScrollTop();
-          }
-        }
-        setInterval(zlSync, 200);
-
-        // === SECONDARY: immediate response on hashchange ===
-        window.addEventListener('hashchange', function() {
+        function onProductNavigate() {
           cleanup();
           forceScrollTop();
-          zlScrollLock = 8;
-          schedule();
+          if (isProductPage()) {
+            zlInjectTimer = setTimeout(runEnhancements, 800);
+          }
+        }
+
+        // Hash-based navigation
+        window.addEventListener('hashchange', function() {
+          onProductNavigate();
         });
 
-        // === TERTIARY: intercept ANY click that looks like a product link ===
+        // Intercept product link clicks (React Router <Link> compatible)
         document.addEventListener('click', function(e) {
           var a = e.target.closest('a');
           if (!a) return;
           var href = a.getAttribute('href') || '';
-          // Match both #/products/xxx and /products/xxx patterns
           var match = href.match(/#?\/?products\/([^\/]+)/);
           if (!match) return;
           var targetSlug = match[1];
-          if (targetSlug && targetSlug !== zlCurrentSlug) {
-            cleanup();
-            forceScrollTop();
-            zlScrollLock = 8;
+          if (targetSlug && targetSlug !== getProductSlug()) {
+            onProductNavigate();
           }
         });
 
-        zlCurrentSlug = getProductSlug();
-        schedule();
+        // Initial load
+        if (isProductPage()) {
+          zlInjectTimer = setTimeout(runEnhancements, 800);
+        }
       })();
     </script>
 
