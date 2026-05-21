@@ -697,7 +697,7 @@
           },
           'peeling-gel': {
             hero: {
-              src: './assets/hero-mirror-ritual.jpg',
+              src: './assets/hero-peeling-facial.jpg',
               label: 'The Renewal',
               title: 'Reveal what lies beneath'
             },
@@ -749,7 +749,7 @@
           },
           'syringe': {
             hero: {
-              src: './assets/hero-serum-dropper.jpg',
+              src: './assets/hero-syringe-precision.jpg',
               label: 'The Correction',
               title: 'Precision, measured in microns'
             },
@@ -1160,6 +1160,7 @@
 
         window.addEventListener('hashchange', function() {
           cleanup();
+          window.scrollTo({top: 0, behavior: 'instant'});
           schedule();
         });
 

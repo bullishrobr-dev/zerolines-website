@@ -514,6 +514,11 @@ nav,
     object-position: center top !important;
   }
   
+  /* Night cream hero: shift down to show more face */
+  img[src*="night-sleeping-woman"] {
+    object-position: center 30% !important;
+  }
+  
   /* Testimonial image fix */
   section img[src*="hero-model"] {
     object-position: center 30% !important;
