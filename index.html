@@ -1063,7 +1063,11 @@
         }
 
         function forceScrollTop() {
-          window.scrollTo(0, 0);
+          if (window.zlLenis) {
+            window.zlLenis.scrollTo(0, { immediate: true });
+          } else {
+            window.scrollTo(0, 0);
+          }
           if (document.documentElement) document.documentElement.scrollTop = 0;
           if (document.body) document.body.scrollTop = 0;
         }
@@ -1161,7 +1165,10 @@
 
         function zlInjectAndAnimate() {
           runEnhancements();
-          if (typeof initAnimations === 'function') initAnimations();
+          if (typeof initAnimations === 'function') {
+            initAnimations();
+            window._zlAnimationsInitialized = true;
+          }
         }
 
         // Wait for React to finish re-rendering before injecting.
@@ -1370,23 +1377,32 @@
           entries.forEach(function(entry) {
             if (entry.isIntersecting) {
               entry.target.classList.add('is-visible');
-              // Optionally unobserve after first reveal:
-              // revealObserver.unobserve(entry.target);
             }
           });
         }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
 
-        // Observe image reveal containers
-        document.querySelectorAll('.zl-reveal-img').forEach(function(el) {
-          revealObserver.observe(el);
+        var selectors = ['.zl-reveal-img', '.zl-reveal-text', '.zl-fade-up'];
+        selectors.forEach(function(sel) {
+          document.querySelectorAll(sel).forEach(function(el) {
+            revealObserver.observe(el);
+          });
         });
-        // Observe text reveal containers
-        document.querySelectorAll('.zl-reveal-text').forEach(function(el) {
-          revealObserver.observe(el);
-        });
-        // Observe fade-up elements
-        document.querySelectorAll('.zl-fade-up').forEach(function(el) {
-          revealObserver.observe(el);
+
+        // Critical fallback: some browsers don't fire IntersectionObserver
+        // for elements already in viewport. Force-reveal them after paint.
+        requestAnimationFrame(function() {
+          setTimeout(function() {
+            var vh = window.innerHeight || document.documentElement.clientHeight;
+            selectors.forEach(function(sel) {
+              document.querySelectorAll(sel).forEach(function(el) {
+                if (el.classList.contains('is-visible')) return;
+                var rect = el.getBoundingClientRect();
+                if (rect.top < vh && rect.bottom > 0) {
+                  el.classList.add('is-visible');
+                }
+              });
+            });
+          }, 100);
         });
       }
 
@@ -1642,9 +1658,12 @@
             parallaxTicking = true;
           }
         }, { passive: true });
-        // Also update continuously for drift even when not scrolling
+        // Also update continuously for drift, but ONLY when hero is near viewport
         function driftLoop() {
-          if (!parallaxTicking) {
+          var rect = heroSection.getBoundingClientRect();
+          var vh = window.innerHeight || document.documentElement.clientHeight;
+          var isNearViewport = rect.top < vh && rect.bottom > -vh;
+          if (isNearViewport && !parallaxTicking) {
             parallaxTicking = true;
             requestAnimationFrame(function() {
               updateParallax();
@@ -1678,19 +1697,28 @@
         }, 500);
       }
 
-      // Run after React renders
+      // Run after React renders (only if not already run by product injection)
+      function zlRunInitialAnimations() {
+        if (window._zlAnimationsInitialized) return;
+        initAnimations();
+        window._zlAnimationsInitialized = true;
+      }
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
-          setTimeout(initAnimations, 1500);
+          setTimeout(zlRunInitialAnimations, 1500);
         });
       } else {
-        setTimeout(initAnimations, 1500);
+        setTimeout(zlRunInitialAnimations, 1500);
       }
 
       // ============================================================
       // 12. ANALYZER NAV LINK INJECTION
       // ============================================================
+      var _zlLastNavUpdate = 0;
       function addAnalyzerNav() {
+        var now = Date.now();
+        if (now - _zlLastNavUpdate < 1000) return;
+        _zlLastNavUpdate = now;
         var isQuiz = window.zlIsQuizRoute();
         
         // Helper: inject Analyzer link after Story in a container
@@ -1800,7 +1828,11 @@
       // 12b. ANALYZER PROMO SECTION (homepage: after "erasing time"
       // section; other non-quiz pages: before footer)
       // ============================================================
+      var _zlLastPromoUpdate = 0;
       function addAnalyzerPromo() {
+        var now = Date.now();
+        if (now - _zlLastPromoUpdate < 1000) return;
+        _zlLastPromoUpdate = now;
         var isQuiz = window.zlIsQuizRoute();
         var promo = document.getElementById('zl-analyzer-promo');
         
@@ -2647,7 +2679,11 @@
       // ============================================================
       // 18. INITIALIZATION
       // ============================================================
+      var _zlAnimLastRun = 0;
       function initAnimations() {
+        var now = Date.now();
+        if (now - _zlAnimLastRun < 500) return; // throttle rapid re-calls
+        _zlAnimLastRun = now;
         wrapImagesForReveal();
         wrapTextForReveal();
         initRevealObserver();
@@ -2666,8 +2702,16 @@
 
       // Re-init on hash change (back/forward buttons, manual URL changes)
       window.addEventListener('hashchange', function(e) {
-        window.scrollTo(0, 0);
-        setTimeout(initAnimations, 600);
+        if (window.zlLenis) {
+          window.zlLenis.scrollTo(0, { immediate: true });
+        } else {
+          window.scrollTo(0, 0);
+        }
+        window._zlAnimationsInitialized = false;
+        setTimeout(function() {
+          initAnimations();
+          window._zlAnimationsInitialized = true;
+        }, 600);
       });
 
       // ============================================================
