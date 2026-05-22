@@ -2686,7 +2686,6 @@
         _zlAnimLastRun = now;
         wrapImagesForReveal();
         wrapTextForReveal();
-        initRevealObserver();
         initMagneticButtons();
         initParallax();
         initHeroEntrance();
@@ -2697,7 +2696,8 @@
         initCursorLabels();
         initButtonRipple();
         initAmbientBubbles();
-        initStaggeredGrids();
+        initStaggeredGrids();   // MUST run before initRevealObserver()
+        initRevealObserver();   // so newly-added .zl-fade-up elements get observed
       }
 
       // Re-init on hash change (back/forward buttons, manual URL changes)
@@ -2938,6 +2938,22 @@
         setTimeout(initConversionElements, 800);
       });
 
+    })();
+    </script>
+    <!-- Force full page reload on product navigation — eliminates all SPA race conditions -->
+    <script>
+    (function() {
+      document.addEventListener('click', function(e) {
+        var a = e.target.closest('a');
+        if (!a) return;
+        var href = a.getAttribute('href') || '';
+        // Match product page links: #/products/anything
+        if (/^#\/products\/[^\/]+$/.test(href)) {
+          e.preventDefault();
+          e.stopPropagation();
+          window.location.assign(window.location.origin + '/' + href);
+        }
+      }, true); // capture phase — runs BEFORE React Router's listener
     })();
     </script>
   </body>
