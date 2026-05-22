@@ -826,7 +826,6 @@
           img.className = 'zl-product-hero-img';
           img.loading = 'eager';
           img.decoding = 'async';
-          img.style.opacity = '0';
 
           picture.appendChild(source);
           picture.appendChild(img);
@@ -872,7 +871,6 @@
           img.alt = data.headline || '';
           img.loading = 'lazy';
           img.decoding = 'async';
-          img.style.opacity = '0';
           picture.appendChild(source);
           picture.appendChild(img);
           imgWrap.appendChild(picture);
@@ -1049,10 +1047,13 @@
         var zlInjectTimer = null;
         var zlLastSlug = null;
         var zlRetryCount = 0;
-        var zlIsInjecting = false;
+        var zlRenderObserver = null;
+        var zlRenderDebounce = null;
 
         function cleanup() {
           if (zlInjectTimer) { clearTimeout(zlInjectTimer); zlInjectTimer = null; }
+          if (zlRenderDebounce) { clearTimeout(zlRenderDebounce); zlRenderDebounce = null; }
+          if (zlRenderObserver) { zlRenderObserver.disconnect(); zlRenderObserver = null; }
           zlRetryCount = 0;
           var main = document.querySelector('main');
           if (main) {
@@ -1075,17 +1076,11 @@
           if (!data) return;
 
           var main = document.querySelector('main');
-          if (!main || !main.isConnected) {
-            if (zlRetryCount < 50) {
-              zlRetryCount++;
-              zlInjectTimer = setTimeout(runEnhancements, 100);
-            }
-            return;
-          }
+          if (!main) return;
 
           var sections = main.querySelectorAll('section');
           if (sections.length < 6) {
-            if (zlRetryCount < 50) {
+            if (zlRetryCount < 100) {
               zlRetryCount++;
               zlInjectTimer = setTimeout(runEnhancements, 100);
             }
@@ -1165,16 +1160,39 @@
         }
 
         function zlInjectAndAnimate() {
-          if (zlIsInjecting) return;
-          zlIsInjecting = true;
           runEnhancements();
-          // Double rAF ensures layout is complete before animating
-          requestAnimationFrame(function() {
-            requestAnimationFrame(function() {
-              if (typeof initAnimations === 'function') initAnimations();
-              zlIsInjecting = false;
-            });
+          if (typeof initAnimations === 'function') initAnimations();
+        }
+
+        // Wait for React to finish re-rendering before injecting.
+        // We watch #root for DOM mutations and inject once changes stop.
+        function zlWaitForRenderThenInject() {
+          var root = document.getElementById('root');
+          if (!root) {
+            zlInjectTimer = setTimeout(zlInjectAndAnimate, 800);
+            return;
+          }
+          // If observer already running, disconnect old one
+          if (zlRenderObserver) { zlRenderObserver.disconnect(); }
+          if (zlRenderDebounce) { clearTimeout(zlRenderDebounce); }
+
+          zlRenderObserver = new MutationObserver(function() {
+            if (zlRenderDebounce) clearTimeout(zlRenderDebounce);
+            zlRenderDebounce = setTimeout(function() {
+              // DOM has been stable for 200ms — React is likely done
+              if (zlRenderObserver) { zlRenderObserver.disconnect(); zlRenderObserver = null; }
+              zlInjectAndAnimate();
+            }, 200);
           });
+
+          zlRenderObserver.observe(root, { childList: true, subtree: true });
+
+          // Safety fallback: inject after 1200ms even if mutations are still happening
+          zlInjectTimer = setTimeout(function() {
+            if (zlRenderObserver) { zlRenderObserver.disconnect(); zlRenderObserver = null; }
+            if (zlRenderDebounce) { clearTimeout(zlRenderDebounce); zlRenderDebounce = null; }
+            zlInjectAndAnimate();
+          }, 1200);
         }
 
         // Poll every 200ms for route changes
@@ -1185,9 +1203,9 @@
             cleanup();
             forceScrollTop();
             if (slug) {
-              zlInjectTimer = setTimeout(zlInjectAndAnimate, 400);
+              zlWaitForRenderThenInject();
             } else {
-              setTimeout(function() { if (typeof initAnimations === 'function') initAnimations(); }, 400);
+              setTimeout(function() { if (typeof initAnimations === 'function') initAnimations(); }, 800);
             }
           }
         }, 200);
@@ -1348,16 +1366,12 @@
       var revealObserver = null;
       function initRevealObserver() {
         if (revealObserver) revealObserver.disconnect();
-        var observedEls = [];
         revealObserver = new IntersectionObserver(function(entries) {
           entries.forEach(function(entry) {
             if (entry.isIntersecting) {
-              // Small delay ensures browser has painted initial opacity:0 state
-              // before transitioning to opacity:1 — prevents flash-of-content
-              setTimeout(function() {
-                entry.target.classList.add('is-visible');
-              }, 50);
-              revealObserver.unobserve(entry.target);
+              entry.target.classList.add('is-visible');
+              // Optionally unobserve after first reveal:
+              // revealObserver.unobserve(entry.target);
             }
           });
         }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
@@ -1365,30 +1379,15 @@
         // Observe image reveal containers
         document.querySelectorAll('.zl-reveal-img').forEach(function(el) {
           revealObserver.observe(el);
-          observedEls.push(el);
         });
         // Observe text reveal containers
         document.querySelectorAll('.zl-reveal-text').forEach(function(el) {
           revealObserver.observe(el);
-          observedEls.push(el);
         });
         // Observe fade-up elements
         document.querySelectorAll('.zl-fade-up').forEach(function(el) {
           revealObserver.observe(el);
-          observedEls.push(el);
         });
-
-        // Fallback: force-reveal anything already in viewport (some browsers
-        // don't fire IntersectionObserver for already-visible elements)
-        setTimeout(function() {
-          observedEls.forEach(function(el) {
-            if (el.classList.contains('is-visible')) return;
-            var rect = el.getBoundingClientRect();
-            if (rect.top < window.innerHeight && rect.bottom > 0) {
-              el.classList.add('is-visible');
-            }
-          });
-        }, 150);
       }
 
       // ============================================================
@@ -2649,8 +2648,6 @@
       // 18. INITIALIZATION
       // ============================================================
       function initAnimations() {
-        if (window._zlAnimRunning) return;
-        window._zlAnimRunning = true;
         wrapImagesForReveal();
         wrapTextForReveal();
         initRevealObserver();
@@ -2665,19 +2662,12 @@
         initButtonRipple();
         initAmbientBubbles();
         initStaggeredGrids();
-        // Clear guard after everything settles
-        setTimeout(function() { window._zlAnimRunning = false; }, 600);
       }
 
-      // Re-init on hash change (SPA navigation fallback)
-      // Note: our polling system handles pushState-based navigation.
-      // This listener catches back/forward buttons and manual hash changes.
+      // Re-init on hash change (back/forward buttons, manual URL changes)
       window.addEventListener('hashchange', function(e) {
         window.scrollTo(0, 0);
-        // Re-init animations after a brief delay to let React settle
-        setTimeout(function() {
-          if (!window._zlAnimRunning) initAnimations();
-        }, 600);
+        setTimeout(initAnimations, 600);
       });
 
       // ============================================================
