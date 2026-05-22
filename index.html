@@ -1,6 +1,44 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- AUTO-RELOAD on product page navigation: intercepts React Router pushState
+         and forces a clean hard refresh so product pages always load correctly -->
+    <script>
+    (function() {
+      var _zlProductReloaded = false;
+      function _zlCheckProductReload() {
+        var hash = window.location.hash || '';
+        if (/^#\/products\//.test(hash)) {
+          var flag = sessionStorage.getItem('zl_product_refreshed');
+          if (!flag && !_zlProductReloaded) {
+            _zlProductReloaded = true;
+            sessionStorage.setItem('zl_product_refreshed', '1');
+            window.location.reload(true);
+          } else {
+            sessionStorage.removeItem('zl_product_refreshed');
+          }
+        }
+      }
+      // Monkey-patch pushState to catch React Router click navigation
+      var _origPushState = history.pushState;
+      history.pushState = function() {
+        _origPushState.apply(this, arguments);
+        _zlCheckProductReload();
+      };
+      // Also catch replaceState
+      var _origReplaceState = history.replaceState;
+      history.replaceState = function() {
+        _origReplaceState.apply(this, arguments);
+        _zlCheckProductReload();
+      };
+      // Catch back/forward buttons
+      window.addEventListener('popstate', function() {
+        _zlCheckProductReload();
+      });
+      // Check on initial load too
+      _zlCheckProductReload();
+    })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Cache-Control" content="public, max-age=3600" />
