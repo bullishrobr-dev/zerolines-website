@@ -1,0 +1,19 @@
+# Netlify redirects for Zero Lines SPA
+# Static HTML files handle crawlers; SPA fallback handles client-side nav
+
+# Ensure trailing slashes are normalized (optional SEO improvement)
+/science/              /science              301
+/protocol/             /protocol             301
+/story/                /story                301
+/testimonials/         /testimonials         301
+/contact/              /contact              301
+/products/             /products             301
+/products/serum/       /products/serum       301
+/products/night-cream/ /products/night-cream 301
+/products/day-cream/   /products/day-cream   301
+/products/peeling-gel/ /products/peeling-gel 301
+/products/syringe/     /products/syringe     301
+/products/syringe-refill/ /products/syringe-refill 301
+
+# SPA fallback — serve index.html for unmatched routes so React can mount
+/*                     /index.html           200
