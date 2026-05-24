@@ -3467,20 +3467,6 @@ input:focus, textarea:focus, select:focus, button:focus, a:focus {
 }
 
 /* --- PAGE TRANSITION OVERLAY --- */
-.zl-page-transition {
-  position: fixed;
-  inset: 0;
-  z-index: 9998;
-  background: #0a0a0a;
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
-  pointer-events: none;
-}
-.zl-page-transition.is-active {
-  transform: scaleY(1);
-  transform-origin: bottom;
-}
 
 /* --- NAVBAR SCROLL STATE — BLUR + BORDER --- */
 nav.scrolled, header.scrolled, .navbar.scrolled, [class*="navbar"].scrolled {
