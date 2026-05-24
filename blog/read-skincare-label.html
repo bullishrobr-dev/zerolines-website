@@ -211,7 +211,9 @@
             <div class="zl-blog-newsletter">
         <h3 class="zl-blog-newsletter-title">Join the Inner Circle</h3>
         <p class="zl-blog-newsletter-text">Early access to new research, skin science insights, and exclusive offers. No spam.</p>
-        <form class="zl-blog-newsletter-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" onsubmit="this.style.display='none';this.nextElementSibling.style.display='block';return true;">
+        <!-- TODO: Replace FORM_ID_PLACEHOLDER with your actual Formspree form ID from https://formspree.io -->
+        <form class="zl-blog-newsletter-form" action="https://formspree.io/f/FORM_ID_PLACEHOLDER" method="POST" onsubmit="this.style.display='none';this.nextElementSibling.style.display='block';return true;">
+          <input type="hidden" name="_subject" value="Zero Lines Newsletter Subscription">
           <input type="email" name="email" placeholder="your@email.com" required />
           <button type="submit">Subscribe</button>
         </form>

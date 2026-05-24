@@ -383,7 +383,7 @@
           "name": "How does the AI Skin Analyzer work?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Upload a facial photo and answer 10 quick questions about your skin concerns, lifestyle, and environment. Our AI, powered by GPT-4o, analyses texture, tone, hydration, ageing signs, and lifestyle factors — then delivers a complete dermatologist-style report with personalised recommendations."
+            "text": "Upload a facial photo and answer 10 quick questions about your skin concerns, lifestyle, and environment. Our AI analyses texture, tone, hydration, ageing signs, and lifestyle factors — then delivers a complete dermatologist-style report with personalised recommendations."
           }
         },
         {
@@ -426,6 +426,57 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <script type="module" crossorigin src="./assets/index-CdnbiGbM.js?v=37"></script>
     <style>html,body{background:#0a0a0a;color:#f5f5f5;font-family:'Inter',sans-serif;min-height:100vh;margin:0}</style>
+    <style>
+      .zl-hero-line-inner {
+        display: block;
+        opacity: 0.01;
+        transform: translateY(20px);
+        transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+      }
+      .zl-sticky-mobile-cta {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        gap: 8px;
+        padding: 10px 16px;
+        background: rgba(253, 252, 250, 0.95);
+        backdrop-filter: blur(12px);
+        border-top: 1px solid rgba(0,0,0,0.06);
+        z-index: 997;
+      }
+      .zl-sticky-mobile-cta .zl-sticky-cta-whatsapp {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        background: #25D366;
+        color: #fff;
+        border-radius: 100px;
+        padding: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+      .zl-sticky-mobile-cta .zl-sticky-cta-waitlist {
+        flex: 1;
+        background: #0a0a0a;
+        color: #fff;
+        border: none;
+        border-radius: 100px;
+        padding: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      @media (min-width: 768px) { .zl-sticky-mobile-cta { display: none; } }
+    </style>
     <link rel="stylesheet" crossorigin href="./assets/index-BELDyRU9.css?v=37" media="print" onload="this.media='all'">
   </head>
   <body>
@@ -479,8 +530,8 @@
             </button>
             <div class="zl-quiz-trust">
               <span><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> No photo stored</span>
-              <span><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> GPT-4o powered</span>
-              <span><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg> 20,000+ analyses</span>
+              <span><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Clinical-Grade Skin Analysis</span>
+              <span><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg> 2,000+ analyses</span>
             </div>
           </div>
           <div class="zl-quiz-hero-visual">
@@ -646,7 +697,7 @@
           <div class="zl-quiz-footer-contact">
             <a href="mailto:info@zerolines.life">info@zerolines.life</a>
             <span>·</span>
-            <a href="https://wa.me/35054005198" target="_blank" rel="noopener">WhatsApp</a>
+            <a href="https://wa.me/35054005198" target="_blank" rel="noopener">Concierge</a>
           </div>
           <p class="zl-quiz-footer-copy">© 2026 Zero Lines. All rights reserved.</p>
         </div>
@@ -1558,9 +1609,6 @@
       })();
     </script>
 
-    <!-- Sticky Mobile CTA -->
-    <a href="/#/quiz" class="zl-sticky-cta" id="zl-sticky-cta">Analyse Your Skin</a>
-
     <!-- ===== ZERO LINES ANIMATION SYSTEM ===== -->
     <div id="zl-scroll-progress"></div>
 
@@ -1877,7 +1925,7 @@
           if (sub) sub.classList.add('is-revealed');
           var ctaEl = document.querySelector('.zl-hero-cta');
           if (ctaEl) ctaEl.classList.add('is-revealed');
-        }, 100);
+        }, 50);
       }
 
       // ============================================================
@@ -1899,7 +1947,7 @@
             var rect = btn.getBoundingClientRect();
             var x = e.clientX - rect.left - rect.width / 2;
             var y = e.clientY - rect.top - rect.height / 2;
-            btn.style.transform = 'translate(' + (x * 0.25) + 'px, ' + (y * 0.25) + 'px)';
+            btn.style.transform = 'translate(' + (x * 0.12) + 'px, ' + (y * 0.12) + 'px)';
           }, { passive: true });
 
           btn.addEventListener('mouseleave', function() {
@@ -1920,9 +1968,16 @@
         if (!heroSection) return;
         heroBg.classList.add('zl-parallax-bg');
 
+        var isVisible = true;
+        var observer = new IntersectionObserver(function(entries) {
+          isVisible = entries[0].isIntersecting;
+        }, { threshold: 0 });
+        observer.observe(heroSection);
+
         var startTime = Date.now();
         var parallaxTicking = false;
         function updateParallax() {
+          if (!isVisible) { parallaxTicking = false; return; }
           var rect = heroSection.getBoundingClientRect();
           var scrollProgress = -rect.top / rect.height;
           if (scrollProgress > -1 && scrollProgress < 2) {
@@ -1948,6 +2003,7 @@
         window.addEventListener('scroll', window._zlHeroParallaxScrollHandler, { passive: true });
         // Also update continuously for drift, but ONLY when hero is near viewport
         function driftLoop() {
+          if (!isVisible) { requestAnimationFrame(driftLoop); return; }
           var rect = heroSection.getBoundingClientRect();
           var vh = window.innerHeight || document.documentElement.clientHeight;
           var isNearViewport = rect.top < vh && rect.bottom > -vh;
@@ -1983,6 +2039,103 @@
             }, 600);
           }, 100);
         }, 500);
+      }
+
+      // ============================================================
+      // 10b. PAGE TRANSITION OVERLAY
+      // ============================================================
+      function initPageTransition() {
+        var overlay = document.getElementById('zl-page-transition');
+        if (!overlay) return;
+        document.addEventListener('click', function(e) {
+          var a = e.target.closest('a');
+          if (!a || !a.href) return;
+          if (a.href.indexOf(window.location.origin) !== 0) return;
+          if (a.getAttribute('target') === '_blank') return;
+          e.preventDefault();
+          overlay.classList.add('is-active');
+          setTimeout(function() {
+            window.location.href = a.href;
+          }, 400);
+        });
+      }
+
+      // ============================================================
+      // 10c. SCROLL PROGRESS INDICATOR
+      // ============================================================
+      function initScrollProgress() {
+        var bar = document.getElementById('zl-scroll-progress');
+        if (!bar) {
+          bar = document.createElement('div');
+          bar.id = 'zl-scroll-progress';
+          bar.className = 'zl-scroll-progress';
+          document.body.appendChild(bar);
+        }
+        function update() {
+          var scrollTop = window.scrollY || document.documentElement.scrollTop;
+          var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          var progress = docHeight > 0 ? scrollTop / docHeight : 0;
+          bar.style.setProperty('--scroll-progress', progress);
+          bar.style.transform = 'scaleX(' + progress + ')';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+      }
+
+      // ============================================================
+      // 10d. NAVBAR BLUR + BORDER ON SCROLL
+      // ============================================================
+      function initNavbarScroll() {
+        var nav = document.querySelector('nav, header, .navbar');
+        if (!nav) return;
+        var threshold = 50;
+        function update() {
+          var scrolled = (window.scrollY || window.pageYOffset) > threshold;
+          nav.classList.toggle('scrolled', scrolled);
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+      }
+
+      // ============================================================
+      // 10e. GENERIC PAGE ENTRANCE (non-homepage routes)
+      // ============================================================
+      function initPageEntrance() {
+        if (document.body.classList.contains('homepage')) return;
+        var main = document.querySelector('#root, main, [role="main"]');
+        if (!main) return;
+        main.style.opacity = '0';
+        main.style.transform = 'translateY(12px)';
+        main.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        requestAnimationFrame(function() {
+          main.style.opacity = '1';
+          main.style.transform = 'translateY(0)';
+        });
+      }
+
+      // ============================================================
+      // 10f. MOBILE MENU AS SLIDE-IN DRAWER
+      // ============================================================
+      function initMobileMenu() {
+        var toggle = document.querySelector('.menu-toggle, .hamburger, [aria-label="Menu"]');
+        var menu = document.querySelector('.mobile-menu, .nav-drawer');
+        var backdrop = document.querySelector('.menu-backdrop');
+        if (!toggle || !menu) return;
+        function open() {
+          menu.classList.add('is-open');
+          if (backdrop) backdrop.classList.add('is-visible');
+          document.body.style.overflow = 'hidden';
+        }
+        function close() {
+          menu.classList.remove('is-open');
+          if (backdrop) backdrop.classList.remove('is-visible');
+          document.body.style.overflow = '';
+        }
+        toggle.addEventListener('click', function() {
+          menu.classList.contains('is-open') ? close() : open();
+        });
+        if (backdrop) backdrop.addEventListener('click', close);
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close(); });
       }
 
       // Run after React renders (only if not already run by product injection)
@@ -2629,10 +2782,40 @@
           this.renderQuestion();
         },
 
+        transitionRender: function(direction) {
+          var container = document.getElementById('zl-quiz-question-container');
+          var currentEl = container.querySelector('.zl-quiz-question');
+          if (!currentEl) {
+            this.renderQuestion();
+            return;
+          }
+          var slideOut = direction === 'next' ? '-30px' : '30px';
+          var slideIn = direction === 'next' ? '30px' : '-30px';
+
+          currentEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+          currentEl.style.opacity = '0';
+          currentEl.style.transform = 'translateX(' + slideOut + ')';
+
+          var self = this;
+          setTimeout(function() {
+            self.renderQuestion();
+            var nextEl = container.querySelector('.zl-quiz-question');
+            if (nextEl) {
+              nextEl.style.opacity = '0';
+              nextEl.style.transform = 'translateX(' + slideIn + ')';
+              requestAnimationFrame(function() {
+                nextEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                nextEl.style.opacity = '1';
+                nextEl.style.transform = 'translateX(0)';
+              });
+            }
+          }, 300);
+        },
+
         next: function() {
           if (this.currentStep < this.questions.length - 1) {
             this.currentStep++;
-            this.renderQuestion();
+            this.transitionRender('next');
           } else {
             this.showSection('zl-quiz-photo');
             this.initPhotoUpload();
@@ -2642,7 +2825,7 @@
         prev: function() {
           if (this.currentStep > 0) {
             this.currentStep--;
-            this.renderQuestion();
+            this.transitionRender('prev');
           }
         },
 
@@ -2979,6 +3162,12 @@
         initMagneticButtons();
         initParallax();
         initHeroEntrance();
+        initPageEntrance();
+        initPageTransition();
+        initScrollProgress();
+        initNavbarScroll();
+        initMobileMenu();
+        initMobileStickyCTA();
         addAnalyzerNav();
         addAnalyzerPromo();
         enhanceContactPage();
@@ -3005,26 +3194,22 @@
       });
 
       // ============================================================
-      // 16. STICKY MOBILE CTA
+      // 16. STICKY MOBILE CTA — WhatsApp primary
       // ============================================================
-      (function() {
-        var stickyCta = document.getElementById('zl-sticky-cta');
-        if (!stickyCta) return;
-        function updateStickyCta() {
-          if (window.zlIsQuizRoute && window.zlIsQuizRoute()) {
-            stickyCta.classList.remove('is-visible');
-            return;
-          }
-          var hero = document.querySelector('.hero-el, section:first-of-type');
-          var threshold = hero ? hero.offsetTop + hero.offsetHeight * 0.5 : 400;
-          if (window.scrollY > threshold) {
-            stickyCta.classList.add('is-visible');
-          } else {
-            stickyCta.classList.remove('is-visible');
-          }
-        }
-        window.addEventListener('scroll', updateStickyCta, { passive: true });
-      })();
+      function initMobileStickyCTA() {
+        if (!window.matchMedia('(max-width: 767px)').matches) return;
+        var existing = document.querySelector('.zl-sticky-mobile-cta');
+        if (existing) existing.remove();
+
+        var bar = document.createElement('div');
+        bar.className = 'zl-sticky-mobile-cta';
+        bar.innerHTML =
+          '<a href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%27m%20interested%20in%20your%20skincare%20protocol." class="zl-sticky-cta-btn zl-sticky-cta-whatsapp" target="_blank" rel="noopener">' +
+          '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>' +
+          'Ask on WhatsApp</a>' +
+          '<button class="zl-sticky-cta-btn zl-sticky-cta-waitlist" onclick="zlOpenWaitlistModal()">Join Waitlist</button>';
+        document.body.appendChild(bar);
+      }
 
       // ============================================================
       // 18. EMAIL CAPTURE HANDLER (Waitlist / Newsletter)
@@ -3033,16 +3218,29 @@
         event.preventDefault();
         var form = event.target;
         var email = form.querySelector('input[type="email"]').value.trim();
-        if (!email) return;
-        // Store locally (backend integration needed for real email capture)
+        if (!email || !email.includes('@')) return Promise.reject('Invalid email');
+
+        // Store locally as backup
         var emails = JSON.parse(localStorage.getItem('zl_waitlist_emails') || '[]');
-        emails.push({ email: email, source: source || 'unknown', date: new Date().toISOString() });
+        emails.push({ email: email, source: source || 'waitlist', date: new Date().toISOString() });
         localStorage.setItem('zl_waitlist_emails', JSON.stringify(emails));
         localStorage.setItem('zl_waitlist_submitted', '1');
-        // Show success state
+
+        // Show success state immediately (optimistic)
         form.innerHTML = '<p style="color:#0ABAB5;font-weight:500;">Welcome to the waitlist. We\'ll be in touch.</p>';
-        // TODO: Send to backend (EmailOctopus, Mailchimp, Cloudflare Worker)
-        console.log('[ZL] Waitlist submission:', email, 'from:', source);
+
+        // TODO: Replace FORM_ID with your actual Formspree form ID from https://formspree.io
+        return fetch('https://formspree.io/f/FORM_ID', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, source: source, _subject: 'Zero Lines Waitlist' })
+        }).then(function(r) {
+          if (r.ok && typeof gtag === 'function') gtag('event', 'waitlist_signup');
+          return r;
+        }).catch(function(e) {
+          console.warn('Waitlist submission failed, saved locally:', e);
+          return { ok: true, local: true };
+        });
       };
       window.zlSubmitNewsletter = function(event) {
         window.zlSubmitWaitlist(event, 'newsletter');
@@ -3293,6 +3491,8 @@
       var success=document.getElementById('zl-waitlist-success');
       function open(){overlay.classList.add('active');overlay.setAttribute('aria-hidden','false')}
       function closeModal(){overlay.classList.remove('active');overlay.setAttribute('aria-hidden','true')}
+      window.zlOpenWaitlistModal = open;
+      window.zlCloseWaitlistModal = closeModal;
       btn.addEventListener('click',open);
       closeBtn.addEventListener('click',closeModal);
       overlay.addEventListener('click',function(e){if(e.target===overlay)closeModal()});
@@ -3316,5 +3516,9 @@
       });
     })();
     </script>
+    <div class="zl-page-transition" id="zl-page-transition"></div>
+    <a href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%27m%20interested%20in%20your%20skincare%20protocol." class="zl-whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
   </body>
 </html>
