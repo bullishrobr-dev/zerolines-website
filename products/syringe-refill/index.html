@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
   <head>
     <!-- AUTO-RELOAD on product page navigation: intercepts React Router pushState
          and forces a clean hard refresh so product pages always load correctly -->
@@ -168,7 +168,52 @@
         "@type": "Offer",
         "availability": "https://schema.org/PreOrder",
         "url": "https://zerolines.life/products/syringe-refill"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "8"
       }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I install the Precision Collagen Activation Refill?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Twist off the empty cartridge from the syringe handle. Align the new refill cartridge and push until you hear a click. Prime with one pump to activate the mechanism, and your ritual continues seamlessly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the refill the same formula as the original syringe?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The Precision Collagen Activation Refill contains the exact same clinical-grade hydrolysed collagen and botanical peptide complex as the original syringe. The only difference is the packaging — 40% less material at a more accessible price point."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the refill help the environment?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Each refill uses 40% less packaging than a full new syringe and supports our zero-plastic commitment. By reusing the precision instrument handle and replacing only the cartridge, you reduce waste while maintaining the same clinical-grade formulation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many applications does one refill provide?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "One Precision Collagen Activation Refill provides approximately 12 weekly applications, enough for a 3-month supply when used as directed in the Zero Lines Protocol."
+          }
+        }
+      ]
     }
     </script>
     <script type="application/ld+json">
@@ -3111,6 +3156,84 @@
           window.location.assign(window.location.origin + '/' + href);
         }
       }, true); // capture phase — runs BEFORE React Router's listener
+    })();
+    </script>
+    <!-- ===== WAITLIST MODAL ===== -->
+    <style>
+      .zl-waitlist-btn{position:fixed;bottom:24px;right:24px;z-index:9999;background:#0ABAB5;color:#0a0a0a;border:none;border-radius:50px;padding:14px 28px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 20px rgba(10,186,181,0.3);opacity:.85;transition:all .3s ease}
+      .zl-waitlist-btn:hover{opacity:1;transform:translateY(-2px);box-shadow:0 6px 28px rgba(10,186,181,0.4)}
+      @keyframes zl-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+      .zl-waitlist-btn:not(:hover){animation:zl-pulse 3s ease-in-out infinite}
+      @media (prefers-reduced-motion:reduce){.zl-waitlist-btn{animation:none}}
+      .zl-waitlist-overlay{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;opacity:0;transition:opacity .3s ease}
+      .zl-waitlist-overlay.active{display:flex;opacity:1}
+      .zl-waitlist-modal{background:#111;border:1px solid rgba(10,186,181,0.2);border-radius:16px;padding:40px;max-width:440px;width:90%;position:relative;transform:translateY(20px);transition:transform .3s ease}
+      .zl-waitlist-overlay.active .zl-waitlist-modal{transform:translateY(0)}
+      .zl-waitlist-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#888;font-size:24px;cursor:pointer;line-height:1;padding:4px}
+      .zl-waitlist-close:hover{color:#fff}
+      .zl-waitlist-modal h3{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;color:#fff;margin:0 0 12px}
+      .zl-waitlist-modal p{font-family:'Inter',sans-serif;font-size:14px;color:#aaa;line-height:1.6;margin:0 0 24px}
+      .zl-waitlist-form{display:flex;flex-direction:column;gap:16px}
+      .zl-waitlist-form input[type="email"]{background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:14px 16px;color:#fff;font-family:'Inter',sans-serif;font-size:14px;outline:none}
+      .zl-waitlist-form input[type="email"]:focus{border-color:#0ABAB5}
+      .zl-waitlist-form button[type="submit"]{background:#0ABAB5;color:#0a0a0a;border:none;border-radius:8px;padding:14px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s}
+      .zl-waitlist-form button[type="submit"]:hover{opacity:.9}
+      .zl-waitlist-success{display:none;text-align:center;padding:20px 0}
+      .zl-waitlist-success svg{width:48px;height:48px;color:#0ABAB5;margin-bottom:16px}
+      .zl-waitlist-success h4{font-family:'Playfair Display',serif;font-size:20px;color:#fff;margin:0 0 8px}
+      .zl-waitlist-success p{color:#aaa;margin:0}
+    </style>
+    <button class="zl-waitlist-btn" id="zl-waitlist-btn" aria-label="Join waitlist">Join Waitlist</button>
+    <div class="zl-waitlist-overlay" id="zl-waitlist-overlay" aria-hidden="true">
+      <div class="zl-waitlist-modal" role="dialog" aria-modal="true" aria-labelledby="zl-waitlist-title">
+        <button class="zl-waitlist-close" id="zl-waitlist-close" aria-label="Close modal">&times;</button>
+        <div id="zl-waitlist-content">
+          <h3 id="zl-waitlist-title">Be the First to Experience Zero Lines</h3>
+          <p>Enter your email to receive early access, exclusive offers, and complimentary skin analysis invitations.</p>
+          <form class="zl-waitlist-form" id="zl-waitlist-form" action="https://formspree.io/f/FORM_ID" method="POST">
+            <!-- Formspree ID — REPLACE FORM_ID with your actual Formspree form ID -->
+            <input type="email" name="email" placeholder="your@email.com" required aria-label="Email address">
+            <button type="submit">Notify Me</button>
+          </form>
+        </div>
+        <div class="zl-waitlist-success" id="zl-waitlist-success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <h4>You're on the list</h4>
+          <p>Thank you. We'll be in touch with early access details.</p>
+        </div>
+      </div>
+    </div>
+    <script>
+    (function(){
+      var btn=document.getElementById('zl-waitlist-btn');
+      var overlay=document.getElementById('zl-waitlist-overlay');
+      var closeBtn=document.getElementById('zl-waitlist-close');
+      var form=document.getElementById('zl-waitlist-form');
+      var content=document.getElementById('zl-waitlist-content');
+      var success=document.getElementById('zl-waitlist-success');
+      function open(){overlay.classList.add('active');overlay.setAttribute('aria-hidden','false')}
+      function closeModal(){overlay.classList.remove('active');overlay.setAttribute('aria-hidden','true')}
+      btn.addEventListener('click',open);
+      closeBtn.addEventListener('click',closeModal);
+      overlay.addEventListener('click',function(e){if(e.target===overlay)closeModal()});
+      document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
+      form.addEventListener('submit',function(e){
+        e.preventDefault();
+        var email=form.querySelector('input[name="email"]').value;
+        localStorage.setItem('zl_waitlist_email',email);
+        var xhr=new XMLHttpRequest();
+        xhr.open('POST',form.action);
+        xhr.setRequestHeader('Accept','application/json');
+        xhr.onload=function(){
+          content.style.display='none';success.style.display='block';
+          if(typeof gtag==='function')gtag('event','waitlist_signup');
+        };
+        xhr.onerror=function(){
+          content.style.display='none';success.style.display='block';
+          if(typeof gtag==='function')gtag('event','waitlist_signup');
+        };
+        xhr.send(new FormData(form));
+      });
     })();
     </script>
   </body>

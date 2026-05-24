@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
   <head>
     <!-- AUTO-RELOAD on product page navigation: intercepts React Router pushState
          and forces a clean hard refresh so product pages always load correctly -->
@@ -41,6 +41,30 @@
     })();
     </script>
     <meta charset="UTF-8" />
+    <!-- Google Analytics 4 — REPLACE G-XXXXXXXXXX with your GA4 Measurement ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    <!-- Meta Pixel — REPLACE 000000000000000 with your Meta Pixel ID -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window,document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '000000000000000');
+      fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=000000000000000&ev=PageView&noscript=1"/></noscript>
+    <!-- Google Search Console verification — REPLACE YOUR_VERIFICATION_CODE_HERE -->
+    <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE_HERE" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Cache-Control" content="public, max-age=3600" />
     <meta http-equiv="Pragma" content="cache" />
@@ -62,7 +86,7 @@
     <link rel="canonical" href="https://zerolines.life/" id="zl-canonical" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="theme-color" content="#0a0a0a" />
-    <link rel="preload" as="image" href="./assets/hero-editorial-1.jpg" />
+    <link rel="preload" as="image" href="./assets/hero-editorial-1.webp" type="image/webp" />
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -401,7 +425,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <script type="module" crossorigin src="./assets/index-CdnbiGbM.js?v=37"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BELDyRU9.css?v=37">
+    <style>html,body{background:#0a0a0a;color:#f5f5f5;font-family:'Inter',sans-serif;min-height:100vh;margin:0}</style>
+    <link rel="stylesheet" crossorigin href="./assets/index-BELDyRU9.css?v=37" media="print" onload="this.media='all'">
   </head>
   <body>
     <a href="#root" class="zl-skip-link">Skip to main content</a>
@@ -462,7 +487,7 @@
             <div class="zl-quiz-hero-image-wrap">
               <picture>
                 <source srcset="./assets/hero-editorial-1.webp" type="image/webp">
-                <img src="./assets/hero-editorial-1.jpg" alt="AI Skin Analysis" class="zl-quiz-hero-image" loading="eager">
+                <img src="./assets/hero-editorial-1.jpg" alt="AI Skin Analysis" class="zl-quiz-hero-image" loading="eager" fetchpriority="high" decoding="async" width="864" height="1184">
               </picture>
               <div class="zl-quiz-hero-scan-line"></div>
               <div class="zl-quiz-hero-scan-line" style="top:40%;animation-delay:1.2s"></div>
@@ -3174,6 +3199,121 @@
           window.location.assign(window.location.origin + '/' + href);
         }
       }, true); // capture phase — runs BEFORE React Router's listener
+    })();
+    </script>
+    <!-- GA4 Event Tracking -->
+    <script>
+    (function() {
+      // Quiz completion tracking
+      var quizResults = document.getElementById('zl-quiz-results');
+      if (quizResults) {
+        var quizTracked = false;
+        var observer = new MutationObserver(function(mutations) {
+          if (!quizTracked && quizResults.style.display !== 'none') {
+            quizTracked = true;
+            var productRec = '';
+            var productEl = document.getElementById('zl-results-products');
+            if (productEl) {
+              var firstProduct = productEl.querySelector('h4, h3, h5, strong');
+              if (firstProduct) productRec = firstProduct.textContent.trim();
+            }
+            if (typeof gtag === 'function') gtag('event', 'quiz_complete', { 'product_recommendation': productRec });
+            observer.disconnect();
+          }
+        });
+        observer.observe(quizResults, { attributes: true, attributeFilter: ['style', 'class'] });
+      }
+
+      // WhatsApp click tracking
+      document.addEventListener('click', function(e) {
+        var el = e.target.closest('a[href*="wa.me"]');
+        if (!el) return;
+        var loc = 'header';
+        if (el.closest('.zl-results-footer-btns')) loc = 'quiz_results';
+        else if (el.closest('.zl-quiz-footer')) loc = 'quiz_footer';
+        else if (el.closest('footer')) loc = 'footer';
+        else if (el.closest('#zl-quiz-module')) loc = 'quiz';
+        else if (el.closest('#contact')) loc = 'contact';
+        if (typeof gtag === 'function') gtag('event', 'whatsapp_click', { 'location': loc });
+      });
+    })();
+    </script>
+    <!-- ===== WAITLIST MODAL ===== -->
+    <style>
+      .zl-waitlist-btn{position:fixed;bottom:24px;right:24px;z-index:9999;background:#0ABAB5;color:#0a0a0a;border:none;border-radius:50px;padding:14px 28px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 20px rgba(10,186,181,0.3);opacity:.85;transition:all .3s ease}
+      .zl-waitlist-btn:hover{opacity:1;transform:translateY(-2px);box-shadow:0 6px 28px rgba(10,186,181,0.4)}
+      @keyframes zl-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+      .zl-waitlist-btn:not(:hover){animation:zl-pulse 3s ease-in-out infinite}
+      @media (prefers-reduced-motion:reduce){.zl-waitlist-btn{animation:none}}
+      .zl-waitlist-overlay{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;opacity:0;transition:opacity .3s ease}
+      .zl-waitlist-overlay.active{display:flex;opacity:1}
+      .zl-waitlist-modal{background:#111;border:1px solid rgba(10,186,181,0.2);border-radius:16px;padding:40px;max-width:440px;width:90%;position:relative;transform:translateY(20px);transition:transform .3s ease}
+      .zl-waitlist-overlay.active .zl-waitlist-modal{transform:translateY(0)}
+      .zl-waitlist-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#888;font-size:24px;cursor:pointer;line-height:1;padding:4px}
+      .zl-waitlist-close:hover{color:#fff}
+      .zl-waitlist-modal h3{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;color:#fff;margin:0 0 12px}
+      .zl-waitlist-modal p{font-family:'Inter',sans-serif;font-size:14px;color:#aaa;line-height:1.6;margin:0 0 24px}
+      .zl-waitlist-form{display:flex;flex-direction:column;gap:16px}
+      .zl-waitlist-form input[type="email"]{background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:14px 16px;color:#fff;font-family:'Inter',sans-serif;font-size:14px;outline:none}
+      .zl-waitlist-form input[type="email"]:focus{border-color:#0ABAB5}
+      .zl-waitlist-form button[type="submit"]{background:#0ABAB5;color:#0a0a0a;border:none;border-radius:8px;padding:14px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s}
+      .zl-waitlist-form button[type="submit"]:hover{opacity:.9}
+      .zl-waitlist-success{display:none;text-align:center;padding:20px 0}
+      .zl-waitlist-success svg{width:48px;height:48px;color:#0ABAB5;margin-bottom:16px}
+      .zl-waitlist-success h4{font-family:'Playfair Display',serif;font-size:20px;color:#fff;margin:0 0 8px}
+      .zl-waitlist-success p{color:#aaa;margin:0}
+    </style>
+    <button class="zl-waitlist-btn" id="zl-waitlist-btn" aria-label="Join waitlist">Join Waitlist</button>
+    <div class="zl-waitlist-overlay" id="zl-waitlist-overlay" aria-hidden="true">
+      <div class="zl-waitlist-modal" role="dialog" aria-modal="true" aria-labelledby="zl-waitlist-title">
+        <button class="zl-waitlist-close" id="zl-waitlist-close" aria-label="Close modal">&times;</button>
+        <div id="zl-waitlist-content">
+          <h3 id="zl-waitlist-title">Be the First to Experience Zero Lines</h3>
+          <p>Enter your email to receive early access, exclusive offers, and complimentary skin analysis invitations.</p>
+          <form class="zl-waitlist-form" id="zl-waitlist-form" action="https://formspree.io/f/FORM_ID" method="POST">
+            <!-- Formspree ID — REPLACE FORM_ID with your actual Formspree form ID -->
+            <input type="email" name="email" placeholder="your@email.com" required aria-label="Email address">
+            <button type="submit">Notify Me</button>
+          </form>
+        </div>
+        <div class="zl-waitlist-success" id="zl-waitlist-success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <h4>You're on the list</h4>
+          <p>Thank you. We'll be in touch with early access details.</p>
+        </div>
+      </div>
+    </div>
+    <script>
+    (function(){
+      var btn=document.getElementById('zl-waitlist-btn');
+      var overlay=document.getElementById('zl-waitlist-overlay');
+      var closeBtn=document.getElementById('zl-waitlist-close');
+      var form=document.getElementById('zl-waitlist-form');
+      var content=document.getElementById('zl-waitlist-content');
+      var success=document.getElementById('zl-waitlist-success');
+      function open(){overlay.classList.add('active');overlay.setAttribute('aria-hidden','false')}
+      function closeModal(){overlay.classList.remove('active');overlay.setAttribute('aria-hidden','true')}
+      btn.addEventListener('click',open);
+      closeBtn.addEventListener('click',closeModal);
+      overlay.addEventListener('click',function(e){if(e.target===overlay)closeModal()});
+      document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
+      form.addEventListener('submit',function(e){
+        e.preventDefault();
+        var email=form.querySelector('input[name="email"]').value;
+        localStorage.setItem('zl_waitlist_email',email);
+        var xhr=new XMLHttpRequest();
+        xhr.open('POST',form.action);
+        xhr.setRequestHeader('Accept','application/json');
+        xhr.onload=function(){
+          content.style.display='none';success.style.display='block';
+          if(typeof gtag==='function')gtag('event','waitlist_signup');
+        };
+        xhr.onerror=function(){
+          content.style.display='none';success.style.display='block';
+          if(typeof gtag==='function')gtag('event','waitlist_signup');
+        };
+        xhr.send(new FormData(form));
+      });
     })();
     </script>
   </body>

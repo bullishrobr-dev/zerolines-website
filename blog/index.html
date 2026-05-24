@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -31,15 +31,18 @@
     "publisher": {
       "@type": "Organization",
       "name": "Zero Lines",
-      "logo": "https://zerolines.life/assets/logo.png"
+      "logo": {"@type": "ImageObject", "url": "https://zerolines.life/assets/logo.png"}
     }
   }
   </script>
   <script type="application/ld+json">
-  {"@context": "https://schema.org", "@type": "Organization", "@id": "https://zerolines.life/#organization", "name": "Zero Lines", "url": "https://zerolines.life/", "logo": "https://zerolines.life/assets/logo.png", "sameAs": [], "contactPoint": {"@type": "ContactPoint", "contactType": "Customer Service", "email": "info@zerolines.life", "availableLanguage": ["English", "Spanish"]}}
+  {"@context": "https://schema.org", "@type": "Organization", "@id": "https://zerolines.life/#organization", "name": "Zero Lines", "url": "https://zerolines.life/", "logo": {"@type": "ImageObject", "url": "https://zerolines.life/assets/logo.png"}, "sameAs": [], "contactPoint": {"@type": "ContactPoint", "contactType": "Customer Service", "email": "info@zerolines.life", "availableLanguage": ["English", "Spanish"]}}
   </script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "WebPage", "@id": "https://zerolines.life/blog/index.html", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".zl-blog-content > p:first-of-type", ".zl-blog-toc"]}}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"The Journal | Skin Science, Alpine Ingredients & Longevity","description":"Explore skin science, alpine ingredients, and the art of ageing well. The Zero Lines Journal features expert insights on collagen, hydration, and the protocol that changes everything.","image":"https://zerolines.life/assets/hero-editorial-1.jpg","author":{"@type":"Organization","name":"Zero Lines"},"publisher":{"@type":"Organization","name":"Zero Lines","logo":{"@type":"ImageObject","url":"https://zerolines.life/assets/logo.png"}},"datePublished":"2026-05-13","dateModified":"2026-05-13","mainEntityOfPage":{"@type":"WebPage","@id":"https://zerolines.life/blog/"}}
   </script>
 </head>
 <body class="zl-blog-body">
@@ -55,14 +58,14 @@
       <nav class="zl-blog-header-nav">
         <a href="/#/science">Science</a>
         <a href="/#/protocol">Protocol</a>
-        <a href="/#/products">Products</a>
+        <a href="/products">Products</a>
         <a href="/#/story">Story</a>
-        <a href="/#/quiz">Analyzer</a>
+        <a href="/quiz">Analyzer</a>
         <a href="/#/testimonials">Testimonials</a>
         <a href="/#/contact">Contact</a>
         <a href="/blog/" class="active">Journal</a>
       </nav>
-      <a href="/#/quiz" class="zl-blog-header-cta">Analyse Your Skin</a>
+      <a href="/quiz" class="zl-blog-header-cta">Analyse Your Skin</a>
     </div>
   </header>
 
@@ -71,6 +74,7 @@
     <p class="zl-blog-landing-eyebrow">The Zero Lines Journal</p>
     <h1 class="zl-blog-landing-title">Skin Science.<br>Alpine Wisdom.</h1>
     <p class="zl-blog-landing-subtitle">Expert insights on cellular ageing, Pyrenean mineral water, collagen science, and the daily rituals that preserve what time tries to take.</p>
+    <p style="color:#767676;font-size:0.875rem;margin-top:0.5rem;"><time datetime="2026-05-13">Last updated: 13 May 2026</time></p>
     <div class="zl-blog-categories">
       <button class="zl-blog-category-btn active" onclick="filterPosts('all')">All</button>
       <button class="zl-blog-category-btn" onclick="filterPosts('science')">Science</button>
@@ -349,6 +353,13 @@
       </div>
     </a>
 
+  
+    <section style="margin-top:3rem; padding:1.5rem; border-top:1px solid rgba(0,0,0,0.08);">
+      <h3 style="font-size:1rem; font-weight:600; margin-bottom:1rem;">Explore Zero Lines</h3>
+      <p style="font-size:0.9375rem; color:#4a4a4a; line-height:1.6;">
+        Browse our <a href="/products">complete range</a> of Alpine-formulated skincare, or take the <a href="/quiz">AI Skin Analyser</a> for personalised recommendations.
+      </p>
+    </section>
   </main>
 
   <!-- Editor's Pick -->
@@ -393,7 +404,7 @@
       <p class="zl-blog-ai-analyst-eyebrow">AI-Powered Analysis</p>
       <h2 class="zl-blog-ai-analyst-title">See Your Skin Like Never Before</h2>
       <p class="zl-blog-ai-analyst-text">Upload a photo and answer 10 quick questions. Our AI analyses texture, tone, hydration, ageing signs, and lifestyle factors — then delivers a complete dermatologist-style report.</p>
-      <a href="/#/quiz" class="zl-blog-ai-analyst-btn">Analyse Your Skin</a>
+      <a href="/quiz" class="zl-blog-ai-analyst-btn">Analyse Your Skin</a>
     </div>
     <div class="zl-blog-ai-analyst-graphic">
       <div class="zl-blog-ai-analyst-radar"></div>
@@ -426,9 +437,9 @@
         <a href="/">Home</a>
         <a href="/#/science">Science</a>
         <a href="/#/protocol">Protocol</a>
-        <a href="/#/products">Products</a>
+        <a href="/products">Products</a>
         <a href="/#/story">Story</a>
-        <a href="/#/quiz">Analyzer</a>
+        <a href="/quiz">Analyzer</a>
         <a href="/#/contact">Contact</a><a href="/blog/">Journal</a>
       </nav>
       <div class="zl-blog-footer-contact">
