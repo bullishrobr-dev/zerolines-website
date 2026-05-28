@@ -3,7 +3,7 @@
 > **Last updated**: 2026-05-28  
 > **Current branch**: `main`  
 > **Working tree**: clean (no uncommitted changes)  
-> **Recent commit**: `c6f0b9e` — fix: move Join Waitlist button to bottom-left (opposite WhatsApp)
+> **Recent commit**: `b628794` — fix: comprehensive audit implementation — P0 & P1 fixes
 
 ---
 
@@ -15,6 +15,7 @@ Zero Lines is a **clinical-luxury skincare brand** based in Gibraltar. This is t
 - **Local path**: `/Users/metabt/Desktop/ZLweb`
 - **No build step** — this is hand-written static HTML/CSS/JS
 - **No framework** — vanilla JavaScript, custom CSS, no React/Vue/etc on the frontend
+- **Service Worker** — added for asset caching (`service-worker.js`)
 
 ---
 
