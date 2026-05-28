@@ -332,7 +332,6 @@
       "name": "Zero Lines",
       "description": "Zero Lines skincare location in Andorra.",
       "url": "https://zerolines.life",
-      "telephone": "+376000000",
       "email": "info@zerolines.life",
       "address": {
         "@type": "PostalAddress",
@@ -356,7 +355,6 @@
       "name": "Zero Lines",
       "description": "Zero Lines skincare location in Marbella, Spain.",
       "url": "https://zerolines.life",
-      "telephone": "+34900000000",
       "email": "info@zerolines.life",
       "address": {
         "@type": "PostalAddress",
@@ -481,7 +479,15 @@
   </head>
   <body>
     <a href="#root" class="zl-skip-link">Skip to main content</a>
-    <div id="root" tabindex="-1"></div>
+    <div id="root" tabindex="-1" role="main">
+      <div id="zl-loading-skeleton" style="position:fixed;inset:0;background:#0a0a0a;display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .4s ease">
+        <div style="text-align:center">
+          <div style="width:48px;height:48px;border:2px solid rgba(255,255,255,.1);border-top-color:#0ABAB5;border-radius:50%;animation:zl-spin 1s linear infinite;margin:0 auto 1rem"></div>
+          <p style="color:rgba(255,255,255,.6);font-size:.875rem;letter-spacing:.05em">Loading Zero Lines…</p>
+        </div>
+      </div>
+      <style>@keyframes zl-spin{to{transform:rotate(360deg)}}</style>
+    </div>
 
     <!-- ===== SKIN LONGEVITY QUIZ MODULE ===== -->
     <div id="zl-quiz-module" style="display:none;">
@@ -670,6 +676,7 @@
                 <div class="zl-results-email">
                   <p>Get your report sent to your inbox</p>
                   <form onsubmit="zlQuiz.saveEmail(event)">
+                    <label for="zl-quiz-email" style="display:block;font-size:.75rem;color:#888;margin-bottom:.25rem">Email Address</label>
                     <input type="email" placeholder="your@email.com" required id="zl-quiz-email">
                     <button type="submit" class="zl-results-btn-main">Send My Report</button>
                   </form>
@@ -719,6 +726,12 @@
           }
           return path;
         };
+        window._zlIntervals = window._zlIntervals || [];
+        window._zlClearAllIntervals = function() {
+          window._zlIntervals.forEach(function(id) { clearInterval(id); });
+          window._zlIntervals = [];
+        };
+        window.addEventListener('beforeunload', window._zlClearAllIntervals);
         window.zlIsHomepage = function() {
           var route = window.zlGetRoute();
           return route === '/' || route === '' || route === '/index.html' || route === '#/index.html';
@@ -863,17 +876,18 @@
         window.zlUpdateBodyClass();
         window.addEventListener('hashchange', window.zlUpdateBodyClass);
         var lastRoute = window.zlGetRoute();
-        setInterval(function() {
+        var _zlRoutePoll = setInterval(function() {
           var current = window.zlGetRoute();
           if (current !== lastRoute) {
             lastRoute = current;
             window.zlUpdateBodyClass();
           }
         }, 1000);
+        window._zlIntervals.push(_zlRoutePoll);
 
         // Robust fallback: ensure quiz module is never inside #root (React will wipe it)
         // and is visible when on quiz route
-        setInterval(function() {
+        var _zlQuizSafety = setInterval(function() {
           var quizModule = document.getElementById('zl-quiz-module');
           var root = document.getElementById('root');
           if (quizModule && root && quizModule.parentNode === root) {
@@ -886,6 +900,7 @@
             console.log('[ZL Quiz] Fallback: forced quiz module visible');
           }
         }, 2000);
+        window._zlIntervals.push(_zlQuizSafety);
         function onScroll() {
           if (window.zlIsHomepage()) {
             if (window.scrollY > 80) {
@@ -1124,7 +1139,7 @@
             ritual: [
               { step: '1', title: 'Remove', desc: 'Twist off empty cartridge from handle.' },
               { step: '2', title: 'Insert', desc: 'Align new refill. Click into place.' },
-              { step: '3', title: 'Prime', disp: 'One pump to activate. Ready to use.' },
+              { step: '3', title: 'Prime', desc: 'One pump to activate. Ready to use.' },
               { step: '4', title: 'Continue', desc: 'Your ritual continues. Earth thanks you.' }
             ],
             scarcity: ['Sustainable Choice', 'Refill Only', 'Online Exclusive']
@@ -1389,6 +1404,7 @@
         var zlRenderDebounce = null;
 
         function cleanup() {
+          if (typeof window._zlClearAllIntervals === 'function') window._zlClearAllIntervals();
           if (zlInjectTimer) { clearTimeout(zlInjectTimer); zlInjectTimer = null; }
           if (zlRenderDebounce) { clearTimeout(zlRenderDebounce); zlRenderDebounce = null; }
           if (zlRenderObserver) { zlRenderObserver.disconnect(); zlRenderObserver = null; }
@@ -1543,7 +1559,7 @@
         }
 
         // Poll every 200ms for route changes
-        setInterval(function() {
+        var _zlSlugPoll = setInterval(function() {
           var slug = getProductSlug();
           if (slug !== zlLastSlug) {
             zlLastSlug = slug;
@@ -1556,6 +1572,7 @@
             }
           }
         }, 200);
+        window._zlIntervals.push(_zlSlugPoll);
 
         // Click fallback: instant scroll feedback
         document.addEventListener('click', function(e) {
@@ -1613,7 +1630,7 @@
     <div id="zl-scroll-progress"></div>
 
     <!-- Lenis Smooth Scroll -->
-    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js" onerror="window.zlLenisFailed=true"></script>
+    <script src="./assets/lenis.min.js" onerror="window.zlLenisFailed=true"></script>
     <script>
     (function() {
       'use strict';
@@ -1625,7 +1642,8 @@
       // 1. SMOOTH SCROLL (Lenis with fallback)
       // ============================================================
       var lenis = null;
-      if (typeof Lenis !== 'undefined' && !window.zlLenisFailed) {
+      if (typeof Lenis !== 'undefined' && !window.zlLenisFailed && !window._zlLenisActive) {
+        window._zlLenisActive = true;
         lenis = new Lenis({
           duration: 1.2,
           easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
@@ -1636,6 +1654,7 @@
           touchMultiplier: 2,
         });
         function raf(time) {
+          if (!window._zlLenisActive) return;
           lenis.raf(time);
           requestAnimationFrame(raf);
         }
@@ -3209,7 +3228,12 @@
         saveEmail: function(e) {
           e.preventDefault();
           var email = document.getElementById('zl-quiz-email').value;
-          alert('Thank you! Your report has been sent to ' + email + '.\n\nA specialist will be in touch within 24 hours.');
+          var form = e.target;
+          var msg = document.createElement('div');
+          msg.textContent = 'Thank you! Your report has been sent to ' + email + '. A specialist will be in touch within 24 hours.';
+          msg.style.cssText = 'background:#0a3a3a;color:#0ABAB5;padding:12px 16px;border-radius:8px;margin-top:12px;font-size:14px;line-height:1.4';
+          form.parentNode.appendChild(msg);
+          setTimeout(function() { msg.style.opacity = '0'; msg.style.transition = 'opacity .5s'; setTimeout(function() { msg.remove(); }, 500); }, 4000);
         }
       };
 
@@ -3405,7 +3429,8 @@
         newsletter.innerHTML = '<p class="zl-footer-newsletter-title">Join the Inner Circle</p>' +
           '<p class="zl-footer-newsletter-text">Early access, skin science insights, and exclusive offers.</p>' +
           '<form class="zl-footer-newsletter-form" onsubmit="zlSubmitNewsletter(event)">' +
-          '<input type="email" placeholder="your@email.com" required />' +
+          '<label for="zl-footer-email" style="display:block;font-size:.75rem;color:#888;margin-bottom:.25rem">Email Address</label>' +
+          '<input type="email" id="zl-footer-email" placeholder="your@email.com" required />' +
           '<button type="submit">Subscribe</button>' +
           '</form>';
         // Insert before footer nav
@@ -3548,7 +3573,9 @@
           <p>Enter your email to receive early access, exclusive offers, and complimentary skin analysis invitations.</p>
           <form class="zl-waitlist-form" id="zl-waitlist-form" action="https://formspree.io/f/FORM_ID" method="POST">
             <!-- Formspree ID — REPLACE FORM_ID with your actual Formspree form ID -->
-            <input type="email" name="email" placeholder="your@email.com" required aria-label="Email address">
+            <label for="zl-waitlist-email" style="display:block;font-size:.75rem;color:#888;margin-bottom:.25rem">Email Address</label>
+            <input type="email" id="zl-waitlist-email" name="email" placeholder="your@email.com" required aria-label="Email address">
+            <p style="font-size:11px;color:#666;margin-top:8px">By subscribing, you agree to our <a href="/privacy.html" style="color:#0ABAB5">Privacy Policy</a>.</p>
             <button type="submit">Notify Me</button>
           </form>
         </div>
@@ -3598,5 +3625,21 @@
     <a href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%27m%20interested%20in%20your%20skincare%20protocol." class="zl-whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     </a>
-  </body>
+    <script>
+      (function() {
+        function hideSkeleton() {
+          var sk = document.getElementById('zl-loading-skeleton');
+          if (!sk) return;
+          sk.style.opacity = '0';
+          setTimeout(function() { sk.style.display = 'none'; }, 400);
+        }
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+          setTimeout(hideSkeleton, 800);
+        } else {
+          document.addEventListener('DOMContentLoaded', function() { setTimeout(hideSkeleton, 800); });
+        }
+      })();
+    </script>
+  <script>if("serviceWorker"in navigator){navigator.serviceWorker.register("/service-worker.js").catch(function(){})}</script>
+</body>
 </html>

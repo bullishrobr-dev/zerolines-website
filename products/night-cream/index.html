@@ -1,32 +1,412 @@
 <!doctype html>
 <html lang="en-GB">
-  <head>
-    <!-- AUTO-RELOAD on product page navigation: intercepts React Router pushState
-         and forces a clean hard refresh so product pages always load correctly -->
-    
-
-    <!-- Sticky Product Bar -->
-    <div class="zl-sticky-product-bar" id="zl-sticky-product-bar">
-      <div style="display:flex;align-items:center;gap:12px;flex:1;min-width:0;">
-        <span class="product-name" id="zl-sticky-product-name">Product Name</span>
-        <span class="product-price" id="zl-sticky-product-price"></span>
-      </div>
-      <a href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%27m%20interested%20in%20the%20Renewal%20and%20Repair%20Night%20Cream." class="btn-whatsapp" id="zl-sticky-cta" target="_blank" rel="noopener">Pre-Order on WhatsApp</a>
-    </div>
-    <script>
-    (function() {
-      var bar = document.getElementById('zl-sticky-product-bar');
-      if (!bar) return;
-      // Show after scrolling past hero
-      var hero = document.querySelector('section:first-of-type');
-      function update() {
-        var threshold = hero ? hero.offsetHeight * 0.6 : 400;
-        bar.classList.toggle('is-visible', (window.scrollY || window.pageYOffset) > threshold);
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="public, max-age=3600" />
+<title>Renewal and Repair Night Cream — Zero Lines | Advanced Skincare Solutions</title>
+<meta name="description" content="A rich night cream with Pyrenean mineral water, niacinamide, hydrolyzed collagen, and lavender floral water." />
+<meta property="og:title" content="Renewal and Repair Night Cream — Zero Lines" />
+<meta property="og:description" content="A rich night cream with Pyrenean mineral water, niacinamide, hydrolyzed collagen, and lavender floral water." />
+<meta property="og:type" content="product" />
+<meta property="og:image" content="https://zerolines.life/assets/product-night-cream.webp" />
+<meta property="og:url" content="https://zerolines.life/products/night-cream/" />
+<meta property="og:locale" content="en_GB" />
+<meta property="og:site_name" content="Zero Lines" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Renewal and Repair Night Cream — Zero Lines" />
+<meta name="twitter:description" content="A rich night cream with Pyrenean mineral water, niacinamide, hydrolyzed collagen, and lavender floral water." />
+<meta name="twitter:image" content="https://zerolines.life/assets/product-night-cream.webp" />
+<link rel="canonical" href="https://zerolines.life/products/night-cream/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0a0a0a" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "https://zerolines.life/#product-night-cream",
+  "name": "Renewal and Repair Night Cream",
+  "description": "A rich night cream with Pyrenean mineral water, niacinamide, hydrolyzed collagen, and lavender floral water.",
+  "brand": {"@type": "Brand", "name": "Zero Lines"},
+  "image": "https://zerolines.life/assets/product-night-cream.webp",
+  "offers": {
+    "@type": "Offer",
+    "availability": "https://schema.org/PreOrder",
+    "url": "https://zerolines.life/products/night-cream/",
+    "price": "325",
+    "priceCurrency": "GBP"
+  }
+}
+</script>
+<!-- AUTO-RELOAD on product page navigation: intercepts React Router pushState
+     and forces a clean hard refresh so product pages always load correctly -->
+<script>
+(function() {
+  var _zlProductReloaded = false;
+  function _zlCheckProductReload() {
+    var hash = window.location.hash || '';
+    if (/^#\/products\//.test(hash)) {
+      if (window._zlSkipProductReload) return;
+      var flag = sessionStorage.getItem('zl_product_refreshed');
+      if (!flag && !_zlProductReloaded) {
+        _zlProductReloaded = true;
+        sessionStorage.setItem('zl_product_refreshed', '1');
+        window.location.reload(true);
+      } else {
+        sessionStorage.removeItem('zl_product_refreshed');
       }
-      window.addEventListener('scroll', update, { passive: true });
-      update();
-    })();
-    </script>
-    <script>document.getElementById('zl-sticky-product-name').textContent = 'Renewal and Repair Night Cream';</script>
-  </body>
+    }
+  }
+  var _origPushState = history.pushState;
+  history.pushState = function() {
+    _origPushState.apply(this, arguments);
+    _zlCheckProductReload();
+  };
+  var _origReplaceState = history.replaceState;
+  history.replaceState = function() {
+    _origReplaceState.apply(this, arguments);
+    _zlCheckProductReload();
+  };
+  window.addEventListener('popstate', function() {
+    _zlCheckProductReload();
+  });
+  _zlCheckProductReload();
+})();
+</script>
+<style>
+html,body{background:#0a0a0a;color:#f5f5f5;font-family:'Inter',sans-serif;margin:0;min-height:100vh}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:400;margin:0}
+a{color:#0ABAB5;text-decoration:none}
+img{max-width:100%;height:auto;display:block}
+.zl-skip-link{position:absolute;left:-9999px}
+.zl-header{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:16px 24px;background:rgba(10,10,10,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.06)}
+.zl-header-logo{font-family:'Playfair Display',serif;font-size:1.25rem;color:#f5f5f5;letter-spacing:0.05em}
+.zl-header-links{display:none;gap:24px;align-items:center;font-size:0.875rem}
+.zl-header-links a{color:rgba(255,255,255,0.75);transition:color 0.2s}
+.zl-header-links a:hover{color:#f5f5f5}
+@media(min-width:768px){.zl-header-links{display:flex}}
+.zl-header-cta{display:none;padding:8px 20px;border:1px solid rgba(255,255,255,0.2);border-radius:100px;color:#f5f5f5;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;transition:all 0.2s}
+@media(min-width:768px){.zl-header-cta{display:inline-block}}
+.zl-header-cta:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.35)}
+
+main{padding-top:64px}
+
+.zl-hero{position:relative;min-height:70vh;display:flex;align-items:flex-end;overflow:hidden}
+.zl-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.7}
+.zl-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,0.95) 0%,rgba(10,10,10,0.3) 60%,rgba(10,10,10,0.1) 100%)}
+.zl-hero-content{position:relative;z-index:2;padding:48px 24px 64px;max-width:720px}
+.zl-eyebrow{display:block;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:#0ABAB5;margin-bottom:12px}
+.zl-hero h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.1;margin-bottom:16px}
+.zl-hero p{font-size:1.125rem;line-height:1.6;color:rgba(255,255,255,0.75);max-width:560px}
+.zl-price{display:inline-block;margin-top:20px;font-size:1.5rem;font-family:'Playfair Display',serif;color:#f5f5f5}
+
+.zl-section{padding:64px 24px;max-width:1100px;margin:0 auto}
+.zl-section h2{font-size:clamp(1.5rem,3vw,2.25rem);margin-bottom:16px}
+.zl-section > p{color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:32px;max-width:720px}
+
+.zl-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:32px}
+.zl-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:28px}
+.zl-card h3{font-size:1.125rem;margin-bottom:10px;color:#f5f5f5}
+.zl-card p{font-size:0.9375rem;color:rgba(255,255,255,0.65);line-height:1.6;margin:0}
+
+.zl-benefits{list-style:none;padding:0;margin:24px 0 0;display:grid;gap:12px}
+.zl-benefits li{position:relative;padding-left:28px;color:rgba(255,255,255,0.8);line-height:1.6}
+.zl-benefits li::before{content:"";position:absolute;left:0;top:6px;width:16px;height:16px;background:#0ABAB5;border-radius:50%;opacity:0.8}
+
+.zl-clinical-bar{display:flex;flex-wrap:wrap;gap:16px 32px;padding:28px 24px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;margin-top:32px}
+.zl-clinical-item{font-size:0.875rem;color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:8px}
+.zl-clinical-item::before{content:"✓";color:#0ABAB5;font-weight:700}
+
+.zl-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;margin-top:32px}
+.zl-step{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:24px}
+.zl-step-title{font-weight:600;margin-bottom:8px;color:#f5f5f5}
+.zl-step p{font-size:0.9375rem;color:rgba(255,255,255,0.65);line-height:1.6;margin:0}
+
+.zl-editorial{display:grid;grid-template-columns:1fr;gap:32px;align-items:center;margin-top:48px}
+@media(min-width:768px){.zl-editorial{grid-template-columns:1fr 1fr}}
+.zl-editorial img{border-radius:12px;width:100%;height:320px;object-fit:cover}
+.zl-editorial-text h3{font-size:clamp(1.25rem,2.5vw,1.75rem);margin-bottom:12px}
+.zl-editorial-text p{color:rgba(255,255,255,0.7);line-height:1.7}
+
+.zl-ritual{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-top:32px}
+.zl-ritual-step{text-align:center;padding:24px}
+.zl-ritual-number{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(10,186,181,0.4);color:#0ABAB5;border-radius:50%;font-family:'Playfair Display',serif;font-size:1rem;margin:0 auto 12px}
+.zl-ritual-title{font-weight:600;margin-bottom:8px;color:#f5f5f5}
+.zl-ritual-step p{font-size:0.875rem;color:rgba(255,255,255,0.65);line-height:1.6;margin:0}
+
+.zl-faq{margin-top:32px}
+.zl-faq-item{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;margin-bottom:12px;overflow:hidden}
+.zl-faq-item summary{padding:18px 24px;cursor:pointer;font-weight:500;color:#f5f5f5;list-style:none;display:flex;justify-content:space-between;align-items:center}
+.zl-faq-item summary::after{content:"+";color:#0ABAB5;font-size:1.25rem}
+.zl-faq-item[open] summary::after{content:"−"}
+.zl-faq-item p{padding:0 24px 18px;margin:0;color:rgba(255,255,255,0.7);line-height:1.6;font-size:0.9375rem}
+
+.zl-cta-section{text-align:center;padding:80px 24px}
+.zl-cta-section h2{margin-bottom:12px}
+.zl-cta-section p{color:rgba(255,255,255,0.7);margin-bottom:28px}
+.zl-btn-wa{display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:14px 32px;border-radius:100px;font-weight:600;font-size:0.9375rem;letter-spacing:0.03em;text-transform:uppercase;transition:transform 0.2s}
+.zl-btn-wa:hover{transform:translateY(-2px)}
+
+.zl-sticky-product-bar{position:fixed;bottom:0;left:0;right:0;display:none;align-items:center;justify-content:space-between;gap:16px;padding:12px 24px;background:rgba(10,10,10,0.95);backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,0.08);z-index:998}
+.zl-sticky-product-bar.is-visible{display:flex}
+.zl-sticky-product-bar .product-name{font-family:'Playfair Display',serif;font-size:1rem;color:#f5f5f5}
+.zl-sticky-product-bar .product-price{font-size:0.875rem;color:#0ABAB5}
+.zl-sticky-product-bar .btn-whatsapp{padding:10px 20px;background:#25D366;color:#fff;border-radius:100px;font-size:0.8rem;font-weight:600;letter-spacing:0.03em;text-transform:uppercase;white-space:nowrap}
+@media(min-width:768px){.zl-sticky-product-bar{padding:12px 48px}}
+
+.zl-scarcity{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px;padding:24px;margin-top:48px}
+.zl-scarcity span{font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.1);padding:6px 14px;border-radius:100px}
+
+.zl-warning{background:rgba(255,200,0,0.06);border:1px solid rgba(255,200,0,0.15);border-radius:10px;padding:20px 24px;margin-top:32px}
+.zl-warning strong{display:block;color:#e8c547;margin-bottom:6px}
+.zl-warning p{color:rgba(255,255,255,0.65);margin:0;font-size:0.9375rem;line-height:1.6}
+
+.zl-footer{border-top:1px solid rgba(255,255,255,0.06);padding:48px 24px;text-align:center}
+.zl-footer-logo{font-family:'Playfair Display',serif;font-size:1.25rem;color:#f5f5f5;letter-spacing:0.05em;display:block;margin-bottom:8px}
+.zl-footer p{color:rgba(255,255,255,0.5);font-size:0.875rem;margin-bottom:20px}
+.zl-footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 24px;margin-bottom:20px}
+.zl-footer-links a{color:rgba(255,255,255,0.6);font-size:0.875rem;transition:color 0.2s}
+.zl-footer-links a:hover{color:#f5f5f5}
+.zl-footer-copy{color:rgba(255,255,255,0.35);font-size:0.8125rem}
+</style>
+</head>
+<body>
+<a href="#main" class="zl-skip-link">Skip to main content</a>
+
+<header class="zl-header">
+  <a href="/" class="zl-header-logo">ZERO LINES</a>
+  <nav class="zl-header-links">
+    <a href="/science/">Science</a>
+    <a href="/protocol/">Protocol</a>
+    <a href="/products/">Products</a>
+    <a href="/story/">Story</a>
+    <a href="/testimonials/">Testimonials</a>
+    <a href="/contact/">Contact</a>
+    <a href="/blog/">Journal</a>
+  </nav>
+  <a href="/" class="zl-header-cta">Back to Home</a>
+</header>
+
+<main id="main">
+  <section class="zl-hero">
+    <picture>
+      <source srcset="./assets/night-sleeping-woman.webp" type="image/webp">
+      <img src="./assets/night-sleeping-woman.jpg" alt="Renewal and Repair Night Cream">
+    </picture>
+    <div class="zl-hero-overlay"></div>
+    <div class="zl-hero-content">
+      <span class="zl-eyebrow">Step 05 · Evening Repair</span>
+      <h1>Renewal and Repair Night Cream</h1>
+      <p>A rich regenerative cream that supports skin comfort and collagen rebuilding during the skin's natural overnight renewal cycle.</p>
+      <span class="zl-price">£325</span>
+    </div>
+  </section>
+
+  <section class="zl-section">
+    <span class="zl-eyebrow">Overview</span>
+    <h2>A different approach to overnight care</h2>
+    <p>Renewal and Repair Night Cream is not a heavier version of your Environmental Shield Day Cream. It is a specialised regenerative formulation designed to work in harmony with the skin's natural overnight repair processes, supporting skin renewal and collagen rebuilding while you sleep.</p>
+    <div class="zl-cards">
+          <div class="zl-card">
+            <h3>Overnight regeneration support</h3>
+            <p>Formulated to work during the skin's natural nighttime renewal cycle — when skin comfort processes are most active. Designed to support this window of opportunity.</p>
+          </div>
+          <div class="zl-card">
+            <h3>Collagen architecture support</h3>
+            <p>Contains hydrolyzed collagen and a shea butter complex designed to support the structural rebuilding processes that occur during sleep, promoting the appearance of firmer, more resilient skin over time.</p>
+          </div>
+          <div class="zl-card">
+            <h3>Deep restorative hydration</h3>
+            <p>A richer texture than the Environmental Shield Day Cream, designed to provide sustained hydration throughout the night without transferring to pillows or feeling heavy.</p>
+          </div></div>
+  </section>
+
+  <section class="zl-section">
+    <span class="zl-eyebrow">What this product is designed to support</span>
+    <h2>Designed to Support</h2>
+    <ul class="zl-benefits"><li>Supports the skin's natural overnight repair and renewal processes</li><li>Designed to promote the appearance of firmer, more resilient skin over time</li><li>Formulated to provide deep, sustained hydration throughout the night</li><li>Helps support the skin's natural barrier recovery during sleep</li><li>Works in harmony with the skin's circadian renewal cycle</li><li>Suitable for nightly external application on facial and neck skin</li></ul>
+  </section>
+
+  <section class="zl-section">
+    <span class="zl-eyebrow">How it works</span>
+    <h2>Overnight mechanism</h2>
+    <p>During sleep, the skin's skin renewal processes are at their peak. Blood flow increases, cell turnover accelerates, and the skin enters a state of repair. Renewal and Repair Night Cream is formulated to support and enhance this natural window of renewal.</p><p>The hydrolyzed collagen and shea butter complex work together — hydrolyzed collagen supports skin comfort signalling while ceramides help rebuild the lipid barrier that may have been compromised during the day by environmental exposure. This dual approach supports both repair and protection.</p>
+    
+        <div class="zl-warning">
+          <strong>External use only</strong>
+          <p>Renewal and Repair Night Cream is designed exclusively for external facial and neck application. Avoid contact with eyes. If irritation occurs, discontinue use and consult a healthcare professional.</p>
+        </div>
+  </section>
+
+  <section class="zl-section">
+    <span class="zl-eyebrow">Usage protocol</span>
+    <h2>Application Protocol</h2>
+    <p>Renewal and Repair Night Cream follows a structured evening application protocol. It is the final step in the Longevity Protocol, designed to seal in all treatment layers and support overnight renewal.</p>
+    <div class="zl-steps">
+          <div class="zl-step">
+            <div class="zl-step-title">Evening application</div>
+            <p>Apply as the final step in your evening routine, after The Serum. Use a slightly larger amount than the Environmental Shield Day Cream — approximately a almond-sized amount for face and neck.</p>
+          </div>
+          <div class="zl-step">
+            <div class="zl-step-title">Gentle massage</div>
+            <p>Massage gently into face and neck using upward motions. Take your time — this is a moment of care, not a race.</p>
+          </div>
+          <div class="zl-step">
+            <div class="zl-step-title">Allow to absorb</div>
+            <p>Allow 5–10 minutes for the cream to fully absorb before lying down. This prevents product transfer and ensures the active compounds begin their overnight work.</p>
+          </div>
+          <div class="zl-step">
+            <div class="zl-step-title">Sleep and renew</div>
+            <p>The cream works while you sleep. During the 6–8 hours of sleep, the formulation supports the skin's natural repair and renewal processes.</p>
+          </div></div>
+  </section>
+
+  <section class="zl-section">
+    <div class="zl-editorial">
+      <picture>
+        <source srcset="./assets/science-skin-macro-droplets.webp" type="image/webp">
+        <img src="./assets/science-skin-macro-droplets.jpg" alt="Overnight immersion. Dawn-to-dusk radiance." loading="lazy">
+      </picture>
+      <div class="zl-editorial-text">
+        <span class="zl-eyebrow">Science</span>
+        <h3>Overnight immersion. Dawn-to-dusk radiance.</h3>
+        <p>Harnessing the restorative power of Alpine spring minerals, our night cream works in harmony with your skin's natural circadian rhythm. Deep hydration meets cellular renewal — so you wake to skin that feels reborn.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="zl-section">
+    <span class="zl-eyebrow">Clinical</span>
+    <h2>Proven Results</h2>
+    <div class="zl-clinical-bar">
+          <div class="zl-clinical-item">
+            <span>91% saw reduced fine lines*</span>
+          </div>
+          <div class="zl-clinical-item">
+            <span>Clinical study: 38 women, 8 weeks</span>
+          </div>
+          <div class="zl-clinical-item">
+            <span>Overnight barrier repair</span>
+          </div>
+          <div class="zl-clinical-item">
+            <span>Hypoallergenic formula</span>
+          </div></div>
+  </section>
+
+  <section class="zl-section">
+    <span class="zl-eyebrow">The Ritual</span>
+    <h2>How to Apply for Optimal Results</h2>
+    <div class="zl-ritual">
+          <div class="zl-ritual-step">
+            <div class="zl-ritual-number">1</div>
+            <div class="zl-ritual-title">Double Cleanse</div>
+            <p>Remove makeup and impurities thoroughly.</p>
+          </div>
+          <div class="zl-ritual-step">
+            <div class="zl-ritual-number">2</div>
+            <div class="zl-ritual-title">Layer Serum</div>
+            <p>Apply BioSignal Facial Serum first.</p>
+          </div>
+          <div class="zl-ritual-step">
+            <div class="zl-ritual-number">3</div>
+            <div class="zl-ritual-title">Lock In</div>
+            <p>Smooth night cream over face and décolletage.</p>
+          </div>
+          <div class="zl-ritual-step">
+            <div class="zl-ritual-number">4</div>
+            <div class="zl-ritual-title">Rest</div>
+            <p>Sleep on silk. Let the minerals work.</p>
+          </div></div>
+    <div class="zl-scarcity"><span>Small Batch Production</span><span>Online Exclusive</span><span>Complimentary Samples</span></div>
+  </section>
+
+  <section class="zl-section">
+    <span class="zl-eyebrow">FAQ</span>
+    <h2>Frequently Asked Questions</h2>
+    <div class="zl-faq">
+          <details class="zl-faq-item">
+            <summary>Why do I need a separate Renewal and Repair Night Cream?</summary>
+            <p>The skin's needs differ between day and night. During the day, the skin needs protection from environmental stressors. At night, the skin enters a repair mode with increased cell turnover. Renewal and Repair Night Cream is specifically formulated to support these overnight renewal processes.</p>
+          </details>
+          <details class="zl-faq-item">
+            <summary>Can I use my Environmental Shield Day Cream at night?</summary>
+            <p>While you can, the Environmental Shield Day Cream is formulated for environmental protection — a function you don't need while sleeping. Renewal and Repair Night Cream contains hydrolyzed collagen and ceramides specifically designed to support the overnight repair cycle. For optimal protocol results, use the designated night formulation.</p>
+          </details>
+          <details class="zl-faq-item">
+            <summary>Will it stain my pillowcase?</summary>
+            <p>Renewal and Repair Night Cream is designed to absorb fully within 5–10 minutes. We recommend applying it before your evening wind-down routine (reading, meditation, etc.) to allow full absorption before lying down.</p>
+          </details>
+          <details class="zl-faq-item">
+            <summary>How long does one jar last?</summary>
+            <p>With nightly use of an almond-sized amount, one jar is designed to last approximately 2–3 months.</p>
+          </details>
+          <details class="zl-faq-item">
+            <summary>Is it too rich for oily skin?</summary>
+            <p>Renewal and Repair Night Cream has a richer texture than Environmental Shield Day Cream by design — the skin can tolerate and benefits from more nourishment overnight. However, if you have very oily skin, start with a smaller amount and adjust as needed.</p>
+          </details>
+          <details class="zl-faq-item">
+            <summary>Can I use it with retinol?</summary>
+            <p>The Longevity Protocol is designed as a complete system. If you currently use retinol, we recommend transitioning to the full protocol for a structured approach. If you wish to combine, use retinol and Renewal and Repair Night Cream on alternate nights.</p>
+          </details>
+          <details class="zl-faq-item">
+            <summary>What is the circadian renewal cycle?</summary>
+            <p>The skin follows a circadian rhythm — a 24-hour cycle. During daylight hours, the skin is in defence mode. At night, blood flow increases, cell turnover accelerates, and repair processes activate. Renewal and Repair Night Cream is formulated to support this natural nighttime repair window.</p>
+          </details>
+          <details class="zl-faq-item">
+            <summary>Should I apply it to my neck too?</summary>
+            <p>Yes. The neck skin is thinner and often shows signs of ageing earlier than the face. Apply Renewal and Repair Night Cream to both face and neck using upward massage motions for comprehensive overnight support.</p>
+          </details></div>
+  </section>
+
+  <section class="zl-cta-section">
+    <h2>Ready to Experience Cream?</h2>
+    <p>Pre-order now via WhatsApp. Our skincare specialists are available to answer any questions.</p>
+    <a href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%27m%20interested%20in%20the%20Renewal%20and%20Repair%20Night%20Cream." class="zl-btn-wa" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      Pre-Order on WhatsApp
+    </a>
+  </section>
+</main>
+
+<!-- Sticky Product Bar -->
+<div class="zl-sticky-product-bar" id="zl-sticky-product-bar">
+  <div style="display:flex;align-items:center;gap:12px;flex:1;min-width:0;">
+    <span class="product-name" id="zl-sticky-product-name">Renewal and Repair Night Cream</span>
+    <span class="product-price" id="zl-sticky-product-price">£325</span>
+  </div>
+  <a href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%27m%20interested%20in%20the%20Renewal%20and%20Repair%20Night%20Cream." class="btn-whatsapp" id="zl-sticky-cta" target="_blank" rel="noopener">Pre-Order on WhatsApp</a>
+</div>
+<script>
+(function() {
+  var bar = document.getElementById('zl-sticky-product-bar');
+  if (!bar) return;
+  var hero = document.querySelector('section:first-of-type');
+  function update() {
+    var threshold = hero ? hero.offsetHeight * 0.6 : 400;
+    bar.classList.toggle('is-visible', (window.scrollY || window.pageYOffset) > threshold);
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+</script>
+
+<footer class="zl-footer">
+  <a href="/" class="zl-footer-logo">ZERO LINES</a>
+  <p>Advanced Skincare Solutions</p>
+  <nav class="zl-footer-links">
+    <a href="/science/">Science</a>
+    <a href="/protocol/">Protocol</a>
+    <a href="/products/">Products</a>
+    <a href="/story/">Story</a>
+    <a href="/testimonials/">Testimonials</a>
+    <a href="/contact/">Contact</a>
+    <a href="/blog/">Journal</a>
+  </nav>
+  <p class="zl-footer-copy">© 2026 Zero Lines. All rights reserved.</p>
+</footer>
+
+</body>
 </html>

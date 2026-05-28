@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
+  <script>document.documentElement.classList.add("js-enabled");</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ingredients | Zero Lines Journal</title>
@@ -35,7 +36,7 @@
     <header class="zl-blog-header">
     <div class="zl-blog-header-inner">
       <a href="/" class="zl-blog-header-logo">ZERO LINES</a>
-      <button class="zl-blog-nav-toggle" onclick="document.querySelector('.zl-blog-header-nav').classList.toggle('is-open')" aria-label="Menu">
+      <button class="zl-blog-nav-toggle" onclick="document.querySelector('.zl-blog-header-nav').classList.toggle('is-open');document.querySelector('.zl-blog-menu-backdrop').classList.toggle('is-visible')" aria-label="Menu">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
       <nav class="zl-blog-header-nav">
@@ -43,12 +44,13 @@
         <a href="/#/protocol">Protocol</a>
         <a href="/products">Products</a>
         <a href="/#/story">Story</a>
-        <a href="/quiz">Analyzer</a>
+        <a href="/#/quiz">Analyzer</a>
         <a href="/#/testimonials">Testimonials</a>
         <a href="/#/contact">Contact</a>
         <a href="/blog/" class="active">Journal</a>
       </nav>
-      <a href="/quiz" class="zl-blog-header-cta">Analyse Your Skin</a>
+    <div class="zl-blog-menu-backdrop" onclick="document.querySelector('.zl-blog-header-nav').classList.remove('is-open');this.classList.remove('is-visible')" aria-hidden="true"></div>
+      <a href="/#/quiz" class="zl-blog-header-cta">Analyse Your Skin</a>
     </div>
   </header>
 
@@ -116,7 +118,7 @@
     <section style="margin-top:3rem; padding:1.5rem; border-top:1px solid rgba(0,0,0,0.08);">
       <h3 style="font-size:1rem; font-weight:600; margin-bottom:1rem;">Explore Zero Lines</h3>
       <p style="font-size:0.9375rem; color:#4a4a4a; line-height:1.6;">
-        Browse our <a href="/products">complete range</a> of Alpine-formulated skincare, or take the <a href="/quiz">AI Skin Analyser</a> for personalised recommendations.
+        Browse our <a href="/products">complete range</a> of Alpine-formulated skincare, or take the <a href="/#/quiz">AI Skin Analyser</a> for personalised recommendations.
       </p>
     </section>
   </main>

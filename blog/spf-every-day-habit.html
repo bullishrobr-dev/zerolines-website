@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
+  <script>document.documentElement.classList.add("js-enabled");</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SPF Every Day: The Habit That Prevents 80% of Visible Ageing — Zero Lines</title>
@@ -19,7 +20,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="blog.css" />
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","headline":"SPF Every Day: The Habit That Prevents 80% of Visible Aging","description":"UV exposure is responsible for up to 80% of visible facial ageing. Yet most people still treat sunscreen as a beach accessory.","image":"https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=1200&h=675&fit=crop&q=80","author":{"@type":"Organization","name":"Zero Lines"},"publisher": {"@type": "Organization", "name": "Zero Lines", "logo": {"@type": "ImageObject", "url": "https://zerolines.life/assets/logo.png"}},"datePublished": "2026-05-13","dateModified": "2026-05-13","mainEntityOfPage":{"@type":"WebPage","@id":"https://zerolines.life/blog/spf-every-day-habit.html"}}
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"SPF Every Day: The Habit That Prevents 80% of Visible Aging","description":"UV exposure is responsible for up to 80% of visible facial ageing. Yet most people still treat sunscreen as a beach accessory.","image":"images/unsplash/photo-1504608524841-42fe6f032b4b_w_1200_h_675_fit_crop_q_80.jpg","author":{"@type":"Organization","name":"Zero Lines"},"publisher": {"@type": "Organization", "name": "Zero Lines", "logo": {"@type": "ImageObject", "url": "https://zerolines.life/assets/logo.png"}},"datePublished": "2026-05-13","dateModified": "2026-05-13","mainEntityOfPage":{"@type":"WebPage","@id":"https://zerolines.life/blog/spf-every-day-habit.html"}}
   </script>
 <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://zerolines.life/"},{"@type":"ListItem","position":2,"name":"Journal","item":"https://zerolines.life/blog/"},{"@type":"ListItem","position":3,"name":"SPF Every Day: The Habit That Prevents 80% of Visible Aging","item":"https://zerolines.life/blog/spf-every-day-habit.html"}]}
@@ -34,7 +35,7 @@
   {"@context": "https://schema.org", "@type": "WebPage", "@id": "https://zerolines.life/blog/spf-every-day-habit.html", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".zl-blog-content > p:first-of-type", ".zl-blog-toc"]}}
   </script>
   <script type="application/ld+json">
-  {"@context": "https://schema.org", "@type": "MedicalWebPage", "@id": "https://zerolines.life/blog/spf-every-day-habit.html#medical", "name": "SPF Every Day: The Habit That Prevents 80% of Visible Aging", "description": "UV exposure is responsible for up to 80% of visible facial ageing. Yet most people still treat sunscreen as a beach accessory.", "url": "https://zerolines.life/blog/spf-every-day-habit.html", "image": "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=1200&h=675&fit=crop&q=80", "datePublished": "2026-05-13", "dateModified": "2026-05-13", "about": {"@type": "MedicalEntity", "name": "Skin Health"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://zerolines.life/blog/spf-every-day-habit.html"}, "publisher": {"@type": "Organization", "name": "Zero Lines", "logo": {"@type": "ImageObject", "url": "https://zerolines.life/assets/logo.png"}}}
+  {"@context": "https://schema.org", "@type": "MedicalWebPage", "@id": "https://zerolines.life/blog/spf-every-day-habit.html#medical", "name": "SPF Every Day: The Habit That Prevents 80% of Visible Aging", "description": "UV exposure is responsible for up to 80% of visible facial ageing. Yet most people still treat sunscreen as a beach accessory.", "url": "https://zerolines.life/blog/spf-every-day-habit.html", "image": "images/unsplash/photo-1504608524841-42fe6f032b4b_w_1200_h_675_fit_crop_q_80.jpg", "datePublished": "2026-05-13", "dateModified": "2026-05-13", "about": {"@type": "MedicalEntity", "name": "Skin Health"}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://zerolines.life/blog/spf-every-day-habit.html"}, "publisher": {"@type": "Organization", "name": "Zero Lines", "logo": {"@type": "ImageObject", "url": "https://zerolines.life/assets/logo.png"}}}
   </script>
   
 </head>
@@ -43,7 +44,7 @@
     <header class="zl-blog-header">
     <div class="zl-blog-header-inner">
       <a href="/" class="zl-blog-header-logo">ZERO LINES</a>
-      <button class="zl-blog-nav-toggle" onclick="document.querySelector('.zl-blog-header-nav').classList.toggle('is-open')" aria-label="Menu">
+      <button class="zl-blog-nav-toggle" onclick="document.querySelector('.zl-blog-header-nav').classList.toggle('is-open');document.querySelector('.zl-blog-menu-backdrop').classList.toggle('is-visible')" aria-label="Menu">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
       <nav class="zl-blog-header-nav">
@@ -51,12 +52,13 @@
         <a href="/#/protocol">Protocol</a>
         <a href="/products">Products</a>
         <a href="/#/story">Story</a>
-        <a href="/quiz">Analyser</a>
+        <a href="/#/quiz">Analyser</a>
         <a href="/#/testimonials">Testimonials</a>
         <a href="/#/contact">Contact</a>
         <a href="/blog/" class="active">Journal</a>
       </nav>
-      <a href="/quiz" class="zl-blog-header-cta">Analyse Your Skin</a>
+    <div class="zl-blog-menu-backdrop" onclick="document.querySelector('.zl-blog-header-nav').classList.remove('is-open');this.classList.remove('is-visible')" aria-hidden="true"></div>
+      <a href="/#/quiz" class="zl-blog-header-cta">Analyse Your Skin</a>
     </div>
   </header>
 
@@ -191,7 +193,8 @@
         <!-- TODO: Replace FORM_ID_PLACEHOLDER with your actual Formspree form ID from https://formspree.io -->
         <form class="zl-blog-newsletter-form" action="https://formspree.io/f/FORM_ID_PLACEHOLDER" method="POST" onsubmit="this.style.display='none';this.nextElementSibling.style.display='block';return true;">
           <input type="hidden" name="_subject" value="Zero Lines Newsletter Subscription">
-          <input type="email" name="email" placeholder="your@email.com" required />
+          <label style="display:block;font-size:.75rem;color:#888;margin-bottom:.25rem">Email Address</label>
+          <input type="email" name="email" placeholder="your@email.com" required aria-label="Email address" />
           <button type="submit">Subscribe</button>
         </form>
         <div class="zl-blog-newsletter-success">Thank you. Welcome to the Inner Circle.</div>
@@ -202,15 +205,15 @@
         <h3 class="zl-blog-related-title">Related Reading</h3>
         <div class="zl-blog-related-grid">
           <a href="lifestyle-factors-aging.html" class="zl-blog-card">
-            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=240&fit=crop&q=80" alt="Lifestyle" class="zl-blog-card-image" loading="lazy">
+            <img src="images/unsplash/photo-1544367567-0f2fcb009e0b_w_400_h_240_fit_crop_q_80.jpg" alt="Lifestyle" class="zl-blog-card-image" loading="lazy">
             <div class="zl-blog-card-content"><p class="zl-blog-card-category">Lifestyle</p><h4 class="zl-blog-card-title">7 Lifestyle Factors That Accelerate Ageing</h4></div>
           </a>
           <a href="climate-skincare-needs.html" class="zl-blog-card">
-            <img src="https://images.unsplash.com/photo-1504386106331-3e4e71712b38?w=400&h=240&fit=crop&q=80" alt="Climate" class="zl-blog-card-image" loading="lazy">
+            <img src="images/unsplash/photo-1504386106331-3e4e71712b38_w_400_h_240_fit_crop_q_80.jpg" alt="Climate" class="zl-blog-card-image" loading="lazy">
             <div class="zl-blog-card-content"><p class="zl-blog-card-category">Lifestyle</p><h4 class="zl-blog-card-title">How Climate Affects Your Skincare Needs</h4></div>
           </a>
           <a href="complete-guide-skin-aging.html" class="zl-blog-card">
-            <img src="https://images.unsplash.com/photo-1515894203077-9cd36032142f?w=400&h=240&fit=crop&q=80" alt="Ageing" class="zl-blog-card-image" loading="lazy">
+            <img src="images/unsplash/photo-1515894203077-9cd36032142f_w_400_h_240_fit_crop_q_80.jpg" alt="Ageing" class="zl-blog-card-image" loading="lazy">
             <div class="zl-blog-card-content"><p class="zl-blog-card-category">Science</p><h4 class="zl-blog-card-title">The Complete Guide to Skin Ageing</h4></div>
           </a>
         </div>
@@ -221,7 +224,7 @@
           <p class="zl-blog-ai-analyst-eyebrow">AI-Powered Analysis</p>
           <h3 class="zl-blog-ai-analyst-title">See Your Skin Like Never Before</h3>
           <p class="zl-blog-ai-analyst-text">Upload a photo and answer 10 quick questions. Our AI analyses texture, tone, hydration, ageing signs, and lifestyle factors — then delivers a complete dermatologist-style report.</p>
-          <a href="/quiz" class="zl-blog-ai-analyst-btn">Analyse Your Skin</a>
+          <a href="/#/quiz" class="zl-blog-ai-analyst-btn">Analyse Your Skin</a>
         </div>
         <div class="zl-blog-ai-analyst-graphic">
           <div class="zl-blog-ai-analyst-radar"></div>
@@ -233,7 +236,7 @@
         </div>
       </div>
       <div class="zl-blog-author">
-        <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?w=120&h=120&fit=crop&q=80" alt="Zero Lines team" class="zl-blog-author-avatar">
+        <img src="images/unsplash/photo-1559757175-5700dde675bc_w_120_h_120_fit_crop_q_80.jpg" alt="Zero Lines team" class="zl-blog-author-avatar">
         <div>
           <p class="zl-blog-author-name">Zero Lines Formulation Team</p>
           <p class="zl-blog-author-role">Barcelona, Spain</p>
@@ -249,6 +252,7 @@
       <a href="fine-lines-vs-wrinkles.html" class="zl-blog-nav-prev"><span class="zl-blog-nav-label">Previous</span><span class="zl-blog-nav-title">Fine Lines vs. Wrinkles: Understanding the Difference</span></a>
       <a href="pyrenees-to-barcelona.html" class="zl-blog-nav-next"><span class="zl-blog-nav-label">Next</span><span class="zl-blog-nav-title">From Pyrenees to Barcelona: Tracing Zero Lines' Alpine Ingredients</span></a>
     </nav>
+    <div class="zl-blog-menu-backdrop" onclick="document.querySelector('.zl-blog-header-nav').classList.remove('is-open');this.classList.remove('is-visible')" aria-hidden="true"></div>
   
       <section style="margin-top:3rem; padding:1.5rem; border-top:1px solid rgba(0,0,0,0.08);">
         <h3 style="font-size:1rem; font-weight:600; margin-bottom:1rem;">Explore Zero Lines</h3>
@@ -263,8 +267,9 @@
       <a href="/" class="zl-blog-footer-logo">ZERO LINES</a>
       <p class="zl-blog-footer-tagline">Advanced Skincare Solutions</p>
       <nav class="zl-blog-footer-nav">
-        <a href="/">Home</a><a href="/#/science">Science</a><a href="/#/protocol">Protocol</a><a href="/products">Products</a><a href="/#/story">Story</a><a href="/quiz">Analyser</a><a href="/#/contact">Contact</a>
+        <a href="/">Home</a><a href="/#/science">Science</a><a href="/#/protocol">Protocol</a><a href="/products">Products</a><a href="/#/story">Story</a><a href="/#/quiz">Analyser</a><a href="/#/contact">Contact</a>
       </nav>
+    <div class="zl-blog-menu-backdrop" onclick="document.querySelector('.zl-blog-header-nav').classList.remove('is-open');this.classList.remove('is-visible')" aria-hidden="true"></div>
       <div class="zl-blog-footer-contact">
         <a href="mailto:info@zerolines.life">info@zerolines.life</a>
         <span>·</span>
@@ -314,7 +319,7 @@
 <button class="zl-back-to-top" id="zl-back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg></button>
   <div class="zl-blog-sticky-quiz" id="zl-sticky-quiz">
     <span class="zl-blog-sticky-quiz-text"><strong>See Your Skin Like Never Before</strong></span>
-    <a href="/quiz" class="zl-blog-sticky-quiz-btn">Analyse Your Skin</a>
+    <a href="/#/quiz" class="zl-blog-sticky-quiz-btn">Analyse Your Skin</a>
     <button class="zl-blog-sticky-quiz-close" onclick="document.getElementById('zl-sticky-quiz').style.display='none'" aria-label="Close">×</button>
   </div>
 </body>

@@ -10,6 +10,25 @@
  * 3. Deploy
  */
 
+// Simple in-memory rate limiter: max 5 requests per IP per minute
+const rateLimitMap = new Map();
+function isRateLimited(ip) {
+  const now = Date.now();
+  const windowMs = 60 * 1000; // 1 minute
+  const maxRequests = 5;
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now - entry.start > windowMs) {
+    rateLimitMap.set(ip, { start: now, count: 1 });
+    return false;
+  }
+  entry.count++;
+  if (entry.count > maxRequests) {
+    return true;
+  }
+  rateLimitMap.set(ip, entry);
+  return false;
+}
+
 export default {
   async fetch(request, env) {
     const corsHeaders = {
@@ -27,6 +46,24 @@ export default {
       return new Response('Method not allowed', { status: 405, headers: corsHeaders });
     }
 
+    // Rate limiting
+    const clientIp = request.headers.get('CF-Connecting-IP') || 'unknown';
+    if (isRateLimited(clientIp)) {
+      return new Response(
+        JSON.stringify({ error: 'Rate limit exceeded. Max 5 analyses per minute.' }),
+        { status: 429, headers: corsHeaders }
+      );
+    }
+
+    // Request size limit (~5MB)
+    const contentLength = request.headers.get('content-length');
+    if (contentLength && parseInt(contentLength, 10) > 5 * 1024 * 1024) {
+      return new Response(
+        JSON.stringify({ error: 'Request too large. Max 5MB.' }),
+        { status: 413, headers: corsHeaders }
+      );
+    }
+
     try {
       const body = await request.json();
       const { answers, photoBase64 } = body;
@@ -35,6 +72,22 @@ export default {
         return new Response(
           JSON.stringify({ error: 'Missing answers or photo' }),
           { status: 400, headers: corsHeaders }
+        );
+      }
+
+      // Validate photo is a data URL image
+      if (typeof photoBase64 !== 'string' || !photoBase64.startsWith('data:image/')) {
+        return new Response(
+          JSON.stringify({ error: 'Invalid photo format. Must be a base64 data URL image.' }),
+          { status: 400, headers: corsHeaders }
+        );
+      }
+
+      // Sanity-check photo size (base64 ~4/3 of binary; 4MB binary ~5.3MB base64)
+      if (photoBase64.length > 7 * 1024 * 1024) {
+        return new Response(
+          JSON.stringify({ error: 'Photo too large. Max ~4MB image.' }),
+          { status: 413, headers: corsHeaders }
         );
       }
 

@@ -593,7 +593,7 @@ nav,
   }
 }
 
-/* --- AGGRESSIVE MOBILE WIDTH FIXES --- */
+/* --- MOBILE WIDTH FIXES --- */
 @media (max-width: 768px) {
   h1.text-h1, h1.font-serif,
   h2.text-h2, h2.font-serif,
@@ -603,7 +603,7 @@ nav,
     hyphens: none !important;
     overflow-wrap: break-word;
   }
-  
+
   /* Full-width containers on mobile */
   .content-max-width, [class*="max-width"], .text-center {
     max-width: 100% !important;
@@ -612,33 +612,31 @@ nav,
     margin-left: 0 !important;
     margin-right: 0 !important;
   }
-  
-  /* Section padding reduction */
+
+  /* Section padding — keep horizontal breathing room */
   section, .section-pad, .section-pad-sm {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
   }
-  
-  /* Grid → single column full width (targeted) */
-  .grid,
-  [class*="grid-cols"] {
+
+  /* Generic .grid stacks on mobile, but grids with explicit responsive classes
+     (e.g. md:grid-cols-2, lg:grid-cols-3) are left alone so Tailwind breakpoints work */
+  .grid:not([class*="grid-cols-"]) {
     display: flex !important;
     flex-direction: column !important;
     gap: 1rem !important;
-    padding-left: 0.75rem !important;
-    padding-right: 0.75rem !important;
   }
-  .grid > *,
-  [class*="grid-cols"] > * {
+  .grid:not([class*="grid-cols-"]) > * {
     width: 100% !important;
     max-width: 100% !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
   }
 
-  /* Cards full width */
-  .grid > a, .grid > article, .grid > div,
-  [class*="grid-cols"] > a, [class*="grid-cols"] > article, [class*="grid-cols"] > div,
+  /* Cards inside generic grids go full-width */
+  .grid:not([class*="grid-cols-"]) > a,
+  .grid:not([class*="grid-cols-"]) > article,
+  .grid:not([class*="grid-cols-"]) > div,
   .test-card, [class*="product"] > div, [class*="card"] {
     width: 100% !important;
     max-width: 100% !important;
@@ -646,18 +644,12 @@ nav,
     margin-left: 0 !important;
     margin-right: 0 !important;
   }
-  
-  /* Body text wider */
+
+  /* Body text — keep small side padding so it doesn't touch edges */
   p, .text-body, .text-body-large {
     max-width: 100% !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-  
-  /* Feature list items full width */
-  .flex, [class*="flex-col"] {
-    padding-left: 0.5rem !important;
-    padding-right: 0.5rem !important;
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
   }
 }
 
@@ -3354,7 +3346,9 @@ footer a, footer nav a, .zl-quiz-footer-links a {
     font-size: 0.75rem;
   }
   .zl-clinical-item:not(:last-child)::after {
-    display: none;
+    width: 1px;
+    height: 60%;
+    opacity: 0.3;
   }
   .zl-provenance-items {
     gap: 0.5rem 1.25rem;
@@ -3461,7 +3455,8 @@ footer a, footer nav a, .zl-quiz-footer-links a {
 
 /* --- CUSTOM FOCUS STATES --- */
 input:focus, textarea:focus, select:focus, button:focus, a:focus {
-  outline: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
   border-color: #0ABAB5;
   box-shadow: 0 0 0 3px rgba(10, 186, 181, 0.15);
 }

@@ -1548,7 +1548,7 @@
     <div id="zl-scroll-progress"></div>
 
     <!-- Lenis Smooth Scroll -->
-    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js" onerror="window.zlLenisFailed=true"></script>
+    <script src="./assets/lenis.min.js" onerror="window.zlLenisFailed=true"></script>
     <script>
     (function() {
       'use strict';
@@ -3184,5 +3184,6 @@
       }, true); // capture phase — runs BEFORE React Router's listener
     })();
     </script>
-  </body>
+  <script>if("serviceWorker"in navigator){navigator.serviceWorker.register("/service-worker.js").catch(function(){})}</script>
+</body>
 </html>

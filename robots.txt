@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://zerolines.life/sitemap.xml
+Disallow: /assets/*.backup*
