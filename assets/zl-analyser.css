@@ -1,0 +1,129 @@
+/* Zero Lines — Skin Analyser
+   Kept in its own file so it cannot collide with edits to zl.css.
+   Depends on the tokens defined there. */
+
+.zl-a { min-height: 60svh; }
+
+/* ---- shared shell ---- */
+.zl-a-stage { max-width: 780px; margin-inline: auto; }
+.zl-a-stage--wide { max-width: 1040px; }
+
+/* ---- progress ---- */
+#zl-a-progress {
+  position: relative; display: block;
+  font-size: var(--t-eyebrow); font-weight: 500;
+  letter-spacing: .28em; text-transform: uppercase; color: var(--mist);
+  padding-bottom: 1rem; margin-bottom: 2rem;
+}
+#zl-a-progress::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 2px;
+  width: var(--p, 0%); background: var(--tiffany);
+  transition: width 700ms var(--ease);
+}
+#zl-a-progress::before {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: var(--rule);
+}
+
+/* ---- options ---- */
+.zl-a-options { display: grid; gap: .75rem; margin-top: 2rem; }
+@media (min-width: 640px) { .zl-a-options { grid-template-columns: 1fr 1fr; } }
+
+.zl-a-option {
+  position: relative; text-align: left;
+  padding: 1.125rem 3rem 1.125rem 1.375rem;
+  border: 1px solid var(--rule);
+  background: transparent; color: var(--ink);
+  font-size: .9375rem; line-height: 1.5;
+  transition: border-color 320ms var(--ease), background-color 320ms var(--ease), color 320ms var(--ease);
+}
+.zl-a-option:hover { border-color: var(--ink-3); }
+.zl-a-option[data-selected="true"] {
+  border-color: var(--tiffany); background: var(--tiffany-wash); color: var(--ink);
+}
+/* tick */
+.zl-a-option::after {
+  content: ""; position: absolute; right: 1.25rem; top: 50%;
+  width: 16px; height: 16px; margin-top: -8px;
+  border: 1px solid var(--rule); border-radius: 50%;
+  transition: border-color 320ms var(--ease), background-color 320ms var(--ease);
+}
+.zl-a-option[data-selected="true"]::after {
+  border-color: var(--tiffany); background: var(--tiffany);
+  box-shadow: inset 0 0 0 3px #fff;
+}
+
+.zl-a-nav { display: flex; gap: 1rem; align-items: center; margin-top: 2.5rem; flex-wrap: wrap; }
+.zl-a-nav .zl-btn:disabled { opacity: .35; cursor: not-allowed; }
+.zl-a-nav .zl-btn:disabled::before { transform: scaleY(0); }
+
+/* ---- photo ---- */
+.zl-a-drop {
+  display: grid; place-items: center; gap: .75rem; text-align: center;
+  padding: clamp(2.5rem, 8vw, 4.5rem) 1.5rem;
+  border: 1px dashed var(--stone); background: var(--bone-2);
+  cursor: pointer; transition: border-color 320ms var(--ease), background-color 320ms var(--ease);
+}
+.zl-a-drop:hover, .zl-a-drop[data-drag="true"] { border-color: var(--tiffany); background: var(--tiffany-wash); }
+.zl-a-drop__icon { color: var(--tiffany); }
+.zl-a-drop__hint { font-size: .8125rem; color: var(--mist); }
+
+.zl-a-preview { display: grid; gap: 1.25rem; justify-items: start; }
+.zl-a-preview img { max-width: 320px; width: 100%; }
+
+/* ---- working ---- */
+.zl-a-steps { display: grid; gap: .875rem; margin-top: 2.5rem; list-style: none; padding: 0; }
+.zl-a-step {
+  position: relative; padding-left: 2rem;
+  font-size: .9375rem; color: var(--mist-2);
+  transition: color 520ms var(--ease);
+}
+.zl-a-step::before {
+  content: ""; position: absolute; left: 0; top: .55em;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--stone); transition: background-color 520ms var(--ease), transform 520ms var(--ease);
+}
+.zl-a-step[data-active="true"] { color: var(--ink); }
+.zl-a-step[data-active="true"]::before { background: var(--tiffany); transform: scale(1.35); }
+.zl-a-step[data-done="true"] { color: var(--ink-3); }
+.zl-a-step[data-done="true"]::before { background: var(--tiffany); }
+
+.zl-a-pulse {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid var(--tiffany); border-top-color: transparent;
+  animation: zl-a-spin 1.1s linear infinite;
+}
+@keyframes zl-a-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .zl-a-pulse { animation: none; } }
+
+/* ---- report ---- */
+.zl-a-score { display: flex; align-items: baseline; gap: .625rem; flex-wrap: wrap; margin-bottom: 2rem; }
+.zl-a-score__num {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(4rem, 10vw, 7rem); line-height: 1; color: var(--tiffany);
+}
+.zl-a-score__of { font-family: var(--font-display); font-size: 1.75rem; color: var(--mist); }
+.zl-a-score__label { flex-basis: 100%; margin-top: .5rem; font-size: .875rem; letter-spacing: .04em; color: var(--ink-3); }
+
+.zl-a-summary {
+  padding: 1.75rem 0 2rem; margin-bottom: 2.5rem;
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+}
+.zl-a-section { margin-top: 3rem; }
+.zl-a-section > .zl-eyebrow { margin-bottom: 1.5rem; }
+.zl-a-grid { display: grid; gap: 1.5rem; }
+@media (min-width: 720px) { .zl-a-grid { grid-template-columns: 1fr 1fr; } }
+
+.zl-a-block { padding-top: 1.125rem; border-top: 1px solid var(--rule); }
+.zl-a-block__title {
+  font-size: var(--t-eyebrow); font-weight: 500; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--tiffany-deep); margin-bottom: .625rem;
+}
+.zl-a-block p { font-size: .9375rem; line-height: 1.75; color: var(--ink-3); }
+
+.zl-a-list { display: grid; gap: .875rem; list-style: none; padding: 0; }
+.zl-a-list li { position: relative; padding-left: 1.75rem; color: var(--ink-3); font-size: .9375rem; line-height: 1.7; }
+.zl-a-list li::before { content: ""; position: absolute; left: 0; top: .68em; width: 12px; height: 1px; background: var(--tiffany); }
+
+.zl-a-note { margin-top: 3rem; padding: 2rem; background: var(--tiffany-wash); }
+.zl-a-note p { color: var(--ink-2); font-size: .9375rem; line-height: 1.75; }

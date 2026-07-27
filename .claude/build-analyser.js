@@ -1,4 +1,26 @@
-<!doctype html>
+/* Generate /analyser/index.html with the extracted question data inlined, so
+ * the page is self-contained and the questions cannot drift from the originals.
+ */
+const fs = require('fs');
+const path = require('path');
+const ROOT = path.resolve(__dirname, '..');
+
+const questions = JSON.parse(fs.readFileSync(path.join(ROOT, '.claude', 'quiz-questions.json'), 'utf8'));
+
+// "Select up to 3" is stated in the question text; enforce it in data too.
+questions.forEach((q) => {
+  if (q.id === 'concerns') q.max = 3;
+});
+
+const NAV = [
+  ['/science', 'Science'], ['/protocol', 'Protocol'], ['/products', 'Formulations'],
+  ['/story', 'Story'], ['/analyser/', 'Analyser'], ['/blog/', 'Journal'], ['/contact', 'Contact'],
+];
+
+const headerNav = NAV.map(([h, t]) => `      <a class="zl-header__link" href="${h}">${t}</a>`).join('\n');
+const menuNav = NAV.map(([h, t], i) => `    <a class="zl-menu__link" href="${h}" style="--i:${i}">${t}</a>`).join('\n');
+
+const html = `<!doctype html>
 <html lang="en-GB">
 <head>
 <meta charset="UTF-8">
@@ -37,13 +59,7 @@
   <div class="zl-header__inner">
     <a class="zl-logo" href="/">Zero Lines</a>
     <nav class="zl-header__nav" aria-label="Primary">
-      <a class="zl-header__link" href="/science">Science</a>
-      <a class="zl-header__link" href="/protocol">Protocol</a>
-      <a class="zl-header__link" href="/products">Formulations</a>
-      <a class="zl-header__link" href="/story">Story</a>
-      <a class="zl-header__link" href="/analyser/">Analyser</a>
-      <a class="zl-header__link" href="/blog/">Journal</a>
-      <a class="zl-header__link" href="/contact">Contact</a>
+${headerNav}
     </nav>
     <button class="zl-burger" aria-label="Open menu" aria-expanded="false" aria-controls="zl-menu"><span></span></button>
   </div>
@@ -51,13 +67,7 @@
 
 <div class="zl-menu" id="zl-menu" data-open="false">
   <nav class="zl-menu__list" aria-label="Mobile">
-    <a class="zl-menu__link" href="/science" style="--i:0">Science</a>
-    <a class="zl-menu__link" href="/protocol" style="--i:1">Protocol</a>
-    <a class="zl-menu__link" href="/products" style="--i:2">Formulations</a>
-    <a class="zl-menu__link" href="/story" style="--i:3">Story</a>
-    <a class="zl-menu__link" href="/analyser/" style="--i:4">Analyser</a>
-    <a class="zl-menu__link" href="/blog/" style="--i:5">Journal</a>
-    <a class="zl-menu__link" href="/contact" style="--i:6">Contact</a>
+${menuNav}
   </nav>
   <div class="zl-menu__meta">
     <a class="zl-link" href="https://wa.me/35054005198">WhatsApp</a>
@@ -265,7 +275,7 @@
   </div>
 </div>
 
-<script type="application/json" id="zl-quiz-data">[{"id":"age","question":"What is your age range?","multi":false,"options":[{"value":"under25","label":"Under 25"},{"value":"25-34","label":"25–34"},{"value":"35-44","label":"35–44"},{"value":"45-54","label":"45–54"},{"value":"55+","label":"55+"}]},{"id":"gender","question":"What is your gender?","multi":false,"options":[{"value":"female","label":"Female"},{"value":"male","label":"Male"},{"value":"other","label":"Other / Prefer not to say"}]},{"id":"skinType","question":"How would you describe your skin type?","multi":false,"options":[{"value":"dry","label":"Dry — tight, flaky, needs moisture"},{"value":"oily","label":"Oily — shiny, enlarged pores, prone to congestion"},{"value":"combination","label":"Combination — oily T-zone, dry cheeks"},{"value":"sensitive","label":"Sensitive — reacts easily, redness, stinging"},{"value":"normal","label":"Normal — balanced, rarely problematic"}]},{"id":"climate","question":"What best describes your local climate?","multi":false,"options":[{"value":"humid","label":"Humid — hot and moist most of the year"},{"value":"dry","label":"Dry — low humidity, arid or cold"},{"value":"temperate","label":"Temperate — mild, seasonal changes"},{"value":"polluted","label":"Urban / high pollution"},{"value":"coastal","label":"Coastal — salt air and wind"}]},{"id":"concerns","question":"What are your top skin concerns? (Select up to 3)","multi":true,"maxSelect":3,"options":[{"value":"fine lines","label":"Fine lines & wrinkles"},{"value":"dullness","label":"Dullness & uneven tone"},{"value":"dryness","label":"Dryness & dehydration"},{"value":"redness","label":"Redness & sensitivity"},{"value":"pigmentation","label":"Dark spots & pigmentation"},{"value":"pores","label":"Large pores"},{"value":"firmness","label":"Loss of firmness"},{"value":"dark circles","label":"Dark circles"}],"max":3},{"id":"sleep","question":"How is your sleep quality on average?","multi":false,"options":[{"value":"excellent","label":"Excellent — 7-9 hours, restful"},{"value":"good","label":"Good — 6-7 hours, mostly restful"},{"value":"poor","label":"Poor — under 6 hours or interrupted"},{"value":"very poor","label":"Very poor — insomnia or chronic fatigue"}]},{"id":"routine","question":"How would you describe your current skincare routine?","multi":false,"options":[{"value":"none","label":"None — I don't use skincare products"},{"value":"minimal","label":"Minimal — cleanser and moisturiser"},{"value":"moderate","label":"Moderate — 3 to 4 products including a serum"},{"value":"advanced","label":"Advanced — acids, retinoids, multiple steps"}]},{"id":"treatments","question":"Have you tried any of these treatments before? (Select all that apply)","multi":true,"optional":true,"options":[{"value":"retinol","label":"Retinol / Retinoids"},{"value":"acids","label":"AHAs / BHAs (glycolic, salicylic)"},{"value":"vitamin c","label":"Vitamin C serums"},{"value":"peptides","label":"Peptides / Collagen creams"},{"value":"lasers","label":"Laser / IPL treatments"},{"value":"facials","label":"Professional facials"},{"value":"botox","label":"Botox / Fillers"},{"value":"none","label":"None of the above"}]},{"id":"duration","question":"How long have you had these concerns?","multi":false,"options":[{"value":"just started","label":"Just started"},{"value":"few months","label":"A few months"},{"value":"1-2 years","label":"1–2 years"},{"value":"several years","label":"Several years"}]},{"id":"lifestyle","question":"Which of these apply to you? (Select all that apply)","multi":true,"optional":true,"options":[{"value":"smoke","label":"I smoke"},{"value":"alcohol","label":"I drink alcohol regularly"},{"value":"poor sleep","label":"Poor sleep (under 6 hours)"},{"value":"high stress","label":"High stress"},{"value":"no spf","label":"Daily sun exposure without SPF"},{"value":"low water","label":"I drink less than 1L water/day"},{"value":"none","label":"None of the above — I keep a healthy lifestyle"}]}]</script>
+<script type="application/json" id="zl-quiz-data">${JSON.stringify(questions)}</script>
 <script src="/assets/lenis.min.js" defer></script>
 <script src="/assets/zl.js" defer></script>
 <script src="/assets/zl-analyser.js" defer></script>
@@ -278,3 +288,8 @@
 </script>
 </body>
 </html>
+`;
+
+fs.mkdirSync(path.join(ROOT, 'analyser'), { recursive: true });
+fs.writeFileSync(path.join(ROOT, 'analyser', 'index.html'), html);
+console.log(`wrote analyser/index.html with ${questions.length} questions inlined`);
