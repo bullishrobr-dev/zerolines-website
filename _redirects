@@ -1,19 +1,41 @@
-# Netlify redirects for Zero Lines SPA
-# Static HTML files handle crawlers; SPA fallback handles client-side nav
+# Netlify redirects — Zero Lines
+#
+# This site is static HTML. Every route below exists as a real file, so there is
+# no SPA to fall back for.
+#
+# The previous version ended with a catch-all rewrite:
+#     /*    /index.html    200
+# which meant Netlify never served 404.html. Every mistyped or dead URL returned
+# the homepage with HTTP 200 — a soft 404. Google treats those as duplicate
+# content and they hide broken links from any crawler or monitoring. Removed:
+# Netlify serves /404.html automatically for unmatched paths.
 
-# Ensure trailing slashes are normalized (optional SEO improvement)
-/science/              /science              301
-/protocol/             /protocol             301
-/story/                /story                301
-/testimonials/         /testimonials         301
-/contact/              /contact              301
-/products/             /products             301
-/products/serum/       /products/serum       301
-/products/night-cream/ /products/night-cream 301
-/products/day-cream/   /products/day-cream   301
-/products/peeling-gel/ /products/peeling-gel 301
-/products/syringe/     /products/syringe     301
-/products/syringe-refill/ /products/syringe-refill 301
+# --- Legacy hash-router URLs from the pre-clean-URL SPA -----------------------
+# Hash fragments are never sent to the server, so these cannot be redirected
+# server-side; zl.js rewrites them client-side on load. Listed here as a record.
 
-# SPA fallback — serve index.html for unmatched routes so React can mount
-/*                     /index.html           200
+# --- Trailing-slash normalisation --------------------------------------------
+/science/                   /science                  301
+/protocol/                  /protocol                 301
+/story/                     /story                    301
+/testimonials/              /testimonials             301
+/contact/                   /contact                  301
+/products/                  /products                 301
+/products/serum/            /products/serum           301
+/products/night-cream/      /products/night-cream     301
+/products/day-cream/        /products/day-cream       301
+/products/peeling-gel/      /products/peeling-gel     301
+/products/syringe/          /products/syringe         301
+/products/syringe-refill/   /products/syringe-refill  301
+
+# --- Convenience aliases ------------------------------------------------------
+/journal                    /blog/                    301
+/faq                        /faq.html                 301
+/privacy                    /privacy.html             301
+/terms                      /terms.html               301
+/cookies                    /cookies.html             301
+/accessibility              /accessibility.html       301
+/shipping                   /shipping-returns.html    301
+/shipping-returns           /shipping-returns.html    301
+/analyser                   /#analyser                301
+/analyzer                   /#analyser                301
