@@ -3326,20 +3326,37 @@
         localStorage.setItem('zl_waitlist_emails', JSON.stringify(emails));
         localStorage.setItem('zl_waitlist_submitted', '1');
 
-        // Show success state immediately (optimistic)
-        form.innerHTML = '<p style="color:#0ABAB5;font-weight:500;">Welcome to the waitlist. We\'ll be in touch.</p>';
+        var statusEl = form.querySelector('.zl-form__status');
+        var btn = form.querySelector('button[type="submit"]');
+        if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
 
-        // TODO: Replace FORM_ID with your actual Formspree form ID from https://formspree.io
-        return fetch('https://formspree.io/f/FORM_ID', {
+        // Netlify Forms accepts a urlencoded POST to any path on the site.
+        // Report success only once the request actually resolves — the previous
+        // build showed "Welcome to the waitlist" optimistically and swallowed
+        // every failure, which is why a dead endpoint went unnoticed for months.
+        var body = new URLSearchParams({
+          'form-name': 'waitlist',
+          email: email,
+          source: source || 'waitlist'
+        }).toString();
+
+        return fetch('/', {
           method: 'POST',
-          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email, source: source, _subject: 'Zero Lines Waitlist' })
-        }).then(function(r) {
-          if (r.ok && typeof gtag === 'function') gtag('event', 'waitlist_signup');
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: body
+        }).then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          form.innerHTML = '<p class="zl-form__status" data-state="ok">Welcome to the waitlist. We\'ll be in touch.</p>';
+          if (typeof gtag === 'function') gtag('event', 'waitlist_signup');
           return r;
-        }).catch(function(e) {
-          console.warn('Waitlist submission failed, saved locally:', e);
-          return { ok: true, local: true };
+        }).catch(function (err) {
+          console.warn('Waitlist submission failed:', err);
+          if (btn) { btn.disabled = false; btn.textContent = 'Notify Me'; }
+          if (statusEl) {
+            statusEl.setAttribute('data-state', 'err');
+            statusEl.textContent = 'Something went wrong. Please email info@zerolines.life and we will add you.';
+          }
+          throw err;
         });
       };
       window.zlSubmitNewsletter = function(event) {
@@ -3571,7 +3588,9 @@
         <div id="zl-waitlist-content">
           <h3 id="zl-waitlist-title">Be the First to Experience Zero Lines</h3>
           <p>Enter your email to receive early access, exclusive offers, and complimentary skin analysis invitations.</p>
-          <form class="zl-waitlist-form" id="zl-waitlist-form" action="https://formspree.io/f/FORM_ID" method="POST">
+          <form class="zl-waitlist-form" id="zl-waitlist-form" method="POST" name="waitlist" action="/thank-you/" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="waitlist">
+          <p class="zl-hp" aria-hidden="true"><label>Do not fill this in: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
             <!-- Formspree ID — REPLACE FORM_ID with your actual Formspree form ID -->
             <label for="zl-waitlist-email" style="display:block;font-size:.75rem;color:#888;margin-bottom:.25rem">Email Address</label>
             <input type="email" id="zl-waitlist-email" name="email" placeholder="your@email.com" required aria-label="Email address">
