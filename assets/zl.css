@@ -478,7 +478,11 @@ input, textarea, select { font: inherit; color: inherit; }
 }
 .zl-product__media img {
   width: 100%; height: 100%; object-fit: contain;
-  padding: clamp(1.5rem, 5%, 3rem);
+  /* Tight padding: the source shots vary a lot in framing — some are cutouts,
+     one is a wide landscape, one is a full scene — so generous padding made the
+     smaller-framed ones read as tiny. Consistent product photography on a
+     single seamless background is the real fix. */
+  padding: clamp(0.75rem, 2.5%, 1.5rem);
   transition: transform 1500ms var(--ease);
   mix-blend-mode: multiply;   /* neutralises the differing baked-in backgrounds */
 }
