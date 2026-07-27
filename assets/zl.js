@@ -1,93 +1,191 @@
 /* ============================================================================
-   ZERO LINES — behaviour layer
-   Replaces the 504KB React + GSAP bundle.
+   ZERO LINES — behaviour layer v2
 
-   Non-negotiable rule, learned from the previous build:
-   NOTHING here may leave content permanently invisible. The CSS keeps every
-   element visible by default; the `zl-js` class below opts into animation.
-   Every reveal additionally has a hard failsafe timer. If IntersectionObserver
-   is missing, if an error is thrown, if an element never intersects — the
-   content still appears.
+   v1's motion was one fade-and-rise applied to everything, which reads flat.
+   v2 provides a vocabulary — wipes, masked line rise, stagger, parallax,
+   counters, scroll-linked progress, and weighted inertial scrolling — so
+   different content moves differently and the page has rhythm.
+
+   The safety model is unchanged and absolute: CSS keeps everything visible by
+   default, `zl-js` opts into animation, and every reveal has a hard failsafe
+   timer. If any of this throws, the page still reads.
    ========================================================================= */
 (function () {
   'use strict';
 
   var root = document.documentElement;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var canAnimate = !reduced && 'IntersectionObserver' in window;
 
-  // Opt into animation synchronously, before first paint, so there is no flash
-  // of visible-then-hidden content. Skipped entirely for reduced-motion users.
-  if (!reduced && 'IntersectionObserver' in window) root.classList.add('zl-js');
+  if (canAnimate) root.classList.add('zl-js');
 
   function ready(fn) {
     if (document.readyState !== 'loading') fn();
     else document.addEventListener('DOMContentLoaded', fn);
   }
+  function $(sel, ctx) { return [].slice.call((ctx || document).querySelectorAll(sel)); }
 
-  /* ---------- 1. Scroll reveal ------------------------------------------- */
+  /* ---------- 1. Legacy hash-route rescue -------------------------------- *
+     The old SPA used #/science, #/products/day-cream. Those URLs are still in
+     bookmarks, inbound links and Google's cache, and hash fragments never reach
+     the server so Netlify cannot redirect them. Runs before anything paints. */
+
+  (function hashRescue() {
+    var hash = window.location.hash || '';
+    if (hash.indexOf('#/') !== 0) return;
+    var target = hash.slice(1);
+    if (target === '/quiz' || target === '/analyser') target = '/analyser/';
+    var here = window.location.pathname.replace(/\/$/, '');
+    if (target.replace(/\/$/, '') !== here) {
+      window.location.replace(target);
+    } else {
+      // same page, stale hash — strip it so it cannot confuse anything
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+  })();
+
+  /* ---------- 2. Reveal -------------------------------------------------- */
 
   function initReveal() {
-    if (!root.classList.contains('zl-js')) return;
-
-    var targets = [].slice.call(document.querySelectorAll('[data-reveal], .zl-rise'));
+    if (!canAnimate) return;
+    var targets = $('[data-reveal], [data-stagger], .zl-rise, .zl-draw');
     if (!targets.length) return;
 
-    var show = function (el) { el.classList.add('is-in'); };
+    function show(el) { el.classList.add('is-in'); }
 
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        show(entry.target);
-        io.unobserve(entry.target);
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        show(e.target);
+        io.unobserve(e.target);
       });
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.01 });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.01 });
 
     targets.forEach(function (el) {
-      // Anything already in view on load reveals immediately — no waiting for a scroll.
       var r = el.getBoundingClientRect();
-      if (r.top < window.innerHeight && r.bottom > 0) show(el);
+      if (r.top < window.innerHeight * 1.05 && r.bottom > 0) show(el);
       else io.observe(el);
     });
 
-    // Hard failsafe: whatever happens, everything is visible within 2.5s.
+    // Absolute backstop — everything visible within 2.5s no matter what.
     setTimeout(function () { targets.forEach(show); }, 2500);
   }
 
-  /* ---------- 2. Header state -------------------------------------------- */
+  /* ---------- 3. Parallax ------------------------------------------------ *
+     Subtle only. data-parallax="0.12" moves the element at 12% of scroll.
+     Values above ~0.25 start to feel like a gimmick rather than depth. */
+
+  function initParallax() {
+    if (!canAnimate) return;
+    var items = $('[data-parallax]').map(function (el) {
+      return { el: el, factor: parseFloat(el.getAttribute('data-parallax')) || 0.12 };
+    });
+    if (!items.length) return;
+
+    var ticking = false;
+    function update() {
+      var vh = window.innerHeight;
+      items.forEach(function (it) {
+        var r = it.el.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > vh + 200) return;
+        // -1 at top of viewport, +1 at bottom
+        var progress = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
+        it.el.style.transform = 'translate3d(0,' + (progress * it.factor * 100).toFixed(2) + 'px,0)';
+      });
+      ticking = false;
+    }
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+  }
+
+  /* ---------- 4. Counters ------------------------------------------------ */
+
+  function initCounters() {
+    var els = $('[data-count]');
+    if (!els.length) return;
+    if (!canAnimate) {
+      els.forEach(function (el) { el.textContent = el.getAttribute('data-count'); });
+      return;
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var el = e.target;
+        io.unobserve(el);
+        var target = parseFloat(el.getAttribute('data-count'));
+        var suffix = el.getAttribute('data-count-suffix') || '';
+        var dur = 1600, t0 = null;
+        function frame(t) {
+          if (t0 === null) t0 = t;
+          var p = Math.min((t - t0) / dur, 1);
+          var eased = 1 - Math.pow(1 - p, 4);          // quart-out, matches --ease
+          el.textContent = Math.round(target * eased) + suffix;
+          if (p < 1) requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      });
+    }, { threshold: 0.4 });
+
+    els.forEach(function (el) { el.textContent = '0' + (el.getAttribute('data-count-suffix') || ''); io.observe(el); });
+    setTimeout(function () {
+      els.forEach(function (el) {
+        if (el.textContent === '0' + (el.getAttribute('data-count-suffix') || '')) {
+          el.textContent = el.getAttribute('data-count') + (el.getAttribute('data-count-suffix') || '');
+        }
+      });
+    }, 3000);
+  }
+
+  /* ---------- 5. Scroll progress ----------------------------------------- */
+
+  function initProgress() {
+    var bar = document.querySelector('.zl-progress');
+    if (!bar) return;
+    var ticking = false;
+    function update() {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    }, { passive: true });
+    update();
+  }
+
+  /* ---------- 6. Header -------------------------------------------------- */
 
   function initHeader() {
     var header = document.querySelector('.zl-header');
     if (!header) return;
-
-    // A page with a full-bleed hero starts transparent over it; everything else
-    // starts solid so the nav is always legible.
-    var hero = document.querySelector('.zl-hero');
-    var solidFrom = hero ? Math.max(hero.offsetHeight - 120, 80) : 0;
-
     var ticking = false;
     function update() {
-      header.setAttribute('data-mode', window.scrollY >= solidFrom ? 'solid' : 'over');
+      header.setAttribute('data-scrolled', window.scrollY > 24 ? 'true' : 'false');
       ticking = false;
     }
     update();
     window.addEventListener('scroll', function () {
       if (ticking) return;
       ticking = true;
-      window.requestAnimationFrame(update);
-    }, { passive: true });
-    window.addEventListener('resize', function () {
-      solidFrom = hero ? Math.max(hero.offsetHeight - 120, 80) : 0;
-      update();
+      requestAnimationFrame(update);
     }, { passive: true });
   }
 
-  /* ---------- 3. Mobile menu --------------------------------------------- */
+  /* ---------- 7. Menu ---------------------------------------------------- */
 
   function initMenu() {
     var burger = document.querySelector('.zl-burger');
     var menu = document.getElementById('zl-menu');
     if (!burger || !menu) return;
-
     var lastFocus = null;
 
     function setOpen(open) {
@@ -99,51 +197,29 @@
         lastFocus = document.activeElement;
         var first = menu.querySelector('a, button');
         if (first) first.focus();
-      } else if (lastFocus) {
+      } else if (lastFocus && lastFocus.focus) {
         lastFocus.focus();
       }
     }
 
-    burger.addEventListener('click', function () {
-      setOpen(menu.getAttribute('data-open') !== 'true');
-    });
-    menu.addEventListener('click', function (e) {
-      if (e.target.closest('a')) setOpen(false);
-    });
+    burger.addEventListener('click', function () { setOpen(menu.getAttribute('data-open') !== 'true'); });
+    menu.addEventListener('click', function (e) { if (e.target.closest('a')) setOpen(false); });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && menu.getAttribute('data-open') === 'true') setOpen(false);
     });
     setOpen(false);
   }
 
-  /* ---------- 4. Legacy hash-route rescue --------------------------------- */
-  /* The old SPA used #/science, #/products/day-cream etc. Those URLs are still
-     in the wild — in inbound links, bookmarks and anything Google cached before
-     the clean-URL migration. Hash fragments never reach the server, so Netlify
-     cannot redirect them; they have to be caught here. */
-
-  function initHashRescue() {
-    var hash = window.location.hash || '';
-    if (hash.indexOf('#/') !== 0) return;
-    var target = hash.slice(1);                       // "#/science" -> "/science"
-    if (target === '/' || target === '') target = '/';
-    if (target !== window.location.pathname) {
-      window.location.replace(target);
-    }
-  }
-
-  /* ---------- 5. Cookie banner ------------------------------------------- */
+  /* ---------- 8. Cookie notice ------------------------------------------- */
 
   function initCookies() {
     var banner = document.getElementById('zl-cookie');
     if (!banner) return;
     var KEY = 'zl_cookie_choice';
-
     try { if (localStorage.getItem(KEY)) return; } catch (e) { return; }
 
-    // Hold it back until the visitor has actually started reading. Shown on
-    // first paint it competes with the hero headline, and on narrow viewports
-    // it lands directly on top of the hero's call-to-action buttons.
+    // Held back until the visitor scrolls — on first paint it competes with the
+    // hero and on narrow viewports it lands on the hero's buttons.
     var shown = false;
     function reveal() {
       if (shown) return;
@@ -151,10 +227,9 @@
       banner.setAttribute('data-open', 'true');
       window.removeEventListener('scroll', onScroll);
     }
-    function onScroll() { if (window.scrollY > 240) reveal(); }
-
+    function onScroll() { if (window.scrollY > 280) reveal(); }
     window.addEventListener('scroll', onScroll, { passive: true });
-    setTimeout(reveal, 12000);        // backstop for visitors who never scroll
+    setTimeout(reveal, 14000);
 
     banner.addEventListener('click', function (e) {
       var btn = e.target.closest('[data-cookie]');
@@ -164,15 +239,12 @@
     });
   }
 
-  /* ---------- 6. Netlify form submit ------------------------------------- */
+  /* ---------- 9. Netlify forms ------------------------------------------- */
 
   function initForms() {
-    [].slice.call(document.querySelectorAll('form[data-netlify]')).forEach(function (form) {
+    $('form[data-netlify]').forEach(function (form) {
       form.addEventListener('submit', function (e) {
-        // Progressive enhancement only. Without JS the form posts normally to
-        // /thank-you/ and still works.
-        e.preventDefault();
-
+        e.preventDefault();   // progressive enhancement; without JS it posts normally
         var status = form.querySelector('.zl-form__status');
         var btn = form.querySelector('button[type="submit"]');
         var original = btn ? btn.textContent : '';
@@ -184,48 +256,83 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: new URLSearchParams(new FormData(form)).toString()
-        })
-          .then(function (r) {
-            if (!r.ok) throw new Error('HTTP ' + r.status);
-            var wrap = form.parentNode;
-            form.remove();
-            var ok = document.createElement('p');
-            ok.className = 'zl-form__status';
-            ok.setAttribute('data-state', 'ok');
-            ok.setAttribute('role', 'status');
-            ok.textContent = 'Thank you — you are on the list. We will be in touch.';
-            wrap.appendChild(ok);
-          })
-          .catch(function () {
-            if (btn) { btn.disabled = false; btn.textContent = original; }
-            if (status) {
-              status.setAttribute('data-state', 'err');
-              status.textContent = 'Something went wrong. Please email info@zerolines.life and we will add you.';
-            }
-          });
+        }).then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          var wrap = form.parentNode;
+          form.remove();
+          var ok = document.createElement('p');
+          ok.className = 'zl-form__status';
+          ok.setAttribute('data-state', 'ok');
+          ok.setAttribute('role', 'status');
+          ok.textContent = 'Thank you — you are on the list. We will be in touch.';
+          wrap.appendChild(ok);
+        }).catch(function () {
+          if (btn) { btn.disabled = false; btn.textContent = original; }
+          if (status) {
+            status.setAttribute('data-state', 'err');
+            status.textContent = 'Something went wrong. Please email info@zerolines.life and we will add you.';
+          }
+        });
       });
     });
   }
 
-  /* ---------- 7. Current-page nav state ---------------------------------- */
+  /* ---------- 10. Current page nav state --------------------------------- */
 
   function initCurrentNav() {
     var here = window.location.pathname.replace(/\/index\.html$/, '/').replace(/\/$/, '') || '/';
-    [].slice.call(document.querySelectorAll('.zl-header__link, .zl-menu__link')).forEach(function (a) {
+    $('.zl-header__link, .zl-menu__link').forEach(function (a) {
       var href = (a.getAttribute('href') || '').replace(/\/$/, '') || '/';
       if (href === here) a.setAttribute('aria-current', 'page');
     });
   }
 
+  /* ---------- 11. Weighted scroll ---------------------------------------- *
+     Lenis gives scrolling the inertia luxury sites use. Loaded only when it is
+     present and motion is allowed; the site is fully functional without it. */
+
+  function initSmoothScroll() {
+    if (!canAnimate || typeof window.Lenis !== 'function') return;
+    if (window.innerWidth < 900) return;      // native momentum is better on touch
+    try {
+      var lenis = new window.Lenis({
+        duration: 1.25,
+        easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+        smoothWheel: true,
+        smoothTouch: false
+      });
+      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf);
+
+      // in-page anchors go through lenis so they inherit the same weight
+      $('a[href^="#"]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          var id = a.getAttribute('href');
+          if (id.length < 2) return;
+          var el = document.querySelector(id);
+          if (!el) return;
+          e.preventDefault();
+          lenis.scrollTo(el, { offset: -80 });
+        });
+      });
+      window.zlLenis = lenis;
+    } catch (err) { /* native scrolling is a perfectly good fallback */ }
+  }
+
   /* ---------- boot -------------------------------------------------------- */
 
-  initHashRescue();   // before paint where possible — it may navigate away
   ready(function () {
-    try { initReveal(); } catch (e) { document.querySelectorAll('[data-reveal],.zl-rise').forEach(function (el) { el.classList.add('is-in'); }); }
+    try { initReveal(); } catch (e) {
+      $('[data-reveal],[data-stagger],.zl-rise,.zl-draw').forEach(function (el) { el.classList.add('is-in'); });
+    }
     try { initHeader(); } catch (e) {}
     try { initMenu(); } catch (e) {}
+    try { initParallax(); } catch (e) {}
+    try { initCounters(); } catch (e) {}
+    try { initProgress(); } catch (e) {}
     try { initCookies(); } catch (e) {}
     try { initForms(); } catch (e) {}
     try { initCurrentNav(); } catch (e) {}
+    try { initSmoothScroll(); } catch (e) {}
   });
 })();
