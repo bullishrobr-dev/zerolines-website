@@ -1,0 +1,602 @@
+/* ============================================================================
+   ZERO LINES — Design System
+   Clinical-luxury skincare. Hand-authored. No framework.
+
+   Design principles encoded here:
+   1. Content is VISIBLE BY DEFAULT. Scroll-reveal is opt-in via .zl-js on <html>,
+      set synchronously by zl.js. If JS fails, the page still reads perfectly.
+      (The previous build left 163 elements stranded at opacity:0 — never again.)
+   2. Bone and ink dominate. Accent occupies <5% of any viewport.
+   3. Motion is slow and heavy. Long durations, expo easing, small distances.
+      Nothing bounces. Nothing springs.
+   4. Space is the luxury. Section padding is generous and scales fluidly.
+   ========================================================================= */
+
+/* ---------- 1. TOKENS ---------------------------------------------------- */
+
+:root {
+  /* Surface — warm bone, never pure white */
+  --bone:        #FAF8F4;
+  --bone-2:      #F3EFE8;
+  --bone-3:      #EAE4DA;
+  --stone:       #DED7CA;
+
+  /* Ink — warm near-black, never pure black */
+  --ink:         #0E0F0E;
+  --ink-2:       #242624;
+  --ink-3:       #4A4D4A;
+  --mist:        #86867F;   /* secondary text on bone — 4.6:1 on --bone */
+  --mist-2:      #A8A79F;   /* tertiary / meta only, never body copy */
+
+  /* Accent — muted verdigris. Pyrenean spring, not startup turquoise. */
+  --verdigris:      #3A5952;
+  --verdigris-lift: #4C7269;
+  --verdigris-wash: #EDF2F0;
+
+  /* Metallic — used only as hairlines and small-caps highlights */
+  --gold:        #9C8149;
+  --gold-lift:   #BFA269;
+
+  /* On-dark */
+  --on-dark:        #F7F5F1;
+  --on-dark-2:      #B9B7B0;
+  --on-dark-3:      #7E7D77;
+
+  /* Lines */
+  --rule:        rgba(14, 15, 14, 0.10);
+  --rule-soft:   rgba(14, 15, 14, 0.06);
+  --rule-dark:   rgba(255, 255, 255, 0.14);
+  --rule-dark-soft: rgba(255, 255, 255, 0.07);
+
+  /* Type families */
+  --font-display: "Cormorant Garamond", "Didot", "Bodoni MT", Georgia, serif;
+  --font-body:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* Fluid type scale — 1.25 minor-third at the base, wider at display sizes */
+  --t-display-xl: clamp(3.25rem, 8.5vw, 8.5rem);
+  --t-display-l:  clamp(2.5rem, 5.6vw, 5rem);
+  --t-display-m:  clamp(2rem, 3.6vw, 3.25rem);
+  --t-display-s:  clamp(1.6rem, 2.4vw, 2.25rem);
+  --t-lead:       clamp(1.0625rem, 1.15vw, 1.3125rem);
+  --t-body:       1rem;
+  --t-small:      0.875rem;
+  --t-eyebrow:    0.6875rem;
+
+  /* Rhythm */
+  --gutter:       clamp(1.5rem, 5vw, 5rem);
+  --section-y:    clamp(5.5rem, 13vh, 11rem);
+  --section-y-sm: clamp(3.5rem, 8vh, 6rem);
+  --container:    1320px;
+  --container-mid: 1040px;
+  --measure:      68ch;      /* prose max line length */
+  --measure-tight: 46ch;     /* lead paragraphs, pull quotes */
+
+  /* Motion — heavy, expensive */
+  --ease:      cubic-bezier(0.16, 1, 0.30, 1);
+  --ease-io:   cubic-bezier(0.62, 0.05, 0.20, 1);
+  --dur-rev:   1150ms;
+  --dur-ui:    420ms;
+
+  --header-h:  76px;
+}
+
+@media (max-width: 768px) { :root { --header-h: 62px; } }
+
+/* ---------- 2. RESET ----------------------------------------------------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 1.5rem);
+}
+
+body {
+  margin: 0;
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  font-weight: 400;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis-weight: none;
+  overflow-x: hidden;
+}
+
+img, picture, video, svg { max-width: 100%; display: block; }
+img { height: auto; }
+
+h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd { margin: 0; }
+ul[class], ol[class] { list-style: none; margin: 0; padding: 0; }
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+input, textarea, select { font: inherit; color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--verdigris);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.zl-on-dark :focus-visible { outline-color: var(--on-dark); }
+
+::selection { background: var(--verdigris); color: var(--bone); }
+
+/* ---------- 3. TYPOGRAPHY ------------------------------------------------ */
+
+.zl-display-xl, .zl-display-l, .zl-display-m, .zl-display-s {
+  font-family: var(--font-display);
+  font-weight: 300;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.zl-display-xl { font-size: var(--t-display-xl); line-height: 0.94; letter-spacing: -0.025em; }
+.zl-display-l  { font-size: var(--t-display-l);  line-height: 1.02; }
+.zl-display-m  { font-size: var(--t-display-m);  line-height: 1.12; }
+.zl-display-s  { font-size: var(--t-display-s);  line-height: 1.2;  letter-spacing: -0.01em; }
+
+/* Italic accent — the one flourish. Use on a single word in a headline. */
+.zl-em { font-style: italic; font-weight: 300; }
+
+.zl-eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--t-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--mist);
+  line-height: 1.4;
+}
+.zl-on-dark .zl-eyebrow { color: var(--on-dark-3); }
+.zl-eyebrow--accent { color: var(--verdigris); }
+.zl-eyebrow--gold   { color: var(--gold); }
+
+.zl-lead {
+  font-size: var(--t-lead);
+  line-height: 1.68;
+  color: var(--ink-3);
+  font-weight: 300;
+  max-width: var(--measure);
+}
+.zl-on-dark .zl-lead { color: var(--on-dark-2); }
+
+.zl-prose { max-width: var(--measure); }
+.zl-prose p { margin-bottom: 1.5em; color: var(--ink-3); }
+.zl-prose p:last-child { margin-bottom: 0; }
+.zl-prose strong { font-weight: 600; color: var(--ink); }
+.zl-prose a { color: var(--verdigris); text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+.zl-prose a:hover { color: var(--verdigris-lift); }
+
+.zl-muted { color: var(--mist); }
+.zl-num {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4vw, 3.75rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- 4. LAYOUT ---------------------------------------------------- */
+
+.zl-container     { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
+.zl-container--mid{ max-width: var(--container-mid); }
+.zl-container--narrow { max-width: 780px; }
+
+.zl-section       { padding-block: var(--section-y); position: relative; }
+.zl-section--sm   { padding-block: var(--section-y-sm); }
+.zl-section--flush-top { padding-top: 0; }
+
+.zl-dark { background: var(--ink); color: var(--on-dark); }
+.zl-dark h1, .zl-dark h2, .zl-dark h3 { color: var(--on-dark); }
+.zl-tint { background: var(--bone-2); }
+
+.zl-rule { height: 1px; background: var(--rule); border: 0; margin: 0; }
+.zl-dark .zl-rule { background: var(--rule-dark); }
+
+.zl-grid { display: grid; gap: clamp(2rem, 4vw, 4rem); }
+.zl-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.zl-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.zl-grid--4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1024px) { .zl-grid--4 { grid-template-columns: repeat(2, 1fr); } .zl-grid--3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 760px)  { .zl-grid--2, .zl-grid--3, .zl-grid--4 { grid-template-columns: 1fr; } }
+
+/* Editorial split: text column + image column */
+.zl-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2.5rem, 6vw, 6.5rem);
+  align-items: center;
+}
+.zl-split--wide-img { grid-template-columns: 5fr 7fr; }
+.zl-split--wide-txt { grid-template-columns: 7fr 5fr; }
+@media (max-width: 900px) {
+  .zl-split, .zl-split--wide-img, .zl-split--wide-txt { grid-template-columns: 1fr; gap: clamp(2rem, 6vw, 3rem); }
+  .zl-split__media--first-on-mobile { order: -1; }
+}
+
+.zl-stack > * + * { margin-top: var(--stack-gap, 1.5rem); }
+.zl-stack--tight { --stack-gap: 1rem; }
+.zl-stack--loose { --stack-gap: 2.5rem; }
+
+/* ---------- 5. HEADER / NAV ---------------------------------------------- */
+
+.zl-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--ink); color: var(--on-dark);
+  padding: 0.875rem 1.5rem; font-size: var(--t-small);
+}
+.zl-skip:focus { left: 0; }
+
+.zl-header {
+  position: fixed; inset: 0 0 auto 0; z-index: 100;
+  height: var(--header-h);
+  display: flex; align-items: center;
+  transition: background-color var(--dur-ui) var(--ease),
+              backdrop-filter var(--dur-ui) var(--ease),
+              border-color var(--dur-ui) var(--ease);
+  border-bottom: 1px solid transparent;
+}
+/* Over-hero state: transparent, light text */
+.zl-header[data-mode="over"] { color: var(--on-dark); }
+.zl-header[data-mode="over"] .zl-header__link { color: var(--on-dark-2); }
+.zl-header[data-mode="over"] .zl-header__link:hover,
+.zl-header[data-mode="over"] .zl-header__link[aria-current="page"] { color: var(--on-dark); }
+/* Scrolled state: bone panel, ink text */
+.zl-header[data-mode="solid"] {
+  background: rgba(250, 248, 244, 0.86);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  border-bottom-color: var(--rule-soft);
+  color: var(--ink);
+}
+.zl-header[data-mode="solid"] .zl-header__link { color: var(--ink-3); }
+.zl-header[data-mode="solid"] .zl-header__link:hover,
+.zl-header[data-mode="solid"] .zl-header__link[aria-current="page"] { color: var(--ink); }
+
+.zl-header__inner {
+  width: 100%; max-width: var(--container); margin-inline: auto;
+  padding-inline: var(--gutter);
+  display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+}
+
+.zl-logo {
+  font-family: var(--font-body);
+  font-size: 0.8125rem; font-weight: 500;
+  letter-spacing: 0.42em; text-transform: uppercase;
+  white-space: nowrap;
+  transition: opacity var(--dur-ui) var(--ease);
+}
+.zl-logo:hover { opacity: 0.62; }
+
+.zl-header__nav { display: flex; align-items: center; gap: clamp(1.25rem, 2.4vw, 2.5rem); }
+.zl-header__link {
+  position: relative;
+  font-size: 0.75rem; font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  transition: color var(--dur-ui) var(--ease);
+  padding-block: 0.5rem;
+}
+.zl-header__link::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0.125rem;
+  height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: right;
+  transition: transform 560ms var(--ease);
+}
+.zl-header__link:hover::after,
+.zl-header__link[aria-current="page"]::after { transform: scaleX(1); transform-origin: left; }
+
+@media (max-width: 1080px) { .zl-header__nav { display: none; } }
+
+/* Burger */
+.zl-burger { display: none; width: 44px; height: 44px; align-items: center; justify-content: center; margin-right: -0.5rem; }
+.zl-burger span { display: block; width: 22px; height: 1px; background: currentColor; position: relative; transition: background-color 200ms var(--ease); }
+.zl-burger span::before, .zl-burger span::after {
+  content: ""; position: absolute; left: 0; width: 22px; height: 1px; background: currentColor;
+  transition: transform 460ms var(--ease), top 260ms var(--ease);
+}
+.zl-burger span::before { top: -6px; }
+.zl-burger span::after  { top: 6px; }
+[data-menu="open"] .zl-burger span { background: transparent; }
+[data-menu="open"] .zl-burger span::before { top: 0; transform: rotate(45deg); }
+[data-menu="open"] .zl-burger span::after  { top: 0; transform: rotate(-45deg); }
+@media (max-width: 1080px) { .zl-burger { display: flex; } }
+
+/* Full-screen menu — display:none when closed so it can never leak into view
+   (the old build kept it in the layer tree at opacity 0 and it bled through). */
+.zl-menu {
+  position: fixed; inset: 0; z-index: 99;
+  background: var(--ink); color: var(--on-dark);
+  display: none;
+  flex-direction: column; justify-content: center;
+  padding: var(--header-h) var(--gutter) 3rem;
+}
+.zl-menu[data-open="true"] { display: flex; }
+.zl-menu__list { display: flex; flex-direction: column; gap: clamp(0.5rem, 1.6vh, 1rem); }
+.zl-menu__link {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(2rem, 7vw, 3.5rem); line-height: 1.15;
+  color: var(--on-dark);
+  opacity: 0; transform: translateY(18px);
+  animation: zl-menu-in 760ms var(--ease) forwards;
+  animation-delay: calc(var(--i, 0) * 55ms + 90ms);
+}
+@keyframes zl-menu-in { to { opacity: 1; transform: none; } }
+.zl-menu__meta { margin-top: clamp(2rem, 6vh, 4rem); display: flex; flex-wrap: wrap; gap: 1.5rem 2.5rem; }
+
+/* ---------- 6. BUTTONS --------------------------------------------------- */
+
+.zl-btn {
+  --btn-fg: var(--bone); --btn-bg: var(--ink); --btn-bd: var(--ink);
+  position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem;
+  padding: 1.0625rem 2.25rem;
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--btn-fg); background: var(--btn-bg);
+  border: 1px solid var(--btn-bd);
+  border-radius: 0;            /* squared. pills read cheap. */
+  overflow: hidden; isolation: isolate;
+  transition: color 620ms var(--ease), border-color 620ms var(--ease);
+}
+/* Wipe fill — slower and heavier than a colour fade */
+.zl-btn::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--btn-fg);
+  transform: scaleY(0); transform-origin: bottom;
+  transition: transform 620ms var(--ease);
+}
+.zl-btn:hover::before { transform: scaleY(1); }
+.zl-btn:hover { color: var(--btn-bg); }
+
+.zl-btn--ghost { --btn-fg: var(--ink); --btn-bg: transparent; --btn-bd: var(--ink); }
+.zl-btn--ghost::before { background: var(--ink); }
+.zl-btn--ghost:hover { color: var(--bone); }
+
+.zl-btn--light { --btn-fg: var(--ink); --btn-bg: var(--on-dark); --btn-bd: var(--on-dark); }
+.zl-btn--on-dark-ghost { --btn-fg: var(--on-dark); --btn-bg: transparent; --btn-bd: rgba(255,255,255,0.4); }
+.zl-btn--on-dark-ghost::before { background: var(--on-dark); }
+.zl-btn--on-dark-ghost:hover { color: var(--ink); border-color: var(--on-dark); }
+
+.zl-btn--accent { --btn-fg: var(--bone); --btn-bg: var(--verdigris); --btn-bd: var(--verdigris); }
+
+/* Text link with animated rule */
+.zl-link {
+  display: inline-flex; align-items: center; gap: 0.625rem;
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+  padding-bottom: 0.4375rem; position: relative;
+}
+.zl-link::after {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%;
+  background: currentColor; opacity: 0.28;
+  transition: opacity 480ms var(--ease);
+}
+.zl-link::before {
+  content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%;
+  background: currentColor; transform: scaleX(0); transform-origin: right;
+  transition: transform 560ms var(--ease);
+}
+.zl-link:hover::before { transform: scaleX(1); transform-origin: left; }
+.zl-link:hover::after { opacity: 0; }
+.zl-link__arrow { transition: transform 560ms var(--ease); }
+.zl-link:hover .zl-link__arrow { transform: translateX(5px); }
+
+/* ---------- 7. MEDIA ----------------------------------------------------- */
+
+.zl-media { position: relative; overflow: hidden; background: var(--bone-3); }
+.zl-media img { width: 100%; height: 100%; object-fit: cover; }
+.zl-media--portrait { aspect-ratio: 3 / 4; }
+.zl-media--square   { aspect-ratio: 1 / 1; }
+.zl-media--editorial{ aspect-ratio: 4 / 5; }
+.zl-media--wide     { aspect-ratio: 16 / 10; }
+.zl-media--cinema   { aspect-ratio: 21 / 9; }
+
+/* Slow zoom on hover — 1.4s, barely perceptible start */
+.zl-media--zoom img { transition: transform 1400ms var(--ease); }
+.zl-media--zoom:hover img, a:hover .zl-media--zoom img { transform: scale(1.045); }
+
+.zl-media__cap {
+  margin-top: 0.875rem; font-size: 0.75rem; letter-spacing: 0.04em;
+  color: var(--mist);
+}
+
+/* ---------- 8. REVEAL (fail-safe) ---------------------------------------- *
+   Default: fully visible. Only when <html class="zl-js"> is present — set
+   synchronously by zl.js before paint — do elements start hidden. If the
+   script never runs, or errors, every element remains readable.            */
+
+.zl-js [data-reveal] {
+  opacity: 0;
+  transform: translateY(var(--reveal-y, 22px));
+  transition: opacity var(--dur-rev) var(--ease),
+              transform var(--dur-rev) var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.zl-js [data-reveal].is-in { opacity: 1; transform: none; }
+.zl-js [data-reveal="fade"] { --reveal-y: 0px; }
+.zl-js [data-reveal="rise"] { --reveal-y: 40px; }
+
+/* Masked line-rise for display headlines. The mask never hides the text
+   permanently — .is-in is applied by IO, and a failsafe timer in zl.js
+   force-applies it after 1.6s regardless. */
+.zl-js .zl-rise { display: block; overflow: hidden; }
+.zl-js .zl-rise > * {
+  display: block;
+  transform: translateY(105%);
+  transition: transform 1250ms var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.zl-js .zl-rise.is-in > * { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .zl-js [data-reveal], .zl-js .zl-rise > * {
+    opacity: 1 !important; transform: none !important; transition: none !important;
+  }
+  .zl-menu__link { animation: none; opacity: 1; transform: none; }
+  .zl-media--zoom img { transition: none; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ---------- 9. HERO ------------------------------------------------------ */
+
+.zl-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex; align-items: flex-end;
+  overflow: hidden;
+  background: var(--ink);      /* base colour so text is legible before img paints */
+  color: var(--on-dark);
+}
+.zl-hero__media { position: absolute; inset: 0; z-index: 0; }
+.zl-hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: var(--hero-pos, 50% 30%); }
+/* Scrim: strong at the bottom where the type sits, clear at the top */
+.zl-hero__scrim {
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(to top, rgba(8,9,8,0.86) 0%, rgba(8,9,8,0.55) 28%, rgba(8,9,8,0.18) 55%, rgba(8,9,8,0.30) 100%);
+}
+.zl-hero__inner {
+  position: relative; z-index: 2;
+  width: 100%; max-width: var(--container); margin-inline: auto;
+  padding: 0 var(--gutter) clamp(3.5rem, 9vh, 7rem);
+}
+.zl-hero__title { max-width: 15ch; }
+.zl-hero__lead  { max-width: 46ch; margin-top: clamp(1.25rem, 2.5vh, 2rem); color: var(--on-dark-2); }
+.zl-hero__actions { margin-top: clamp(2rem, 4vh, 3rem); display: flex; flex-wrap: wrap; gap: 1rem; }
+
+/* Mobile hero: the old build let a desktop crop run on phones and the model's
+   face fell outside the frame. Portrait crop + tighter type below. */
+@media (max-width: 760px) {
+  .zl-hero { min-height: 92svh; }
+  .zl-hero__media img { object-position: var(--hero-pos-mobile, 50% 22%); }
+  .zl-hero__title { max-width: 11ch; }
+  .zl-hero__lead  { max-width: 38ch; }
+  .zl-hero__actions .zl-btn { width: 100%; }
+}
+
+.zl-scroll-cue {
+  position: absolute; left: 50%; bottom: 1.75rem; z-index: 2;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.625rem;
+  font-size: 0.625rem; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--on-dark-3);
+}
+.zl-scroll-cue__line { width: 1px; height: 44px; background: linear-gradient(to bottom, transparent, var(--on-dark-3)); }
+@media (max-width: 760px) { .zl-scroll-cue { display: none; } }
+
+/* ---------- 10. CARDS ---------------------------------------------------- */
+
+.zl-card { display: block; position: relative; }
+.zl-card__body { padding-top: 1.5rem; }
+.zl-card__title { font-family: var(--font-display); font-weight: 300; font-size: 1.5rem; line-height: 1.25; letter-spacing: -0.01em; }
+.zl-card__meta { margin-top: 0.5rem; font-size: var(--t-small); color: var(--mist); }
+.zl-card__desc { margin-top: 0.75rem; color: var(--ink-3); font-size: 0.9375rem; line-height: 1.7; }
+
+/* Product card */
+.zl-product { display: block; position: relative; }
+.zl-product__media { aspect-ratio: 4 / 5; background: var(--bone-2); overflow: hidden; position: relative; }
+.zl-product__media img { width: 100%; height: 100%; object-fit: contain; padding: clamp(1.5rem, 4%, 3rem); transition: transform 1400ms var(--ease); }
+.zl-product:hover .zl-product__media img { transform: scale(1.05); }
+.zl-product__idx {
+  position: absolute; top: 1.25rem; left: 1.25rem;
+  font-size: 0.6875rem; letter-spacing: 0.2em; color: var(--mist-2);
+}
+.zl-product__body { padding-top: 1.375rem; display: flex; flex-direction: column; gap: 0.4375rem; }
+.zl-product__name { font-family: var(--font-display); font-weight: 400; font-size: 1.3125rem; line-height: 1.25; }
+.zl-product__role { font-size: var(--t-small); color: var(--mist); }
+.zl-product__price { font-size: var(--t-small); color: var(--ink-3); letter-spacing: 0.04em; }
+
+/* ---------- 11. FORMS ---------------------------------------------------- */
+
+.zl-field { position: relative; display: block; }
+.zl-input {
+  width: 100%; padding: 1.0625rem 0 0.9375rem;
+  background: transparent; border: 0; border-bottom: 1px solid var(--rule);
+  font-size: 1rem; color: var(--ink);
+  transition: border-color var(--dur-ui) var(--ease);
+}
+.zl-input::placeholder { color: var(--mist-2); }
+.zl-input:focus { outline: none; border-bottom-color: var(--ink); }
+.zl-on-dark .zl-input { color: var(--on-dark); border-bottom-color: var(--rule-dark); }
+.zl-on-dark .zl-input::placeholder { color: var(--on-dark-3); }
+.zl-on-dark .zl-input:focus { border-bottom-color: var(--on-dark); }
+.zl-input:user-invalid { border-bottom-color: #A4443A; }
+
+.zl-form__note { font-size: 0.75rem; color: var(--mist); line-height: 1.6; }
+.zl-form__status { font-size: var(--t-small); min-height: 1.5em; }
+.zl-form__status[data-state="ok"]  { color: var(--verdigris); }
+.zl-form__status[data-state="err"] { color: #A4443A; }
+.zl-on-dark .zl-form__status[data-state="ok"] { color: #8FC0B4; }
+
+/* Honeypot */
+.zl-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* ---------- 12. FOOTER --------------------------------------------------- */
+
+.zl-footer { background: var(--ink); color: var(--on-dark-2); padding-block: clamp(4rem, 9vh, 7rem) 2.5rem; }
+.zl-footer__top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: clamp(2rem, 4vw, 4rem); }
+@media (max-width: 900px) { .zl-footer__top { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .zl-footer__top { grid-template-columns: 1fr; } }
+.zl-footer__brand .zl-logo { color: var(--on-dark); font-size: 0.875rem; }
+.zl-footer h3 { font-size: var(--t-eyebrow); font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase; color: var(--on-dark-3); margin-bottom: 1.25rem; }
+.zl-footer__links { display: flex; flex-direction: column; gap: 0.75rem; }
+.zl-footer__links a { font-size: 0.875rem; color: var(--on-dark-2); transition: color var(--dur-ui) var(--ease); }
+.zl-footer__links a:hover { color: var(--on-dark); }
+.zl-footer__bottom {
+  margin-top: clamp(3rem, 6vh, 5rem); padding-top: 2rem; border-top: 1px solid var(--rule-dark-soft);
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem;
+  font-size: 0.75rem; color: var(--on-dark-3);
+}
+.zl-footer__legal { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+
+/* ---------- 13. FLOATING UI --------------------------------------------- */
+
+.zl-float { position: fixed; z-index: 90; bottom: 1.5rem; }
+.zl-float--right { right: 1.5rem; }
+.zl-float--left  { left: 1.5rem; }
+
+.zl-wa {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--ink); color: var(--on-dark);
+  display: grid; place-items: center;
+  box-shadow: 0 6px 28px rgba(0,0,0,0.22);
+  transition: transform 520ms var(--ease), background-color 520ms var(--ease);
+}
+.zl-wa:hover { transform: translateY(-3px); background: var(--verdigris); }
+
+/* Cookie banner */
+.zl-cookie {
+  position: fixed; z-index: 95; left: 0; right: 0; bottom: 0;
+  background: var(--ink); color: var(--on-dark-2);
+  padding: 1.25rem var(--gutter);
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1rem 2rem;
+  transform: translateY(100%); transition: transform 700ms var(--ease);
+  font-size: 0.8125rem;
+}
+.zl-cookie[data-open="true"] { transform: none; }
+.zl-cookie__actions { display: flex; gap: 0.75rem; }
+.zl-cookie .zl-btn { padding: 0.75rem 1.25rem; font-size: 0.6875rem; }
+
+/* ---------- 14. UTILITIES ------------------------------------------------ */
+
+.zl-sr {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.zl-center { text-align: center; margin-inline: auto; }
+.zl-nowrap { white-space: nowrap; }
+.zl-mt-0 { margin-top: 0 !important; }
+
+/* Counter rule — the thin numbered divider used between editorial sections */
+.zl-index-rule {
+  display: flex; align-items: baseline; gap: 1.5rem;
+  padding-bottom: 1.25rem; border-bottom: 1px solid var(--rule);
+  margin-bottom: clamp(2rem, 5vh, 3.5rem);
+}
+.zl-dark .zl-index-rule { border-bottom-color: var(--rule-dark); }
+.zl-index-rule__num { font-size: var(--t-eyebrow); letter-spacing: 0.28em; color: var(--mist); }
+.zl-dark .zl-index-rule__num { color: var(--on-dark-3); }

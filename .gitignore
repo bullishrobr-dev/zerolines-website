@@ -32,3 +32,6 @@ build/
 tmp/
 temp/
 *.backup*
+
+# Local agent working files
+.claude/contactsheet.html
