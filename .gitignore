@@ -35,3 +35,4 @@ temp/
 
 # Local agent working files
 .claude/contactsheet.html
+.claude/shots/

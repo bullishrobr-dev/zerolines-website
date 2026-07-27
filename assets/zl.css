@@ -153,6 +153,9 @@ input, textarea, select { font: inherit; color: inherit; }
   line-height: 1.4;
 }
 .zl-on-dark .zl-eyebrow { color: var(--on-dark-3); }
+/* Over photography the mid-grey is unreadable wherever the image is light —
+   the hero eyebrow needs to hold against the brightest part of the crop. */
+.zl-hero .zl-eyebrow { color: rgba(255, 255, 255, 0.78); }
 .zl-eyebrow--accent { color: var(--verdigris); }
 .zl-eyebrow--gold   { color: var(--gold); }
 
@@ -568,18 +571,28 @@ input, textarea, select { font: inherit; color: inherit; }
 }
 .zl-wa:hover { transform: translateY(-3px); background: var(--verdigris); }
 
-/* Cookie banner */
+/* Cookie notice — a compact card, not a full-width bar.
+   It sits bottom-right stacked above the WhatsApp button, because hero copy and
+   its CTAs live bottom-LEFT; a full-width bar covered them on first load. */
 .zl-cookie {
-  position: fixed; z-index: 95; left: 0; right: 0; bottom: 0;
+  position: fixed; z-index: 95;
+  right: 1.5rem; bottom: calc(1.5rem + 52px + 1rem);
+  width: min(360px, calc(100vw - 3rem));
   background: var(--ink); color: var(--on-dark-2);
-  padding: 1.25rem var(--gutter);
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1rem 2rem;
-  transform: translateY(100%); transition: transform 700ms var(--ease);
-  font-size: 0.8125rem;
+  padding: 1.5rem;
+  display: flex; flex-direction: column; gap: 1.125rem;
+  font-size: 0.8125rem; line-height: 1.6;
+  box-shadow: 0 10px 44px rgba(0, 0, 0, 0.28);
+  opacity: 0; transform: translateY(14px); pointer-events: none;
+  transition: opacity 620ms var(--ease), transform 620ms var(--ease);
 }
-.zl-cookie[data-open="true"] { transform: none; }
-.zl-cookie__actions { display: flex; gap: 0.75rem; }
-.zl-cookie .zl-btn { padding: 0.75rem 1.25rem; font-size: 0.6875rem; }
+.zl-cookie[data-open="true"] { opacity: 1; transform: none; pointer-events: auto; }
+.zl-cookie__actions { display: flex; gap: 0.625rem; }
+.zl-cookie .zl-btn { padding: 0.6875rem 1rem; font-size: 0.625rem; flex: 1; }
+
+@media (max-width: 560px) {
+  .zl-cookie { left: 1rem; right: 1rem; width: auto; bottom: calc(1rem + 52px + 0.75rem); }
+}
 
 /* ---------- 14. UTILITIES ------------------------------------------------ */
 
