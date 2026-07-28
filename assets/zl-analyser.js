@@ -85,9 +85,6 @@
   /* ---------- panel switching --------------------------------------------- */
 
   function scrollToTop() {
-    if (window.zlLenis && typeof window.zlLenis.scrollTo === 'function') {
-      try { window.zlLenis.scrollTo(0); return; } catch (e) { /* fall through */ }
-    }
     try { window.scrollTo({ top: 0, behavior: 'smooth' }); }
     catch (e) { window.scrollTo(0, 0); }
   }

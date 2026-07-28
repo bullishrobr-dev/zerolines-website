@@ -438,69 +438,23 @@
      Lenis gives scrolling the inertia luxury sites use. Loaded only when it is
      present and motion is allowed; the site is fully functional without it. */
 
+  /* Scroll hijacking is GONE. The browser owns the scroll position.
+   *
+   * lenis was tried at duration:1.25 and then at lerp:0.14 and was annoying at
+   * both — any interpolation between the wheel and the page puts a lag between
+   * intent and response, and no amount of tuning removes that, it only makes it
+   * smaller. Native scroll is instant and matches every other page the visitor
+   * uses. Every other effect is unaffected: the reveals, scrub, pin, stagger and
+   * parallax all read window.scrollY, and they work identically on native scroll.
+   *
+   * Anchors go back to the browser too, via CSS scroll-behavior:smooth plus
+   * scroll-padding-top, which handles the header offset without JavaScript —
+   * and without the ~1,100px undershoot lenis had when handed a DOM node.
+   */
   function initSmoothScroll() {
-    if (!canAnimate || typeof window.Lenis !== 'function') return;
-    try {
-      // smoothTouch stays OFF deliberately. Overriding a phone's own momentum
-      // curve makes scrolling feel laggy and detached, not luxurious — the
-      // weight on touch comes from the scrub and pin work below instead.
-      // lerp, not duration. duration:1.25 meant the page kept gliding for well
-      // over a second after the wheel stopped — which reads as lag, not luxury,
-      // and was described (fairly) as horrible. A lerp follows the wheel closely
-      // and just takes the edge off. The weight now comes from the scrub and pin
-      // work, which is where it belongs; the scroll itself should feel immediate.
-      var lenis = new window.Lenis({
-        lerp: 0.14,
-        wheelMultiplier: 1,
-        smoothWheel: true,
-        smoothTouch: false
-      });
-      // Tell the stylesheet to stand down: CSS scroll-behavior:smooth animates the
-      // same scroll position lenis writes every frame, and anchors land short.
-      root.classList.add('zl-lenis');
-
-      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-      requestAnimationFrame(raf);
-
-      // In-page anchors go through lenis so they inherit the same weight.
-      //
-      // Pass an absolute pixel position, NOT the element. Handing lenis 1.1.18 a
-      // DOM node resolved short by ~1,100px on every FAQ anchor — measured
-      // landing at scrollY 2810 where the target sat at 4054. The same call with
-      // a number computed here lands exactly. Resolve the position at click time
-      // so it accounts for whatever has since loaded or reflowed.
-      $('a[href^="#"]').forEach(function (a) {
-        a.addEventListener('click', function (e) {
-          var id = a.getAttribute('href');
-          if (id.length < 2) return;
-          var el;
-          try { el = document.querySelector(id); } catch (err) { return; }
-          if (!el) return;
-          e.preventDefault();
-
-          var header = document.querySelector('.zl-header');
-          var pad = (header ? header.offsetHeight : 0) + 24;
-
-          function targetY() {
-            return Math.max(0, el.getBoundingClientRect().top + window.scrollY - pad);
-          }
-          lenis.scrollTo(targetY());
-
-          // Images below the fold are lazy, so content above the target can load
-          // mid-flight and push it down — the homepage waitlist landed 210px
-          // short that way. Re-measure once the animation has settled and close
-          // any gap that opened up.
-          setTimeout(function () {
-            var drift = el.getBoundingClientRect().top - pad;
-            if (Math.abs(drift) > 24) lenis.scrollTo(targetY(), { duration: 0.4 });
-          }, 1500);
-
-          // keep the URL shareable without letting the browser jump the page
-          if (history.replaceState) history.replaceState(null, '', id);
-        });
-      });
-      window.zlLenis = lenis;
-    } catch (err) { /* native scrolling is a perfectly good fallback */ }
+    // Deliberately a no-op. Kept as a named function so the boot sequence and
+    // this explanation stay together, rather than the reason being lost in a
+    // diff for whoever wonders later why there is no smooth-scroll library.
   }
 
   /* ---------- boot -------------------------------------------------------- */

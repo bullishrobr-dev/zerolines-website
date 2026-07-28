@@ -128,12 +128,9 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 1.5rem);
 }
-/* When lenis is driving the scroll it must own it outright. CSS smooth-scroll
-   animates the same property lenis is writing each frame, and the two fight:
-   in-page anchors were landing ~1,100px short of their target on every jump.
-   zl.js adds this class only when a lenis instance actually starts, so viewports
-   without it keep native smooth scrolling. */
-html.zl-lenis { scroll-behavior: auto; }
+/* Native smooth scrolling owns anchors now — no library interpolates the
+   scroll position, so nothing needs to stand down. scroll-padding-top above
+   keeps a jumped-to heading clear of the fixed header. */
 
 body {
   margin: 0;

@@ -1,7 +1,7 @@
 [
   {
     "id": "age",
-    "question": "What is your age range?",
+    "question": "Which decade are you in?",
     "multi": false,
     "options": [
       {
@@ -10,278 +10,312 @@
       },
       {
         "value": "25-34",
-        "label": "25–34"
+        "label": "25 to 34"
       },
       {
         "value": "35-44",
-        "label": "35–44"
+        "label": "35 to 44"
       },
       {
         "value": "45-54",
-        "label": "45–54"
+        "label": "45 to 54"
       },
       {
         "value": "55+",
-        "label": "55+"
+        "label": "55 or older"
       }
-    ]
-  },
-  {
-    "id": "gender",
-    "question": "What is your gender?",
-    "multi": false,
-    "options": [
-      {
-        "value": "female",
-        "label": "Female"
-      },
-      {
-        "value": "male",
-        "label": "Male"
-      },
-      {
-        "value": "other",
-        "label": "Other / Prefer not to say"
-      }
-    ]
+    ],
+    "short": "Age"
   },
   {
     "id": "skinType",
-    "question": "How would you describe your skin type?",
+    "question": "How does your skin usually behave?",
     "multi": false,
     "options": [
       {
         "value": "dry",
-        "label": "Dry — tight, flaky, needs moisture"
+        "label": "Dry — tight, sometimes flaky, drinks up moisture"
       },
       {
         "value": "oily",
-        "label": "Oily — shiny, enlarged pores, prone to congestion"
+        "label": "Oily — shine returns by midday, pores show"
       },
       {
         "value": "combination",
-        "label": "Combination — oily T-zone, dry cheeks"
+        "label": "Combination — oily through the T-zone, drier on the cheeks"
       },
       {
         "value": "sensitive",
-        "label": "Sensitive — reacts easily, redness, stinging"
+        "label": "Sensitive — flushes easily, stings with new products"
       },
       {
         "value": "normal",
-        "label": "Normal — balanced, rarely problematic"
+        "label": "Balanced — rarely gives me trouble"
       }
-    ]
-  },
-  {
-    "id": "climate",
-    "question": "What best describes your local climate?",
-    "multi": false,
-    "options": [
-      {
-        "value": "humid",
-        "label": "Humid — hot and moist most of the year"
-      },
-      {
-        "value": "dry",
-        "label": "Dry — low humidity, arid or cold"
-      },
-      {
-        "value": "temperate",
-        "label": "Temperate — mild, seasonal changes"
-      },
-      {
-        "value": "polluted",
-        "label": "Urban / high pollution"
-      },
-      {
-        "value": "coastal",
-        "label": "Coastal — salt air and wind"
-      }
-    ]
+    ],
+    "short": "Skin type"
   },
   {
     "id": "concerns",
-    "question": "What are your top skin concerns? (Select up to 3)",
+    "question": "What would you change if you could?",
     "multi": true,
-    "maxSelect": 3,
+    "max": 3,
     "options": [
       {
-        "value": "fine lines",
-        "label": "Fine lines & wrinkles"
-      },
-      {
-        "value": "dullness",
-        "label": "Dullness & uneven tone"
-      },
-      {
-        "value": "dryness",
-        "label": "Dryness & dehydration"
-      },
-      {
-        "value": "redness",
-        "label": "Redness & sensitivity"
-      },
-      {
-        "value": "pigmentation",
-        "label": "Dark spots & pigmentation"
-      },
-      {
-        "value": "pores",
-        "label": "Large pores"
+        "value": "lines",
+        "label": "Fine lines and wrinkles"
       },
       {
         "value": "firmness",
         "label": "Loss of firmness"
       },
       {
-        "value": "dark circles",
-        "label": "Dark circles"
+        "value": "dullness",
+        "label": "Dullness and uneven tone"
+      },
+      {
+        "value": "dryness",
+        "label": "Dryness and dehydration"
+      },
+      {
+        "value": "redness",
+        "label": "Redness and sensitivity"
+      },
+      {
+        "value": "pigmentation",
+        "label": "Dark spots and pigmentation"
+      },
+      {
+        "value": "pores",
+        "label": "Enlarged or congested pores"
+      },
+      {
+        "value": "eyes",
+        "label": "Under-eye circles and puffiness"
       }
-    ]
+    ],
+    "short": "Concerns"
   },
   {
-    "id": "sleep",
-    "question": "How is your sleep quality on average?",
+    "id": "priority",
+    "question": "And if you could only fix one of those?",
     "multi": false,
     "options": [
       {
-        "value": "excellent",
-        "label": "Excellent — 7-9 hours, restful"
+        "value": "lines",
+        "label": "Fine lines and wrinkles"
       },
       {
-        "value": "good",
-        "label": "Good — 6-7 hours, mostly restful"
+        "value": "firmness",
+        "label": "Loss of firmness"
       },
       {
-        "value": "poor",
-        "label": "Poor — under 6 hours or interrupted"
+        "value": "dullness",
+        "label": "Dullness and uneven tone"
       },
       {
-        "value": "very poor",
-        "label": "Very poor — insomnia or chronic fatigue"
+        "value": "dryness",
+        "label": "Dryness and dehydration"
+      },
+      {
+        "value": "redness",
+        "label": "Redness and sensitivity"
+      },
+      {
+        "value": "pigmentation",
+        "label": "Dark spots and pigmentation"
+      },
+      {
+        "value": "pores",
+        "label": "Enlarged or congested pores"
+      },
+      {
+        "value": "eyes",
+        "label": "Under-eye circles and puffiness"
       }
-    ]
+    ],
+    "short": "Priority"
+  },
+  {
+    "id": "sun",
+    "question": "How much sun does your face see?",
+    "multi": false,
+    "options": [
+      {
+        "value": "daily-spf",
+        "label": "Plenty — but I wear SPF every day"
+      },
+      {
+        "value": "daily-no-spf",
+        "label": "Plenty, and I rarely wear SPF"
+      },
+      {
+        "value": "moderate",
+        "label": "Some — mostly getting from A to B"
+      },
+      {
+        "value": "little",
+        "label": "Very little, I am indoors most days"
+      },
+      {
+        "value": "history",
+        "label": "A great deal in the past, less now"
+      }
+    ],
+    "short": "Sun"
+  },
+  {
+    "id": "climate",
+    "question": "What is the weather like where you live?",
+    "multi": false,
+    "options": [
+      {
+        "value": "humid",
+        "label": "Warm and humid"
+      },
+      {
+        "value": "dry",
+        "label": "Dry — low humidity most of the year"
+      },
+      {
+        "value": "temperate",
+        "label": "Temperate, four distinct seasons"
+      },
+      {
+        "value": "urban",
+        "label": "City air, noticeable pollution"
+      },
+      {
+        "value": "coastal",
+        "label": "Coastal — salt air and wind"
+      }
+    ],
+    "short": "Climate"
   },
   {
     "id": "routine",
-    "question": "How would you describe your current skincare routine?",
+    "question": "What does your routine look like at the moment?",
     "multi": false,
     "options": [
       {
         "value": "none",
-        "label": "None — I don't use skincare products"
+        "label": "Barely anything — soap and water"
       },
       {
         "value": "minimal",
-        "label": "Minimal — cleanser and moisturiser"
+        "label": "Cleanser and a moisturiser"
       },
       {
         "value": "moderate",
-        "label": "Moderate — 3 to 4 products including a serum"
+        "label": "A few steps, including a serum"
       },
       {
         "value": "advanced",
-        "label": "Advanced — acids, retinoids, multiple steps"
+        "label": "A full routine, and I read the labels"
       }
-    ]
+    ],
+    "short": "Routine"
   },
   {
     "id": "treatments",
-    "question": "Have you tried any of these treatments before? (Select all that apply)",
+    "question": "Anything you have tried before?",
     "multi": true,
     "optional": true,
     "options": [
       {
         "value": "retinol",
-        "label": "Retinol / Retinoids"
+        "label": "Retinol or retinoids"
       },
       {
         "value": "acids",
-        "label": "AHAs / BHAs (glycolic, salicylic)"
+        "label": "AHAs or BHAs"
       },
       {
-        "value": "vitamin c",
-        "label": "Vitamin C serums"
+        "value": "vitaminc",
+        "label": "Vitamin C"
       },
       {
         "value": "peptides",
-        "label": "Peptides / Collagen creams"
+        "label": "Peptides or collagen creams"
       },
       {
-        "value": "lasers",
-        "label": "Laser / IPL treatments"
+        "value": "laser",
+        "label": "Laser or IPL"
       },
       {
         "value": "facials",
         "label": "Professional facials"
       },
       {
-        "value": "botox",
-        "label": "Botox / Fillers"
+        "value": "injectables",
+        "label": "Injectables"
       },
       {
         "value": "none",
-        "label": "None of the above"
+        "label": "None of these"
       }
-    ]
+    ],
+    "short": "History"
   },
   {
-    "id": "duration",
-    "question": "How long have you had these concerns?",
+    "id": "sleep",
+    "question": "How well do you sleep?",
     "multi": false,
     "options": [
       {
-        "value": "just started",
-        "label": "Just started"
+        "value": "excellent",
+        "label": "Well — seven to nine hours, most nights"
       },
       {
-        "value": "few months",
-        "label": "A few months"
+        "value": "good",
+        "label": "Reasonably — six or seven hours"
       },
       {
-        "value": "1-2 years",
-        "label": "1–2 years"
+        "value": "poor",
+        "label": "Badly — usually under six"
       },
       {
-        "value": "several years",
-        "label": "Several years"
+        "value": "very-poor",
+        "label": "Very badly — broken or very little"
       }
-    ]
+    ],
+    "short": "Sleep"
   },
   {
     "id": "lifestyle",
-    "question": "Which of these apply to you? (Select all that apply)",
+    "question": "Anything else we should know?",
     "multi": true,
     "optional": true,
     "options": [
+      {
+        "value": "stress",
+        "label": "I am under a lot of stress"
+      },
       {
         "value": "smoke",
         "label": "I smoke"
       },
       {
         "value": "alcohol",
-        "label": "I drink alcohol regularly"
+        "label": "I drink regularly"
       },
       {
-        "value": "poor sleep",
-        "label": "Poor sleep (under 6 hours)"
+        "value": "water",
+        "label": "I drink less than a litre of water a day"
       },
       {
-        "value": "high stress",
-        "label": "High stress"
+        "value": "travel",
+        "label": "I fly often"
       },
       {
-        "value": "no spf",
-        "label": "Daily sun exposure without SPF"
-      },
-      {
-        "value": "low water",
-        "label": "I drink less than 1L water/day"
+        "value": "hormonal",
+        "label": "Recent hormonal changes"
       },
       {
         "value": "none",
-        "label": "None of the above — I keep a healthy lifestyle"
+        "label": "None of these"
       }
-    ]
+    ],
+    "short": "Lifestyle"
   }
 ]
