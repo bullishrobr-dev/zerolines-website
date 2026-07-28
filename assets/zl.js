@@ -59,16 +59,55 @@
         show(e.target);
         io.unobserve(e.target);
       });
-    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.01 });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.01 });
 
     targets.forEach(function (el) {
       var r = el.getBoundingClientRect();
-      if (r.top < window.innerHeight * 1.05 && r.bottom > 0) show(el);
+      // Only what is already on screen at load reveals immediately. Everything
+      // else waits for the visitor to actually reach it.
+      if (r.top < window.innerHeight * 0.92 && r.bottom > 0) show(el);
       else io.observe(el);
     });
 
-    // Absolute backstop — everything visible within 2.5s no matter what.
-    setTimeout(function () { targets.forEach(show); }, 2500);
+    // SAFETY NET — deliberately NOT a blanket timer.
+    //
+    // This used to be `setTimeout(() => targets.forEach(show), 2500)`, which
+    // revealed the entire document 2.5s after load. Measured on the homepage:
+    // by t=3000ms all 62 below-the-fold elements already carried .is-in. Nothing
+    // could animate in when the visitor reached it, because it had been revealed
+    // while they were still looking at the hero. The page read, in the owner's
+    // words, like "one big canvas" — every element simply stuck in place.
+    //
+    // The failure this net actually needs to catch is "IntersectionObserver
+    // exists but never fires", and the only harm from that is content stranded
+    // invisible IN FRONT OF the visitor. So sweep what is on screen, and leave
+    // everything below to arrive on its own.
+    // Reveals everything from the fold line UPWARD — anything on screen, and
+    // anything already scrolled past. Only what is still below stays held back,
+    // because that is the only content that can still meaningfully arrive.
+    //
+    // The "already passed" half matters: a fast scroll or an anchor jump can
+    // carry an element by before the observer fires, and there is nothing to
+    // animate for content the visitor has gone past — leaving it invisible is
+    // the one genuinely broken outcome. Measured: fast-scrolling the syringe
+    // page left 23 elements stranded before this.
+    function sweepVisible() {
+      var fold = window.innerHeight * 0.95;
+      for (var i = 0; i < targets.length; i++) {
+        var el = targets[i];
+        if (el.classList.contains('is-in')) continue;
+        if (el.getBoundingClientRect().top < fold) show(el);
+      }
+    }
+
+    var sweeping = false;
+    window.addEventListener('scroll', function () {
+      if (sweeping) return;
+      sweeping = true;
+      requestAnimationFrame(function () { sweepVisible(); sweeping = false; });
+    }, { passive: true });
+    window.addEventListener('resize', sweepVisible, { passive: true });
+    setTimeout(sweepVisible, 1200);   // covers a load that settles late
   }
 
   /* ---------- 3. Parallax ------------------------------------------------ *

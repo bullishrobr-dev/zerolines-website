@@ -45,16 +45,28 @@ const paths = process.argv.slice(2).length ? process.argv.slice(2) : ['/'];
 
       await page.screenshot({ path: path.join(OUT, `${slug}-${label}.png`), fullPage: true });
 
-      const stats = await page.evaluate(() => ({
-        height: document.body.scrollHeight,
-        invisible: [...document.querySelectorAll('body *')].filter((e) => {
+      const stats = await page.evaluate(() => {
+        // "Stranded" means invisible where the visitor can actually see it —
+        // at or above the fold. Content still BELOW the fold is meant to be
+        // held back so it can animate in on arrival; counting that as a failure
+        // is what the old blanket-reveal backstop was papering over, and that
+        // backstop is precisely what made the whole page feel stuck in place.
+        const fold = window.innerHeight;
+        const hidden = [...document.querySelectorAll('body *')].filter((e) => {
           const c = getComputedStyle(e);
-          return c.opacity === '0' && c.display !== 'none' && e.offsetHeight > 0;
-        }).length,
-        brokenImgs: [...document.images].filter((i) => !i.complete || i.naturalWidth === 0).map((i) => i.currentSrc || i.src),
-      }));
+          if (c.opacity !== '0' || c.display === 'none' || !e.offsetHeight) return false;
+          return e.getBoundingClientRect().top < fold;
+        });
+        return {
+          height: document.body.scrollHeight,
+          invisible: hidden.length,
+          heldBelowFold: [...document.querySelectorAll('[data-reveal],[data-stagger],.zl-rise,.zl-draw')]
+            .filter((e) => !e.classList.contains('is-in')).length,
+          brokenImgs: [...document.images].filter((i) => !i.complete || i.naturalWidth === 0).map((i) => i.currentSrc || i.src),
+        };
+      });
 
-      console.log(`${p} [${label}] h=${stats.height} invisible=${stats.invisible} brokenImgs=${stats.brokenImgs.length}${stats.brokenImgs.length ? ' -> ' + stats.brokenImgs.join(', ') : ''}`);
+      console.log(`${p} [${label}] h=${stats.height} stranded=${stats.invisible} awaitingScroll=${stats.heldBelowFold} brokenImgs=${stats.brokenImgs.length}${stats.brokenImgs.length ? ' -> ' + stats.brokenImgs.join(', ') : ''}`);
       if (failed.length) console.log(`   HTTP failures: ${failed.join(', ')}`);
       if (errors.length) console.log(`   console errors: ${errors.slice(0, 4).join(' | ')}`);
 
