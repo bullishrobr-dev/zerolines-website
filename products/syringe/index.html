@@ -13,20 +13,20 @@
 <meta property="og:title" content="Precision Collagen Activation Syringe — Zero Lines">
 <meta property="og:description" content="Targeted intervention. Transformative results. Two effects from one dose — the key product of the Zero Lines Longevity Protocol.">
 <meta property="og:url" content="https://zerolines.life/products/syringe/">
-<meta property="og:image" content="https://zerolines.life/assets/og/product-syringe-hero.jpg">
+<meta property="og:image" content="https://zerolines.life/assets/og/product-syringe.jpg">
 <meta property="og:image:width" content="1248">
 <meta property="og:image:height" content="832">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Precision Collagen Activation Syringe — Zero Lines">
 <meta name="twitter:description" content="Targeted intervention. Transformative results. Two effects from one dose.">
-<meta name="twitter:image" content="https://zerolines.life/assets/og/product-syringe-hero.jpg">
+<meta name="twitter:image" content="https://zerolines.life/assets/og/product-syringe.jpg">
 
 <link rel="icon" href="/assets/logo-mark.png">
 <link rel="apple-touch-icon" href="/assets/logo-mark.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="image" href="/assets/product-syringe-hero.webp" fetchpriority="high">
+<link rel="preload" as="image" href="/assets/product-syringe.webp" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/zl.css">
 
@@ -350,15 +350,18 @@
 
       <figure style="margin:0">
         <div class="zl-phero__frame">
-          <div class="zl-media" data-reveal="wipe" style="--reveal-delay:240ms;aspect-ratio:3/2">
-            <img src="/assets/product-syringe-hero.webp"
-                 alt="Macro study of the mouth and cheek: the skin at the left of the frame even and smooth, at the right finely lined"
-                 fetchpriority="high" width="1344" height="768">
+          <!-- multiply against a box carrying the page colour, so the shot's pale
+               ground resolves to bone instead of a white rectangle on bone. -->
+          <div class="zl-media" data-reveal="wipe" style="--reveal-delay:240ms;aspect-ratio:3/2;background:var(--bone)">
+            <img src="/assets/product-syringe.webp"
+                 alt="The Precision Collagen Activation Syringe lying on warm alabaster: a matte white barrel with a brushed sea-teal plunger and a tapered white tip"
+                 fetchpriority="high" width="1856" height="2304"
+                 style="mix-blend-mode:multiply">
           </div>
         </div>
         <figcaption class="zl-muted" data-reveal="fade" style="--reveal-delay:900ms;margin-top:1.5rem;font-size:.75rem;line-height:1.6;max-width:42ch">
-          The perioral zone — where expression settles first, and the few square
-          centimetres the applicator is built to reach.
+          The instrument itself: a tapered tip and a measured plunger, built to
+          reach the few square centimetres where expression settles first.
         </figcaption>
       </figure>
     </div>
@@ -467,10 +470,19 @@
       <!-- The wipe's clip-path opens a stacking context, so multiply has no page
            backdrop to blend into and the shot's white ground stays white. Giving
            the frame the page colour puts that backdrop back inside the group. -->
-      <div class="zl-media" data-reveal="wipe" style="--reveal-delay:160ms;aspect-ratio:6/5;background:var(--bone)">
-        <img src="/assets/atmosphere-teal-gel-swatch.webp"
-             alt="The formulation, drawn out in a single ribbon"
-             loading="lazy" style="object-fit:contain;mix-blend-mode:multiply">
+      <div>
+        <div class="zl-media" data-reveal="wipe" style="--reveal-delay:160ms;aspect-ratio:6/5;background:var(--bone)">
+          <img src="/assets/atmosphere-teal-gel-swatch.webp"
+               alt="The formulation, drawn out in a single ribbon"
+               loading="lazy" style="object-fit:contain;mix-blend-mode:multiply">
+        </div>
+
+        <div class="zl-media zl-media--square zl-scrub" style="--reveal-delay:300ms;margin-top:clamp(.75rem,1.6vw,1.25rem);background:var(--bone)">
+          <img src="/assets/box-syringe.webp"
+               alt="The carton it ships in: a white box edged in sea-teal, marked Precision Collagen Activation Syringe, 15 ml"
+               loading="lazy" width="1856" height="2304"
+               style="object-fit:contain;mix-blend-mode:multiply;padding:clamp(1.5rem,5%,3.25rem)">
+        </div>
       </div>
     </div>
 
@@ -685,7 +697,7 @@
       <a class="zl-product" href="/products/peeling-gel/">
         <div class="zl-product__media">
           <span class="zl-product__idx">01</span>
-          <img src="/assets/product-peeling.webp" alt="Bio-Renewal Peeling Gel" loading="lazy">
+          <img src="/assets/product-peeling-gel.webp" alt="Bio-Renewal Peeling Gel" loading="lazy">
         </div>
         <div class="zl-product__body">
           <h3 class="zl-product__name">Bio-Renewal Peeling Gel</h3>
@@ -707,7 +719,7 @@
       <a class="zl-product" href="/products/syringe-refill/">
         <div class="zl-product__media">
           <span class="zl-product__idx">06</span>
-          <img src="/assets/product-syringe.webp" alt="Precision Collagen Activation Refill" loading="lazy">
+          <img src="/assets/box-syringe-refill.webp" alt="Precision Collagen Activation Refill" loading="lazy">
         </div>
         <div class="zl-product__body">
           <h3 class="zl-product__name">Precision Collagen Activation Refill</h3>

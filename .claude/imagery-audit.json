@@ -1,0 +1,372 @@
+{
+ "verified": [
+  {
+   "asset": "product-serum.webp",
+   "pages": 8,
+   "verified": true,
+   "kb": 43
+  },
+  {
+   "asset": "product-night-cream.webp",
+   "pages": 7,
+   "verified": true,
+   "kb": 48
+  },
+  {
+   "asset": "product-day-cream.webp",
+   "pages": 6,
+   "verified": true,
+   "kb": 49
+  },
+  {
+   "asset": "box-syringe-refill.webp",
+   "pages": 6,
+   "verified": true,
+   "kb": 46
+  },
+  {
+   "asset": "product-syringe.webp",
+   "pages": 5,
+   "verified": true,
+   "kb": 42
+  },
+  {
+   "asset": "product-peeling-gel.webp",
+   "pages": 5,
+   "verified": true,
+   "kb": 55
+  },
+  {
+   "asset": "model-application.webp",
+   "pages": 2,
+   "verified": true,
+   "kb": 167
+  },
+  {
+   "asset": "source-pyrenees.webp",
+   "pages": 1,
+   "verified": true,
+   "kb": 717
+  },
+  {
+   "asset": "box-day-cream.webp",
+   "pages": 1,
+   "verified": true,
+   "kb": 63
+  },
+  {
+   "asset": "collection-six.webp",
+   "pages": 1,
+   "verified": true,
+   "kb": 45
+  },
+  {
+   "asset": "box-night-cream.webp",
+   "pages": 1,
+   "verified": true,
+   "kb": 38
+  },
+  {
+   "asset": "box-peeling-gel.webp",
+   "pages": 1,
+   "verified": true,
+   "kb": 39
+  },
+  {
+   "asset": "box-serum.webp",
+   "pages": 1,
+   "verified": true,
+   "kb": 42
+  },
+  {
+   "asset": "box-syringe.webp",
+   "pages": 1,
+   "verified": true,
+   "kb": 45
+  },
+  {
+   "asset": "model-morning.webp",
+   "pages": 1,
+   "verified": true,
+   "kb": 201
+  },
+  {
+   "asset": "collection-detail.webp",
+   "pages": 1,
+   "verified": true,
+   "kb": 156
+  },
+  {
+   "asset": "model-neck-detail.webp",
+   "pages": 1,
+   "verified": true,
+   "kb": 305
+  }
+ ],
+ "unverified": [
+  {
+   "asset": "logo-mark.png",
+   "pages": 52,
+   "verified": false,
+   "kb": 7
+  },
+  {
+   "asset": "logo.png",
+   "pages": 31,
+   "verified": false,
+   "kb": 117
+  },
+  {
+   "asset": "science-researcher-lab.webp",
+   "pages": 27,
+   "verified": false,
+   "kb": 166
+  },
+  {
+   "asset": "logo-wordmark-dark.png",
+   "pages": 20,
+   "verified": false,
+   "kb": 16
+  },
+  {
+   "asset": "atmosphere-application-ritual.webp",
+   "pages": 15,
+   "verified": false,
+   "kb": 91
+  },
+  {
+   "asset": "story-alpine-spring-water.webp",
+   "pages": 13,
+   "verified": false,
+   "kb": 195
+  },
+  {
+   "asset": "science-peptide-molecular.webp",
+   "pages": 12,
+   "verified": false,
+   "kb": 205
+  },
+  {
+   "asset": "science-hero-dna-cellular.webp",
+   "pages": 12,
+   "verified": false,
+   "kb": 398
+  },
+  {
+   "asset": "atmosphere-cream-texture.webp",
+   "pages": 11,
+   "verified": false,
+   "kb": 53
+  },
+  {
+   "asset": "atmosphere-morning-ritual.webp",
+   "pages": 10,
+   "verified": false,
+   "kb": 97
+  },
+  {
+   "asset": "story-barcelona-architecture.webp",
+   "pages": 10,
+   "verified": false,
+   "kb": 249
+  },
+  {
+   "asset": "atmosphere-daily-ritual.webp",
+   "pages": 10,
+   "verified": false,
+   "kb": 115
+  },
+  {
+   "asset": "story-pyrenees-to-sea.webp",
+   "pages": 9,
+   "verified": false,
+   "kb": 856
+  },
+  {
+   "asset": "science-skin-macro-droplets.webp",
+   "pages": 9,
+   "verified": false,
+   "kb": 135
+  },
+  {
+   "asset": "story-pyrenees.webp",
+   "pages": 8,
+   "verified": false,
+   "kb": 66
+  },
+  {
+   "asset": "story-pyrenean-mountains-dawn.webp",
+   "pages": 8,
+   "verified": false,
+   "kb": 836
+  },
+  {
+   "asset": "science-bubbles-macro.webp",
+   "pages": 7,
+   "verified": false,
+   "kb": 145
+  },
+  {
+   "asset": "science-peptides.webp",
+   "pages": 7,
+   "verified": false,
+   "kb": 39
+  },
+  {
+   "asset": "atmosphere-spa-ritual.webp",
+   "pages": 7,
+   "verified": false,
+   "kb": 205
+  },
+  {
+   "asset": "night-sleeping-woman.webp",
+   "pages": 7,
+   "verified": false,
+   "kb": 215
+  },
+  {
+   "asset": "story-springs.webp",
+   "pages": 6,
+   "verified": false,
+   "kb": 70
+  },
+  {
+   "asset": "hero-model-young-southeast-asian-woman.webp",
+   "pages": 6,
+   "verified": false,
+   "kb": 138
+  },
+  {
+   "asset": "science-minerals.webp",
+   "pages": 5,
+   "verified": false,
+   "kb": 56
+  },
+  {
+   "asset": "atmosphere-botanical-petal.webp",
+   "pages": 5,
+   "verified": false,
+   "kb": 108
+  },
+  {
+   "asset": "product-syringe-hero.webp",
+   "pages": 5,
+   "verified": false,
+   "kb": 36
+  },
+  {
+   "asset": "science-dna.webp",
+   "pages": 4,
+   "verified": false,
+   "kb": 46
+  },
+  {
+   "asset": "hero-editorial-2.webp",
+   "pages": 4,
+   "verified": false,
+   "kb": 69
+  },
+  {
+   "asset": "story-laboratory.webp",
+   "pages": 4,
+   "verified": false,
+   "kb": 44
+  },
+  {
+   "asset": "atmosphere-teal-gel-swatch.webp",
+   "pages": 4,
+   "verified": false,
+   "kb": 313
+  },
+  {
+   "asset": "science-cellular.webp",
+   "pages": 3,
+   "verified": false,
+   "kb": 69
+  },
+  {
+   "asset": "hero-editorial-1.webp",
+   "pages": 3,
+   "verified": false,
+   "kb": 62
+  },
+  {
+   "asset": "hero-peeling-facial.webp",
+   "pages": 3,
+   "verified": false,
+   "kb": 293
+  },
+  {
+   "asset": "hero-model-young-latina.webp",
+   "pages": 2,
+   "verified": false,
+   "kb": 272
+  },
+  {
+   "asset": "product-peeling.webp",
+   "pages": 2,
+   "verified": false,
+   "kb": 30
+  },
+  {
+   "asset": "story-clinic-interior.webp",
+   "pages": 2,
+   "verified": false,
+   "kb": 314
+  },
+  {
+   "asset": "atmosphere-serum-texture.webp",
+   "pages": 2,
+   "verified": false,
+   "kb": 356
+  },
+  {
+   "asset": "hero-serum-application.webp",
+   "pages": 2,
+   "verified": false,
+   "kb": 86
+  },
+  {
+   "asset": "hero-model-middle-aged-caucasian-man.webp",
+   "pages": 1,
+   "verified": false,
+   "kb": 466
+  },
+  {
+   "asset": "hero-model-young-south-asian-woman.webp",
+   "pages": 1,
+   "verified": false,
+   "kb": 200
+  },
+  {
+   "asset": "atmosphere-neck-skin-detail.webp",
+   "pages": 1,
+   "verified": false,
+   "kb": 67
+  },
+  {
+   "asset": "hero-house.webp",
+   "pages": 1,
+   "verified": false,
+   "kb": 137
+  },
+  {
+   "asset": "hero-model-mature-black-woman.webp",
+   "pages": 1,
+   "verified": false,
+   "kb": 163
+  },
+  {
+   "asset": "story-alpine-crystals.webp",
+   "pages": 1,
+   "verified": false,
+   "kb": 413
+  },
+  {
+   "asset": "hero-model-mature-asian-woman.webp",
+   "pages": 1,
+   "verified": false,
+   "kb": 157
+  }
+ ]
+}

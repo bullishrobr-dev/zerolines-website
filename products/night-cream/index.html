@@ -499,11 +499,26 @@
            so the bottle tracks the reading column instead of stranding a column of
            empty bone beside it. -->
       <div style="align-self:stretch">
-        <div class="zl-media zl-media--editorial zl-scrub"
-             style="position:sticky;top:calc(var(--header-h) + 2rem);--reveal-delay:160ms;background:var(--bone-2)">
-          <img src="/assets/product-night-cream.webp"
-               alt="Renewal and Repair Night Cream, 50 ml, in its black and glass bottle"
-               loading="lazy" style="object-fit:contain;mix-blend-mode:multiply;padding:clamp(1rem,4%,2.5rem)">
+        <!-- Bottle and carton travel together inside the one sticky box; keeping
+             the carton in the flow beneath it would put it under the pinned
+             bottle as the reading column scrolls. The wide slot keeps the pair
+             short enough to stay pinned on a laptop viewport. -->
+        <div style="position:sticky;top:calc(var(--header-h) + 2rem)">
+          <div class="zl-media zl-media--editorial zl-scrub"
+               style="--reveal-delay:160ms;background:var(--bone-2)">
+            <img src="/assets/product-night-cream.webp"
+                 alt="Renewal and Repair Night Cream, a 50 ml frosted bottle of ivory cream with a sea-teal cap"
+                 loading="lazy" width="1856" height="2304"
+                 style="object-fit:contain;mix-blend-mode:multiply;padding:clamp(1rem,4%,2.5rem)">
+          </div>
+
+          <div class="zl-media zl-media--wide zl-scrub"
+               style="--reveal-delay:280ms;margin-top:clamp(.75rem,1.6vw,1.25rem);background:var(--bone-2)">
+            <img src="/assets/box-night-cream.webp"
+                 alt="The carton it ships in: a white box edged in sea-teal, marked Renewal and Repair Night Cream, 50 ml"
+                 loading="lazy" width="1856" height="2304"
+                 style="object-fit:contain;mix-blend-mode:multiply;padding:clamp(.5rem,2%,1rem)">
+          </div>
         </div>
       </div>
     </div>
@@ -740,7 +755,7 @@
       <a class="zl-product" href="/products/syringe-refill/">
         <div class="zl-product__media">
           <span class="zl-product__idx">06</span>
-          <img src="/assets/product-syringe.webp" alt="Precision Collagen Activation Refill" loading="lazy">
+          <img src="/assets/box-syringe-refill.webp" alt="Precision Collagen Activation Refill" loading="lazy">
         </div>
         <div class="zl-product__body">
           <h3 class="zl-product__name">Precision Collagen Activation Refill</h3>
