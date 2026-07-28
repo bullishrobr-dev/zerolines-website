@@ -36,3 +36,10 @@ temp/
 # Local agent working files
 .claude/contactsheet.html
 .claude/shots/
+
+# Retired assets. Kept on disk so a replaced image can be compared or restored,
+# but excluded from the repo so 3 MB of superseded photography and the retired
+# React bundle stop shipping on every deploy. Anything quarantined after it was
+# already committed remains recoverable from git history.
+assets/_do-not-use/
+blog/images/
