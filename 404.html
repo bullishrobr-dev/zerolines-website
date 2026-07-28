@@ -1,126 +1,223 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en-GB">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page Not Found — Zero Lines</title>
-  <meta name="description" content="The page you are looking for does not exist. Explore Zero Lines skincare.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/index-BELDyRU9.css">
-  <style>
-    :root {
-      --bg-primary: #0A0A0A;
-      --text-primary: #F5F5F5;
-      --text-secondary: #888888;
-      --accent: #0ABAB5;
-      --border: rgba(255,255,255,0.08);
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      font-family: 'Inter', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-    }
-    .error-code {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(6rem, 15vw, 12rem);
-      font-weight: 400;
-      line-height: 1;
-      color: rgba(255,255,255,0.06);
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 0;
-      pointer-events: none;
-      user-select: none;
-    }
-    .content {
-      position: relative;
-      z-index: 1;
-      max-width: 480px;
-    }
-    .eyebrow {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #C9A84C;
-      margin-bottom: 1.5rem;
-    }
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 400;
-      margin-bottom: 1rem;
-      letter-spacing: -0.02em;
-    }
-    p {
-      color: var(--text-secondary);
-      font-size: 1rem;
-      line-height: 1.7;
-      margin-bottom: 2.5rem;
-    }
-    .links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
-    }
-    .link-btn {
-      padding: 0.875rem 1.75rem;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text-primary);
-      text-decoration: none;
-      font-size: 0.8125rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      transition: all 0.3s ease;
-    }
-    .link-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-    .link-btn.primary {
-      background: var(--accent);
-      color: var(--bg-primary);
-      border-color: var(--accent);
-    }
-    .link-btn.primary:hover {
-      background: #0bc4bf;
-      border-color: #0bc4bf;
-    }
-    .footer {
-      position: absolute;
-      bottom: 2rem;
-      color: var(--text-secondary);
-      font-size: 0.8125rem;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Lost Signal — Zero Lines</title>
+<meta name="description" content="This page does not exist. Return to Zero Lines, or continue to the formulations and the protocol.">
+<meta name="robots" content="noindex, follow">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zero Lines">
+<meta property="og:title" content="Lost Signal — Zero Lines">
+<meta property="og:description" content="This page does not exist. The protocol continues.">
+<meta property="og:url" content="https://zerolines.life/">
+<meta property="og:image" content="https://zerolines.life/assets/og/hero-editorial-1.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lost Signal — Zero Lines">
+<meta name="twitter:description" content="This page does not exist. The protocol continues.">
+<meta name="twitter:image" content="https://zerolines.life/assets/og/hero-editorial-1.jpg">
+
+<link rel="icon" href="/assets/logo-mark.png">
+<link rel="apple-touch-icon" href="/assets/logo-mark.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/zl.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Zero Lines",
+  "url": "https://zerolines.life",
+  "logo": "https://zerolines.life/assets/logo-wordmark-dark.png",
+  "description": "A clinical-luxury Skin Longevity House. Bioactive formulations powered by hydrolysed collagen, botanical extracts and Pyrenean mineral water.",
+  "sameAs": ["https://instagram.com/zerolines.life"],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "email": "info@zerolines.life",
+    "telephone": "+350-54005198",
+    "areaServed": ["GB", "GI", "ES", "AD"],
+    "availableLanguage": ["English", "Spanish"]
+  }
+}
+</script>
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "WebSite", "name": "Zero Lines", "url": "https://zerolines.life" }
+</script>
+<style>
+/* Page-scoped: the not-found page. Type on bone, one ghost numeral behind it.
+   The numeral is tinted with a low-alpha colour rather than opacity, so it can
+   never be mistaken for content that failed to reveal. */
+
+.zl-lost {
+  position: relative; overflow: hidden;
+  min-height: calc(100svh - var(--header-h));
+  display: flex; align-items: center;
+  padding-top: calc(var(--header-h) + clamp(2.5rem, 8vh, 5rem));
+  padding-bottom: clamp(3rem, 10vh, 6rem);
+}
+.zl-lost__ghost {
+  position: absolute; inset: 0; z-index: 0;
+  display: grid; place-items: center; pointer-events: none; user-select: none;
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(14rem, 42vw, 40rem); line-height: .8; letter-spacing: -.05em;
+  color: rgba(10, 186, 181, .07);
+}
+.zl-lost__inner { position: relative; z-index: 1; width: 100%; }
+.zl-lost__actions { margin-top: clamp(2.25rem, 5vh, 3rem); display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+</style>
 </head>
+
 <body>
-  <div class="error-code">404</div>
-  <div class="content">
-    <p class="eyebrow">Lost Signal</p>
-    <h1>This page does not exist.</h1>
-    <p>The page you are looking for may have been moved, deleted, or never existed. But the protocol continues.</p>
-    <div class="links">
-      <a href="/" class="link-btn primary">Return Home</a>
-      <a href="/#/products" class="link-btn">Explore Products</a>
-      <a href="/#/protocol" class="link-btn">The Protocol</a>
+<a class="zl-skip" href="#main">Skip to main content</a>
+<div class="zl-progress" aria-hidden="true"></div>
+
+<header class="zl-header">
+  <div class="zl-header__inner">
+    <a class="zl-logo" href="/">Zero Lines</a>
+    <nav class="zl-header__nav" aria-label="Primary">
+      <a class="zl-header__link" href="/science">Science</a>
+      <a class="zl-header__link" href="/protocol">Protocol</a>
+      <a class="zl-header__link" href="/products">Formulations</a>
+      <a class="zl-header__link" href="/story">Story</a>
+      <a class="zl-header__link" href="/analyser/">Analyser</a>
+      <a class="zl-header__link" href="/blog/">Journal</a>
+      <a class="zl-header__link" href="/contact">Contact</a>
+    </nav>
+    <button class="zl-burger" aria-label="Open menu" aria-expanded="false" aria-controls="zl-menu"><span></span></button>
+  </div>
+</header>
+
+<div class="zl-menu" id="zl-menu" data-open="false">
+  <nav class="zl-menu__list" aria-label="Mobile">
+    <a class="zl-menu__link" href="/science"   style="--i:0">Science</a>
+    <a class="zl-menu__link" href="/protocol"  style="--i:1">Protocol</a>
+    <a class="zl-menu__link" href="/products"  style="--i:2">Formulations</a>
+    <a class="zl-menu__link" href="/story"     style="--i:3">Story</a>
+    <a class="zl-menu__link" href="/analyser/" style="--i:4">Analyser</a>
+    <a class="zl-menu__link" href="/blog/"     style="--i:5">Journal</a>
+    <a class="zl-menu__link" href="/contact"   style="--i:6">Contact</a>
+  </nav>
+  <div class="zl-menu__meta">
+    <a class="zl-link" href="https://wa.me/35054005198">WhatsApp</a>
+    <a class="zl-link" href="mailto:info@zerolines.life">info@zerolines.life</a>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ── Lost signal — one screen, type only ──────────────────────────────── -->
+<section class="zl-lost">
+  <span class="zl-lost__ghost" aria-hidden="true">404</span>
+
+  <div class="zl-lost__inner">
+    <div class="zl-container zl-container--narrow zl-center">
+      <span class="zl-eyebrow zl-eyebrow--center" data-reveal>Lost Signal</span>
+
+      <h1 class="zl-display-xl" style="margin-top:1.5rem">
+        <span class="zl-rise" style="--reveal-delay:80ms"><span>This page does</span></span>
+        <span class="zl-rise" style="--reveal-delay:210ms"><span>not <em class="zl-em--brand">exist</em>.</span></span>
+      </h1>
+
+      <hr class="zl-rule zl-draw" style="max-width:88px;margin:2.25rem auto 0;background:var(--tiffany);height:2px">
+
+      <p class="zl-lead zl-center" data-reveal="far" style="--reveal-delay:540ms;margin-top:2.25rem;max-width:44ch">
+        The address you followed may have moved, or it may never have been
+        written. The protocol continues either way.
+      </p>
+
+      <div class="zl-lost__actions" data-reveal style="--reveal-delay:680ms">
+        <a class="zl-btn zl-btn--brand" href="/">Return home</a>
+        <a class="zl-btn zl-btn--ghost" href="/products">The formulations</a>
+        <a class="zl-btn zl-btn--ghost" href="/protocol">The protocol</a>
+      </div>
+
+      <p class="zl-muted" data-reveal style="--reveal-delay:800ms;margin-top:2.25rem;font-size:.8125rem">
+        If a link of ours sent you here, tell us —
+        <a href="mailto:info@zerolines.life" style="color:var(--tiffany-deep);text-decoration:underline;text-underline-offset:.2em">info@zerolines.life</a>
+      </p>
     </div>
   </div>
-  <div class="footer">© 2026 Zero Lines</div>
+</section>
+
+</main>
+
+<footer class="zl-footer zl-on-dark">
+  <div class="zl-container">
+    <div class="zl-footer__top">
+      <div class="zl-footer__brand">
+        <span class="zl-logo">Zero Lines</span>
+        <p style="margin-top:1.25rem;max-width:32ch;font-size:.875rem;line-height:1.7">
+          A clinical-luxury Skin Longevity House. Botanical science, Pyrenean
+          mineral complexes, and formulations made in Barcelona.
+        </p>
+      </div>
+      <div>
+        <h3>Explore</h3>
+        <div class="zl-footer__links">
+          <a href="/science">Science</a>
+          <a href="/protocol">Protocol</a>
+          <a href="/products">Formulations</a>
+          <a href="/story">Story</a>
+          <a href="/blog/">Journal</a>
+        </div>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <div class="zl-footer__links">
+          <a href="/contact">Get in touch</a>
+          <a href="https://wa.me/35054005198">WhatsApp</a>
+          <a href="mailto:info@zerolines.life">info@zerolines.life</a>
+          <a href="https://instagram.com/zerolines.life">Instagram</a>
+        </div>
+      </div>
+      <div>
+        <h3>Information</h3>
+        <div class="zl-footer__links">
+          <a href="/faq.html">FAQ</a>
+          <a href="/shipping-returns.html">Shipping &amp; returns</a>
+          <a href="/privacy.html">Privacy</a>
+          <a href="/terms.html">Terms</a>
+          <a href="/accessibility.html">Accessibility</a>
+        </div>
+      </div>
+    </div>
+    <div class="zl-footer__bottom">
+      <span>© 2026 Zero Lines. Gibraltar &amp; Barcelona.</span>
+      <div class="zl-footer__legal">
+        <a href="/cookies.html">Cookies</a>
+        <a href="/accessibility.html">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a class="zl-wa" href="https://wa.me/35054005198" aria-label="Contact Zero Lines on WhatsApp">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.82 9.82 0 016.988 2.898 9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<div class="zl-cookie" id="zl-cookie" data-open="false" role="region" aria-label="Cookie notice">
+  <span>We use cookies to understand how the site is used. <a href="/cookies.html">Learn more</a></span>
+  <div class="zl-cookie__actions">
+    <button class="zl-btn zl-btn--on-dark-ghost" data-cookie="essential">Essential only</button>
+    <button class="zl-btn zl-btn--light" data-cookie="all">Accept all</button>
+  </div>
+</div>
+
+<script src="/assets/lenis.min.js" defer></script>
+<script src="/assets/zl.js" defer></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('/service-worker.js').catch(function () {});
+    });
+  }
+</script>
 </body>
 </html>

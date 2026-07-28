@@ -218,24 +218,46 @@
     var KEY = 'zl_cookie_choice';
     try { if (localStorage.getItem(KEY)) return; } catch (e) { return; }
 
-    // Held back until the visitor scrolls — on first paint it competes with the
-    // hero and on narrow viewports it lands on the hero's buttons.
     var shown = false;
-    function reveal() {
+
+    // The notice is fixed to the bottom, so on a narrow viewport it sits on top
+    // of whatever ends the page — which on several pages is the waitlist Register
+    // button and its privacy link, leaving them genuinely unclickable. Reserving
+    // matching space at the foot of the document lets the visitor scroll any
+    // covered control clear of it.
+    function reserveSpace() {
+      if (!shown) return;
+      var h = banner.getBoundingClientRect().height;
+      var gap = window.innerWidth <= 560 ? 16 : 24;
+      document.body.style.paddingBottom = (h + gap * 2 + 52) + 'px';
+    }
+
+    function open() {
       if (shown) return;
       shown = true;
       banner.setAttribute('data-open', 'true');
       window.removeEventListener('scroll', onScroll);
+      requestAnimationFrame(reserveSpace);
     }
-    function onScroll() { if (window.scrollY > 280) reveal(); }
+
+    function close() {
+      shown = false;
+      banner.setAttribute('data-open', 'false');
+      document.body.style.paddingBottom = '';
+    }
+
+    // Held back until the visitor scrolls — shown on first paint it competes with
+    // the hero, and on narrow viewports it lands on the hero's own buttons.
+    function onScroll() { if (window.scrollY > 280) open(); }
     window.addEventListener('scroll', onScroll, { passive: true });
-    setTimeout(reveal, 14000);
+    setTimeout(open, 14000);              // backstop for visitors who never scroll
+    window.addEventListener('resize', reserveSpace, { passive: true });
 
     banner.addEventListener('click', function (e) {
       var btn = e.target.closest('[data-cookie]');
       if (!btn) return;
       try { localStorage.setItem(KEY, btn.getAttribute('data-cookie')); } catch (err) {}
-      banner.setAttribute('data-open', 'false');
+      close();
     });
   }
 

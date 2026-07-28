@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
-  <script>document.documentElement.classList.add("js-enabled");</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Journal — Zero Lines | Skin Science, Alpine Ingredients & Longevity</title>
@@ -17,11 +16,7 @@
   <meta name="twitter:image" content="https://zerolines.life/assets/og/hero-editorial-1.jpg" />
   <link rel="canonical" href="https://zerolines.life/blog/" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
-  <meta name="theme-color" content="#0a0a0a" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="blog.css" />
+  <meta name="theme-color" content="#FBFAF8" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -45,39 +40,64 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"BlogPosting","headline":"The Journal | Skin Science, Alpine Ingredients & Longevity","description":"Explore skin science, alpine ingredients, and the art of ageing well. The Zero Lines Journal features expert insights on collagen, hydration, and the protocol that changes everything.","image":"https://zerolines.life/assets/hero-editorial-1.jpg","author":{"@type":"Organization","name":"Zero Lines"},"publisher":{"@type":"Organization","name":"Zero Lines","logo":{"@type":"ImageObject","url":"https://zerolines.life/assets/logo.png"}},"datePublished":"2026-05-13","dateModified":"2026-05-13","mainEntityOfPage":{"@type":"WebPage","@id":"https://zerolines.life/blog/"}}
   </script>
+
+<link rel="icon" href="/assets/logo-mark.png">
+<link rel="apple-touch-icon" href="/assets/logo-mark.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/zl.css">
+<link rel="stylesheet" href="/blog/blog.css">
 </head>
 <body class="zl-blog-body">
-  <div id="zl-scroll-progress"></div>
 
   <!-- Header -->
-    <header class="zl-blog-header">
-    <div class="zl-blog-header-inner">
-      <a href="/" class="zl-blog-header-logo">ZERO LINES</a>
-      <button class="zl-blog-nav-toggle" onclick="document.querySelector('.zl-blog-header-nav').classList.toggle('is-open');document.querySelector('.zl-blog-menu-backdrop').classList.toggle('is-visible')" aria-label="Menu">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-      <nav class="zl-blog-header-nav">
-        <a href="/#/science">Science</a>
-        <a href="/#/protocol">Protocol</a>
-        <a href="/products">Products</a>
-        <a href="/#/story">Story</a>
-        <a href="/#/quiz">Analyzer</a>
-        <a href="/#/testimonials">Testimonials</a>
-        <a href="/#/contact">Contact</a>
-        <a href="/blog/" class="active">Journal</a>
-      </nav>
-    <div class="zl-blog-menu-backdrop" onclick="document.querySelector('.zl-blog-header-nav').classList.remove('is-open');this.classList.remove('is-visible')" aria-hidden="true"></div>
-      <a href="/#/quiz" class="zl-blog-header-cta">Analyse Your Skin</a>
-    </div>
-  </header>
+    <a class="zl-skip" href="#main">Skip to main content</a>
+<div class="zl-progress" aria-hidden="true"></div>
+
+<header class="zl-header">
+  <div class="zl-header__inner">
+    <a class="zl-logo" href="/">Zero Lines</a>
+    <nav class="zl-header__nav" aria-label="Primary">
+      <a class="zl-header__link" href="/science">Science</a>
+      <a class="zl-header__link" href="/protocol">Protocol</a>
+      <a class="zl-header__link" href="/products">Formulations</a>
+      <a class="zl-header__link" href="/story">Story</a>
+      <a class="zl-header__link" href="/analyser/">Analyser</a>
+      <a class="zl-header__link" href="/blog/">Journal</a>
+      <a class="zl-header__link" href="/contact">Contact</a>
+    </nav>
+    <button class="zl-burger" aria-label="Open menu" aria-expanded="false" aria-controls="zl-menu"><span></span></button>
+  </div>
+</header>
+
+<div class="zl-menu" id="zl-menu" data-open="false">
+  <nav class="zl-menu__list" aria-label="Mobile">
+    <a class="zl-menu__link" href="/science"   style="--i:0">Science</a>
+    <a class="zl-menu__link" href="/protocol"  style="--i:1">Protocol</a>
+    <a class="zl-menu__link" href="/products"  style="--i:2">Formulations</a>
+    <a class="zl-menu__link" href="/story"     style="--i:3">Story</a>
+    <a class="zl-menu__link" href="/analyser/" style="--i:4">Analyser</a>
+    <a class="zl-menu__link" href="/blog/"     style="--i:5">Journal</a>
+    <a class="zl-menu__link" href="/contact"   style="--i:6">Contact</a>
+  </nav>
+  <div class="zl-menu__meta">
+    <a class="zl-link" href="https://wa.me/35054005198">WhatsApp</a>
+    <a class="zl-link" href="mailto:info@zerolines.life">info@zerolines.life</a>
+  </div>
+</div>
+
+<main id="main">
 
   <!-- Hero -->
   <section class="zl-blog-landing-hero">
-    <p class="zl-blog-landing-eyebrow">The Zero Lines Journal</p>
-    <h1 class="zl-blog-landing-title">Skin Science.<br>Alpine Wisdom.</h1>
-    <p class="zl-blog-landing-subtitle">Expert insights on cellular ageing, Pyrenean mineral water, collagen science, and the daily rituals that preserve what time tries to take.</p>
-    <p style="color:#767676;font-size:0.875rem;margin-top:0.5rem;"><time datetime="2026-05-13">Last updated: 13 May 2026</time></p>
-    <div class="zl-blog-categories">
+    <p class="zl-blog-landing-eyebrow" data-reveal="fade">The Zero Lines Journal</p>
+    <h1 class="zl-blog-landing-title"><span class="zl-rise" style="--reveal-delay:80ms"><span>Skin science.</span></span><span class="zl-rise" style="--reveal-delay:200ms"><span>Alpine <em class="zl-em--brand">wisdom</em>.</span></span></h1>
+    <hr class="zl-blog-landing-rule zl-draw" style="--reveal-delay:340ms">
+    <p class="zl-blog-landing-subtitle" data-reveal style="--reveal-delay:420ms">Expert insights on cellular ageing, Pyrenean mineral water, collagen science, and the daily rituals that preserve what time tries to take.</p>
+    <p class="zl-blog-updated"><time datetime="2026-05-13">Last updated: 13 May 2026</time></p>
+    <div class="zl-blog-categories" data-stagger>
       <button class="zl-blog-category-btn active" onclick="filterPosts('all')">All</button>
       <button class="zl-blog-category-btn" onclick="filterPosts('science')">Science</button>
       <button class="zl-blog-category-btn" onclick="filterPosts('ingredients')">Ingredients</button>
@@ -85,7 +105,7 @@
       <button class="zl-blog-category-btn" onclick="filterPosts('lifestyle')">Lifestyle</button>
       <button class="zl-blog-category-btn" onclick="filterPosts('brand')">Brand Story</button>
     </div>
-    <div class="zl-blog-search-bar">
+    <div class="zl-blog-search-bar" data-reveal="fade">
       <svg class="zl-blog-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       <input type="text" class="zl-blog-search-input" placeholder="Search articles..." aria-label="Search articles" oninput="handleSearch(this.value)">
     </div>
@@ -93,31 +113,31 @@
 
   <!-- Most Read -->
   <section class="zl-blog-most-read">
-    <div class="zl-blog-section-header">
+    <div class="zl-blog-section-header" data-reveal>
       <div>
         <p class="zl-blog-section-eyebrow">Trending Now</p>
         <h2 class="zl-blog-section-title">Most Read</h2>
       </div>
     </div>
-    <div class="zl-blog-landing-grid zl-blog-landing-grid--compact">
-      <a href="complete-guide-skin-aging.html" class="zl-blog-landing-card" data-category="science">
-        <img src="images/unsplash/photo-1515894203077-9cd36032142f_w_600_h_400_fit_crop_q_80.jpg" alt="Skin ageing science" class="zl-blog-landing-card-image" loading="lazy">
+    <div class="zl-blog-landing-grid zl-blog-landing-grid--compact" data-stagger>
+      <a href="/blog/complete-guide-skin-aging.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:0ms" data-category="science">
+        <span class="zl-blog-landing-card-media"><img src="/assets/science-hero-dna-cellular.webp" alt="Skin ageing science" class="zl-blog-landing-card-image" loading="lazy"></span>
         <div class="zl-blog-landing-card-content">
           <div class="zl-blog-landing-card-meta"><span>Science</span><span>Jan 8, 2026</span><span>7 min read</span></div>
           <h2 class="zl-blog-landing-card-title">The Complete Guide to Skin Ageing: What Actually Happens After 30</h2>
           <p class="zl-blog-landing-card-excerpt">Collagen loss, cellular senescence, and the four mechanisms that drive visible ageing — explained without the jargon.</p>
         </div>
       </a>
-      <a href="zero-lines-protocol.html" class="zl-blog-landing-card" data-category="routine">
-        <img src="images/unsplash/photo-1556228578-0d85b1a4d571_w_600_h_400_fit_crop_q_80.jpg" alt="Skincare protocol" class="zl-blog-landing-card-image" loading="lazy">
+      <a href="/blog/zero-lines-protocol.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:90ms" data-category="routine">
+        <span class="zl-blog-landing-card-media"><img src="/assets/atmosphere-application-ritual.webp" alt="Skincare protocol" class="zl-blog-landing-card-image" loading="lazy"></span>
         <div class="zl-blog-landing-card-content">
           <div class="zl-blog-landing-card-meta"><span>Routine</span><span>Jan 12, 2026</span><span>8 min read</span></div>
           <h2 class="zl-blog-landing-card-title">The Zero Lines Protocol: A 6-Step System for Skin Longevity</h2>
           <p class="zl-blog-landing-card-excerpt">How six bioactive formulations work in sequence to restore cellular communication, barrier integrity, and collagen density.</p>
         </div>
       </a>
-      <a href="spf-every-day-habit.html" class="zl-blog-landing-card" data-category="lifestyle">
-        <img src="images/unsplash/photo-1504608524841-42fe6f032b4b_w_600_h_400_fit_crop_q_80.jpg" alt="Sun protection" class="zl-blog-landing-card-image" loading="lazy">
+      <a href="/blog/spf-every-day-habit.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:180ms" data-category="lifestyle">
+        <span class="zl-blog-landing-card-media"><img src="/assets/atmosphere-morning-ritual.webp" alt="Sun protection" class="zl-blog-landing-card-image" loading="lazy"></span>
         <div class="zl-blog-landing-card-content">
           <div class="zl-blog-landing-card-meta"><span>Lifestyle</span><span>Feb 16, 2026</span><span>5 min read</span></div>
           <h2 class="zl-blog-landing-card-title">SPF Every Day: The Habit That Prevents 80% of Visible Ageing</h2>
@@ -128,10 +148,10 @@
   </section>
 
   <!-- Article Grid -->
-  <main class="zl-blog-landing-grid" id="blog-grid">
+  <div class="zl-blog-landing-grid" id="blog-grid">
 
-    <a href="complete-guide-skin-aging.html" class="zl-blog-landing-card" data-category="science">
-      <img src="images/unsplash/photo-1515894203077-9cd36032142f_w_600_h_400_fit_crop_q_80.jpg" alt="Skin ageing science" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/complete-guide-skin-aging.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:0ms" data-category="science">
+      <span class="zl-blog-landing-card-media"><img src="/assets/science-hero-dna-cellular.webp" alt="Skin ageing science" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Science</span><span>Jan 8, 2026</span><span>7 min read</span></div>
         <h2 class="zl-blog-landing-card-title">The Complete Guide to Skin Ageing: What Actually Happens After 30</h2>
@@ -139,8 +159,8 @@
       </div>
     </a>
 
-    <a href="zero-lines-protocol.html" class="zl-blog-landing-card" data-category="routine">
-      <img src="images/unsplash/photo-1556228578-0d85b1a4d571_w_600_h_400_fit_crop_q_80.jpg" alt="Skincare protocol" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/zero-lines-protocol.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:90ms" data-category="routine">
+      <span class="zl-blog-landing-card-media"><img src="/assets/atmosphere-application-ritual.webp" alt="Skincare protocol" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Routine</span><span>Jan 12, 2026</span><span>8 min read</span></div>
         <h2 class="zl-blog-landing-card-title">The Zero Lines Protocol: A 6-Step System for Skin Longevity</h2>
@@ -148,8 +168,8 @@
       </div>
     </a>
 
-    <a href="why-pyrenean-mineral-water.html" class="zl-blog-landing-card" data-category="ingredients">
-      <img src="images/unsplash/photo-1464822759023-fed622ff2c3b_w_600_h_400_fit_crop_q_80.jpg" alt="Mountain spring water" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/why-pyrenean-mineral-water.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:180ms" data-category="ingredients">
+      <span class="zl-blog-landing-card-media"><img src="/assets/story-alpine-spring-water.webp" alt="Mountain spring water" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Ingredients</span><span>Jan 15, 2026</span><span>6 min read</span></div>
         <h2 class="zl-blog-landing-card-title">Why Pyrenean Mineral Water Is the Most Underrated Skincare Ingredient</h2>
@@ -157,8 +177,8 @@
       </div>
     </a>
 
-    <a href="lifestyle-factors-aging.html" class="zl-blog-landing-card" data-category="lifestyle">
-      <img src="images/unsplash/photo-1544367567-0f2fcb009e0b_w_600_h_400_fit_crop_q_80.jpg" alt="Healthy lifestyle" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/lifestyle-factors-aging.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:0ms" data-category="lifestyle">
+      <span class="zl-blog-landing-card-media"><img src="/assets/hero-model-young-southeast-asian-woman.webp" alt="Healthy lifestyle" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Lifestyle</span><span>Jan 19, 2026</span><span>7 min read</span></div>
         <h2 class="zl-blog-landing-card-title">7 Lifestyle Factors That Accelerate Skin Ageing</h2>
@@ -166,8 +186,8 @@
       </div>
     </a>
 
-    <a href="how-altitude-changes-water.html" class="zl-blog-landing-card" data-category="science">
-      <img src="images/unsplash/photo-1506905925346-21bda4d32df4_w_600_h_400_fit_crop_q_80.jpg" alt="Mountain altitude" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/how-altitude-changes-water.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:90ms" data-category="science">
+      <span class="zl-blog-landing-card-media"><img src="/assets/story-pyrenean-mountains-dawn.webp" alt="Mountain altitude" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Science</span><span>Jan 22, 2026</span><span>5 min read</span></div>
         <h2 class="zl-blog-landing-card-title">How Altitude Changes Water — And Why Your Skin Cares</h2>
@@ -175,8 +195,8 @@
       </div>
     </a>
 
-    <a href="collagen-decline-biological-clock.html" class="zl-blog-landing-card" data-category="science">
-      <img src="images/unsplash/photo-1532187863486-abf9dbad1b69_w_600_h_400_fit_crop_q_80.jpg" alt="Collagen science" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/collagen-decline-biological-clock.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:180ms" data-category="science">
+      <span class="zl-blog-landing-card-media"><img src="/assets/science-peptide-molecular.webp" alt="Collagen science" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Science</span><span>Jan 29, 2026</span><span>7 min read</span></div>
         <h2 class="zl-blog-landing-card-title">Collagen Decline: The Biological Clock You Can Slow Down</h2>
@@ -184,8 +204,8 @@
       </div>
     </a>
 
-    <a href="how-to-layer-skincare.html" class="zl-blog-landing-card" data-category="routine">
-      <img src="images/unsplash/photo-1596755389378-c31d21fd1273_w_600_h_400_fit_crop_q_80.jpg" alt="Skincare layering" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/how-to-layer-skincare.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:0ms" data-category="routine">
+      <span class="zl-blog-landing-card-media"><img src="/assets/atmosphere-cream-texture.webp" alt="Skincare layering" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Routine</span><span>Feb 2, 2026</span><span>6 min read</span></div>
         <h2 class="zl-blog-landing-card-title">How to Layer Skincare: The Order That Actually Matters</h2>
@@ -193,8 +213,8 @@
       </div>
     </a>
 
-    <a href="andorra-alpine-secret.html" class="zl-blog-landing-card" data-category="ingredients">
-      <img src="images/unsplash/photo-1519681393784-d120267933ba_w_600_h_400_fit_crop_q_80.jpg" alt="Andorra mountains" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/andorra-alpine-secret.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:90ms" data-category="ingredients">
+      <span class="zl-blog-landing-card-media"><img src="/assets/story-pyrenees.webp" alt="Andorra mountains" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Ingredients</span><span>Feb 5, 2026</span><span>6 min read</span></div>
         <h2 class="zl-blog-landing-card-title">Andorra's Alpine Secret: The Science Behind High-Altitude Spring Water</h2>
@@ -202,8 +222,8 @@
       </div>
     </a>
 
-    <a href="read-skincare-label.html" class="zl-blog-landing-card" data-category="ingredients">
-      <img src="images/unsplash/photo-1585435557343-3b092031a831_w_600_h_400_fit_crop_q_80.jpg" alt="Skincare ingredients" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/read-skincare-label.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:180ms" data-category="ingredients">
+      <span class="zl-blog-landing-card-media"><img src="/assets/science-minerals.webp" alt="Skincare ingredients" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Ingredients</span><span>Feb 9, 2026</span><span>8 min read</span></div>
         <h2 class="zl-blog-landing-card-title">How to Read a Skincare Label Like a Formulator</h2>
@@ -211,8 +231,8 @@
       </div>
     </a>
 
-    <a href="fine-lines-vs-wrinkles.html" class="zl-blog-landing-card" data-category="science">
-      <img src="images/unsplash/photo-1504198266287-1659872e6590_w_600_h_400_fit_crop_q_80.jpg" alt="Sun and skin" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/fine-lines-vs-wrinkles.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:0ms" data-category="science">
+      <span class="zl-blog-landing-card-media"><img src="/assets/hero-model-young-latina.webp" alt="Sun and skin" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Science</span><span>Feb 12, 2026</span><span>5 min read</span></div>
         <h2 class="zl-blog-landing-card-title">Fine Lines vs. Wrinkles: Understanding the Difference</h2>
@@ -220,8 +240,8 @@
       </div>
     </a>
 
-    <a href="spf-every-day-habit.html" class="zl-blog-landing-card" data-category="lifestyle">
-      <img src="images/unsplash/photo-1504608524841-42fe6f032b4b_w_600_h_400_fit_crop_q_80.jpg" alt="Sun protection" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/spf-every-day-habit.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:90ms" data-category="lifestyle">
+      <span class="zl-blog-landing-card-media"><img src="/assets/atmosphere-morning-ritual.webp" alt="Sun protection" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Lifestyle</span><span>Feb 16, 2026</span><span>5 min read</span></div>
         <h2 class="zl-blog-landing-card-title">SPF Every Day: The Habit That Prevents 80% of Visible Ageing</h2>
@@ -229,8 +249,8 @@
       </div>
     </a>
 
-    <a href="pyrenees-to-barcelona.html" class="zl-blog-landing-card" data-category="brand">
-      <img src="images/unsplash/photo-1583422409516-2895a77efded_w_600_h_400_fit_crop_q_80.jpg" alt="Barcelona architecture" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/pyrenees-to-barcelona.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:180ms" data-category="brand">
+      <span class="zl-blog-landing-card-media"><img src="/assets/story-barcelona-architecture.webp" alt="Barcelona architecture" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Brand Story</span><span>Feb 19, 2026</span><span>6 min read</span></div>
         <h2 class="zl-blog-landing-card-title">From Pyrenees to Barcelona: Tracing Zero Lines' Alpine Ingredients</h2>
@@ -238,8 +258,8 @@
       </div>
     </a>
 
-    <a href="hydrolyzed-collagen-myth-miracle.html" class="zl-blog-landing-card" data-category="ingredients">
-      <img src="images/unsplash/photo-1616394584738-fc6e612e71b9_w_600_h_400_fit_crop_q_80.jpg" alt="Collagen molecules" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/hydrolyzed-collagen-myth-miracle.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:0ms" data-category="ingredients">
+      <span class="zl-blog-landing-card-media"><img src="/assets/science-dna.webp" alt="Collagen molecules" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Ingredients</span><span>Feb 26, 2026</span><span>7 min read</span></div>
         <h2 class="zl-blog-landing-card-title">Hydrolysed Collagen in Skincare: Myth or Miracle?</h2>
@@ -247,8 +267,8 @@
       </div>
     </a>
 
-    <a href="morning-vs-night-routine.html" class="zl-blog-landing-card" data-category="routine">
-      <img src="images/unsplash/photo-1515894203077-9cd36032142f_w_600_h_400_fit_crop_q_80.jpg" alt="Morning routine" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/morning-vs-night-routine.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:90ms" data-category="routine">
+      <span class="zl-blog-landing-card-media"><img src="/assets/atmosphere-morning-ritual.webp" alt="Morning routine" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Routine</span><span>Mar 2, 2026</span><span>6 min read</span></div>
         <h2 class="zl-blog-landing-card-title">Morning Routine vs. Night Routine: Why One Size Doesn't Fit Both</h2>
@@ -256,8 +276,8 @@
       </div>
     </a>
 
-    <a href="sleep-repairs-skin.html" class="zl-blog-landing-card" data-category="lifestyle">
-      <img src="images/unsplash/photo-1520206183501-b80df61043c2_w_600_h_400_fit_crop_q_80.jpg" alt="Sleep and skin" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/sleep-repairs-skin.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:180ms" data-category="lifestyle">
+      <span class="zl-blog-landing-card-media"><img src="/assets/night-sleeping-woman.webp" alt="Sleep and skin" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Lifestyle</span><span>Mar 5, 2026</span><span>6 min read</span></div>
         <h2 class="zl-blog-landing-card-title">How Sleep Repairs Your Skin (And What Happens When You Don't)</h2>
@@ -265,8 +285,8 @@
       </div>
     </a>
 
-    <a href="cortisol-stress-aging.html" class="zl-blog-landing-card" data-category="lifestyle">
-      <img src="images/unsplash/photo-1506126613408-eca07ce68773_w_600_h_400_fit_crop_q_80.jpg" alt="Stress relief" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/cortisol-stress-aging.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:0ms" data-category="lifestyle">
+      <span class="zl-blog-landing-card-media"><img src="/assets/atmosphere-spa-ritual.webp" alt="Stress relief" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Lifestyle</span><span>Mar 12, 2026</span><span>6 min read</span></div>
         <h2 class="zl-blog-landing-card-title">Cortisol and Your Face: The Stress-Ageing Connection Science Confirms</h2>
@@ -274,8 +294,8 @@
       </div>
     </a>
 
-    <a href="niacinamide-ingredient-over-30.html" class="zl-blog-landing-card" data-category="ingredients">
-      <img src="images/unsplash/photo-1598440947619-2c35fc9aa908_w_600_h_400_fit_crop_q_80.jpg" alt="Niacinamide skincare" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/niacinamide-ingredient-over-30.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:90ms" data-category="ingredients">
+      <span class="zl-blog-landing-card-media"><img src="/assets/science-skin-macro-droplets.webp" alt="Niacinamide skincare" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Ingredients</span><span>Mar 19, 2026</span><span>6 min read</span></div>
         <h2 class="zl-blog-landing-card-title">Niacinamide: The One Ingredient Everyone Over 30 Should Know</h2>
@@ -283,8 +303,8 @@
       </div>
     </a>
 
-    <a href="algae-marine-ingredients.html" class="zl-blog-landing-card" data-category="ingredients">
-      <img src="images/unsplash/photo-1505118380757-91f5f5632de0_w_600_h_400_fit_crop_q_80.jpg" alt="Ocean algae" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/algae-marine-ingredients.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:180ms" data-category="ingredients">
+      <span class="zl-blog-landing-card-media"><img src="/assets/science-bubbles-macro.webp" alt="Ocean algae" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Ingredients</span><span>Mar 26, 2026</span><span>6 min read</span></div>
         <h2 class="zl-blog-landing-card-title">Brown Algae and Red Algae: Marine Ingredients That Actually Work</h2>
@@ -292,8 +312,8 @@
       </div>
     </a>
 
-    <a href="botanical-vs-synthetic-peptides.html" class="zl-blog-landing-card" data-category="science">
-      <img src="images/unsplash/photo-1576086213369-97a306d36557_w_600_h_400_fit_crop_q_80.jpg" alt="Botanical science" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/botanical-vs-synthetic-peptides.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:0ms" data-category="science">
+      <span class="zl-blog-landing-card-media"><img src="/assets/science-peptides.webp" alt="Botanical science" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Science</span><span>Apr 2, 2026</span><span>7 min read</span></div>
         <h2 class="zl-blog-landing-card-title">Botanical Peptides vs. Synthetic Peptides: What's the Difference?</h2>
@@ -301,8 +321,8 @@
       </div>
     </a>
 
-    <a href="weekly-exfoliation-vs-daily.html" class="zl-blog-landing-card" data-category="routine">
-      <img src="images/unsplash/photo-1620916566398-39f1143ab7be_w_600_h_400_fit_crop_q_80.jpg" alt="Skincare exfoliation" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/weekly-exfoliation-vs-daily.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:90ms" data-category="routine">
+      <span class="zl-blog-landing-card-media"><img src="/assets/hero-peeling-facial.webp" alt="Skincare exfoliation" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Routine</span><span>Apr 9, 2026</span><span>5 min read</span></div>
         <h2 class="zl-blog-landing-card-title">Why Weekly Exfoliation Outperforms Daily Scrubs</h2>
@@ -310,8 +330,8 @@
       </div>
     </a>
 
-    <a href="first-30-days-protocol.html" class="zl-blog-landing-card" data-category="routine">
-      <img src="images/unsplash/photo-1515377905703-c4788e51af15_w_600_h_400_fit_crop_q_80.jpg" alt="Skincare routine" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/first-30-days-protocol.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:180ms" data-category="routine">
+      <span class="zl-blog-landing-card-media"><img src="/assets/atmosphere-daily-ritual.webp" alt="Skincare routine" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Routine</span><span>Apr 16, 2026</span><span>7 min read</span></div>
         <h2 class="zl-blog-landing-card-title">The First 30 Days: What to Expect When Starting a Clinical Protocol</h2>
@@ -319,8 +339,8 @@
       </div>
     </a>
 
-    <a href="climate-skincare-needs.html" class="zl-blog-landing-card" data-category="lifestyle">
-      <img src="images/unsplash/photo-1504386106331-3e4e71712b38_w_600_h_400_fit_crop_q_80.jpg" alt="Climate and skin" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/climate-skincare-needs.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:0ms" data-category="lifestyle">
+      <span class="zl-blog-landing-card-media"><img src="/assets/story-pyrenees-to-sea.webp" alt="Climate and skin" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Lifestyle</span><span>Apr 23, 2026</span><span>6 min read</span></div>
         <h2 class="zl-blog-landing-card-title">Barcelona to Gibraltar: How Climate Affects Your Skincare Needs</h2>
@@ -328,8 +348,8 @@
       </div>
     </a>
 
-    <a href="drinking-water-better-skin.html" class="zl-blog-landing-card" data-category="lifestyle">
-      <img src="images/unsplash/photo-1523362628745-0c100150b504_w_600_h_400_fit_crop_q_80.jpg" alt="Drinking water" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/drinking-water-better-skin.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:90ms" data-category="lifestyle">
+      <span class="zl-blog-landing-card-media"><img src="/assets/story-springs.webp" alt="Drinking water" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Lifestyle</span><span>Apr 30, 2026</span><span>5 min read</span></div>
         <h2 class="zl-blog-landing-card-title">Drinking Water for Better Skin: How Much Is Actually Enough?</h2>
@@ -337,8 +357,8 @@
       </div>
     </a>
 
-    <a href="inside-the-lab.html" class="zl-blog-landing-card" data-category="brand">
-      <img src="images/unsplash/photo-1532094349884-543bc11b234d_w_600_h_400_fit_crop_q_80.jpg" alt="Laboratory" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/inside-the-lab.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:180ms" data-category="brand">
+      <span class="zl-blog-landing-card-media"><img src="/assets/story-laboratory.webp" alt="Laboratory" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Brand Story</span><span>May 7, 2026</span><span>7 min read</span></div>
         <h2 class="zl-blog-landing-card-title">Inside the Lab: Four Years of Formulation at Zero Lines</h2>
@@ -346,8 +366,8 @@
       </div>
     </a>
 
-    <a href="understanding-skin-type.html" class="zl-blog-landing-card" data-category="routine">
-      <img src="images/unsplash/photo-1596755389378-c31d21fd1273_w_600_h_400_fit_crop_q_80.jpg" alt="Skin analysis" class="zl-blog-landing-card-image" loading="lazy">
+    <a href="/blog/understanding-skin-type.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:0ms" data-category="routine">
+      <span class="zl-blog-landing-card-media"><img src="/assets/atmosphere-neck-skin-detail.webp" alt="Skin analysis" class="zl-blog-landing-card-image" loading="lazy"></span>
       <div class="zl-blog-landing-card-content">
         <div class="zl-blog-landing-card-meta"><span>Education</span><span>May 14, 2026</span><span>6 min read</span></div>
         <h2 class="zl-blog-landing-card-title">Understanding Your Skin Type: A Guide to the Zero Lines Analyzer</h2>
@@ -356,41 +376,42 @@
     </a>
 
   
-    <section style="margin-top:3rem; padding:1.5rem; border-top:1px solid rgba(0,0,0,0.08);">
-      <h3 style="font-size:1rem; font-weight:600; margin-bottom:1rem;">Explore Zero Lines</h3>
-      <p style="font-size:0.9375rem; color:#4a4a4a; line-height:1.6;">
-        Browse our <a href="/products">complete range</a> of Alpine-formulated skincare, or take the <a href="/#/quiz">AI Skin Analyser</a> for personalised recommendations.
+    <p class="zl-blog-no-results" id="blog-empty" hidden>No entries match that search. Try another term, or browse all.</p>
+    <section class="zl-blog-explore" data-reveal>
+      <h3>Explore Zero Lines</h3>
+      <p>
+        Browse our <a href="/products">complete range</a> of Alpine-formulated skincare, or take the <a href="/analyser/">AI Skin Analyser</a> for personalised recommendations.
       </p>
     </section>
-  </main>
+  </div>
 
   <!-- Editor's Pick -->
   <section class="zl-blog-editors-pick">
-    <div class="zl-blog-section-header">
+    <div class="zl-blog-section-header" data-reveal>
       <div>
         <p class="zl-blog-section-eyebrow">Curated by Our Team</p>
         <h2 class="zl-blog-section-title">Editor's Pick</h2>
       </div>
     </div>
-    <div class="zl-blog-landing-grid zl-blog-landing-grid--compact">
-      <a href="collagen-decline-biological-clock.html" class="zl-blog-landing-card" data-category="science">
-        <img src="images/unsplash/photo-1532187863486-abf9dbad1b69_w_600_h_400_fit_crop_q_80.jpg" alt="Collagen science" class="zl-blog-landing-card-image" loading="lazy">
+    <div class="zl-blog-landing-grid zl-blog-landing-grid--compact" data-stagger>
+      <a href="/blog/collagen-decline-biological-clock.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:90ms" data-category="science">
+        <span class="zl-blog-landing-card-media"><img src="/assets/science-peptide-molecular.webp" alt="Collagen science" class="zl-blog-landing-card-image" loading="lazy"></span>
         <div class="zl-blog-landing-card-content">
           <div class="zl-blog-landing-card-meta"><span>Science</span><span>Jan 29, 2026</span><span>7 min read</span></div>
           <h2 class="zl-blog-landing-card-title">Collagen Decline: The Biological Clock You Can Slow Down</h2>
           <p class="zl-blog-landing-card-excerpt">We lose 1% of collagen per year after 30. But that decline is not inevitable — here's what the research says about slowing it.</p>
         </div>
       </a>
-      <a href="inside-the-lab.html" class="zl-blog-landing-card" data-category="brand">
-        <img src="images/unsplash/photo-1532094349884-543bc11b234d_w_600_h_400_fit_crop_q_80.jpg" alt="Laboratory" class="zl-blog-landing-card-image" loading="lazy">
+      <a href="/blog/inside-the-lab.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:180ms" data-category="brand">
+        <span class="zl-blog-landing-card-media"><img src="/assets/story-laboratory.webp" alt="Laboratory" class="zl-blog-landing-card-image" loading="lazy"></span>
         <div class="zl-blog-landing-card-content">
           <div class="zl-blog-landing-card-meta"><span>Brand Story</span><span>May 7, 2026</span><span>7 min read</span></div>
           <h2 class="zl-blog-landing-card-title">Inside the Lab: Four Years of Formulation at Zero Lines</h2>
           <p class="zl-blog-landing-card-excerpt">From the first prototype to the final six-formulation protocol — the iterations, the failures, and the breakthroughs that defined the journey.</p>
         </div>
       </a>
-      <a href="why-pyrenean-mineral-water.html" class="zl-blog-landing-card" data-category="ingredients">
-        <img src="images/unsplash/photo-1464822759023-fed622ff2c3b_w_600_h_400_fit_crop_q_80.jpg" alt="Mountain spring water" class="zl-blog-landing-card-image" loading="lazy">
+      <a href="/blog/why-pyrenean-mineral-water.html" class="zl-blog-landing-card" data-reveal style="--reveal-delay:0ms" data-category="ingredients">
+        <span class="zl-blog-landing-card-media"><img src="/assets/story-alpine-spring-water.webp" alt="Mountain spring water" class="zl-blog-landing-card-image" loading="lazy"></span>
         <div class="zl-blog-landing-card-content">
           <div class="zl-blog-landing-card-meta"><span>Ingredients</span><span>Jan 15, 2026</span><span>6 min read</span></div>
           <h2 class="zl-blog-landing-card-title">Why Pyrenean Mineral Water Is the Most Underrated Skincare Ingredient</h2>
@@ -401,12 +422,12 @@
   </section>
 
   <!-- Quiz CTA -->
-    <section class="zl-blog-ai-analyst">
+    <section class="zl-blog-ai-analyst" data-reveal="far">
     <div class="zl-blog-ai-analyst-content">
       <p class="zl-blog-ai-analyst-eyebrow">AI-Powered Analysis</p>
       <h2 class="zl-blog-ai-analyst-title">See Your Skin Like Never Before</h2>
-      <p class="zl-blog-ai-analyst-text">Upload a photo and answer 10 quick questions. Our AI analyses texture, tone, hydration, ageing signs, and lifestyle factors — then delivers a complete dermatologist-style report.</p>
-      <a href="/#/quiz" class="zl-blog-ai-analyst-btn">Analyse Your Skin</a>
+      <p class="zl-blog-ai-analyst-text">Upload a photo and answer 10 quick questions. Our AI analyses texture, tone, hydration, ageing signs, and lifestyle factors — then delivers a complete written assessment.</p>
+      <a href="/analyser/" class="zl-blog-ai-analyst-btn">Analyse Your Skin</a>
     </div>
     <div class="zl-blog-ai-analyst-graphic">
       <div class="zl-blog-ai-analyst-radar"></div>
@@ -419,106 +440,134 @@
   </section>
 
   <!-- Newsletter -->
-  <section class="zl-blog-newsletter">
+  <section class="zl-blog-newsletter" data-reveal>
     <div class="zl-blog-newsletter-inner">
       <h2 class="zl-blog-newsletter-title">Join the Inner Circle</h2>
       <p class="zl-blog-newsletter-text">Early access to new research, skin science insights, and exclusive offers. No spam.</p>
-      <form class="zl-blog-newsletter-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Subscribed!';">
-        <input type="email" placeholder="Your email address" aria-label="Email address" required>
-        <button type="submit">Subscribe</button>
-      </form>
+      <form class="zl-blog-newsletter-form" method="POST" name="newsletter" action="/thank-you/" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="newsletter">
+          <p class="zl-hp" aria-hidden="true"><label>Do not fill this in: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+          <label class="zl-sr" for="nl-email">Email address</label>
+          <input type="email" id="nl-email" name="email" placeholder="your@email.com" required autocomplete="email">
+          <button type="submit">Subscribe</button>
+          <span class="zl-form__status" role="status" aria-live="polite"></span>
+        </form>
     </div>
   </section>
 
 <!-- Footer -->
-  <footer class="zl-blog-footer">
-    <div class="zl-blog-footer-inner">
-      <a href="/" class="zl-blog-footer-logo">ZERO LINES</a>
-      <p class="zl-blog-footer-tagline">Advanced Skincare Solutions</p>
-      <nav class="zl-blog-footer-nav">
-        <a href="/">Home</a>
-        <a href="/#/science">Science</a>
-        <a href="/#/protocol">Protocol</a>
-        <a href="/products">Products</a>
-        <a href="/#/story">Story</a>
-        <a href="/#/quiz">Analyzer</a>
-        <a href="/#/contact">Contact</a><a href="/blog/">Journal</a>
-      </nav>
-    <div class="zl-blog-menu-backdrop" onclick="document.querySelector('.zl-blog-header-nav').classList.remove('is-open');this.classList.remove('is-visible')" aria-hidden="true"></div>
-      <div class="zl-blog-footer-contact">
-        <a href="mailto:info@zerolines.life">info@zerolines.life</a>
-        <span>·</span>
-        <a href="https://wa.me/35054005198" target="_blank" rel="noopener">WhatsApp</a>
+  </main>
+
+<footer class="zl-footer zl-on-dark">
+  <div class="zl-container">
+    <div class="zl-footer__top">
+      <div class="zl-footer__brand">
+        <span class="zl-logo">Zero Lines</span>
+        <p style="margin-top:1.25rem;max-width:32ch;font-size:.875rem;line-height:1.7">
+          A clinical-luxury Skin Longevity House. Botanical science, Pyrenean
+          mineral complexes, and formulations made in Barcelona.
+        </p>
       </div>
-      <p class="zl-blog-footer-copy">&copy; 2026 Zero Lines. All rights reserved.</p>
+      <div>
+        <h3>Explore</h3>
+        <div class="zl-footer__links">
+          <a href="/science">Science</a>
+          <a href="/protocol">Protocol</a>
+          <a href="/products">Formulations</a>
+          <a href="/story">Story</a>
+          <a href="/blog/">Journal</a>
+        </div>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <div class="zl-footer__links">
+          <a href="/contact">Get in touch</a>
+          <a href="https://wa.me/35054005198">WhatsApp</a>
+          <a href="mailto:info@zerolines.life">info@zerolines.life</a>
+          <a href="https://instagram.com/zerolines.life">Instagram</a>
+        </div>
+      </div>
+      <div>
+        <h3>Information</h3>
+        <div class="zl-footer__links">
+          <a href="/faq.html">FAQ</a>
+          <a href="/shipping-returns.html">Shipping &amp; returns</a>
+          <a href="/privacy.html">Privacy</a>
+          <a href="/terms.html">Terms</a>
+          <a href="/accessibility.html">Accessibility</a>
+        </div>
+      </div>
     </div>
-  </footer>
+    <div class="zl-footer__bottom">
+      <span>© 2026 Zero Lines. Gibraltar &amp; Barcelona.</span>
+      <div class="zl-footer__legal">
+        <a href="/cookies.html">Cookies</a>
+        <a href="/accessibility.html">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  (function () {
+    var category = 'all';
+    var query = '';
 
-  <script>
-    var currentCategory = 'all';
-    var currentQuery = '';
-
-    // Scroll progress + back-to-top
-    (function() {
-      var bar = document.getElementById('zl-scroll-progress');
-      var backToTop = document.getElementById('zl-back-to-top');
-      function update() {
-        var scrollTop = window.scrollY || document.documentElement.scrollTop;
-        var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        if (bar) bar.style.width = docHeight > 0 ? (scrollTop / docHeight * 100) + '%' : '0%';
-        if (backToTop) {
-          if (scrollTop > 600) backToTop.classList.add('is-visible');
-          else backToTop.classList.remove('is-visible');
-        }
-      }
-      window.addEventListener('scroll', update, { passive: true });
-      update();
-    })();
-
-    // Apply combined category + search filters
-    function applyFilters() {
-      var cards = document.querySelectorAll('.zl-blog-landing-card');
-      var query = currentQuery.toLowerCase().trim();
-      cards.forEach(function(card) {
-        var cat = card.dataset.category || '';
-        var title = (card.querySelector('.zl-blog-landing-card-title') || {}).textContent || '';
-        var excerpt = (card.querySelector('.zl-blog-landing-card-excerpt') || {}).textContent || '';
-        var categoryText = (card.querySelector('.zl-blog-landing-card-meta span') || {}).textContent || '';
-        var matchesCategory = currentCategory === 'all' || cat === currentCategory;
-        var matchesSearch = !query || title.toLowerCase().includes(query) || excerpt.toLowerCase().includes(query) || categoryText.toLowerCase().includes(query);
-        card.style.display = matchesCategory && matchesSearch ? 'block' : 'none';
+    function apply() {
+      var q = query.toLowerCase().trim();
+      var shown = 0;
+      var cards = document.querySelectorAll('#blog-grid .zl-blog-landing-card');
+      Array.prototype.forEach.call(cards, function (card) {
+        var cat = card.getAttribute('data-category') || '';
+        var pick = function (sel) {
+          var el = card.querySelector(sel);
+          return el ? el.textContent : '';
+        };
+        var haystack = (pick('.zl-blog-landing-card-title') + ' ' +
+                        pick('.zl-blog-landing-card-excerpt') + ' ' +
+                        pick('.zl-blog-landing-card-meta span')).toLowerCase();
+        var ok = (category === 'all' || cat === category) && (!q || haystack.indexOf(q) > -1);
+        card.style.display = ok ? '' : 'none';
+        if (ok) shown++;
       });
+      var empty = document.getElementById('blog-empty');
+      if (empty) empty.hidden = shown > 0;
     }
 
-    // Category filter
-    function filterPosts(category) {
-      var buttons = document.querySelectorAll('.zl-blog-category-btn');
-      buttons.forEach(function(btn) {
-        btn.classList.toggle('active', btn.textContent.toLowerCase().trim() === (category === 'all' ? 'all' : category));
+    window.filterPosts = function (next) {
+      category = next;
+      Array.prototype.forEach.call(document.querySelectorAll('.zl-blog-category-btn'), function (btn) {
+        var label = btn.textContent.toLowerCase().trim();
+        var match = next === 'all' ? label === 'all' : label.indexOf(next) === 0;
+        btn.classList.toggle('active', match);
+        btn.setAttribute('aria-pressed', match ? 'true' : 'false');
       });
-      currentCategory = category;
-      applyFilters();
-    }
+      apply();
+    };
 
-    // Search filter
-    function handleSearch(value) {
-      currentQuery = value;
-      applyFilters();
-    }
+    window.handleSearch = function (value) { query = value; apply(); };
+  })();
+</script>
 
-    // Fade up animation
-    (function() {
-      var observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) entry.target.classList.add('is-visible');
-        });
-      }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
-      document.querySelectorAll('.zl-blog-landing-card').forEach(function(el) {
-        el.classList.add('zl-blog-fade-up');
-        observer.observe(el);
-      });
-    })();
-  </script>
-<button class="zl-back-to-top" id="zl-back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg></button>
+<a class="zl-wa" href="https://wa.me/35054005198" aria-label="Contact Zero Lines on WhatsApp">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.82 9.82 0 016.988 2.898 9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<div class="zl-cookie" id="zl-cookie" data-open="false" role="region" aria-label="Cookie notice">
+  <span>We use cookies to understand how the site is used. <a href="/cookies.html">Learn more</a></span>
+  <div class="zl-cookie__actions">
+    <button class="zl-btn zl-btn--on-dark-ghost" data-cookie="essential">Essential only</button>
+    <button class="zl-btn zl-btn--light" data-cookie="all">Accept all</button>
+  </div>
+</div>
+
+<script src="/assets/lenis.min.js" defer></script>
+<script src="/assets/zl.js" defer></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('/service-worker.js').catch(function () {});
+    });
+  }
+</script>
 </body>
 </html>

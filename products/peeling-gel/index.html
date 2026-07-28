@@ -1,406 +1,883 @@
 <!doctype html>
 <html lang="en-GB">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="Cache-Control" content="public, max-age=3600" />
-<title>Bio-Renewal Peeling Gel — Zero Lines | Advanced Skincare Solutions</title>
-<meta name="description" content="A gentle weekly exfoliation gel formulated with Pyrenean mineral water, aloe vera juice, and brown algae extract." />
-<meta property="og:title" content="Bio-Renewal Peeling Gel — Zero Lines" />
-<meta property="og:description" content="A gentle weekly exfoliation gel formulated with Pyrenean mineral water, aloe vera juice, and brown algae extract." />
-<meta property="og:type" content="product" />
-<meta property="og:image" content="https://zerolines.life/assets/og/product-peeling-gel.jpg" />
-<meta property="og:url" content="https://zerolines.life/products/peeling-gel/" />
-<meta property="og:locale" content="en_GB" />
-<meta property="og:site_name" content="Zero Lines" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Bio-Renewal Peeling Gel — Zero Lines" />
-<meta name="twitter:description" content="A gentle weekly exfoliation gel formulated with Pyrenean mineral water, aloe vera juice, and brown algae extract." />
-<meta name="twitter:image" content="https://zerolines.life/assets/og/product-peeling-gel.jpg" />
-<link rel="canonical" href="https://zerolines.life/products/peeling-gel/" />
-<meta name="robots" content="index, follow, max-image-preview:large" />
-<meta name="theme-color" content="#0a0a0a" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Bio-Renewal Peeling Gel — Zero Lines | Weekly Botanical Exfoliation</title>
+<meta name="description" content="Step one of the Zero Lines Longevity Protocol. A weekly gel exfoliant built on aloe vera juice and brown algae extract, designed to clear the surface without stripping the barrier. In pre-launch — not yet available to purchase.">
+<link rel="canonical" href="https://zerolines.life/products/peeling-gel/">
+
+<meta property="og:type" content="product">
+<meta property="og:site_name" content="Zero Lines">
+<meta property="og:title" content="Bio-Renewal Peeling Gel — Zero Lines">
+<meta property="og:description" content="Gentle power. Profound clarity. Step 01 of the Longevity Protocol — weekly exfoliation that prepares the skin rather than polishing it.">
+<meta property="og:url" content="https://zerolines.life/products/peeling-gel/">
+<meta property="og:image" content="https://zerolines.life/assets/og/product-peeling-gel.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bio-Renewal Peeling Gel — Zero Lines">
+<meta name="twitter:description" content="Gentle power. Profound clarity. Step 01 of the Longevity Protocol — weekly exfoliation that prepares the skin rather than polishing it.">
+<meta name="twitter:image" content="https://zerolines.life/assets/og/product-peeling-gel.jpg">
+
+<link rel="icon" href="/assets/logo-mark.png">
+<link rel="apple-touch-icon" href="/assets/logo-mark.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="/assets/hero-peeling-facial.webp" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/zl.css">
+
+<style>
+/* FAQ accordion — the one component this page needs that the design system does
+   not yet carry. Namespaced under .zl-acc so it cannot collide with anything.
+   Nothing here hides content: <details> collapses by layout, never by opacity. */
+.zl-acc__item { border-bottom: 1px solid var(--rule); }
+.zl-acc__item:first-child { border-top: 1px solid var(--rule); }
+.zl-acc__q {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem;
+  list-style: none; cursor: pointer;
+  padding: 1.4375rem 0;
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(1.125rem, 1.5vw, 1.375rem); line-height: 1.35;
+  transition: color var(--dur-ui) var(--ease);
+}
+.zl-acc__q::-webkit-details-marker { display: none; }
+.zl-acc__q:hover { color: var(--tiffany-deep); }
+.zl-acc__ico { position: relative; flex: none; width: 14px; height: 14px; margin-top: .45em; }
+.zl-acc__ico::before, .zl-acc__ico::after {
+  content: ""; position: absolute; background: var(--tiffany);
+  transition: transform 520ms var(--ease);
+}
+.zl-acc__ico::before { left: 0; right: 0; top: 50%; height: 1px; }
+.zl-acc__ico::after  { top: 0; bottom: 0; left: 50%; width: 1px; }
+.zl-acc__item[open] .zl-acc__ico::after { transform: scaleY(0); }
+.zl-acc__a {
+  margin: 0; padding: 0 0 1.75rem; max-width: 64ch;
+  color: var(--ink-3); font-size: .9375rem; line-height: 1.8;
+}
+.zl-acc__item[open] .zl-acc__a { animation: zl-acc-in 620ms var(--ease) both; }
+@keyframes zl-acc-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Zero Lines",
+  "url": "https://zerolines.life",
+  "logo": "https://zerolines.life/assets/logo-wordmark-dark.png",
+  "description": "A clinical-luxury Skin Longevity House. Bioactive formulations powered by hydrolysed collagen, botanical extracts and Pyrenean mineral water.",
+  "sameAs": ["https://instagram.com/zerolines.life"],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "email": "info@zerolines.life",
+    "telephone": "+350-54005198",
+    "areaServed": ["GB", "GI", "ES", "AD"],
+    "availableLanguage": ["English", "Spanish"]
+  }
+}
+</script>
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "WebSite", "name": "Zero Lines", "url": "https://zerolines.life" }
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Product",
-  "@id": "https://zerolines.life/#product-peeling-gel",
+  "@id": "https://zerolines.life/products/peeling-gel/#product",
   "name": "Bio-Renewal Peeling Gel",
-  "description": "A gentle weekly exfoliation gel formulated with Pyrenean mineral water, aloe vera juice, and brown algae extract.",
-  "brand": {"@type": "Brand", "name": "Zero Lines"},
-  "image": "https://zerolines.life/assets/product-peeling-gel.webp",
-  "offers": {
-    "@type": "Offer",
-    "availability": "https://schema.org/PreOrder",
-    "url": "https://zerolines.life/products/peeling-gel/",
-    "price": "125",
-    "priceCurrency": "GBP"
-  }
+  "url": "https://zerolines.life/products/peeling-gel/",
+  "category": "Facial exfoliant",
+  "description": "Step one of the Zero Lines Longevity Protocol. A weekly gel exfoliant built on aloe vera juice, brown algae extract and a citric acid complex, designed to clear the surface of accumulated dead cells without stripping the barrier. In pre-launch and not yet available to purchase.",
+  "brand": { "@type": "Brand", "name": "Zero Lines" },
+  "image": [
+    "https://zerolines.life/assets/product-peeling.webp",
+    "https://zerolines.life/assets/hero-peeling-facial.webp"
+  ],
+  "isPartOf": { "@type": "ProductGroup", "name": "The Zero Lines Longevity Protocol" },
+  "additionalProperty": [
+    { "@type": "PropertyValue", "name": "Protocol step", "value": "01 - Weekly Exfoliation" },
+    { "@type": "PropertyValue", "name": "Frequency", "value": "Once weekly" },
+    { "@type": "PropertyValue", "name": "Key ingredients", "value": "Aloe vera juice, brown algae extract, citric acid and cotton seed complex" },
+    { "@type": "PropertyValue", "name": "Availability", "value": "Pre-launch - not yet available to purchase" }
+  ]
 }
 </script>
-<!-- AUTO-RELOAD on product page navigation: intercepts React Router pushState
-     and forces a clean hard refresh so product pages always load correctly -->
-<script>
-(function() {
-  var _zlProductReloaded = false;
-  function _zlCheckProductReload() {
-    var hash = window.location.hash || '';
-    if (/^#\/products\//.test(hash)) {
-      if (window._zlSkipProductReload) return;
-      var flag = sessionStorage.getItem('zl_product_refreshed');
-      if (!flag && !_zlProductReloaded) {
-        _zlProductReloaded = true;
-        sessionStorage.setItem('zl_product_refreshed', '1');
-        window.location.reload(true);
-      } else {
-        sessionStorage.removeItem('zl_product_refreshed');
-      }
-    }
-  }
-  var _origPushState = history.pushState;
-  history.pushState = function() {
-    _origPushState.apply(this, arguments);
-    _zlCheckProductReload();
-  };
-  var _origReplaceState = history.replaceState;
-  history.replaceState = function() {
-    _origReplaceState.apply(this, arguments);
-    _zlCheckProductReload();
-  };
-  window.addEventListener('popstate', function() {
-    _zlCheckProductReload();
-  });
-  _zlCheckProductReload();
-})();
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zerolines.life/" },
+    { "@type": "ListItem", "position": 2, "name": "Formulations", "item": "https://zerolines.life/products" },
+    { "@type": "ListItem", "position": 3, "name": "Bio-Renewal Peeling Gel", "item": "https://zerolines.life/products/peeling-gel/" }
+  ]
+}
 </script>
-<style>
-html,body{background:#0a0a0a;color:#f5f5f5;font-family:'Inter',sans-serif;margin:0;min-height:100vh}
-h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:400;margin:0}
-a{color:#0ABAB5;text-decoration:none}
-img{max-width:100%;height:auto;display:block}
-.zl-skip-link{position:absolute;left:-9999px}
-.zl-header{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:16px 24px;background:rgba(10,10,10,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.06)}
-.zl-header-logo{font-family:'Playfair Display',serif;font-size:1.25rem;color:#f5f5f5;letter-spacing:0.05em}
-.zl-header-links{display:none;gap:24px;align-items:center;font-size:0.875rem}
-.zl-header-links a{color:rgba(255,255,255,0.75);transition:color 0.2s}
-.zl-header-links a:hover{color:#f5f5f5}
-@media(min-width:768px){.zl-header-links{display:flex}}
-.zl-header-cta{display:none;padding:8px 20px;border:1px solid rgba(255,255,255,0.2);border-radius:100px;color:#f5f5f5;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;transition:all 0.2s}
-@media(min-width:768px){.zl-header-cta{display:inline-block}}
-.zl-header-cta:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.35)}
-
-main{padding-top:64px}
-
-.zl-hero{position:relative;min-height:70vh;display:flex;align-items:flex-end;overflow:hidden}
-.zl-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.7}
-.zl-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,0.95) 0%,rgba(10,10,10,0.3) 60%,rgba(10,10,10,0.1) 100%)}
-.zl-hero-content{position:relative;z-index:2;padding:48px 24px 64px;max-width:720px}
-.zl-eyebrow{display:block;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:#0ABAB5;margin-bottom:12px}
-.zl-hero h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.1;margin-bottom:16px}
-.zl-hero p{font-size:1.125rem;line-height:1.6;color:rgba(255,255,255,0.75);max-width:560px}
-.zl-price{display:inline-block;margin-top:20px;font-size:1.5rem;font-family:'Playfair Display',serif;color:#f5f5f5}
-
-.zl-section{padding:64px 24px;max-width:1100px;margin:0 auto}
-.zl-section h2{font-size:clamp(1.5rem,3vw,2.25rem);margin-bottom:16px}
-.zl-section > p{color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:32px;max-width:720px}
-
-.zl-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:32px}
-.zl-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:28px}
-.zl-card h3{font-size:1.125rem;margin-bottom:10px;color:#f5f5f5}
-.zl-card p{font-size:0.9375rem;color:rgba(255,255,255,0.65);line-height:1.6;margin:0}
-
-.zl-benefits{list-style:none;padding:0;margin:24px 0 0;display:grid;gap:12px}
-.zl-benefits li{position:relative;padding-left:28px;color:rgba(255,255,255,0.8);line-height:1.6}
-.zl-benefits li::before{content:"";position:absolute;left:0;top:6px;width:16px;height:16px;background:#0ABAB5;border-radius:50%;opacity:0.8}
-
-.zl-clinical-bar{display:flex;flex-wrap:wrap;gap:16px 32px;padding:28px 24px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;margin-top:32px}
-.zl-clinical-item{font-size:0.875rem;color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:8px}
-.zl-clinical-item::before{content:"✓";color:#0ABAB5;font-weight:700}
-
-.zl-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;margin-top:32px}
-.zl-step{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:24px}
-.zl-step-title{font-weight:600;margin-bottom:8px;color:#f5f5f5}
-.zl-step p{font-size:0.9375rem;color:rgba(255,255,255,0.65);line-height:1.6;margin:0}
-
-.zl-editorial{display:grid;grid-template-columns:1fr;gap:32px;align-items:center;margin-top:48px}
-@media(min-width:768px){.zl-editorial{grid-template-columns:1fr 1fr}}
-.zl-editorial img{border-radius:12px;width:100%;height:320px;object-fit:cover}
-.zl-editorial-text h3{font-size:clamp(1.25rem,2.5vw,1.75rem);margin-bottom:12px}
-.zl-editorial-text p{color:rgba(255,255,255,0.7);line-height:1.7}
-
-.zl-ritual{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-top:32px}
-.zl-ritual-step{text-align:center;padding:24px}
-.zl-ritual-number{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(10,186,181,0.4);color:#0ABAB5;border-radius:50%;font-family:'Playfair Display',serif;font-size:1rem;margin:0 auto 12px}
-.zl-ritual-title{font-weight:600;margin-bottom:8px;color:#f5f5f5}
-.zl-ritual-step p{font-size:0.875rem;color:rgba(255,255,255,0.65);line-height:1.6;margin:0}
-
-.zl-faq{margin-top:32px}
-.zl-faq-item{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;margin-bottom:12px;overflow:hidden}
-.zl-faq-item summary{padding:18px 24px;cursor:pointer;font-weight:500;color:#f5f5f5;list-style:none;display:flex;justify-content:space-between;align-items:center}
-.zl-faq-item summary::after{content:"+";color:#0ABAB5;font-size:1.25rem}
-.zl-faq-item[open] summary::after{content:"−"}
-.zl-faq-item p{padding:0 24px 18px;margin:0;color:rgba(255,255,255,0.7);line-height:1.6;font-size:0.9375rem}
-
-.zl-cta-section{text-align:center;padding:80px 24px}
-.zl-cta-section h2{margin-bottom:12px}
-.zl-cta-section p{color:rgba(255,255,255,0.7);margin-bottom:28px}
-.zl-btn-wa{display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:14px 32px;border-radius:100px;font-weight:600;font-size:0.9375rem;letter-spacing:0.03em;text-transform:uppercase;transition:transform 0.2s}
-.zl-btn-wa:hover{transform:translateY(-2px)}
-
-.zl-sticky-product-bar{position:fixed;bottom:0;left:0;right:0;display:none;align-items:center;justify-content:space-between;gap:16px;padding:12px 24px;background:rgba(10,10,10,0.95);backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,0.08);z-index:998}
-.zl-sticky-product-bar.is-visible{display:flex}
-.zl-sticky-product-bar .product-name{font-family:'Playfair Display',serif;font-size:1rem;color:#f5f5f5}
-.zl-sticky-product-bar .product-price{font-size:0.875rem;color:#0ABAB5}
-.zl-sticky-product-bar .btn-whatsapp{padding:10px 20px;background:#25D366;color:#fff;border-radius:100px;font-size:0.8rem;font-weight:600;letter-spacing:0.03em;text-transform:uppercase;white-space:nowrap}
-@media(min-width:768px){.zl-sticky-product-bar{padding:12px 48px}}
-
-.zl-scarcity{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px;padding:24px;margin-top:48px}
-.zl-scarcity span{font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.1);padding:6px 14px;border-radius:100px}
-
-.zl-warning{background:rgba(255,200,0,0.06);border:1px solid rgba(255,200,0,0.15);border-radius:10px;padding:20px 24px;margin-top:32px}
-.zl-warning strong{display:block;color:#e8c547;margin-bottom:6px}
-.zl-warning p{color:rgba(255,255,255,0.65);margin:0;font-size:0.9375rem;line-height:1.6}
-
-.zl-footer{border-top:1px solid rgba(255,255,255,0.06);padding:48px 24px;text-align:center}
-.zl-footer-logo{font-family:'Playfair Display',serif;font-size:1.25rem;color:#f5f5f5;letter-spacing:0.05em;display:block;margin-bottom:8px}
-.zl-footer p{color:rgba(255,255,255,0.5);font-size:0.875rem;margin-bottom:20px}
-.zl-footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 24px;margin-bottom:20px}
-.zl-footer-links a{color:rgba(255,255,255,0.6);font-size:0.875rem;transition:color 0.2s}
-.zl-footer-links a:hover{color:#f5f5f5}
-.zl-footer-copy{color:rgba(255,255,255,0.35);font-size:0.8125rem}
-</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How often should I use the Peeling Gel?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Once a week. The protocol is written around a weekly interval, which is designed to support the skin’s own renewal without over-processing it. More often is not more effective, and it risks the barrier this formulation is built to protect." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use it alongside other exfoliating products?",
+      "acceptedAnswer": { "@type": "Answer", "text": "We would not. Keep other exfoliants off the skin on the day you use this one. The protocol is designed as a complete system — let this step do its work, then continue into the treatment steps that follow it." }
+    },
+    {
+      "@type": "Question",
+      "name": "Will it make my skin more sensitive to the sun?",
+      "acceptedAnswer": { "@type": "Answer", "text": "As with any exfoliation, skin can be more sensitive to ultraviolet light in the days that follow. Sun protection every morning is part of the protocol in any case, and it matters most in the day or two after this step." }
+    },
+    {
+      "@type": "Question",
+      "name": "What should I apply afterwards?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Continue straight into the sequence: the Precision Collagen Activation Syringe, then the BioSignal Facial Serum. Freshly cleared skin is at its most receptive, which is precisely why this step comes first." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it suitable for sensitive skin?",
+      "acceptedAnswer": { "@type": "Answer", "text": "It is formulated to be gentle — a skin-compatible pH, soothing botanical extracts, and no abrasive particles anywhere in it. If your skin is particularly reactive, patch test on the inner forearm before the first full application." }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does one tube last?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Used once weekly as directed, one tube is designed to last approximately three to four months." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I skip this step in the protocol?",
+      "acceptedAnswer": { "@type": "Answer", "text": "You can, but the sequence is doing real work. This step clears the surface so that what follows meets living tissue rather than the residue of the week behind it. For the protocol to behave as it was designed to, begin here." }
+    },
+    {
+      "@type": "Question",
+      "name": "What should I expect?",
+      "acceptedAnswer": { "@type": "Answer", "text": "A surface that feels smoother to the touch once it is rinsed. Beyond that, this is a protocol measured in months rather than days: the texture and clarity it is designed to support build with consistent weekly use, and every skin arrives at its own pace." }
+    }
+  ]
+}
+</script>
 </head>
+
 <body>
-<a href="#main" class="zl-skip-link">Skip to main content</a>
+<a class="zl-skip" href="#main">Skip to main content</a>
+<div class="zl-progress" aria-hidden="true"></div>
 
 <header class="zl-header">
-  <a href="/" class="zl-header-logo">ZERO LINES</a>
-  <nav class="zl-header-links">
-    <a href="/science/">Science</a>
-    <a href="/protocol/">Protocol</a>
-    <a href="/products/">Products</a>
-    <a href="/story/">Story</a>
-    <a href="/testimonials/">Testimonials</a>
-    <a href="/contact/">Contact</a>
-    <a href="/blog/">Journal</a>
-  </nav>
-  <a href="/" class="zl-header-cta">Back to Home</a>
+  <div class="zl-header__inner">
+    <a class="zl-logo" href="/">Zero Lines</a>
+    <nav class="zl-header__nav" aria-label="Primary">
+      <a class="zl-header__link" href="/science">Science</a>
+      <a class="zl-header__link" href="/protocol">Protocol</a>
+      <a class="zl-header__link" href="/products">Formulations</a>
+      <a class="zl-header__link" href="/story">Story</a>
+      <a class="zl-header__link" href="/analyser/">Analyser</a>
+      <a class="zl-header__link" href="/blog/">Journal</a>
+      <a class="zl-header__link" href="/contact">Contact</a>
+    </nav>
+    <button class="zl-burger" aria-label="Open menu" aria-expanded="false" aria-controls="zl-menu"><span></span></button>
+  </div>
 </header>
 
+<div class="zl-menu" id="zl-menu" data-open="false">
+  <nav class="zl-menu__list" aria-label="Mobile">
+    <a class="zl-menu__link" href="/science"   style="--i:0">Science</a>
+    <a class="zl-menu__link" href="/protocol"  style="--i:1">Protocol</a>
+    <a class="zl-menu__link" href="/products"  style="--i:2">Formulations</a>
+    <a class="zl-menu__link" href="/story"     style="--i:3">Story</a>
+    <a class="zl-menu__link" href="/analyser/" style="--i:4">Analyser</a>
+    <a class="zl-menu__link" href="/blog/"     style="--i:5">Journal</a>
+    <a class="zl-menu__link" href="/contact"   style="--i:6">Contact</a>
+  </nav>
+  <div class="zl-menu__meta">
+    <a class="zl-link" href="https://wa.me/35054005198">WhatsApp</a>
+    <a class="zl-link" href="mailto:info@zerolines.life">info@zerolines.life</a>
+  </div>
+</div>
+
 <main id="main">
-  <section class="zl-hero">
-    <img src="../../assets/hero-peeling-facial.webp" alt="Bio-Renewal Peeling Gel">
-    <div class="zl-hero-overlay"></div>
-    <div class="zl-hero-content">
-      <span class="zl-eyebrow">Step 01 · Weekly Exfoliation</span>
-      <h1>Bio-Renewal Peeling Gel</h1>
-      <p>A gentle yet effective weekly exfoliation treatment designed to support natural renewal and prepare the skin for advanced bioactive treatments.</p>
-      <span class="zl-price">£125</span>
-    </div>
-  </section>
 
-  <section class="zl-section">
-    <span class="zl-eyebrow">Overview</span>
-    <h2>A different approach to exfoliation</h2>
-    <p>Peeling Gel is not a harsh scrub that strips the skin. It is a structured weekly exfoliation protocol designed to support the skin's natural renewal process while maintaining barrier integrity.</p>
-    <div class="zl-cards">
-          <div class="zl-card">
-            <h3>Structured weekly protocol</h3>
-            <p>A defined exfoliation system applied once per week. Designed to work progressively, supporting natural renewal without over-processing the skin.</p>
-          </div>
-          <div class="zl-card">
-            <h3>Barrier-friendly formulation</h3>
-            <p>Unlike aggressive physical scrubs, this gel-based system works with the skin's natural chemistry. Designed to exfoliate without compromising the skin's protective barrier.</p>
-          </div>
-          <div class="zl-card">
-            <h3>Prepares for treatment</h3>
-            <p>By removing accumulated dead cells, the skin is better positioned to receive and respond to the bioactive treatments in the Longevity Protocol.</p>
-          </div></div>
-  </section>
+<!-- ── 1. Hero — light split. Portrait wipes in; the name rises line by line ── -->
+<section class="zl-hero">
+  <div class="zl-container">
+    <div class="zl-hero__grid">
+      <div>
+        <nav aria-label="Breadcrumb" data-reveal
+             style="font-size:.6875rem;letter-spacing:.28em;text-transform:uppercase;color:var(--mist);margin-bottom:1.5rem">
+          <a href="/products" style="color:var(--mist)">Formulations</a>
+          <span aria-hidden="true" style="padding:0 .5rem">/</span>
+          <span style="color:var(--ink-3)">Peeling Gel</span>
+        </nav>
 
-  <section class="zl-section">
-    <span class="zl-eyebrow">What this product is designed to support</span>
-    <h2>Designed to Support</h2>
-    <ul class="zl-benefits"><li>Helps support the skin's natural exfoliation process for a refreshed appearance</li><li>Designed to improve the look of skin texture and promote a smoother surface</li><li>Formulated to support the appearance of clarity and radiance over time</li><li>Works to prepare the skin for enhanced absorption of subsequent treatments</li><li>Suitable for regular use as part of a structured skincare protocol</li><li>External application only, designed for use on facial skin</li></ul>
-  </section>
+        <span class="zl-eyebrow" data-reveal style="--reveal-delay:60ms">01 · Weekly Exfoliation</span>
 
-  <section class="zl-section">
-    <span class="zl-eyebrow">How it works</span>
-    <h2>Gentle exfoliation mechanism</h2>
-    <p>The Peeling Gel utilises a citric acid complex to gently dissolve the bonds between dead skin cells on the surface layer. This process supports the skin's natural shedding cycle without the need for physical abrasion.</p><p>After application, the formulation works within minutes to support surface renewal. Rinse thoroughly after the recommended contact time and follow with your treatment serum for optimal protocol synergy.</p>
-    
-        <div class="zl-warning">
-          <strong>External use only</strong>
-          <p>Peeling Gel is designed exclusively for external facial application. Avoid contact with eyes and mucous membranes. If irritation occurs, rinse immediately and discontinue use. Consult a healthcare professional if irritation persists.</p>
+        <h1 class="zl-display-xl zl-hero__title" style="margin-top:1.5rem;max-width:12ch">
+          <span class="zl-rise" style="--reveal-delay:120ms"><span>Bio-<em class="zl-em--brand">Renewal</em></span></span>
+          <span class="zl-rise" style="--reveal-delay:240ms"><span>Peeling Gel.</span></span>
+        </h1>
+
+        <p class="zl-lead zl-hero__lead" data-reveal style="--reveal-delay:620ms">
+          A weekly gel exfoliant built on aloe vera juice and brown algae
+          extract. It clears the surface the protocol is about to work on —
+          without stripping the barrier that protects it.
+        </p>
+
+        <div data-reveal style="--reveal-delay:700ms;margin-top:1.75rem">
+          <hr class="zl-rule zl-draw" style="max-width:56px;background:var(--tiffany);height:2px">
+          <p style="margin-top:1rem;font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--tiffany-deep)">
+            Not yet available to purchase — join the waitlist.
+          </p>
         </div>
-  </section>
 
-  <section class="zl-section">
-    <span class="zl-eyebrow">Usage protocol</span>
-    <h2>Application Protocol</h2>
-    <p>Peeling Gel follows a structured weekly exfoliation protocol. Consistency and timing are designed to support progressive refinement without over-processing.</p>
-    <div class="zl-steps">
-          <div class="zl-step">
-            <div class="zl-step-title">Weekly application</div>
-            <p>Apply to cleansed, dry face once per week. Gently massage in circular motions to support the exfoliation process.</p>
-          </div>
-          <div class="zl-step">
-            <div class="zl-step-title">Contact time</div>
-            <p>Leave on for 2 minutes maximum. Do not exceed the recommended contact time.</p>
-          </div>
-          <div class="zl-step">
-            <div class="zl-step-title">Rinse and continue</div>
-            <p>Rinse thoroughly with lukewarm water. Follow immediately with The Serum as the next step in the Longevity Protocol.</p>
-          </div>
-          <div class="zl-step">
-            <div class="zl-step-title">Consistent scheduling</div>
-            <p>Use on the same day each week. Many users prefer evening application to allow the skin to rest overnight.</p>
-          </div></div>
-  </section>
+        <div class="zl-hero__actions" data-reveal style="--reveal-delay:780ms">
+          <a class="zl-btn zl-btn--brand" href="#waitlist">Join the waitlist</a>
+          <a class="zl-btn zl-btn--ghost" href="/protocol">See the full protocol</a>
+        </div>
+      </div>
 
-  <section class="zl-section">
-    <div class="zl-editorial">
-      <img src="../../assets/atmosphere-teal-gel-swatch.webp" alt="Gentle power. Profound clarity." loading="lazy">
-      <div class="zl-editorial-text">
-        <span class="zl-eyebrow">Texture</span>
-        <h3>Gentle power. Profound clarity.</h3>
-        <p>A gel so refined it feels like water, yet so effective it transforms texture in minutes. Botanical enzymes dissolve dullness without a trace of abrasion — revealing the luminous skin that was waiting underneath.</p>
+      <div class="zl-hero__media">
+        <div class="zl-media" data-reveal="wipe" style="--reveal-delay:200ms">
+          <img src="/assets/hero-peeling-facial.webp"
+               alt="A woman receiving a professional facial treatment, gel applied to the cheek with a soft brush"
+               fetchpriority="high" width="1600" height="2400">
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="zl-section">
-    <span class="zl-eyebrow">Clinical</span>
-    <h2>Proven Results</h2>
-    <div class="zl-clinical-bar">
-          <div class="zl-clinical-item">
-            <span>100% reported smoother texture*</span>
-          </div>
-          <div class="zl-clinical-item">
-            <span>Panel of 35 women, 6 weeks</span>
-          </div>
-          <div class="zl-clinical-item">
-            <span>pH-balanced, non-stripping</span>
-          </div>
-          <div class="zl-clinical-item">
-            <span>Suitable for sensitive skin</span>
-          </div></div>
-  </section>
+<!-- ── 2. Position — a single line, drawn rule beneath ──────────────────── -->
+<section class="zl-section zl-section--sm">
+  <div class="zl-container zl-container--narrow zl-center">
+    <p class="zl-display-m" data-reveal="fade" style="font-family:var(--font-display);font-weight:300;line-height:1.3">
+      “Exfoliation is not a polish. It is <em class="zl-em--brand">preparation</em> —
+      the difference between a formulation that sits on the skin and one that
+      reaches it.”
+    </p>
+    <hr class="zl-rule zl-draw" style="max-width:80px;margin:2.75rem auto 0;background:var(--tiffany);height:2px">
+  </div>
+</section>
 
-  <section class="zl-section">
-    <span class="zl-eyebrow">The Ritual</span>
-    <h2>How to Apply for Optimal Results</h2>
-    <div class="zl-ritual">
-          <div class="zl-ritual-step">
-            <div class="zl-ritual-number">1</div>
-            <div class="zl-ritual-title">Clean Skin</div>
-            <p>Use on freshly cleansed, dry face.</p>
-          </div>
-          <div class="zl-ritual-step">
-            <div class="zl-ritual-number">2</div>
-            <div class="zl-ritual-title">Massage</div>
-            <p>Apply in circular motions for 60 seconds.</p>
-          </div>
-          <div class="zl-ritual-step">
-            <div class="zl-ritual-number">3</div>
-            <div class="zl-ritual-title">Wait</div>
-            <p>Leave on for 2–3 minutes. Feel the tingle.</p>
-          </div>
-          <div class="zl-ritual-step">
-            <div class="zl-ritual-number">4</div>
-            <div class="zl-ritual-title">Rinse</div>
-            <p>Lukewarm water. Pat dry. Glow.</p>
-          </div></div>
-    <div class="zl-scarcity"><span>Weekly Ritual</span><span>Limited Stock</span><span>Online Only</span></div>
-  </section>
+<!-- ── 3. What it is ───────────────────────────────────────────────────── -->
+<section class="zl-section zl-tint">
+  <div class="zl-container">
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">01</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">The Formulation</span>
+    </div>
 
-  <section class="zl-section">
-    <span class="zl-eyebrow">FAQ</span>
-    <h2>Frequently Asked Questions</h2>
-    <div class="zl-faq">
-          <details class="zl-faq-item">
-            <summary>How often should I use Peeling Gel?</summary>
-            <p>Once per week only. The protocol is designed for weekly exfoliation to support natural renewal without over-processing. Using more frequently may compromise the skin barrier.</p>
-          </details>
-          <details class="zl-faq-item">
-            <summary>Can I use it with other exfoliating products?</summary>
-            <p>We recommend avoiding other exfoliating products on the same day as Peeling Gel. The protocol is designed as a complete system — let this step do its work, then follow with The Serum.</p>
-          </details>
-          <details class="zl-faq-item">
-            <summary>Will it make my skin sensitive to the sun?</summary>
-            <p>As with all exfoliation treatments, the skin may be more sensitive to UV exposure following application. We recommend using SPF during the day after your weekly exfoliation.</p>
-          </details>
-          <details class="zl-faq-item">
-            <summary>What should I apply after Peeling Gel?</summary>
-            <p>Always follow Peeling Gel with The Serum (Step 2 of the Longevity Protocol). Freshly exfoliated skin is optimally positioned to receive the bioactive ingredients in the serum.</p>
-          </details>
-          <details class="zl-faq-item">
-            <summary>Is it suitable for sensitive skin?</summary>
-            <p>The formulation is designed to be gentle, with a pH-balanced base and soothing botanical extracts. However, if you have particularly sensitive skin, we recommend performing a patch test before first use.</p>
-          </details>
-          <details class="zl-faq-item">
-            <summary>How long does one tube last?</summary>
-            <p>With once-weekly use as directed, one tube is designed to last approximately 3–4 months.</p>
-          </details>
-          <details class="zl-faq-item">
-            <summary>Can I skip this step in the protocol?</summary>
-            <p>While the protocol is designed as an integrated system, Peeling Gel prepares the skin for optimal absorption of subsequent treatments. For best results, we recommend following the complete 6-step protocol.</p>
-          </details>
-          <details class="zl-faq-item">
-            <summary>What results can I expect?</summary>
-            <p>With consistent weekly use, Peeling Gel is designed to support smoother, more refined-looking skin over time. Individual results may vary depending on skin condition and consistency of use.</p>
-          </details></div>
-  </section>
+    <div class="zl-split zl-split--wide-txt">
+      <div>
+        <h2 class="zl-display-l" style="max-width:15ch">
+          <span class="zl-rise"><span>A different approach</span></span>
+          <span class="zl-rise" style="--reveal-delay:130ms"><span>to <em class="zl-em--brand">exfoliation</em>.</span></span>
+        </h2>
+        <div class="zl-prose" data-reveal="far" style="--reveal-delay:220ms;margin-top:2rem">
+          <p>
+            There are no abrasive particles in this formulation, and nothing
+            about the way it works depends on friction. A scrub removes what it
+            can reach by force, and takes a little of the barrier with it every
+            time. That is a trade the protocol is not willing to make once a
+            week for the rest of your life.
+          </p>
+          <p>
+            Instead, the gel loosens the bonds holding spent cells to the
+            surface and rinses away with them. What is left is not a polished
+            face. It is a receptive one — and receptivity is the entire point of
+            standing first in a six-step sequence.
+          </p>
+          <p><strong>Step one clears the canvas. It does not paint on it.</strong></p>
+        </div>
+      </div>
 
-  <section class="zl-cta-section">
-    <h2>Ready to Experience Gel?</h2>
-    <p>Pre-order now via WhatsApp. Our skincare specialists are available to answer any questions.</p>
-    <a href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%27m%20interested%20in%20the%20Bio-Renewal%20Peeling%20Gel." class="zl-btn-wa" target="_blank" rel="noopener">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-      Pre-Order on WhatsApp
-    </a>
-  </section>
+      <div class="zl-media zl-media--editorial" data-reveal="wipe" style="--reveal-delay:140ms">
+        <img src="/assets/product-peeling.webp"
+             alt="The Bio-Renewal Peeling Gel tube, photographed on a pale seamless background"
+             loading="lazy">
+      </div>
+    </div>
+
+    <div class="zl-grid zl-grid--3" data-stagger style="margin-top:clamp(3.5rem,8vh,6rem)">
+      <div style="border-top:1px solid var(--rule);padding-top:1.5rem">
+        <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--tiffany-deep)">Weekly by design</span>
+        <h3 class="zl-display-s" style="margin:.875rem 0 .625rem">A structured step</h3>
+        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
+          A defined exfoliation step applied once a week, written to work
+          progressively — supporting natural renewal without over-processing the
+          skin that has to live with it.
+        </p>
+      </div>
+      <div style="border-top:1px solid var(--rule);padding-top:1.5rem">
+        <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--tiffany-deep)">Barrier first</span>
+        <h3 class="zl-display-s" style="margin:.875rem 0 .625rem">Gel, not grit</h3>
+        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
+          A gel-based system that works with the skin’s own chemistry rather
+          than against it — formulated to exfoliate without compromising the
+          protective barrier.
+        </p>
+      </div>
+      <div style="border-top:1px solid var(--rule);padding-top:1.5rem">
+        <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--tiffany-deep)">Sequence</span>
+        <h3 class="zl-display-s" style="margin:.875rem 0 .625rem">Prepares the skin</h3>
+        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
+          With accumulated dead cells cleared, the skin is better positioned to
+          receive the bioactive steps that follow it in the Longevity Protocol.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 4. Designed to support ──────────────────────────────────────────── -->
+<section class="zl-section">
+  <div class="zl-container">
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">02</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">Intent</span>
+    </div>
+
+    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(3rem,7vh,4.5rem)">
+      <h2 class="zl-display-l" style="max-width:16ch">
+        <span class="zl-rise"><span>What it is designed</span></span>
+        <span class="zl-rise" style="--reveal-delay:130ms"><span>to <em class="zl-em--brand">support</em>.</span></span>
+      </h2>
+      <p class="zl-lead" data-reveal style="--reveal-delay:220ms">
+        A cosmetic formulation can describe its intent and its mechanism. It
+        cannot promise you an outcome. These are the things this one is built to
+        do.
+      </p>
+    </div>
+
+    <ul class="zl-grid zl-grid--2" data-stagger style="list-style:none;padding:0">
+      <li style="border-top:1px solid var(--rule);padding-top:1.25rem;display:flex;gap:1.25rem">
+        <span style="color:var(--tiffany-deep);font-size:.75rem;letter-spacing:.2em;padding-top:.4rem">I</span>
+        <span style="color:var(--ink-3);line-height:1.75">
+          Helps support the skin’s natural exfoliation process for a refreshed
+          appearance.
+        </span>
+      </li>
+      <li style="border-top:1px solid var(--rule);padding-top:1.25rem;display:flex;gap:1.25rem">
+        <span style="color:var(--tiffany-deep);font-size:.75rem;letter-spacing:.2em;padding-top:.4rem">II</span>
+        <span style="color:var(--ink-3);line-height:1.75">
+          Designed to improve the look of skin texture and promote a smoother
+          surface.
+        </span>
+      </li>
+      <li style="border-top:1px solid var(--rule);padding-top:1.25rem;display:flex;gap:1.25rem">
+        <span style="color:var(--tiffany-deep);font-size:.75rem;letter-spacing:.2em;padding-top:.4rem">III</span>
+        <span style="color:var(--ink-3);line-height:1.75">
+          Formulated to support the appearance of clarity and radiance over
+          time.
+        </span>
+      </li>
+      <li style="border-top:1px solid var(--rule);padding-top:1.25rem;display:flex;gap:1.25rem">
+        <span style="color:var(--tiffany-deep);font-size:.75rem;letter-spacing:.2em;padding-top:.4rem">IV</span>
+        <span style="color:var(--ink-3);line-height:1.75">
+          Works to prepare the skin for the absorption of the treatments that
+          follow it.
+        </span>
+      </li>
+      <li style="border-top:1px solid var(--rule);padding-top:1.25rem;display:flex;gap:1.25rem">
+        <span style="color:var(--tiffany-deep);font-size:.75rem;letter-spacing:.2em;padding-top:.4rem">V</span>
+        <span style="color:var(--ink-3);line-height:1.75">
+          Suitable for regular use as part of a structured skincare protocol.
+        </span>
+      </li>
+      <li style="border-top:1px solid var(--rule);padding-top:1.25rem;display:flex;gap:1.25rem">
+        <span style="color:var(--tiffany-deep);font-size:.75rem;letter-spacing:.2em;padding-top:.4rem">VI</span>
+        <span style="color:var(--ink-3);line-height:1.75">
+          External application only, formulated for use on facial skin.
+        </span>
+      </li>
+    </ul>
+
+    <div data-reveal style="margin-top:clamp(2.5rem,6vh,3.5rem)">
+      <a class="zl-link" href="/blog/weekly-exfoliation-vs-daily.html">
+        Why weekly, and not daily <span class="zl-link__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 5. Mechanism — dark field, macro imagery, safety notice ──────────── -->
+<section class="zl-section zl-dark zl-on-dark">
+  <div class="zl-container">
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">03</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">Mechanism</span>
+    </div>
+
+    <div class="zl-split zl-split--wide-img" style="align-items:start">
+      <div>
+        <h2 class="zl-display-l" style="max-width:13ch">
+          <span class="zl-rise"><span>Chemistry, not</span></span>
+          <span class="zl-rise" style="--reveal-delay:130ms"><span><em class="zl-em--brand">abrasion</em>.</span></span>
+        </h2>
+
+        <p class="zl-lead" data-reveal style="--reveal-delay:240ms;margin-top:1.75rem">
+          The formulation uses a citric acid complex to loosen the bonds holding
+          spent cells to the outermost layer, so that they release in the
+          ordinary course of the skin’s own shedding cycle rather than being
+          scrubbed off it.
+        </p>
+        <p class="zl-lead" data-reveal style="--reveal-delay:320ms;margin-top:1.25rem">
+          It works within minutes. Rinse thoroughly at the end of the contact
+          time and continue straight into the next step — freshly cleared skin
+          is at its most receptive in the minutes that follow.
+        </p>
+
+        <div data-reveal style="--reveal-delay:400ms;margin-top:2.5rem;border:1px solid var(--rule-dark);border-left:2px solid var(--tiffany-lift);padding:1.5rem 1.75rem">
+          <strong style="display:block;color:var(--tiffany-lift);font-size:.6875rem;font-weight:500;letter-spacing:.26em;text-transform:uppercase;margin-bottom:.75rem">
+            External use only
+          </strong>
+          <p style="margin:0;color:var(--on-dark-2);font-size:.9375rem;line-height:1.75">
+            The Peeling Gel is formulated exclusively for external facial
+            application. Avoid contact with the eyes and mucous membranes. If
+            irritation occurs, rinse immediately and discontinue use. Consult a
+            healthcare professional if irritation persists.
+          </p>
+        </div>
+
+        <div data-reveal style="--reveal-delay:480ms;margin-top:2.25rem">
+          <a class="zl-link" href="/science">Read the science <span class="zl-link__arrow" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+
+      <div>
+        <div class="zl-media zl-media--wide" data-reveal="wipe" style="--reveal-delay:160ms">
+          <img src="/assets/science-bubbles-macro.webp"
+               alt="Macro study of a clear gel in a laboratory cylinder, bubbles suspended through it"
+               loading="lazy" data-parallax="0.07"
+               style="position:absolute;top:-7%;left:0;width:100%;height:114%">
+        </div>
+
+        <ol data-stagger style="list-style:none;padding:0;margin-top:2rem">
+          <li style="border-top:1px solid var(--rule-dark-soft);padding:1.25rem 0">
+            <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--tiffany-lift)">Ingredient I</span>
+            <h3 style="font-family:var(--font-display);font-weight:400;font-size:1.25rem;margin:.5rem 0 .375rem;color:var(--on-dark)">Aloe vera juice</h3>
+            <p style="margin:0;font-size:.9375rem;line-height:1.75;color:var(--on-dark-2)">
+              The base of the gel. Chosen for slip, and for a long history as a
+              soothing botanical carrier.
+            </p>
+          </li>
+          <li style="border-top:1px solid var(--rule-dark-soft);padding:1.25rem 0">
+            <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--tiffany-lift)">Ingredient II</span>
+            <h3 style="font-family:var(--font-display);font-weight:400;font-size:1.25rem;margin:.5rem 0 .375rem;color:var(--on-dark)">Brown algae extract</h3>
+            <p style="margin:0;font-size:.9375rem;line-height:1.75;color:var(--on-dark-2)">
+              A marine botanical rich in polysaccharides, included so the
+              formulation treats the surface gently as it works.
+            </p>
+          </li>
+          <li style="border-top:1px solid var(--rule-dark-soft);padding:1.25rem 0">
+            <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--tiffany-lift)">Ingredient III</span>
+            <h3 style="font-family:var(--font-display);font-weight:400;font-size:1.25rem;margin:.5rem 0 .375rem;color:var(--on-dark)">Citric acid &amp; cotton seed</h3>
+            <p style="margin:0;font-size:.9375rem;line-height:1.75;color:var(--on-dark-2)">
+              The exfoliating complex, held at the concentration the weekly
+              interval was written around.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 6. Application protocol ─────────────────────────────────────────── -->
+<section class="zl-section">
+  <div class="zl-container">
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">04</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">Application Protocol</span>
+    </div>
+
+    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(3rem,7vh,4.5rem)">
+      <h2 class="zl-display-l" style="max-width:13ch">
+        <span class="zl-rise"><span>Once a week.</span></span>
+        <span class="zl-rise" style="--reveal-delay:130ms"><span>Two <em class="zl-em--brand">minutes</em>.</span></span>
+      </h2>
+      <p class="zl-lead" data-reveal style="--reveal-delay:220ms">
+        Consistency and timing are most of it. The interval is not a suggestion
+        printed on the tube — it is part of how the formulation was designed to
+        behave.
+      </p>
+    </div>
+
+    <ol class="zl-grid zl-grid--4" data-stagger style="list-style:none;padding:0">
+      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
+        <span class="zl-num">01</span>
+        <h3 class="zl-display-s" style="margin:.75rem 0 .625rem">Weekly application</h3>
+        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
+          Apply to cleansed, dry skin once a week. Massage gently in circular
+          motions until the gel is spread evenly across the face.
+        </p>
+      </li>
+      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
+        <span class="zl-num">02</span>
+        <h3 class="zl-display-s" style="margin:.75rem 0 .625rem">Contact time</h3>
+        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
+          Leave for up to two minutes. Do not exceed it — longer is not better,
+          and the limit is deliberate.
+        </p>
+      </li>
+      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
+        <span class="zl-num">03</span>
+        <h3 class="zl-display-s" style="margin:.75rem 0 .625rem">Rinse and continue</h3>
+        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
+          Rinse thoroughly with lukewarm water, then go straight on to step
+          two — the collagen syringe — and the serum after it.
+        </p>
+      </li>
+      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
+        <span class="zl-num">04</span>
+        <h3 class="zl-display-s" style="margin:.75rem 0 .625rem">Consistent scheduling</h3>
+        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
+          Use on the same day each week. Most people prefer the evening, so the
+          skin rests overnight before it meets the day.
+        </p>
+      </li>
+    </ol>
+
+    <hr class="zl-rule zl-draw" style="margin-top:clamp(3rem,7vh,4rem);background:var(--tiffany);height:2px;max-width:140px">
+
+    <div class="zl-split zl-split--wide-txt" data-reveal style="margin-top:2.25rem;align-items:center">
+      <p class="zl-prose" style="font-size:1.0625rem">
+        <strong>Step one runs on one evening a week.</strong> The syringe follows
+        it within minutes, and the daily steps — serum, then day or night
+        cream — carry the instruction through the rest of the week.
+      </p>
+      <div>
+        <a class="zl-btn zl-btn--ghost" href="/protocol">Where this sits in the protocol</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 7. Editorial moment — the gel itself, on pale turquoise ──────────── -->
+<section class="zl-section zl-wash">
+  <div class="zl-container">
+    <div class="zl-media zl-media--cinema" data-reveal="wipe" style="background:#fff">
+      <img src="/assets/atmosphere-teal-gel-swatch.webp"
+           alt="A ribbon of clear turquoise gel, air suspended through it, photographed against white"
+           loading="lazy" style="object-fit:contain;mix-blend-mode:multiply">
+    </div>
+
+    <div class="zl-split zl-split--wide-txt" style="margin-top:clamp(2.5rem,6vh,4rem);align-items:start">
+      <div>
+        <span class="zl-eyebrow" data-reveal>Texture</span>
+        <h2 class="zl-display-l" style="margin-top:1.25rem;max-width:11ch">
+          <span class="zl-rise" style="--reveal-delay:80ms"><span>Gentle power.</span></span>
+          <span class="zl-rise" style="--reveal-delay:200ms"><span>Profound <em class="zl-em--brand">clarity</em>.</span></span>
+        </h2>
+      </div>
+      <div class="zl-prose" data-reveal style="--reveal-delay:280ms">
+        <p>
+          A gel fine enough to move like water and to leave like it too. No
+          grit, no drag, nothing to scrub away and nothing left behind but the
+          skin itself.
+        </p>
+        <p>
+          The clarity that follows is not something the formulation adds. It is
+          what was already there, uncovered — which is the only kind of clarity
+          that lasts past the evening you found it.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 8. The ritual ───────────────────────────────────────────────────── -->
+<section class="zl-section zl-tint">
+  <div class="zl-container">
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">05</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">The Ritual</span>
+    </div>
+
+    <div class="zl-split" style="align-items:center">
+      <div>
+        <h2 class="zl-display-l" data-reveal="far" style="max-width:14ch">
+          One evening a <em class="zl-em--brand">week</em>.
+        </h2>
+        <p class="zl-lead" data-reveal style="--reveal-delay:140ms;margin-top:1.5rem">
+          Four movements, six minutes, fifty-two times a year. The protocol asks
+          for very little of your week — it only asks for the same evening,
+          every week.
+        </p>
+
+        <ol data-stagger style="list-style:none;padding:0;margin-top:2.5rem">
+          <li style="display:flex;gap:1.5rem;padding:1.125rem 0;border-top:1px solid var(--rule)">
+            <span style="color:var(--tiffany-deep);font-size:.75rem;letter-spacing:.2em;padding-top:.35rem">01</span>
+            <span>
+              <strong style="font-weight:500">Clean skin</strong><br>
+              <span class="zl-muted" style="font-size:.9375rem">Freshly cleansed, patted dry. Nothing else on the face.</span>
+            </span>
+          </li>
+          <li style="display:flex;gap:1.5rem;padding:1.125rem 0;border-top:1px solid var(--rule)">
+            <span style="color:var(--tiffany-deep);font-size:.75rem;letter-spacing:.2em;padding-top:.35rem">02</span>
+            <span>
+              <strong style="font-weight:500">Massage</strong><br>
+              <span class="zl-muted" style="font-size:.9375rem">Circular motions for sixty seconds, forehead to jaw.</span>
+            </span>
+          </li>
+          <li style="display:flex;gap:1.5rem;padding:1.125rem 0;border-top:1px solid var(--rule)">
+            <span style="color:var(--tiffany-deep);font-size:.75rem;letter-spacing:.2em;padding-top:.35rem">03</span>
+            <span>
+              <strong style="font-weight:500">Wait</strong><br>
+              <span class="zl-muted" style="font-size:.9375rem">Up to two minutes. No longer, however tempting.</span>
+            </span>
+          </li>
+          <li style="display:flex;gap:1.5rem;padding:1.125rem 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
+            <span style="color:var(--tiffany-deep);font-size:.75rem;letter-spacing:.2em;padding-top:.35rem">04</span>
+            <span>
+              <strong style="font-weight:500">Rinse</strong><br>
+              <span class="zl-muted" style="font-size:.9375rem">Lukewarm water, pat dry, and straight on to step two.</span>
+            </span>
+          </li>
+        </ol>
+      </div>
+
+      <div class="zl-media zl-media--portrait" data-reveal="wipe" style="--reveal-delay:140ms">
+        <img src="/assets/hero-model-young-southeast-asian-woman.webp"
+             alt="Portrait study of clear, evenly textured skin in soft studio light"
+             loading="lazy" data-parallax="0.06"
+             style="position:absolute;top:-7%;left:0;width:100%;height:114%">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 9. FAQ — accessible details/summary accordion ────────────────────── -->
+<section class="zl-section">
+  <div class="zl-container zl-container--mid">
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">06</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">Questions</span>
+    </div>
+
+    <h2 class="zl-display-l" style="max-width:13ch;margin-bottom:clamp(2.5rem,6vh,3.5rem)">
+      <span class="zl-rise"><span>Before you</span></span>
+      <span class="zl-rise" style="--reveal-delay:130ms"><span><em class="zl-em--brand">begin</em>.</span></span>
+    </h2>
+
+    <div class="zl-acc" data-stagger>
+      <details class="zl-acc__item">
+        <summary class="zl-acc__q"><span>How often should I use the Peeling Gel?</span><span class="zl-acc__ico" aria-hidden="true"></span></summary>
+        <p class="zl-acc__a">
+          Once a week. The protocol is written around a weekly interval, which
+          is designed to support the skin’s own renewal without over-processing
+          it. More often is not more effective, and it risks the barrier this
+          formulation is built to protect.
+        </p>
+      </details>
+
+      <details class="zl-acc__item">
+        <summary class="zl-acc__q"><span>Can I use it alongside other exfoliating products?</span><span class="zl-acc__ico" aria-hidden="true"></span></summary>
+        <p class="zl-acc__a">
+          We would not. Keep other exfoliants off the skin on the day you use
+          this one. The protocol is designed as a complete system — let this
+          step do its work, then continue into the treatment steps that follow
+          it.
+        </p>
+      </details>
+
+      <details class="zl-acc__item">
+        <summary class="zl-acc__q"><span>Will it make my skin more sensitive to the sun?</span><span class="zl-acc__ico" aria-hidden="true"></span></summary>
+        <p class="zl-acc__a">
+          As with any exfoliation, skin can be more sensitive to ultraviolet
+          light in the days that follow. Sun protection every morning is part of
+          the protocol in any case, and it matters most in the day or two after
+          this step.
+        </p>
+      </details>
+
+      <details class="zl-acc__item">
+        <summary class="zl-acc__q"><span>What should I apply afterwards?</span><span class="zl-acc__ico" aria-hidden="true"></span></summary>
+        <p class="zl-acc__a">
+          Continue straight into the sequence: the Precision Collagen Activation
+          Syringe, then the BioSignal Facial Serum. Freshly cleared skin is at
+          its most receptive, which is precisely why this step comes first.
+        </p>
+      </details>
+
+      <details class="zl-acc__item">
+        <summary class="zl-acc__q"><span>Is it suitable for sensitive skin?</span><span class="zl-acc__ico" aria-hidden="true"></span></summary>
+        <p class="zl-acc__a">
+          It is formulated to be gentle — a skin-compatible pH, soothing
+          botanical extracts, and no abrasive particles anywhere in it. If your
+          skin is particularly reactive, patch test on the inner forearm before
+          the first full application.
+        </p>
+      </details>
+
+      <details class="zl-acc__item">
+        <summary class="zl-acc__q"><span>How long does one tube last?</span><span class="zl-acc__ico" aria-hidden="true"></span></summary>
+        <p class="zl-acc__a">
+          Used once weekly as directed, one tube is designed to last
+          approximately three to four months.
+        </p>
+      </details>
+
+      <details class="zl-acc__item">
+        <summary class="zl-acc__q"><span>Can I skip this step in the protocol?</span><span class="zl-acc__ico" aria-hidden="true"></span></summary>
+        <p class="zl-acc__a">
+          You can, but the sequence is doing real work. This step clears the
+          surface so that what follows meets living tissue rather than the
+          residue of the week behind it. For the protocol to behave as it was
+          designed to, begin here.
+        </p>
+      </details>
+
+      <details class="zl-acc__item">
+        <summary class="zl-acc__q"><span>What should I expect?</span><span class="zl-acc__ico" aria-hidden="true"></span></summary>
+        <p class="zl-acc__a">
+          A surface that feels smoother to the touch once it is rinsed. Beyond
+          that, this is a protocol measured in months rather than days: the
+          texture and clarity it is designed to support build with consistent
+          weekly use, and every skin arrives at its own pace.
+        </p>
+      </details>
+    </div>
+
+    <p class="zl-muted" data-reveal style="margin-top:2.5rem;font-size:.8125rem">
+      More on formulation, delivery and the protocol in the
+      <a href="/faq.html" style="color:var(--tiffany-deep);text-decoration:underline;text-underline-offset:.2em">full FAQ</a>.
+    </p>
+  </div>
+</section>
+
+<!-- ── 10. Waitlist — the page's one bold turquoise field ───────────────── -->
+<section class="zl-section zl-brand-field" id="waitlist">
+  <div class="zl-container zl-container--narrow zl-center">
+    <span class="zl-eyebrow zl-eyebrow--center" data-reveal>Early Access</span>
+    <h2 class="zl-display-l" style="margin:1.5rem 0 1.5rem">
+      <span class="zl-rise"><span>Before it <em class="zl-em">launches</em>.</span></span>
+    </h2>
+    <p class="zl-lead zl-center" data-reveal style="--reveal-delay:160ms;margin-bottom:2.75rem">
+      The Bio-Renewal Peeling Gel is in pre-launch and not yet available to
+      purchase. Register and we will write to you first — with early access and
+      an invitation to a complimentary skin analysis.
+    </p>
+
+    <form name="waitlist" method="POST" action="/thank-you/"
+          data-netlify="true" netlify-honeypot="bot-field"
+          data-reveal style="--reveal-delay:220ms;max-width:460px;margin-inline:auto;text-align:left">
+      <input type="hidden" name="form-name" value="waitlist">
+      <p class="zl-hp" aria-hidden="true"><label>Do not fill this in: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+      <label class="zl-sr" for="wl-email">Email address</label>
+      <input class="zl-input" type="email" id="wl-email" name="email" placeholder="your@email.com" required autocomplete="email">
+
+      <div style="margin-top:1.75rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+        <button class="zl-btn zl-btn--on-brand" type="submit">Register</button>
+        <span class="zl-form__status" role="status" aria-live="polite"></span>
+      </div>
+
+      <p class="zl-form__note" style="margin-top:1.25rem">
+        We write rarely, and only about the protocol. Unsubscribe at any time.
+        See our <a href="/privacy.html" style="color:var(--ink);text-decoration:underline">privacy policy</a>.
+      </p>
+    </form>
+
+    <hr class="zl-rule zl-draw" style="max-width:120px;margin:clamp(3rem,7vh,4.5rem) auto 2rem;background:rgba(255,255,255,.85);height:2px">
+
+    <p data-reveal style="margin-bottom:2rem;color:var(--ink);font-size:.9375rem">
+      Questions about the formulation? Our specialists answer directly.
+    </p>
+    <div data-reveal style="--reveal-delay:100ms">
+      <a class="zl-btn zl-btn--on-brand" href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%20%E2%80%94%20I%20have%20a%20question%20about%20the%20Bio-Renewal%20Peeling%20Gel.">
+        Ask on WhatsApp
+      </a>
+    </div>
+
+    <div data-reveal style="--reveal-delay:180ms;margin-top:clamp(2.5rem,6vh,3.5rem);display:flex;justify-content:center;flex-wrap:wrap;gap:1.5rem 2.75rem">
+      <a class="zl-link" href="/products/syringe">Step 02 — the syringe <span class="zl-link__arrow" aria-hidden="true">→</span></a>
+      <a class="zl-link" href="/products">All six formulations <span class="zl-link__arrow" aria-hidden="true">→</span></a>
+      <a class="zl-link" href="/analyser/">Analyse my skin <span class="zl-link__arrow" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
 </main>
 
-<!-- Sticky Product Bar -->
-<div class="zl-sticky-product-bar" id="zl-sticky-product-bar">
-  <div style="display:flex;align-items:center;gap:12px;flex:1;min-width:0;">
-    <span class="product-name" id="zl-sticky-product-name">Bio-Renewal Peeling Gel</span>
-    <span class="product-price" id="zl-sticky-product-price">£125</span>
+<footer class="zl-footer zl-on-dark">
+  <div class="zl-container">
+    <div class="zl-footer__top">
+      <div class="zl-footer__brand">
+        <span class="zl-logo">Zero Lines</span>
+        <p style="margin-top:1.25rem;max-width:32ch;font-size:.875rem;line-height:1.7">
+          A clinical-luxury Skin Longevity House. Botanical science, Pyrenean
+          mineral complexes, and formulations made in Barcelona.
+        </p>
+      </div>
+      <div>
+        <h3>Explore</h3>
+        <div class="zl-footer__links">
+          <a href="/science">Science</a>
+          <a href="/protocol">Protocol</a>
+          <a href="/products">Formulations</a>
+          <a href="/story">Story</a>
+          <a href="/blog/">Journal</a>
+        </div>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <div class="zl-footer__links">
+          <a href="/contact">Get in touch</a>
+          <a href="https://wa.me/35054005198">WhatsApp</a>
+          <a href="mailto:info@zerolines.life">info@zerolines.life</a>
+          <a href="https://instagram.com/zerolines.life">Instagram</a>
+        </div>
+      </div>
+      <div>
+        <h3>Information</h3>
+        <div class="zl-footer__links">
+          <a href="/faq.html">FAQ</a>
+          <a href="/shipping-returns.html">Shipping &amp; returns</a>
+          <a href="/privacy.html">Privacy</a>
+          <a href="/terms.html">Terms</a>
+          <a href="/accessibility.html">Accessibility</a>
+        </div>
+      </div>
+    </div>
+    <div class="zl-footer__bottom">
+      <span>© 2026 Zero Lines. Gibraltar &amp; Barcelona.</span>
+      <div class="zl-footer__legal">
+        <a href="/cookies.html">Cookies</a>
+        <a href="/accessibility.html">Accessibility</a>
+      </div>
+    </div>
   </div>
-  <a href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%27m%20interested%20in%20the%20Bio-Renewal%20Peeling%20Gel." class="btn-whatsapp" id="zl-sticky-cta" target="_blank" rel="noopener">Pre-Order on WhatsApp</a>
-</div>
-<script>
-(function() {
-  var bar = document.getElementById('zl-sticky-product-bar');
-  if (!bar) return;
-  var hero = document.querySelector('section:first-of-type');
-  function update() {
-    var threshold = hero ? hero.offsetHeight * 0.6 : 400;
-    bar.classList.toggle('is-visible', (window.scrollY || window.pageYOffset) > threshold);
-  }
-  window.addEventListener('scroll', update, { passive: true });
-  update();
-})();
-</script>
-
-<footer class="zl-footer">
-  <a href="/" class="zl-footer-logo">ZERO LINES</a>
-  <p>Advanced Skincare Solutions</p>
-  <nav class="zl-footer-links">
-    <a href="/science/">Science</a>
-    <a href="/protocol/">Protocol</a>
-    <a href="/products/">Products</a>
-    <a href="/story/">Story</a>
-    <a href="/testimonials/">Testimonials</a>
-    <a href="/contact/">Contact</a>
-    <a href="/blog/">Journal</a>
-  </nav>
-  <p class="zl-footer-copy">© 2026 Zero Lines. All rights reserved.</p>
 </footer>
 
+<a class="zl-wa" href="https://wa.me/35054005198" aria-label="Contact Zero Lines on WhatsApp">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.82 9.82 0 016.988 2.898 9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<div class="zl-cookie" id="zl-cookie" data-open="false" role="region" aria-label="Cookie notice">
+  <span>We use cookies to understand how the site is used. <a href="/cookies.html">Learn more</a></span>
+  <div class="zl-cookie__actions">
+    <button class="zl-btn zl-btn--on-dark-ghost" data-cookie="essential">Essential only</button>
+    <button class="zl-btn zl-btn--light" data-cookie="all">Accept all</button>
+  </div>
+</div>
+
+<script src="/assets/lenis.min.js" defer></script>
+<script src="/assets/zl.js" defer></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('/service-worker.js').catch(function () {});
+    });
+  }
+</script>
 </body>
 </html>

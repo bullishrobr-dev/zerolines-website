@@ -37,8 +37,10 @@
   --ink:         #0B0D0D;
   --ink-2:       #1F2222;
   --ink-3:       #474B4B;
-  --mist:        #7E827F;
-  --mist-2:      #A5A8A4;
+  /* #7E827F measured 3.74:1 on bone — below the 4.5:1 AA floor for body text.
+     #6B6F6C measures 4.89:1. */
+  --mist:        #6B6F6C;
+  --mist-2:      #676B68;   /* #8E918E measured 2.83:1 on the tint — used for real copy, so it must pass */
 
   /* THE BRAND — Tiffany turquoise */
   --tiffany:      #0ABAB5;
@@ -146,7 +148,19 @@ input, textarea, select { font: inherit; color: inherit; }
 .zl-em { font-style: italic; font-weight: 300; }
 /* The one flourish that carries the brand colour into headline type */
 .zl-em--brand { color: var(--tiffany-deep); font-style: italic; }
-.zl-on-dark .zl-em--brand, .zl-brand-field .zl-em--brand { color: var(--tiffany-lift); }
+.zl-on-dark .zl-em--brand { color: var(--tiffany-lift); }
+/* on the turquoise field the accent word cannot be turquoise — go to full ink */
+.zl-brand-field .zl-em--brand { color: var(--ink); }
+/* Everything on the turquoise field resolves to ink. White on #0ABAB5 is
+   2.41:1; page authors reaching for white here is an easy mistake to make,
+   so the system answers it rather than relying on each page getting it right. */
+.zl-brand-field .zl-num,
+.zl-brand-field .zl-muted,
+.zl-brand-field dt,
+.zl-brand-field dd,
+.zl-brand-field p,
+.zl-brand-field li { color: var(--ink); }
+.zl-brand-field .zl-muted, .zl-brand-field dd { color: rgba(11,13,13,0.78); }
 
 .zl-eyebrow {
   display: flex; align-items: center; gap: 0.75rem;
@@ -162,15 +176,15 @@ input, textarea, select { font: inherit; color: inherit; }
 .zl-eyebrow--bare::before { display: none; }
 .zl-eyebrow--center { justify-content: center; }
 .zl-on-dark .zl-eyebrow { color: var(--on-dark-3); }
-.zl-brand-field .zl-eyebrow { color: rgba(255,255,255,0.72); }
-.zl-brand-field .zl-eyebrow::before { background: rgba(255,255,255,0.85); }
+.zl-brand-field .zl-eyebrow { color: rgba(11,13,13,0.8); }  /* 0.66 measured 4.3:1 */
+.zl-brand-field .zl-eyebrow::before { background: rgba(11,13,13,0.7); }
 
 .zl-lead {
   font-size: var(--t-lead); line-height: 1.7;
   color: var(--ink-3); font-weight: 300; max-width: var(--measure);
 }
 .zl-on-dark .zl-lead { color: var(--on-dark-2); }
-.zl-brand-field .zl-lead { color: rgba(255,255,255,0.9); }
+.zl-brand-field .zl-lead { color: rgba(11,13,13,0.82); }
 
 .zl-prose { max-width: var(--measure); }
 .zl-prose p { margin-bottom: 1.5em; color: var(--ink-3); }
@@ -184,7 +198,7 @@ input, textarea, select { font: inherit; color: inherit; }
 .zl-num {
   font-family: var(--font-display); font-weight: 300;
   font-size: clamp(2.25rem, 3.6vw, 3.5rem); line-height: 1;
-  letter-spacing: -0.02em; color: var(--tiffany);
+  letter-spacing: -0.02em; color: var(--tiffany-deep);
 }
 
 /* ---------- 4. LAYOUT ---------------------------------------------------- */
@@ -201,11 +215,16 @@ input, textarea, select { font: inherit; color: inherit; }
 .zl-tint  { background: var(--bone-2); }
 .zl-wash  { background: var(--tiffany-wash); }
 
-/* Full-bleed brand field — the confident turquoise moment */
-.zl-brand-field { background: var(--tiffany); color: #fff; }
-.zl-brand-field h1, .zl-brand-field h2, .zl-brand-field h3 { color: #fff; }
-/* Deep variant for when turquoise-on-turquoise needs contrast */
-.zl-brand-field--deep { background: var(--tiffany-ink); }
+/* Full-bleed brand field — the confident turquoise moment.
+   Type is INK, not white. #0ABAB5 is a light-mid colour: white on it measures
+   2.41:1, well under the 4.5:1 AA floor, and it visibly washes out. Ink on the
+   same turquoise measures 8.08:1 — and dark-on-turquoise is the more assured
+   look besides. */
+.zl-brand-field { background: var(--tiffany); color: var(--ink); }
+.zl-brand-field h1, .zl-brand-field h2, .zl-brand-field h3 { color: var(--ink); }
+/* Deep variant for when a turquoise field genuinely needs light type */
+.zl-brand-field--deep { background: var(--tiffany-ink); color: var(--on-dark); }
+.zl-brand-field--deep h1, .zl-brand-field--deep h2, .zl-brand-field--deep h3 { color: var(--on-dark); }
 
 .zl-rule { height: 1px; background: var(--rule); border: 0; margin: 0; }
 .zl-dark .zl-rule, .zl-brand-field .zl-rule { background: var(--rule-dark); }
@@ -230,16 +249,23 @@ input, textarea, select { font: inherit; color: inherit; }
 .zl-skip { position: absolute; left: -9999px; top: 0; z-index: 200; background: var(--ink); color: var(--on-dark); padding: .875rem 1.5rem; font-size: var(--t-small); }
 .zl-skip:focus { left: 0; }
 
+/* At the top the header sits over the hero, which is always bone — so it can be
+   transparent. The moment the page scrolls it becomes FULLY OPAQUE.
+   It previously stayed at rgba(...,0.82) with a blur, which does not occlude
+   white body text on a near-black section: copy from the page underneath was
+   readable straight through the header band. Blur is not occlusion. An opaque
+   panel cannot ghost, at any scroll position, over any section colour. */
 .zl-header {
   position: fixed; inset: 0 0 auto 0; z-index: 100;
   height: var(--header-h); display: flex; align-items: center;
-  background: rgba(251, 250, 248, 0.82);
-  backdrop-filter: saturate(180%) blur(16px);
-  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  background: transparent;
   border-bottom: 1px solid transparent;
-  transition: border-color var(--dur-ui) var(--ease), background-color var(--dur-ui) var(--ease);
+  transition: background-color var(--dur-ui) var(--ease), border-color var(--dur-ui) var(--ease);
 }
-.zl-header[data-scrolled="true"] { border-bottom-color: var(--rule-soft); }
+.zl-header[data-scrolled="true"] {
+  background: var(--bone);
+  border-bottom-color: var(--rule-soft);
+}
 
 /* Dark variant only where a page genuinely opens on a dark field */
 .zl-header--over-dark { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; color: var(--on-dark); }
@@ -324,9 +350,14 @@ input, textarea, select { font: inherit; color: inherit; }
 .zl-btn--light { --btn-fg: var(--ink); --btn-bg: #fff; --btn-bd: #fff; }
 .zl-btn--on-dark-ghost { --btn-fg: var(--on-dark); --btn-bg: transparent; --btn-bd: rgba(255,255,255,.42); }
 /* The one place turquoise IS the button — primary conversion only */
-.zl-btn--brand { --btn-fg: #fff; --btn-bg: var(--tiffany); --btn-bd: var(--tiffany); --btn-hover-bg: var(--ink); }
+/* Ink on turquoise (8.08:1), not white (2.41:1). This is the hero CTA and the
+   waitlist submit — the two things that must never be hard to read. */
+.zl-btn--brand { --btn-fg: var(--ink); --btn-bg: var(--tiffany); --btn-bd: var(--tiffany); --btn-hover-bg: var(--ink); }
+.zl-btn--brand:hover { color: #fff; }
 .zl-btn--brand:hover { border-color: var(--ink); }
-.zl-btn--on-brand { --btn-fg: var(--tiffany); --btn-bg: #fff; --btn-bd: #fff; --btn-hover-bg: var(--ink); }
+/* On a turquoise field: white fill, ink label. Turquoise-on-white was 2.41:1. */
+.zl-btn--on-brand { --btn-fg: var(--ink); --btn-bg: #fff; --btn-bd: #fff; --btn-hover-bg: var(--ink); }
+.zl-btn--on-brand:hover { color: #fff; }
 
 .zl-link {
   display: inline-flex; align-items: center; gap: .625rem;
@@ -338,7 +369,8 @@ input, textarea, select { font: inherit; color: inherit; }
 .zl-link:hover::before { transform: scaleX(1); transform-origin: left; }
 .zl-link:hover::after { opacity: 0; }
 .zl-link:hover { color: var(--tiffany-deep); }
-.zl-on-dark .zl-link:hover, .zl-brand-field .zl-link:hover { color: #fff; }
+.zl-on-dark .zl-link:hover { color: #fff; }
+.zl-brand-field .zl-link:hover { color: var(--ink); }
 .zl-link__arrow { transition: transform 560ms var(--ease); }
 .zl-link:hover .zl-link__arrow { transform: translateX(5px); }
 
@@ -487,7 +519,7 @@ input, textarea, select { font: inherit; color: inherit; }
   mix-blend-mode: multiply;   /* neutralises the differing baked-in backgrounds */
 }
 .zl-product:hover .zl-product__media img { transform: scale(1.055); }
-.zl-product__idx { position: absolute; top: 1.125rem; left: 1.125rem; z-index: 1; font-size: .6875rem; letter-spacing: .2em; color: var(--tiffany); }
+.zl-product__idx { position: absolute; top: 1.125rem; left: 1.125rem; z-index: 1; font-size: .6875rem; letter-spacing: .2em; color: var(--tiffany-deep); }
 .zl-product__body { padding-top: 1.375rem; display: flex; flex-direction: column; gap: .4375rem; }
 .zl-product__name { font-family: var(--font-display); font-weight: 400; font-size: 1.3125rem; line-height: 1.25; transition: color var(--dur-ui) var(--ease); }
 .zl-product:hover .zl-product__name { color: var(--tiffany-deep); }
@@ -503,16 +535,19 @@ input, textarea, select { font: inherit; color: inherit; }
 }
 .zl-input::placeholder { color: var(--mist-2); }
 .zl-input:focus { outline: none; border-bottom-color: var(--tiffany); }
-.zl-on-dark .zl-input, .zl-brand-field .zl-input { color: #fff; border-bottom-color: rgba(255,255,255,.32); }
-.zl-on-dark .zl-input::placeholder, .zl-brand-field .zl-input::placeholder { color: rgba(255,255,255,.55); }
-.zl-on-dark .zl-input:focus, .zl-brand-field .zl-input:focus { border-bottom-color: #fff; }
+.zl-on-dark .zl-input { color: #fff; border-bottom-color: rgba(255,255,255,.32); }
+.zl-brand-field .zl-input { color: var(--ink); border-bottom-color: rgba(11,13,13,.3); }
+.zl-on-dark .zl-input::placeholder { color: rgba(255,255,255,.55); }
+.zl-brand-field .zl-input::placeholder { color: rgba(11,13,13,.5); }
+.zl-on-dark .zl-input:focus { border-bottom-color: #fff; }
+.zl-brand-field .zl-input:focus { border-bottom-color: var(--ink); }
 
 .zl-form__note { font-size: .75rem; color: var(--mist); line-height: 1.6; }
-.zl-brand-field .zl-form__note { color: rgba(255,255,255,.75); }
+.zl-brand-field .zl-form__note { color: rgba(11,13,13,0.72); }
 .zl-form__status { font-size: var(--t-small); min-height: 1.5em; }
 .zl-form__status[data-state="ok"]  { color: var(--tiffany-deep); }
 .zl-form__status[data-state="err"] { color: #A4443A; }
-.zl-brand-field .zl-form__status[data-state="ok"] { color: #fff; }
+.zl-brand-field .zl-form__status[data-state="ok"] { color: var(--ink); }
 .zl-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
 /* ---------- 12. FOOTER --------------------------------------------------- */
@@ -551,6 +586,10 @@ input, textarea, select { font: inherit; color: inherit; }
   transition: opacity 620ms var(--ease), transform 620ms var(--ease);
 }
 .zl-cookie[data-open="true"] { opacity: 1; transform: none; pointer-events: auto; }
+/* The notice sits on the near-black panel, so its link is light. Owned here
+   rather than inline, so it stays correct wherever the component is used. */
+.zl-cookie a { color: #fff; text-decoration: underline; text-underline-offset: .18em; }
+.zl-cookie a:hover { color: var(--tiffany-lift); }
 .zl-cookie__actions { display: flex; gap: .625rem; }
 .zl-cookie .zl-btn { padding: .6875rem 1rem; font-size: .625rem; flex: 1; }
 @media (max-width: 560px) { .zl-cookie { left: 1rem; right: 1rem; width: auto; bottom: calc(1rem + 52px + .75rem); } }
@@ -562,4 +601,5 @@ input, textarea, select { font: inherit; color: inherit; }
 
 .zl-index-rule { display: flex; align-items: baseline; gap: 1.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--rule); margin-bottom: clamp(2rem, 5vh, 3.5rem); }
 .zl-dark .zl-index-rule, .zl-brand-field .zl-index-rule { border-bottom-color: var(--rule-dark); }
-.zl-index-rule__num { font-size: var(--t-eyebrow); letter-spacing: .28em; color: var(--tiffany); }
+.zl-index-rule__num { font-size: var(--t-eyebrow); letter-spacing: .28em; color: var(--tiffany-deep); }
+.zl-dark .zl-index-rule__num, .zl-brand-field .zl-index-rule__num { color: inherit; opacity: .7; }
