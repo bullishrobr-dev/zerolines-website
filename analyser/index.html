@@ -197,7 +197,7 @@
 
           <div data-reveal style="--reveal-delay:680ms;margin-top:2.25rem;display:flex;gap:1.25rem;flex-wrap:wrap;align-items:center">
             <button class="zl-btn zl-btn--brand" type="button" id="zl-a-start">Begin the analysis</button>
-            <span class="zl-a-meta">About two minutes<br>No account, no email address</span>
+            <span class="zl-a-meta">About two minutes<br>No account, nothing to pay</span>
           </div>
         </div>
 
@@ -261,7 +261,7 @@
           <ul class="zl-a-pledge">
             <li>It is sent over an encrypted connection to the service that reads it.</li>
             <li>It is read once, for this assessment, and is not stored afterwards.</li>
-            <li>It is not attached to a name. The analyser asks for no account, no email address and no payment.</li>
+            <li>It is not attached to a name. The analyser asks for no account and no payment. You are offered your email address at the end, only if you want the assessment sent to you.</li>
             <li>It is never published, never shared with anyone else, and never used for advertising.</li>
           </ul>
 
@@ -455,15 +455,49 @@
           </p>
         </div>
 
+        <!-- This is the highest-intent moment on the site: someone has just
+             answered ten questions and, often, photographed their own face. It
+             used to end with three buttons pointing away and a small text link
+             to /#waitlist — a full navigation that discarded the report, because
+             nothing here persists it. So the best lead-capture asset the brand
+             owns captured nothing. The ask now comes first, and it asks for the
+             one thing the visitor actually wants at this moment: a copy. -->
         <div class="zl-a-close">
+          <div class="zl-a-keep">
+            <form class="zl-a-keep__form" name="waitlist" method="POST" action="/thank-you/"
+                  data-netlify="true" netlify-honeypot="bot-field">
+              <input type="hidden" name="form-name" value="waitlist">
+              <input type="hidden" name="source" value="analyser">
+              <p class="zl-hp" aria-hidden="true"><label>Do not fill this in: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+              <h3 class="zl-a-keep__t">Keep this assessment.</h3>
+              <p class="zl-a-keep__d">
+                We will send it to you, and tell you once when the protocol is
+                available. Nothing else.
+              </p>
+
+              <label class="zl-sr" for="zl-a-email">Email address</label>
+              <div class="zl-a-keep__row">
+                <input class="zl-input" type="email" id="zl-a-email" name="email"
+                       placeholder="your@email.com" required autocomplete="email">
+                <button class="zl-btn zl-btn--brand" type="submit">Send it to me</button>
+              </div>
+              <span class="zl-form__status" role="status" aria-live="polite"></span>
+
+              <p class="zl-form__note zl-a-keep__note">
+                Your photograph is not attached and is not stored. Unsubscribe at
+                any time — see our <a href="/privacy.html">privacy policy</a>.
+              </p>
+            </form>
+          </div>
+
           <div class="zl-a-close__actions">
-            <a class="zl-btn zl-btn--brand" href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%20have%20just%20completed%20the%20skin%20analysis%20and%20would%20like%20to%20talk%20it%20through.">Talk it through with a specialist</a>
+            <a class="zl-btn zl-btn--ghost" href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%20have%20just%20completed%20the%20skin%20analysis%20and%20would%20like%20to%20talk%20it%20through.">Talk it through with a specialist</a>
             <a class="zl-btn zl-btn--ghost" href="/protocol">See the full protocol</a>
           </div>
           <div class="zl-a-close__row">
             <button class="zl-link" type="button" id="zl-a-print">Print or save as PDF <span class="zl-link__arrow" aria-hidden="true">→</span></button>
             <button class="zl-link" type="button" id="zl-a-restart">Start a new analysis <span class="zl-link__arrow" aria-hidden="true">→</span></button>
-            <a class="zl-link" href="/#waitlist">Register for early access <span class="zl-link__arrow" aria-hidden="true">→</span></a>
           </div>
         </div>
       </article>

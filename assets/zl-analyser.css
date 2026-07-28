@@ -358,6 +358,32 @@
 .zl-a-note p + p { margin-top: 1rem; }
 
 .zl-a-close { margin-top: clamp(2.5rem, 6vh, 3.5rem); padding-top: clamp(2rem, 5vh, 2.5rem); border-top: 1px solid var(--rule); }
+
+/* The ask, at the moment the assessment is on screen. It sits on the tint so it
+   reads as the one thing being offered rather than a fourth link in a row, and
+   the champagne hairline above it is the only place that metal appears on this
+   page — it marks this as the close. */
+.zl-a-keep {
+  background: var(--sage-wash);
+  border-top: 2px solid var(--champagne);
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  margin-bottom: clamp(2rem, 4vh, 2.75rem);
+}
+.zl-a-keep__form { max-width: 46ch; }
+.zl-a-keep__t {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(1.5rem, 2.4vw, 2rem); line-height: 1.15;
+  letter-spacing: -0.015em; color: var(--ink); margin: 0;
+}
+.zl-a-keep__d { margin-top: .75rem; font-size: .9375rem; line-height: 1.7; color: var(--ink-3); }
+.zl-a-keep__row { display: flex; gap: .75rem; margin-top: 1.5rem; flex-wrap: wrap; }
+.zl-a-keep__row .zl-input { flex: 1 1 16rem; min-width: 0; }
+.zl-a-keep__row .zl-btn { flex: 0 0 auto; }
+.zl-a-keep__note { margin-top: 1rem; }
+@media (max-width: 520px) {
+  .zl-a-keep__row .zl-btn { width: 100%; }
+}
+
 .zl-a-close__actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
 .zl-a-close__row { display: flex; flex-wrap: wrap; gap: 1.25rem 2.5rem; margin-top: 2.25rem; }
 .zl-a-close__row .zl-link { color: var(--ink-3); }
