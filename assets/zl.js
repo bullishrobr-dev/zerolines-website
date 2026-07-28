@@ -77,9 +77,15 @@
 
   function initParallax() {
     if (!canAnimate) return;
-    var items = $('[data-parallax]').map(function (el) {
-      return { el: el, factor: parseFloat(el.getAttribute('data-parallax')) || 0.12 };
-    });
+    // Parallax writes an inline transform. Scrub drives the same property from
+    // CSS, so an element inside a .zl-scrub container would have its scale
+    // silently clobbered — the image tracked scroll but never actually zoomed.
+    // Scrub wins; it is the richer effect.
+    var items = $('[data-parallax]')
+      .filter(function (el) { return !el.closest('.zl-scrub'); })
+      .map(function (el) {
+        return { el: el, factor: parseFloat(el.getAttribute('data-parallax')) || 0.12 };
+      });
     if (!items.length) return;
 
     var ticking = false;
@@ -102,6 +108,72 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
     update();
+  }
+
+  /* ---------- 3b. Scrub and pin ------------------------------------------ *
+     The two effects that make a page feel weighted rather than merely scrolled,
+     and the ones mobile was missing entirely. Both are driven from one rAF loop
+     writing a custom property, so the compositor animates and nothing reflows. */
+
+  function initScrub() {
+    if (!canAnimate) return;
+
+    var scrubs = $('.zl-scrub');
+    var pins = $('.zl-pin');
+    if (!scrubs.length && !pins.length) return;
+
+    var ticking = false;
+
+    function frame() {
+      var vh = window.innerHeight;
+
+      for (var i = 0; i < scrubs.length; i++) {
+        var el = scrubs[i];
+        var r = el.getBoundingClientRect();
+        if (r.bottom < -80 || r.top > vh + 80) continue;
+        // 0 as the element enters from below, 1 once it has settled in view
+        var p = 1 - Math.max(0, Math.min(1, (r.top - vh * 0.15) / (vh * 0.85)));
+        el.style.setProperty('--scrub', p.toFixed(4));
+      }
+
+      for (var j = 0; j < pins.length; j++) {
+        var pin = pins[j];
+        var pr = pin.getBoundingClientRect();
+        // hand over once the section is nearly done travelling
+        pin.setAttribute('data-leaving', pr.bottom < vh * 0.55 ? 'true' : 'false');
+      }
+
+      ticking = false;
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(frame);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    frame();
+  }
+
+  /* ---------- 3c. Horizontal rails --------------------------------------- *
+     Bring the current step into view on load so a visitor on step 05 does not
+     have to hunt for where they are in the rail. */
+
+  function initRails() {
+    $('.zl-rail').forEach(function (rail) {
+      var current = rail.querySelector('[aria-current="step"]');
+      if (!current) return;
+      var r = current.getBoundingClientRect();
+      var rr = rail.getBoundingClientRect();
+      if (r.left >= rr.left && r.right <= rr.right) return;   // already visible
+
+      // Land it inside the rail's own gutter rather than flush to the edge —
+      // a card jammed against the viewport edge reads as clipped, not aligned.
+      var pad = parseFloat(getComputedStyle(rail).paddingLeft) || 16;
+      rail.scrollLeft = Math.max(0, current.offsetLeft - rail.offsetLeft - pad);
+    });
   }
 
   /* ---------- 4. Counters ------------------------------------------------ */
@@ -316,8 +388,10 @@
 
   function initSmoothScroll() {
     if (!canAnimate || typeof window.Lenis !== 'function') return;
-    if (window.innerWidth < 900) return;      // native momentum is better on touch
     try {
+      // smoothTouch stays OFF deliberately. Overriding a phone's own momentum
+      // curve makes scrolling feel laggy and detached, not luxurious — the
+      // weight on touch comes from the scrub and pin work below instead.
       var lenis = new window.Lenis({
         duration: 1.25,
         easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
@@ -381,6 +455,8 @@
     try { initHeader(); } catch (e) {}
     try { initMenu(); } catch (e) {}
     try { initParallax(); } catch (e) {}
+    try { initScrub(); } catch (e) {}
+    try { initRails(); } catch (e) {}
     try { initCounters(); } catch (e) {}
     try { initProgress(); } catch (e) {}
     try { initCookies(); } catch (e) {}

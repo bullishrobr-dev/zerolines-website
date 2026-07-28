@@ -766,3 +766,134 @@ input, textarea, select { font: inherit; color: inherit; }
   transition-delay: var(--tick-delay, 0ms);
 }
 .zl-js [data-reveal].is-in .zl-concierge__tick { stroke-dashoffset: 0; }
+
+/* ============================================================================
+   MOTION v3 — weight on touch
+   ----------------------------------------------------------------------------
+   Owner: mobile "feels dull and boring... doesn't feel heavy, doesn't feel
+   premium... like a chicken breast with no spices."
+
+   Diagnosis, not guesswork:
+     · lenis was disabled below 900px, so mobile had no weighted scroll at all.
+     · every effect was a one-shot reveal. Nothing responded to HOW you scroll,
+       only THAT you had scrolled. One-shot fades read flat however slow they are.
+
+   What premium sites actually do, and what is added here:
+     · pinned headings that hold while their content travels past
+     · media that scrubs — scale and position tied to scroll progress, not a
+       fire-once transition
+     · horizontal rails you can throw with a thumb
+     · reveals that travel further and longer on small screens, where there is
+       less on screen to carry the motion
+   ========================================================================= */
+
+/* ---- 1. Pinned heading -------------------------------------------------- */
+/* A section title holds at the top while its cards scroll past it. This is the
+   single biggest contributor to a page feeling heavy rather than scrolled. */
+.zl-pin { position: relative; }
+.zl-pin__hold {
+  position: sticky;
+  top: calc(var(--header-h) + clamp(1.5rem, 5vh, 3rem));
+  z-index: 1;
+}
+@media (max-width: 900px) {
+  .zl-pin__hold { top: calc(var(--header-h) + 1rem); }
+}
+/* the held title fades slightly as its section runs out, so it hands over */
+.zl-js .zl-pin__hold { transition: opacity 520ms var(--ease); }
+.zl-js .zl-pin[data-leaving="true"] .zl-pin__hold { opacity: .18; }
+
+/* ---- 2. Scroll-scrubbed media ------------------------------------------- */
+/* --scrub runs 0 -> 1 as the element crosses the viewport, written by zl.js.
+   Because it is a custom property the compositor does the work and nothing
+   reflows. */
+.zl-scrub { --scrub: 0; overflow: hidden; }
+.zl-scrub img {
+  transform: scale(calc(1.14 - (0.14 * var(--scrub))))
+             translate3d(0, calc((var(--scrub) - 0.5) * -3%), 0);
+  transform-origin: center 40%;
+  will-change: transform;
+}
+
+/* A slow tonal lift as the image settles — subtle, but it is what stops a
+   photograph feeling like a static block. */
+.zl-scrub::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: var(--ink);
+  opacity: calc(0.20 - (0.20 * var(--scrub)));
+}
+
+/* ---- 3. Horizontal rail -------------------------------------------------- */
+/* The protocol stepper, and any gallery that wants a thumb-throw. */
+.zl-rail {
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(210px, 250px);
+  gap: clamp(0.875rem, 2vw, 1.25rem);
+  overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  padding-block: 0.5rem 1.5rem;
+  padding-inline: var(--gutter);
+  margin-inline: calc(var(--gutter) * -1);
+  scrollbar-width: none;
+}
+.zl-rail::-webkit-scrollbar { display: none; }
+.zl-rail > * { scroll-snap-align: start; }
+@media (min-width: 1100px) {
+  .zl-rail { grid-auto-columns: minmax(0, 1fr); overflow-x: visible; margin-inline: 0; padding-inline: 0; }
+}
+
+/* the step card itself */
+.zl-step {
+  display: flex; flex-direction: column; gap: 0.75rem;
+  padding-top: 1.125rem; border-top: 1px solid var(--rule);
+  color: inherit;
+  transition: border-color 520ms var(--ease);
+}
+.zl-step:hover { border-top-color: var(--house); }
+.zl-step__n {
+  font-family: var(--font-display); font-weight: 300; font-size: 1.75rem;
+  line-height: 1; color: var(--house);
+}
+.zl-step__name { font-family: var(--font-display); font-size: 1.125rem; line-height: 1.25; }
+.zl-step__role { font-size: 0.8125rem; color: var(--mist); line-height: 1.6; }
+.zl-step[aria-current="step"] { border-top-color: var(--house); border-top-width: 2px; }
+.zl-step[aria-current="step"] .zl-step__name { color: var(--house); }
+.zl-step[aria-current="step"] .zl-step__n::after {
+  content: ""; display: inline-block; width: 18px; height: 1px;
+  background: var(--signal); margin-left: 0.5rem; vertical-align: middle;
+}
+/* thumb affordance — a hairline that shows there is more to the right */
+.zl-rail-hint {
+  display: flex; align-items: center; gap: 0.75rem;
+  font-size: var(--t-eyebrow); letter-spacing: .24em; text-transform: uppercase;
+  color: var(--mist-2); margin-top: 0.25rem;
+}
+.zl-rail-hint::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+@media (min-width: 1100px) { .zl-rail-hint { display: none; } }
+
+/* ---- 4. Reveals travel further on small screens -------------------------- */
+/* There is less on a phone screen to carry a movement, so the same 26px rise
+   that reads considered on a desktop reads like nothing at all. */
+@media (max-width: 900px) {
+  .zl-js [data-reveal]        { --reveal-y: 40px; transition-duration: 1250ms; }
+  .zl-js [data-reveal="far"]  { --reveal-y: 64px; }
+  .zl-js [data-stagger] > *   { transition-duration: 1050ms; }
+}
+
+/* ---- 5. Section seam ----------------------------------------------------- */
+/* A champagne hairline that draws itself as each major section arrives. Small,
+   but it punctuates the scroll instead of sections simply abutting. */
+.zl-seam { position: relative; height: 1px; background: var(--rule); overflow: hidden; }
+.zl-seam::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to right, var(--champagne), transparent 70%);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 1400ms var(--ease);
+}
+.zl-js .zl-seam.is-in::after { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .zl-scrub img { transform: none !important; }
+  .zl-scrub::after { opacity: 0 !important; }
+  .zl-js .zl-pin[data-leaving="true"] .zl-pin__hold { opacity: 1; }
+  .zl-seam::after { transform: scaleX(1) !important; transition: none !important; }
+}

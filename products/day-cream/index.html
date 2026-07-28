@@ -420,7 +420,7 @@
       </div>
 
       <div>
-        <div class="zl-media zl-media--editorial" data-reveal="wipe" style="--reveal-delay:140ms;background:#fff">
+        <div class="zl-media zl-media--editorial zl-scrub" style="--reveal-delay:140ms;background:#fff">
           <img src="/assets/product-day-cream.webp"
                alt="The Environmental Shield Day Cream bottle, a 50 ml airless pump"
                loading="lazy" width="832" height="1248"
@@ -581,7 +581,7 @@
 <!-- ── 6. Editorial moment — the headline, on a dark plate ─────────────── -->
 <section class="zl-section zl-dark zl-on-dark">
   <div class="zl-container">
-    <div class="zl-media zl-media--cinema" data-reveal="wipe" style="background:#fff">
+    <div class="zl-media zl-media--cinema zl-scrub" style="background:#fff">
       <img src="/assets/atmosphere-cream-texture.webp"
            alt="Macro study of the cream — a single swirl of pale, silken texture"
            loading="lazy" width="2688" height="1536" data-parallax="0.07"
@@ -843,6 +843,65 @@
     <div data-reveal style="display:flex;justify-content:center;flex-wrap:wrap;gap:1.5rem 2.75rem">
       <a class="zl-link" href="/products/serum">Step 03 · the serum <span class="zl-link__arrow" aria-hidden="true">→</span></a>
       <a class="zl-link" href="/products/night-cream">Step 05 · the night cream <span class="zl-link__arrow" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── The protocol, in sequence — swipe on touch, click to move ─────────── -->
+<section class="zl-section zl-section--sm zl-tint" data-zl-stepper>
+  <div class="zl-container">
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">The Protocol</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">Where this one sits</span>
+    </div>
+
+    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(2rem,5vh,3rem)">
+      <h2 class="zl-display-m" data-reveal style="max-width:16ch">
+        Six steps, in <em class="zl-em--brand">order</em>.
+      </h2>
+      <p class="zl-lead" data-reveal style="--reveal-delay:120ms">
+        Each formulation prepares the skin for the one after it. Move through the
+        sequence below, or take the whole protocol at once.
+      </p>
+    </div>
+
+    <span class="zl-rail-hint">Swipe</span>
+    <div class="zl-rail" role="list" data-stagger>
+        <a class="zl-step" href="/products/peeling-gel">
+          <span class="zl-step__n">01</span>
+          <span class="zl-step__name">Renew</span>
+          <span class="zl-step__role">One evening a week. Clears the canvas.</span>
+        </a>
+        <a class="zl-step" href="/products/syringe">
+          <span class="zl-step__n">02</span>
+          <span class="zl-step__name">Activate</span>
+          <span class="zl-step__role">One evening a week. The immediate smoothing.</span>
+        </a>
+        <a class="zl-step" href="/products/serum">
+          <span class="zl-step__n">03</span>
+          <span class="zl-step__name">Signal</span>
+          <span class="zl-step__role">Morning and night. Carries the signal.</span>
+        </a>
+        <a class="zl-step" href="/products/day-cream" aria-current="step">
+          <span class="zl-step__n">04</span>
+          <span class="zl-step__name">Shield</span>
+          <span class="zl-step__role">Every morning. Holds the day off.</span>
+        </a>
+        <a class="zl-step" href="/products/night-cream">
+          <span class="zl-step__n">05</span>
+          <span class="zl-step__name">Restore</span>
+          <span class="zl-step__role">Every night. Works with the repair cycle.</span>
+        </a>
+        <a class="zl-step" href="/products/syringe-refill">
+          <span class="zl-step__n">06</span>
+          <span class="zl-step__name">Sustain</span>
+          <span class="zl-step__role">Roughly once a year. Keeps it going.</span>
+        </a>
+    </div>
+
+    <div style="margin-top:clamp(1.5rem,4vh,2.5rem)" data-reveal>
+      <a class="zl-link" href="/protocol">The full protocol <span class="zl-link__arrow" aria-hidden="true">&rarr;</span></a>
     </div>
   </div>
 </section>

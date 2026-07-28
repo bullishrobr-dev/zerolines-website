@@ -121,7 +121,7 @@ force = false
 
 [[redirects]]
 from = "/analyser"
-to = "/#analyser"
+to = "/analyser/"
 status = 301.0
 force = false
 
@@ -133,7 +133,7 @@ force = false
 
 [[redirects]]
 from = "/analyzer"
-to = "/#analyser"
+to = "/analyser/"
 status = 301.0
 force = false
 
