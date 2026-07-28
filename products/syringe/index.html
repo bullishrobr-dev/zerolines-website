@@ -5,72 +5,153 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Precision Collagen Activation Syringe — Zero Lines | Step 02 of the Protocol</title>
-<meta name="description" content="Step 02 of the Zero Lines Longevity Protocol. A precision applicator placing hydrolysed collagen and botanical signal peptides directly on expression lines. External use only — no needle, no injection. Not yet available to purchase.">
+<meta name="description" content="Step 02 of the Zero Lines Longevity Protocol. A precision applicator that places hydrolysed collagen and botanical signal peptides on expression lines. Two effects from one dose — visibly smoother-looking lines the same day, and support for the skin's own structure over weeks. External use only: no needle, no injection. Not yet available to purchase.">
 <link rel="canonical" href="https://zerolines.life/products/syringe/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zero Lines">
 <meta property="og:title" content="Precision Collagen Activation Syringe — Zero Lines">
-<meta property="og:description" content="Targeted intervention. Transformative results. The key product of the Zero Lines Longevity Protocol.">
+<meta property="og:description" content="Targeted intervention. Transformative results. Two effects from one dose — the key product of the Zero Lines Longevity Protocol.">
 <meta property="og:url" content="https://zerolines.life/products/syringe/">
-<meta property="og:image" content="https://zerolines.life/assets/product-syringe-hero.webp">
+<meta property="og:image" content="https://zerolines.life/assets/og/product-syringe-hero.jpg">
 <meta property="og:image:width" content="1248">
 <meta property="og:image:height" content="832">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Precision Collagen Activation Syringe — Zero Lines">
-<meta name="twitter:description" content="Targeted intervention. Transformative results. The key product of the Zero Lines Longevity Protocol.">
-<meta name="twitter:image" content="https://zerolines.life/assets/product-syringe-hero.webp">
+<meta name="twitter:description" content="Targeted intervention. Transformative results. Two effects from one dose.">
+<meta name="twitter:image" content="https://zerolines.life/assets/og/product-syringe-hero.jpg">
 
 <link rel="icon" href="/assets/logo-mark.png">
 <link rel="apple-touch-icon" href="/assets/logo-mark.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="image" href="/assets/hero-syringe-beforeafter.webp" fetchpriority="high">
+<link rel="preload" as="image" href="/assets/product-syringe-hero.webp" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/zl.css">
 
 <style>
-/* Page-scoped components. zl.css has no accordion, notice box or ledger list;
-   these are built from the same tokens so they read as part of the system. */
+/* ============================================================================
+   Page-scoped only. Nothing here hides content: every rule is layout, colour
+   or a motion variant that inherits zl.css's visible-by-default safety model.
+   ========================================================================= */
 
-/* The stock hero field is cut for a 4/5 portrait. This hero carries a 3/2
-   landscape study, where the same geometry hides behind the image and leaves
-   only a sliver showing. Re-cut so the turquoise panel rises above and past
-   the top-right corner — deliberate composition, not a stray rectangle.
-   It must stay clear of the caption below, which is why it goes up, not down. */
-.zl-hero__media::before { inset: -16% -7% 44% 56%; }
-@media (max-width: 900px) {
-  .zl-hero__media::before { inset: -9% -5% 64% 46%; height: auto; }
+/* ---- 1. Contrast corrections for palette v3 -----------------------------
+   Measured on this page's surfaces: --mist (#6B706D) is 4.33:1 on --bone-2
+   and --sage-wash, under the 4.5:1 floor; --on-dark-3 is 4.44:1 on ink; the
+   champagne button's house-teal label is 4.03:1; and --tiffany-deep numerals
+   are 1.93:1 on ink. Corrected locally rather than in the shared sheet. */
+:root { --mute: #5F6360; }                 /* 5.2:1 on tint, 5.7:1 on bone */
+.zl-muted, .zl-eyebrow, .zl-product__role { color: var(--mute); }
+.zl-on-dark .zl-eyebrow                    { color: var(--on-dark-2); }
+.zl-dark .zl-num                           { color: var(--tiffany-lift); }
+.zl-dark .zl-form__note                    { color: var(--on-dark-2); }
+.zl-btn--on-brand                          { --btn-fg: var(--ink); }
+.zl-footer h3, .zl-footer__bottom          { color: var(--on-dark-2); }
+
+/* ---- 2. Hero — type left, the study right ------------------------------
+   zl.css v3 carries only the full-bleed photo hero, so the product hero's
+   two-column geometry lives here. */
+.zl-phero__grid {
+  display: grid; width: 100%;
+  grid-template-columns: 1.04fr 1fr;
+  gap: clamp(2.5rem, 5vw, 5.5rem);
+  align-items: center;
 }
+@media (max-width: 940px) { .zl-phero__grid { grid-template-columns: 1fr; gap: clamp(2.25rem, 6vw, 3rem); } }
 
-/* Ledger list — a hairline-ruled row per item, turquoise tick at the head */
-.zl-ticks li {
-  display: flex; gap: 1rem; padding: 1.125rem 0;
+/* The metallic bracket: a champagne hairline that runs past the top-right
+   corner of the study. Tree order puts it behind the image, so it reads only
+   where it escapes the frame. */
+.zl-phero__frame { position: relative; }
+.zl-phero__frame::before {
+  content: ""; position: absolute;
+  top: -1.375rem; right: -1.375rem; left: 38%; bottom: 42%;
+  border-top: 1px solid var(--champagne);
+  border-right: 1px solid var(--champagne);
+}
+@media (max-width: 940px) { .zl-phero__frame::before { display: none; } }
+
+.zl-phero__meta {
+  margin-top: 1.75rem; padding-top: 1.25rem;
   border-top: 1px solid var(--rule);
-  color: var(--ink-3); font-size: .9375rem; line-height: 1.7;
-}
-.zl-ticks li::before {
-  content: ""; flex: none; width: 22px; height: 1px;
-  background: var(--tiffany); margin-top: .85em;
+  font-size: .8125rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--house);
 }
 
-/* Notice box — the safety warning. Pale turquoise, turquoise edge. */
+/* ---- 3. The two effects — the spine of the page ------------------------
+   A full-bleed band split down the middle: the immediate effect on a pale
+   wash, the lasting one on the house field, a champagne hairline between. */
+.zl-duo { position: relative; display: grid; grid-template-columns: 1fr 1fr; }
+.zl-duo__panel { padding: clamp(2.75rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3.5rem); }
+/* Outer edges align with the container, so the panel copy sits on the same
+   left margin as the headline above it. */
+.zl-duo--now   { padding-left:  max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter))); }
+.zl-duo--later { padding-right: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter))); }
+.zl-duo__panel > * { max-width: 40ch; }
+.zl-duo--now   { background: var(--sage-wash); }
+/* Light type on the house field — 8.5:1. The signal turquoise never sets type
+   here; it stays a mark, on the eyebrow's tick and the seam hairline. */
+.zl-duo--later { background: var(--house); color: var(--on-dark); }
+.zl-duo--later .zl-eyebrow { color: rgba(255,255,255,.86); }
+.zl-duo--later .zl-eyebrow::before { background: var(--signal); }
+.zl-duo--later strong { color: #fff; font-weight: 500; }
+
+.zl-duo__when {
+  font-family: var(--font-display); font-weight: 300; font-style: italic;
+  font-size: clamp(2rem, 3.6vw, 3.25rem); line-height: 1.1;
+  letter-spacing: -0.02em; margin: 1.25rem 0 .25rem;
+}
+.zl-duo__lede { font-size: clamp(1rem, 1.05vw, 1.125rem); line-height: 1.75; margin-top: 1.5rem; }
+.zl-duo__foot { font-size: .8125rem; line-height: 1.75; margin-top: 1.5rem; padding-top: 1.25rem; }
+.zl-duo--now   .zl-duo__foot { border-top: 1px solid rgba(11,13,13,.14); color: var(--ink-3); }
+.zl-duo--later .zl-duo__foot { border-top: 1px solid rgba(255,255,255,.28); }
+.zl-duo__foot a { color: inherit; text-decoration: underline; text-underline-offset: .2em; }
+
+.zl-duo__rule {
+  position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; z-index: 2;
+  background: var(--champagne);
+}
+@media (max-width: 900px) {
+  .zl-duo { grid-template-columns: 1fr; }
+  .zl-duo__rule { display: none; }
+  .zl-duo__panel > * { max-width: none; }
+}
+
+/* Vertical variant of the draw. It carries .zl-draw as well so zl.js observes
+   it; these rules land later in the cascade and win on transform. */
+.zl-js .zl-draw-y      { transform: scaleY(0); transform-origin: top; transition: transform 1400ms var(--ease); }
+.zl-js .zl-draw-y.is-in { transform: scaleY(1); }
+
+/* ---- 4. Small components ----------------------------------------------- */
+
+/* Ingredient card, tagged with the half of the effect it serves */
+.zl-ing { border-top: 1px solid var(--rule); padding-top: 1.5rem; }
+.zl-ing__tag {
+  display: inline-flex; align-items: center; gap: .625rem;
+  font-size: .6875rem; font-weight: 500; letter-spacing: .24em;
+  text-transform: uppercase; color: var(--house);
+}
+.zl-ing__tag::before { content: ""; width: 20px; height: 1px; background: var(--signal); }
+
+/* Notice box — the external-use statement */
 .zl-note {
-  background: var(--tiffany-wash);
-  border-left: 2px solid var(--tiffany);
-  padding: clamp(1.5rem, 3vw, 2.125rem);
-  max-width: var(--measure);
+  background: var(--sage-wash); border-left: 2px solid var(--signal);
+  padding: clamp(1.5rem, 3vw, 2.125rem); max-width: var(--measure);
 }
 .zl-note__label {
   display: block; font-size: var(--t-eyebrow); font-weight: 500;
   letter-spacing: .28em; text-transform: uppercase;
-  color: var(--tiffany-deep); margin-bottom: .875rem;
+  color: var(--house); margin-bottom: .875rem;
 }
 .zl-note p { margin: 0; font-size: .9375rem; line-height: 1.8; color: var(--ink-3); }
 
-/* FAQ accordion — native <details>, so it works with no JS and is keyboard
-   operable and screen-reader announced for free. */
+/* Two-mode row — the effects motif returning inside the usage section */
+.zl-mode { border-top: 1px solid var(--champagne); padding-top: 1.375rem; }
+.zl-mode h3 { font-family: var(--font-display); font-weight: 400; font-size: 1.375rem; line-height: 1.3; }
+.zl-mode p  { margin-top: .5rem; font-size: .9375rem; line-height: 1.75; color: var(--ink-3); }
+
+/* FAQ — native <details>, keyboard operable and announced without any JS */
 .zl-faq { border-top: 1px solid var(--rule); }
 .zl-faq__item { border-bottom: 1px solid var(--rule); }
 .zl-faq__q {
@@ -83,26 +164,20 @@
 }
 .zl-faq__q::-webkit-details-marker { display: none; }
 .zl-faq__q::marker { content: ""; }
-.zl-faq__q:hover, .zl-faq__item[open] > .zl-faq__q { color: var(--tiffany-deep); }
+.zl-faq__q:hover, .zl-faq__item[open] > .zl-faq__q { color: var(--house); }
 .zl-faq__sign { flex: none; position: relative; top: .3em; width: 15px; height: 15px; }
 .zl-faq__sign::before, .zl-faq__sign::after {
   content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px;
-  background: var(--tiffany); transition: transform 520ms var(--ease);
+  background: var(--signal); transition: transform 520ms var(--ease);
 }
 .zl-faq__sign::after { transform: rotate(90deg); }
 .zl-faq__item[open] .zl-faq__sign::after { transform: rotate(0deg); }
-.zl-faq__a {
-  margin: 0; padding: 0 0 1.875rem; max-width: 64ch;
-  color: var(--ink-3); font-size: .9375rem; line-height: 1.85;
-}
-/* Scoped to [open] deliberately. A closed <details> still lays its children
-   out, so an unscoped `animation … both` strands them at opacity:0 — exactly
-   the invisible-content failure this build exists to fix. */
+.zl-faq__a { margin: 0; padding: 0 0 1.875rem; max-width: 64ch; color: var(--ink-3); font-size: .9375rem; line-height: 1.85; }
+.zl-faq__a a { color: var(--house); text-decoration: underline; text-underline-offset: .2em; }
+/* Scoped to [open] on purpose: a closed <details> still lays its children out,
+   so an unscoped `animation … both` would strand them at opacity:0. */
 .zl-faq__item[open] > .zl-faq__a { animation: zl-faq-in 620ms var(--ease) both; }
-@keyframes zl-faq-in {
-  from { opacity: 0; transform: translateY(-8px); }
-  to   { opacity: 1; transform: none; }
-}
+@keyframes zl-faq-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 </style>
 
 <script type="application/ld+json">
@@ -145,16 +220,18 @@
   "@id": "https://zerolines.life/products/syringe/#product",
   "name": "Precision Collagen Activation Syringe",
   "category": "Skin care treatment",
-  "description": "A precision skin-correction treatment placing concentrated hydrolysed collagen and botanical signal peptides directly on expression lines. Step 02 of the Zero Lines Longevity Protocol. For external facial use only — no needle and no injection are involved. In pre-launch and not yet available to purchase.",
+  "description": "Step 02 of the Zero Lines Longevity Protocol. A precision applicator that places concentrated hydrolysed collagen and botanical signal peptides directly along expression lines. It is designed to do two things at once: immediately, the skin looks visibly smoother within minutes and holds through the day; over time, consistent weekly use supports the skin's own structure so lines have less to return to. For external facial use only — no needle and no injection are involved. In pre-launch and not yet available to purchase.",
   "brand": { "@type": "Brand", "name": "Zero Lines" },
-  "image": "https://zerolines.life/assets/product-syringe.webp",
+  "image": "https://zerolines.life/assets/product-syringe-hero.webp",
   "url": "https://zerolines.life/products/syringe/",
   "isFamilyFriendly": true,
   "additionalProperty": [
     { "@type": "PropertyValue", "name": "Protocol step", "value": "02 — Activate" },
-    { "@type": "PropertyValue", "name": "Frequency", "value": "Once weekly" },
+    { "@type": "PropertyValue", "name": "Immediate effect", "value": "Expression lines look visibly smoother within minutes and hold through the day" },
+    { "@type": "PropertyValue", "name": "Lasting effect", "value": "Weekly use supports the skin's own structural protein" },
+    { "@type": "PropertyValue", "name": "Frequency", "value": "Once weekly, plus as needed" },
     { "@type": "PropertyValue", "name": "Applications per unit", "value": "Approximately 60" },
-    { "@type": "PropertyValue", "name": "Application", "value": "External facial use only" },
+    { "@type": "PropertyValue", "name": "Application", "value": "External facial use only — no needle, no injection" },
     { "@type": "PropertyValue", "name": "Availability", "value": "Pre-launch — not yet available to purchase" }
   ]
 }
@@ -166,43 +243,33 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Is this an injectable treatment?",
-      "acceptedAnswer": { "@type": "Answer", "text": "No. The Precision Collagen Activation Syringe is a non-injectable, external application treatment. The applicator resembles a syringe so the formulation can be placed precisely, but no needle and no injection are involved. It is a cream-based formulation designed for targeted external use." }
+      "name": "Is there a needle? Is anything injected?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. Nothing is injected and there is no needle. The applicator borrows the shape of a clinical instrument for one reason: accuracy. You twist the base, a measured dose arrives at the narrow tip, and you place it on the surface of the skin. It is a cream-based formulation for external facial use only." }
     },
     {
       "@type": "Question",
-      "name": "Will I see results from the first use?",
-      "acceptedAnswer": { "@type": "Answer", "text": "The Syringe is built around a dual-action approach. The surface phase is designed to support a visibly smoother, more refined look soon after application; the deeper phase is designed to build progressively with consistent weekly use. Zero Lines is in pre-launch, so nothing here has been measured in a trial and no result is being claimed. Individual experience will vary." }
+      "name": "What will I notice the first time I use it?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The immediate effect. Applied along expression lines, the skin is designed to look visibly smoother within minutes and to hold that through the day. The lasting effect is not something you see on day one — it is built through consistent weekly use. Zero Lines is in pre-launch: nothing on this page has been measured in a trial, and individual experience will vary." }
     },
     {
       "@type": "Question",
       "name": "How often should I use it?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Once a week for the structural, long-term half of the protocol. For a more immediate refinement before an occasion, apply 30 to 60 minutes beforehand. Do not use more than once in a day." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Once a week for the lasting effect. Then as often as you want the immediate one — apply 30 to 60 minutes before an occasion. Do not apply more than once in a day." }
     },
     {
       "@type": "Question",
-      "name": "How does it differ from a regular cream or serum?",
-      "acceptedAnswer": { "@type": "Answer", "text": "It sits in a different category. A moisturiser hydrates the surface and a serum carries actives across the whole face. This is an advanced skin-correction treatment placed only on specific areas, formulated to support the skin's own collagen production and the appearance of eased expression and fluid balance exactly where it is placed." }
-    },
-    {
-      "@type": "Question",
-      "name": "What is the Refill, and why does the Syringe come first?",
-      "acceptedAnswer": { "@type": "Answer", "text": "The Syringe is the key to the Zero Lines ecosystem — the applicator is the instrument the whole protocol runs on. The Refill cartridge carries the same concentrated formulation and is engineered exclusively for that applicator, which is how the protocol continues once the first cartridge is spent." }
-    },
-    {
-      "@type": "Question",
-      "name": "How long does one Syringe last?",
-      "acceptedAnswer": { "@type": "Answer", "text": "One Syringe holds approximately sixty applications. At once-weekly use that is designed to cover roughly twelve months. Additional as-needed use will shorten that." }
+      "name": "Why is there a Refill?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Because the immediate effect is worth having on its own. Some people will only ever want lines to look smoother on the day, the way they would reach for makeup. The Refill cartridge carries the same formulation, fits the applicator you already own, and lets that continue without buying the instrument again." }
     },
     {
       "@type": "Question",
       "name": "Is it suitable for sensitive skin?",
-      "acceptedAnswer": { "@type": "Answer", "text": "The formulation is designed for external facial application and is intended to suit most skin types. If your skin is sensitive, patch test on the inner forearm first. If irritation occurs, discontinue use and consult a healthcare professional." }
+      "acceptedAnswer": { "@type": "Answer", "text": "It is formulated for external facial application and intended to suit most skin types. If your skin is sensitive, patch test on the inner forearm first. Keep it away from the eye itself, from mucous membranes and from broken skin. If irritation occurs, stop using it and speak to a healthcare professional." }
     },
     {
       "@type": "Question",
       "name": "What happens if I stop using it?",
-      "acceptedAnswer": { "@type": "Answer", "text": "The immediate surface refinement is temporary and fades when use stops. The progressive effect that builds with consistent weekly use is designed to persist for a period afterwards and then gradually diminish. Individual experience will vary." }
+      "acceptedAnswer": { "@type": "Answer", "text": "The immediate effect is temporary: it fades as the application wears off, in the same way makeup does. The support built through consistent weekly use is designed to persist for a period afterwards and then gradually diminish. Individual experience will vary." }
     }
   ]
 }
@@ -247,321 +314,297 @@
 
 <main id="main">
 
-<!-- ── 1. Hero — light split. Masked line rise on the name, wipe on the study ── -->
+<!-- ── 1. Hero — masked line rise on the name, clip-path wipe on the study ── -->
 <section class="zl-hero">
   <div class="zl-container">
-    <div class="zl-hero__grid">
+    <div class="zl-phero__grid">
       <div>
-        <span class="zl-eyebrow" data-reveal>02 · The Key Product</span>
+        <span class="zl-eyebrow" data-reveal>Step 02 — The Key Product</span>
 
-        <h1 class="zl-display-l" style="margin-top:1.5rem;max-width:12ch">
+        <h1 class="zl-display-l" style="margin-top:1.5rem;max-width:10ch">
           <span class="zl-rise" style="--reveal-delay:80ms"><span>Precision</span></span>
           <span class="zl-rise" style="--reveal-delay:180ms"><span>Collagen</span></span>
-          <span class="zl-rise" style="--reveal-delay:280ms"><span>Activation</span></span>
-          <span class="zl-rise" style="--reveal-delay:380ms"><span><em class="zl-em--brand">Syringe</em></span></span>
+          <span class="zl-rise" style="--reveal-delay:280ms"><span><em class="zl-em--brand">Activation</em></span></span>
+          <span class="zl-rise" style="--reveal-delay:380ms"><span>Syringe</span></span>
         </h1>
 
-        <p class="zl-lead" data-reveal style="--reveal-delay:580ms;margin-top:clamp(1.25rem,2.4vh,1.75rem);max-width:46ch">
-          A precision skin-correction treatment placing concentrated hydrolysed
-          collagen and botanical signal peptides exactly where expression settles.
-          Designed to support immediate visible refinement and long-term renewal
-          at once. The key to the Zero Lines ecosystem.
+        <p class="zl-lead" data-reveal style="--reveal-delay:600ms;margin-top:clamp(1.25rem,2.4vh,1.75rem);max-width:44ch">
+          A measured dose of hydrolysed collagen and botanical signal peptides,
+          placed exactly where expression has settled. It does two things at
+          once — one you see the same day, one you are building for.
         </p>
 
-        <p data-reveal="fade" style="--reveal-delay:680ms;margin-top:1.75rem;padding-top:1.25rem;border-top:1px solid var(--rule);font-size:.8125rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tiffany-deep)">
-          Not yet available to purchase — join the waitlist
+        <p class="zl-muted" data-reveal="fade" style="--reveal-delay:680ms;margin-top:1rem;font-size:.875rem;max-width:44ch">
+          Applied externally with a precision applicator. No needle, no injection.
         </p>
 
-        <div class="zl-hero__actions" data-reveal style="--reveal-delay:760ms">
+        <p class="zl-phero__meta" data-reveal="fade" style="--reveal-delay:740ms">
+          Not yet available to purchase
+        </p>
+
+        <div class="zl-hero__actions" data-reveal style="--reveal-delay:820ms">
           <a class="zl-btn zl-btn--brand" href="#waitlist">Join the waitlist</a>
-          <a class="zl-btn zl-btn--ghost" href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%27d%20like%20to%20know%20more%20about%20the%20Precision%20Collagen%20Activation%20Syringe.">Ask us a question</a>
+          <a class="zl-btn zl-btn--ghost" href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%27d%20like%20to%20know%20more%20about%20the%20Precision%20Collagen%20Activation%20Syringe.">Ask on WhatsApp</a>
         </div>
       </div>
 
-      <!-- The caption sits outside .zl-hero__media on purpose: that element's
-           ::before draws the offset turquoise field, and it must frame the
-           image alone, not the image plus its caption. -->
       <figure style="margin:0">
-        <div class="zl-hero__media">
-          <div class="zl-media" data-reveal="wipe" style="--reveal-delay:220ms;aspect-ratio:3/2">
-            <img src="/assets/hero-syringe-beforeafter.webp"
-                 alt="Macro study of the skin around the mouth and cheek, smooth on one side of the frame and finely lined on the other"
+        <div class="zl-phero__frame">
+          <div class="zl-media" data-reveal="wipe" style="--reveal-delay:240ms;aspect-ratio:3/2">
+            <img src="/assets/product-syringe-hero.webp"
+                 alt="Macro study of the mouth and cheek: the skin at the left of the frame even and smooth, at the right finely lined"
                  fetchpriority="high" width="1344" height="768">
           </div>
         </div>
         <figcaption class="zl-muted" data-reveal="fade" style="--reveal-delay:900ms;margin-top:1.5rem;font-size:.75rem;line-height:1.6;max-width:42ch">
-          A study of the perioral zone — where expression settles first, and the
-          area the applicator is built to reach.
+          The perioral zone — where expression settles first, and the few square
+          centimetres the applicator is built to reach.
         </figcaption>
       </figure>
     </div>
   </div>
 </section>
 
-<!-- ── 2. What it is ────────────────────────────────────────────────────── -->
+<!-- ── 2. THE TWO EFFECTS — the spine. Full-bleed split band, panels wipe in
+        sequence, champagne hairline draws down the seam. ─────────────────── -->
 <section class="zl-section">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
       <span class="zl-index-rule__num">01</span>
-      <span class="zl-eyebrow zl-eyebrow--bare">What It Is</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">The Two Effects</span>
     </div>
 
-    <div class="zl-split zl-split--wide-txt">
+    <div class="zl-split zl-split--wide-txt" style="align-items:end">
+      <h2 class="zl-display-l" style="max-width:14ch">
+        <span class="zl-rise"><span>One application,</span></span>
+        <span class="zl-rise" style="--reveal-delay:140ms"><span>two <em class="zl-em--brand">timescales</em>.</span></span>
+      </h2>
+      <p class="zl-lead" data-reveal style="--reveal-delay:280ms">
+        Every Zero Lines formulation does two things at once. In the Syringe the
+        difference between them is at its most obvious — which is why this is the
+        product the range is built around.
+      </p>
+    </div>
+  </div>
+
+  <div class="zl-duo" style="margin-top:clamp(3rem,7vh,4.5rem)">
+    <span class="zl-duo__rule zl-draw zl-draw-y" aria-hidden="true"></span>
+
+    <div class="zl-duo__panel zl-duo--now" data-reveal="wipe">
+      <span class="zl-eyebrow">Immediately</span>
+      <p class="zl-duo__when">The same day.</p>
+      <p class="zl-duo__lede">
+        Applied along expression lines, the skin looks visibly smoother within
+        minutes and holds that look through the day. It is the half of the
+        formulation that works at the surface, and the one people notice first.
+      </p>
+      <p class="zl-duo__lede" style="margin-top:1rem"><strong>Like makeup, except it is skincare.</strong></p>
+      <p class="zl-duo__foot">
+        This effect is temporary and it repeats every time you apply. It is also
+        the entire reason the <a href="/products/syringe-refill">Refill cartridge</a>
+        exists — some people will only ever want this half, and they should be
+        able to keep it going.
+      </p>
+    </div>
+
+    <div class="zl-duo__panel zl-duo--later" data-reveal="wipe" style="--reveal-delay:200ms">
+      <span class="zl-eyebrow">Over time</span>
+      <p class="zl-duo__when"><em class="zl-em">Week over week.</em></p>
+      <p class="zl-duo__lede">
+        Underneath that, hydrolysed collagen and botanical signal peptides work on
+        the skin’s own structural protein. With consistent weekly use they are
+        designed to support that structure — so the lines have less to return to.
+      </p>
+      <p class="zl-duo__lede" style="margin-top:1rem"><strong>Slower to show. Structural when it does.</strong></p>
+      <p class="zl-duo__foot">
+        Nothing here has been measured in a trial. Zero Lines has not launched,
+        and no figure, panel or study is cited anywhere on this site. This is
+        stated design intent, and individual experience will vary.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 3. How it works — mechanism, honestly ─────────────────────────────── -->
+<section class="zl-section">
+  <div class="zl-container">
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">02</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">How It Works</span>
+    </div>
+
+    <div class="zl-split">
       <div>
-        <h2 class="zl-display-l" style="max-width:15ch">
-          <span class="zl-rise"><span>A new category of</span></span>
-          <span class="zl-rise" style="--reveal-delay:130ms"><span>skin <em class="zl-em--brand">treatment</em>.</span></span>
+        <h2 class="zl-display-l" style="max-width:13ch">
+          <span class="zl-rise"><span>Not a cream.</span></span>
+          <span class="zl-rise" style="--reveal-delay:130ms"><span>Not a serum.</span></span>
+          <span class="zl-rise" style="--reveal-delay:260ms"><span>A <em class="zl-em--brand">placement</em>.</span></span>
         </h2>
-        <div class="zl-prose" data-reveal="far" style="--reveal-delay:260ms;margin-top:2rem">
+
+        <div class="zl-prose" data-reveal="far" style="--reveal-delay:340ms;margin-top:2rem">
           <p>
-            It is not a cream. It is not a serum. The Precision Collagen
-            Activation Syringe is an advanced skin-correction treatment — a
-            concentrated formulation held in a precision applicator and placed,
-            deliberately, on the few square centimetres that actually need it.
+            Twist the base and a measured dose arrives at a narrow tip. You place
+            it on the few square centimetres where expression has settled —
+            between the brows, at the outer eye, above the lip. A moisturiser
+            covers and a serum carries; this one places. Nothing is spread across
+            the face, and nothing is wasted.
           </p>
           <p>
-            Where a moisturiser covers and a serum carries, this places. By
-            supporting the skin’s own collagen production and the appearance of
-            eased expression and fluid balance in the treated area, it is designed
-            to work with your biology rather than mask the symptom.
+            Two things then happen from the same dose. At the surface, botanical
+            signal peptides carried on rose and chamomile flower waters work on
+            how the skin reads — smoother, more even, light falling differently
+            across a line. Below it, hydrolysed collagen is broken into fragments
+            small enough to be read as a signal rather than sit as a film, working
+            with the skin’s own repair and renewal signalling.
           </p>
           <p><strong>We are not the repair. We are the instructions.</strong></p>
         </div>
+
         <a class="zl-link" href="/science" style="margin-top:2.25rem">
           The science beneath it <span class="zl-link__arrow" aria-hidden="true">→</span>
         </a>
       </div>
 
-      <!-- The shot is already on a near-white studio sweep, so cover + multiply
-           over white dissolves the seam and the object reads at full size.
-           Contained-with-padding made it look like a thumbnail. -->
-      <div class="zl-media zl-media--wide" data-reveal="wipe" style="--reveal-delay:140ms;background:#fff">
-        <img src="/assets/product-syringe.webp"
-             alt="The Precision Collagen Activation Syringe applicator, laid flat"
-             loading="lazy" width="1248" height="832" style="mix-blend-mode:multiply">
-      </div>
-    </div>
-
-    <div class="zl-grid zl-grid--3" data-stagger style="margin-top:clamp(3.5rem,8vh,6rem)">
-      <div style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--tiffany-deep)">The Key</span>
-        <h3 class="zl-display-s" style="margin:.875rem 0 .625rem">Your entrance to the ecosystem</h3>
-        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
-          The applicator is the instrument the whole protocol runs on. Own the
-          Syringe and the Refill cartridge follows — the same formulation,
-          continued, for as long as you keep the protocol running.
-        </p>
-      </div>
-      <div style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--tiffany-deep)">The Design</span>
-        <h3 class="zl-display-s" style="margin:.875rem 0 .625rem">Dual-action by intent</h3>
-        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
-          One phase is designed to be seen soon after application. The other is
-          designed to accumulate quietly, week over week. Both are running from
-          the moment the dose is placed.
-        </p>
-      </div>
-      <div style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--tiffany-deep)">The Form</span>
-        <h3 class="zl-display-s" style="margin:.875rem 0 .625rem">Not a syringe — a delivery system</h3>
-        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
-          It borrows the shape of a clinical instrument for one reason: accuracy.
-          No injection. No needle. A cream-based treatment, placed with a
-          precision tip on the surface of the skin.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── 3. Designed to support ───────────────────────────────────────────── -->
-<section class="zl-section zl-tint">
-  <div class="zl-container">
-    <div class="zl-index-rule" data-reveal>
-      <span class="zl-index-rule__num">02</span>
-      <span class="zl-eyebrow zl-eyebrow--bare">Designed to Support</span>
-    </div>
-
-    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(2.5rem,6vh,4rem)">
-      <h2 class="zl-display-l" style="max-width:16ch">
-        <span class="zl-rise"><span>What this treatment</span></span>
-        <span class="zl-rise" style="--reveal-delay:130ms"><span>is built to <em class="zl-em--brand">do</em>.</span></span>
-      </h2>
-      <p class="zl-lead" data-reveal style="--reveal-delay:240ms">
-        Six intentions, stated as intentions. Each one describes what the
-        formulation is designed to support — not a measured outcome.
-      </p>
-    </div>
-
-    <ul class="zl-grid zl-grid--2 zl-ticks" data-stagger style="gap:0 clamp(2rem,5vw,4.5rem);border-bottom:1px solid var(--rule)">
-      <li>Helps support the visible appearance of expression lines, with targeted precision</li>
-      <li>Designed to promote a smoother, more refined look from the first application</li>
-      <li>Formulated to support the skin’s natural collagen production over time</li>
-      <li>Works to support the appearance of eased expression and fluid balance in treated areas</li>
-      <li>Designed to help reduce the visible appearance of under-eye bags</li>
-      <li>Suitable for external application on facial areas of visible concern</li>
-    </ul>
-
-    <hr class="zl-rule zl-draw" style="max-width:120px;margin:clamp(2.5rem,6vh,3.5rem) 0 1.5rem;background:var(--tiffany);height:2px">
-
-    <p class="zl-muted" data-reveal="fade" style="font-size:.8125rem;line-height:1.7;max-width:62ch">
-      Every line above is a statement of design intent. Zero Lines is in
-      pre-launch: no clinical trial has been completed on this formulation, and
-      none is cited anywhere on this page.
-    </p>
-  </div>
-</section>
-
-<!-- ── 4. How it works ──────────────────────────────────────────────────── -->
-<section class="zl-section">
-  <div class="zl-container">
-    <div class="zl-index-rule" data-reveal>
-      <span class="zl-index-rule__num">03</span>
-      <span class="zl-eyebrow zl-eyebrow--bare">How It Works</span>
-    </div>
-
-    <div class="zl-split zl-split--wide-txt">
-      <div>
-        <h2 class="zl-display-l" style="max-width:14ch">
-          <span class="zl-rise"><span>Two phases, one</span></span>
-          <span class="zl-rise" style="--reveal-delay:130ms"><span><em class="zl-em--brand">dose</em>.</span></span>
-        </h2>
-        <div class="zl-prose" data-reveal="far" style="--reveal-delay:260ms;margin-top:2rem">
-          <p>
-            On application, the botanical peptide complex begins at the surface,
-            where it is designed to support the look of smoother, more refined
-            skin. This is the phase intended to be visible soonest, and to hold
-            through the day.
-          </p>
-          <p>
-            Beneath it, hydrolysed collagen works at the level of the skin’s own
-            repair and renewal signalling. This phase is slower by design. It is
-            built to accumulate with consistent weekly application — supporting
-            longer-term change in texture, firmness and overall appearance rather
-            than a single evening’s effect.
-          </p>
-          <p><strong>Slower to show. Structural when it does.</strong></p>
-        </div>
-      </div>
-
-      <div class="zl-media zl-media--tall" data-reveal="wipe" style="--reveal-delay:140ms">
-        <img src="/assets/science-peptide-molecular.webp"
-             alt="Molecular rendering of a peptide chain"
-             loading="lazy" data-parallax="0.07"
-             style="position:absolute;top:-7%;left:0;width:100%;height:114%">
-      </div>
-    </div>
-
-    <div class="zl-grid zl-grid--3" data-stagger style="margin-top:clamp(3.5rem,8vh,6rem)">
-      <div style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-num">01</span>
-        <h3 class="zl-display-s" style="margin:.75rem 0 .625rem">Hydrolysed collagen</h3>
-        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
-          Collagen broken into fragments small enough to be read as a signal
-          rather than sit on the surface as a film. The deep, slow half of the
-          formulation.
-        </p>
-      </div>
-      <div style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-num">02</span>
-        <h3 class="zl-display-s" style="margin:.75rem 0 .625rem">Botanical extract complex</h3>
-        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
-          Witch hazel, calendula, chamomile, horse chestnut, peppermint, yarrow,
-          mallow, linden and St John’s Wort — nine extracts working on the look
-          of tone and fluid balance.
-        </p>
-      </div>
-      <div style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-num">03</span>
-        <h3 class="zl-display-s" style="margin:.75rem 0 .625rem">Botanical signal peptides</h3>
-        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
-          Carried on rose and chamomile flower waters. The surface phase — the
-          half of the dual action designed to be seen first.
-        </p>
+      <!-- The wipe's clip-path opens a stacking context, so multiply has no page
+           backdrop to blend into and the shot's white ground stays white. Giving
+           the frame the page colour puts that backdrop back inside the group. -->
+      <div class="zl-media" data-reveal="wipe" style="--reveal-delay:160ms;aspect-ratio:6/5;background:var(--bone)">
+        <img src="/assets/atmosphere-teal-gel-swatch.webp"
+             alt="The formulation, drawn out in a single ribbon"
+             loading="lazy" style="object-fit:contain;mix-blend-mode:multiply">
       </div>
     </div>
 
     <div class="zl-note" data-reveal style="margin-top:clamp(3rem,6vh,4rem)">
       <span class="zl-note__label">External use only</span>
       <p>
-        The Precision Collagen Activation Syringe is designed exclusively for
-        external facial application. No injection is required or intended. Do not
-        ingest, and do not apply to mucous membranes or broken skin. If irritation
-        occurs, discontinue use and consult a healthcare professional.
+        The Precision Collagen Activation Syringe is a cream-based formulation for
+        external facial application. It borrows the shape of a clinical instrument
+        for accuracy alone: there is no needle, and no injection is required or
+        intended. Do not ingest. Keep away from the eye itself, from mucous
+        membranes and from broken skin.
       </p>
     </div>
   </div>
 </section>
 
-<!-- ── 5. Application protocol — dark, clinical ─────────────────────────── -->
-<section class="zl-section zl-dark zl-on-dark">
+<!-- ── 4. Ingredients — each tagged with the half of the effect it serves ── -->
+<section class="zl-section zl-tint">
+  <div class="zl-container">
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">03</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">What Is In It</span>
+    </div>
+
+    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(2.5rem,6vh,3.75rem)">
+      <h2 class="zl-display-l" style="max-width:13ch">
+        <span class="zl-rise"><span>Three things</span></span>
+        <span class="zl-rise" style="--reveal-delay:140ms"><span>doing the <em class="zl-em--brand">work</em>.</span></span>
+      </h2>
+      <p class="zl-lead" data-reveal style="--reveal-delay:260ms">
+        Not a list for the sake of a list. These are the three that matter, and
+        which half of the effect each one is there to serve.
+      </p>
+    </div>
+
+    <div class="zl-grid zl-grid--3" data-stagger>
+      <div class="zl-ing">
+        <span class="zl-num">01</span>
+        <h3 class="zl-display-s" style="margin:.75rem 0 .625rem">Hydrolysed collagen</h3>
+        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75;margin-bottom:1.125rem">
+          Collagen broken into fragments small enough to be read as a signal
+          rather than sit on the surface as a film. The slow, structural half of
+          the formulation.
+        </p>
+        <span class="zl-ing__tag">Over time</span>
+      </div>
+
+      <div class="zl-ing">
+        <span class="zl-num">02</span>
+        <h3 class="zl-display-s" style="margin:.75rem 0 .625rem">Botanical signal peptides</h3>
+        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75;margin-bottom:1.125rem">
+          Carried on rose and chamomile flower waters. The surface phase — the
+          reason a line can look visibly smoother within minutes of the dose being
+          placed.
+        </p>
+        <span class="zl-ing__tag">Immediately</span>
+      </div>
+
+      <div class="zl-ing">
+        <span class="zl-num">03</span>
+        <h3 class="zl-display-s" style="margin:.75rem 0 .625rem">Botanical extract complex</h3>
+        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75;margin-bottom:1.125rem">
+          Witch hazel, calendula, chamomile, horse chestnut, peppermint, yarrow,
+          mallow, linden and St John’s Wort — nine extracts working on the look of
+          tone and fluid balance around the eye.
+        </p>
+        <span class="zl-ing__tag">Immediately</span>
+      </div>
+    </div>
+
+    <hr class="zl-rule zl-draw" style="max-width:120px;margin:clamp(2.5rem,6vh,3.5rem) 0 1.5rem;background:var(--signal);height:2px">
+
+    <p class="zl-muted" data-reveal="fade" style="font-size:.8125rem;line-height:1.7;max-width:62ch">
+      Each line describes what the formulation is designed to support, not a
+      measured outcome.
+    </p>
+  </div>
+</section>
+
+<!-- ── 5. How to use — a short sequence, then the two ways to use it ─────── -->
+<section class="zl-section zl-wash">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
       <span class="zl-index-rule__num">04</span>
-      <span class="zl-eyebrow zl-eyebrow--bare">Application Protocol</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">How To Use It</span>
     </div>
 
-    <div class="zl-split zl-split--wide-img">
-      <div>
-        <h2 class="zl-display-l" style="max-width:13ch">
-          <span class="zl-rise"><span>Two ways to</span></span>
-          <span class="zl-rise" style="--reveal-delay:130ms"><span><em class="zl-em--brand">use</em> it.</span></span>
-        </h2>
-        <p class="zl-lead" data-reveal style="--reveal-delay:260ms;margin-top:1.5rem">
-          The Syringe follows a structured correction protocol: once weekly for
-          the long, structural work — and as needed, in the hours before an
-          occasion, for the surface refinement.
-        </p>
-        <div data-reveal style="--reveal-delay:360ms;margin-top:2.25rem">
-          <a class="zl-btn zl-btn--brand" href="/protocol">See the full protocol</a>
-        </div>
-      </div>
+    <h2 class="zl-display-l" style="max-width:14ch;margin-bottom:clamp(2.5rem,6vh,3.5rem)">
+      <span class="zl-rise"><span>Four movements,</span></span>
+      <span class="zl-rise" style="--reveal-delay:140ms"><span>once a <em class="zl-em--brand">week</em>.</span></span>
+    </h2>
 
-      <div class="zl-media zl-media--wide" data-reveal="wipe" style="--reveal-delay:160ms">
-        <img src="/assets/atmosphere-application-ritual.webp"
-             alt="Treatment being pressed into the cheek with the fingertips"
-             loading="lazy" data-parallax="0.06"
-             style="position:absolute;top:-7%;left:0;width:100%;height:114%">
-      </div>
-    </div>
-
-    <ol class="zl-grid zl-grid--2" data-stagger style="list-style:none;padding:0;margin-top:clamp(3.5rem,8vh,6rem)">
-      <li style="border-top:1px solid var(--rule-dark);padding-top:1.5rem">
-        <span class="zl-num">01</span>
-        <h3 class="zl-display-s" style="margin:.75rem 0 .625rem">Weekly treatment</h3>
-        <p style="font-size:.9375rem;line-height:1.8;color:var(--on-dark-2)">
-          For the structural half of the protocol, apply once a week. Twist the
-          base to dispense a measured amount to the tip, then place it directly on
-          expression lines and areas of visible concern.
-        </p>
+    <ol class="zl-grid zl-grid--4" data-stagger style="list-style:none;padding:0">
+      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
+        <span class="zl-num">1</span>
+        <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Cleanse</h3>
+        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">Cleanse, then dry the face completely. Nothing goes on damp skin.</p>
       </li>
-      <li style="border-top:1px solid var(--rule-dark);padding-top:1.5rem">
-        <span class="zl-num">02</span>
-        <h3 class="zl-display-s" style="margin:.75rem 0 .625rem">As-needed refinement</h3>
-        <p style="font-size:.9375rem;line-height:1.8;color:var(--on-dark-2)">
-          Before an occasion, apply 30 to 60 minutes beforehand. The surface-phase
-          peptides are designed to support a more refined look that carries
-          through the day.
-        </p>
+      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
+        <span class="zl-num">2</span>
+        <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Dispense</h3>
+        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">Twist the base once. One measured dose is the whole application.</p>
       </li>
-      <li style="border-top:1px solid var(--rule-dark);padding-top:1.5rem">
-        <span class="zl-num">03</span>
-        <h3 class="zl-display-s" style="margin:.75rem 0 .625rem">Precision targeting</h3>
-        <p style="font-size:.9375rem;line-height:1.8;color:var(--on-dark-2)">
-          Place directly on expression lines: forehead lines, crow’s feet, the
-          frown lines between the brows, and the fine lines above and below the
-          lip. The tip exists to keep the dose exactly where it is intended.
-        </p>
+      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
+        <span class="zl-num">3</span>
+        <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Place</h3>
+        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">Along the lines themselves: brow, outer eye, forehead, above the lip.</p>
       </li>
-      <li style="border-top:1px solid var(--rule-dark);padding-top:1.5rem">
-        <span class="zl-num">04</span>
-        <h3 class="zl-display-s" style="margin:.75rem 0 .625rem">Gentle activation</h3>
-        <p style="font-size:.9375rem;line-height:1.8;color:var(--on-dark-2)">
-          Pat the treated areas with a fingertip to support absorption. Do not rub.
-          Allow one to two minutes before the next step in the protocol.
-        </p>
+      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
+        <span class="zl-num">4</span>
+        <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Press</h3>
+        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">Tap with a fingertip until absorbed. Do not rub. Then leave it a week.</p>
       </li>
     </ol>
+
+    <div class="zl-grid zl-grid--2" data-stagger style="margin-top:clamp(3rem,7vh,4.5rem)">
+      <div class="zl-mode">
+        <h3>Weekly — for the lasting effect</h3>
+        <p>
+          One evening a week, in the same order, is what builds the structural
+          half. Repetition is the whole of it; a protocol is only a protocol
+          because it repeats.
+        </p>
+      </div>
+      <div class="zl-mode">
+        <h3>Before an occasion — for the immediate one</h3>
+        <p>
+          Apply 30 to 60 minutes ahead and the surface phase does its work in
+          time. Use it as often as you want this half. Never more than once in a
+          single day.
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -585,16 +628,15 @@
           <span class="zl-rise" style="--reveal-delay:150ms"><span><em class="zl-em--brand">Transformative</em> results.</span></span>
         </h2>
       </div>
-      <div class="zl-prose" data-reveal style="--reveal-delay:200ms">
-        <p>
-          Inspired by clinical precision, the concentrated corrector delivers
-          actives exactly where they are needed. One weekly application — a
-          single, deliberate moment — that rewrites the story of your skin.
-        </p>
+      <div class="zl-prose" data-reveal style="--reveal-delay:220ms">
         <p>
           Everything about the object argues for restraint. A measured dose. A
-          narrow tip. A few square centimetres of skin. Nothing is spread, and
-          nothing is wasted.
+          narrow tip. A few square centimetres of skin, chosen deliberately. One
+          weekly application, and one more whenever the day asks for it.
+        </p>
+        <p>
+          It is the instrument the rest of the protocol runs on — which is why the
+          cartridge that continues it is a product of its own.
         </p>
         <a class="zl-link" href="/products/syringe-refill" style="margin-top:1rem">
           The refill cartridge <span class="zl-link__arrow" aria-hidden="true">→</span>
@@ -604,163 +646,38 @@
   </div>
 </section>
 
-<!-- ── 7. The ritual — pale turquoise ───────────────────────────────────── -->
-<section class="zl-section zl-wash">
+<!-- ── 7. Where it sits in the protocol ─────────────────────────────────── -->
+<section class="zl-section zl-tint">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
       <span class="zl-index-rule__num">05</span>
-      <span class="zl-eyebrow zl-eyebrow--bare">The Ritual</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">Where It Sits</span>
     </div>
 
-    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(3rem,7vh,4.5rem)">
-      <h2 class="zl-display-l" style="max-width:15ch">
-        <span class="zl-rise"><span>Four movements,</span></span>
-        <span class="zl-rise" style="--reveal-delay:130ms"><span>once a <em class="zl-em--brand">week</em>.</span></span>
+    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(2.5rem,6vh,3.75rem)">
+      <h2 class="zl-display-l" style="max-width:12ch">
+        <span class="zl-rise"><span>Step two</span></span>
+        <span class="zl-rise" style="--reveal-delay:140ms"><span>of <em class="zl-em--brand">six</em>.</span></span>
       </h2>
-      <p class="zl-lead" data-reveal style="--reveal-delay:240ms">
-        The same evening, the same order, every week. Repetition is what turns an
-        application into a protocol.
+      <p class="zl-lead" data-reveal style="--reveal-delay:260ms">
+        The Peeling Gel clears the canvas the night before. The Serum keeps the
+        signal current between treatments. The Refill is how this one carries on.
       </p>
     </div>
 
-    <ol class="zl-grid zl-grid--4" data-stagger style="list-style:none;padding:0">
-      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-num">1</span>
-        <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Cleanse</h3>
-        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">Cleanse thoroughly. Dry the face completely before anything is placed on it.</p>
-      </li>
-      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-num">2</span>
-        <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Dispense</h3>
-        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">Turn the dial to the measured dose. One click is the whole application.</p>
-      </li>
-      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-num">3</span>
-        <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Apply</h3>
-        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">Dot around the eyes, across the forehead, and along the smile lines.</p>
-      </li>
-      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-num">4</span>
-        <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Pat</h3>
-        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">Tap gently until absorbed. Then leave it alone for a week.</p>
-      </li>
-    </ol>
-
-    <hr class="zl-rule zl-draw" style="max-width:160px;margin-top:clamp(3rem,6vh,4rem);background:var(--tiffany);height:2px">
-  </div>
-</section>
-
-<!-- ── 8. FAQ ───────────────────────────────────────────────────────────── -->
-<section class="zl-section">
-  <div class="zl-container zl-container--mid">
-    <div class="zl-index-rule" data-reveal>
-      <span class="zl-index-rule__num">06</span>
-      <span class="zl-eyebrow zl-eyebrow--bare">Questions</span>
-    </div>
-
-    <h2 class="zl-display-l" style="max-width:14ch;margin-bottom:clamp(2.5rem,6vh,3.5rem)">
-      <span class="zl-rise"><span>Eight things</span></span>
-      <span class="zl-rise" style="--reveal-delay:130ms"><span>worth <em class="zl-em--brand">asking</em>.</span></span>
-    </h2>
-
-    <div class="zl-faq" data-stagger>
-      <details class="zl-faq__item">
-        <summary class="zl-faq__q">Is this an injectable treatment?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
-        <p class="zl-faq__a">
-          No. The Precision Collagen Activation Syringe is a non-injectable,
-          external application treatment. The applicator resembles a syringe so
-          the formulation can be placed precisely, but no needle and no injection
-          are involved. It is a cream-based formulation designed for targeted
-          external use.
-        </p>
-      </details>
-
-      <details class="zl-faq__item">
-        <summary class="zl-faq__q">Will I see results from the first use?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
-        <p class="zl-faq__a">
-          The Syringe is built around a dual-action approach. The surface phase is
-          designed to support a visibly smoother, more refined look soon after
-          application; the deeper phase is designed to build progressively with
-          consistent weekly use. Zero Lines is in pre-launch, so nothing here has
-          been measured in a trial and no result is being claimed. Individual
-          experience will vary.
-        </p>
-      </details>
-
-      <details class="zl-faq__item">
-        <summary class="zl-faq__q">How often should I use it?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
-        <p class="zl-faq__a">
-          Once a week for the structural, long-term half of the protocol. For a
-          more immediate refinement before an occasion, apply 30 to 60 minutes
-          beforehand. Do not use more than once in a day.
-        </p>
-      </details>
-
-      <details class="zl-faq__item">
-        <summary class="zl-faq__q">How does it differ from a regular cream or serum?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
-        <p class="zl-faq__a">
-          It sits in a different category. A moisturiser hydrates the surface and
-          a serum carries actives across the whole face. This is an advanced
-          skin-correction treatment placed only on specific areas, formulated to
-          support the skin’s own collagen production and the appearance of eased
-          expression and fluid balance exactly where it is placed.
-        </p>
-      </details>
-
-      <details class="zl-faq__item">
-        <summary class="zl-faq__q">What is the Refill, and why does the Syringe come first?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
-        <p class="zl-faq__a">
-          The Syringe is the key to the Zero Lines ecosystem — the applicator is
-          the instrument the whole protocol runs on. The Refill cartridge carries
-          the same concentrated formulation and is engineered exclusively for that
-          applicator, which is how the protocol continues once the first cartridge
-          is spent.
-        </p>
-      </details>
-
-      <details class="zl-faq__item">
-        <summary class="zl-faq__q">How long does one Syringe last?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
-        <p class="zl-faq__a">
-          One Syringe holds approximately sixty applications. At once-weekly use
-          that is designed to cover roughly twelve months. Additional as-needed
-          use will shorten that.
-        </p>
-      </details>
-
-      <details class="zl-faq__item">
-        <summary class="zl-faq__q">Is it suitable for sensitive skin?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
-        <p class="zl-faq__a">
-          The formulation is designed for external facial application and is
-          intended to suit most skin types. If your skin is sensitive, patch test
-          on the inner forearm first. If irritation occurs, discontinue use and
-          consult a healthcare professional.
-        </p>
-      </details>
-
-      <details class="zl-faq__item">
-        <summary class="zl-faq__q">What happens if I stop using it?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
-        <p class="zl-faq__a">
-          The immediate surface refinement is temporary and fades when use stops.
-          The progressive effect that builds with consistent weekly use is designed
-          to persist for a period afterwards and then gradually diminish.
-          Individual experience will vary.
-        </p>
-      </details>
-    </div>
-
-    <p class="zl-muted" data-reveal="fade" style="margin-top:2.5rem;font-size:.8125rem">
-      More in the <a href="/faq.html" style="color:var(--tiffany-deep);text-decoration:underline;text-underline-offset:.2em">general FAQ</a>,
-      or write to <a href="mailto:info@zerolines.life" style="color:var(--tiffany-deep);text-decoration:underline;text-underline-offset:.2em">info@zerolines.life</a>.
-    </p>
-  </div>
-</section>
-
-<!-- ── 9. Around it in the protocol ─────────────────────────────────────── -->
-<section class="zl-section zl-section--sm zl-tint">
-  <div class="zl-container">
-    <div class="zl-index-rule" data-reveal>
-      <span class="zl-index-rule__num">07</span>
-      <span class="zl-eyebrow zl-eyebrow--bare">Around It in the Protocol</span>
+    <div class="zl-grid zl-grid--3" data-stagger style="margin-bottom:clamp(3rem,7vh,4.5rem)">
+      <div style="border-top:1px solid var(--champagne);padding-top:1.25rem">
+        <span class="zl-num" data-count="60" data-count-suffix="">60</span>
+        <p class="zl-muted" style="font-size:.875rem;margin-top:.5rem">Applications in one Syringe, approximately.</p>
+      </div>
+      <div style="border-top:1px solid var(--champagne);padding-top:1.25rem">
+        <span class="zl-num" data-count="12" data-count-suffix="">12</span>
+        <p class="zl-muted" style="font-size:.875rem;margin-top:.5rem">Months at once-weekly use, approximately.</p>
+      </div>
+      <div style="border-top:1px solid var(--champagne);padding-top:1.25rem">
+        <span class="zl-num">02</span>
+        <p class="zl-muted" style="font-size:.875rem;margin-top:.5rem">The step the other five are arranged around.</p>
+      </div>
     </div>
 
     <div class="zl-grid zl-grid--3" data-stagger>
@@ -793,34 +710,147 @@
         </div>
         <div class="zl-product__body">
           <h3 class="zl-product__name">Precision Collagen Activation Refill</h3>
-          <span class="zl-product__role">Continues it · Twelve months of activation</span>
+          <span class="zl-product__role">Continues it · The immediate effect, kept</span>
         </div>
       </a>
     </div>
 
     <p class="zl-muted" data-reveal style="margin-top:2.5rem;font-size:.8125rem">
       The collection is in pre-launch and not yet available to purchase.
-      <a href="/products" style="color:var(--tiffany-deep);text-decoration:underline;text-underline-offset:.2em">See all six formulations</a>.
+      <a href="/products" style="color:var(--house);text-decoration:underline;text-underline-offset:.2em">See all six formulations</a>
+      or <a href="/protocol" style="color:var(--house);text-decoration:underline;text-underline-offset:.2em">read the protocol</a>.
     </p>
   </div>
 </section>
 
-<!-- ── 10. Waitlist — the turquoise close ───────────────────────────────── -->
-<section class="zl-section zl-brand-field" id="waitlist">
+<!-- ── The consultation — the skin analyser, offered rather than advertised ── -->
+<section class="zl-concierge" aria-labelledby="analysis-syringe">
+  <div class="zl-container">
+    <div class="zl-concierge__inner" data-reveal>
+        <span class="zl-concierge__mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke-width="1" width="56" height="56">
+            <path d="M32 5c10 0 17.5 8.6 17.5 20.2S41.6 59 32 59s-17.5-22.2-17.5-33.8S22 5 32 5Z" stroke="var(--champagne)"/>
+            <path class="zl-concierge__tick" style="--tick-delay:140ms" d="M18.5 24h12" stroke="var(--signal)" stroke-width="1.25"/>
+            <path class="zl-concierge__tick" style="--tick-delay:300ms" d="M33.5 34h12" stroke="var(--signal)" stroke-width="1.25"/>
+            <path class="zl-concierge__tick" style="--tick-delay:460ms" d="M20.5 44h11" stroke="var(--signal)" stroke-width="1.25"/>
+          </svg>
+        </span>
+      <div class="zl-concierge__body">
+        <span class="zl-eyebrow zl-eyebrow--bare zl-concierge__label">The Skin Analysis</span>
+        <h2 class="zl-display-s zl-concierge__title" id="analysis-syringe">Is activation where <em class="zl-em--brand">you</em> should begin?</h2>
+        <p class="zl-concierge__copy">Ten questions and one photograph. The analyser assesses your skin across eight markers and says plainly where the syringe belongs in your own protocol — or whether something else comes first.</p>
+      </div>
+      <div class="zl-concierge__action">
+        <a class="zl-btn zl-btn--ghost" href="/analyser/">Begin the analysis</a>
+        <span class="zl-concierge__note">Complimentary · Two minutes<br>Your photograph is not kept</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 8. FAQ — native accordion, six questions ─────────────────────────── -->
+<section class="zl-section">
+  <div class="zl-container zl-container--mid">
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">06</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">Questions</span>
+    </div>
+
+    <h2 class="zl-display-l" style="max-width:13ch;margin-bottom:clamp(2.5rem,6vh,3.5rem)">
+      <span class="zl-rise"><span>Six things</span></span>
+      <span class="zl-rise" style="--reveal-delay:140ms"><span>worth <em class="zl-em--brand">asking</em>.</span></span>
+    </h2>
+
+    <div class="zl-faq" data-stagger>
+      <details class="zl-faq__item">
+        <summary class="zl-faq__q">Is there a needle? Is anything injected?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
+        <p class="zl-faq__a">
+          No. Nothing is injected and there is no needle. The applicator borrows
+          the shape of a clinical instrument for one reason: accuracy. You twist
+          the base, a measured dose arrives at the narrow tip, and you place it on
+          the surface of the skin. It is a cream-based formulation for external
+          facial use only.
+        </p>
+      </details>
+
+      <details class="zl-faq__item">
+        <summary class="zl-faq__q">What will I notice the first time I use it?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
+        <p class="zl-faq__a">
+          The immediate effect. Applied along expression lines, the skin is
+          designed to look visibly smoother within minutes and to hold that
+          through the day. The lasting effect is not something you see on day one
+          — it is built through consistent weekly use. Zero Lines is in
+          pre-launch: nothing on this page has been measured in a trial, and
+          individual experience will vary.
+        </p>
+      </details>
+
+      <details class="zl-faq__item">
+        <summary class="zl-faq__q">How often should I use it?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
+        <p class="zl-faq__a">
+          Once a week for the lasting effect. Then as often as you want the
+          immediate one — apply 30 to 60 minutes before an occasion. Do not apply
+          more than once in a day.
+        </p>
+      </details>
+
+      <details class="zl-faq__item">
+        <summary class="zl-faq__q">Why is there a Refill?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
+        <p class="zl-faq__a">
+          Because the immediate effect is worth having on its own. Some people
+          will only ever want lines to look smoother on the day, the way they
+          would reach for makeup. The
+          <a href="/products/syringe-refill">Refill cartridge</a> carries the same
+          formulation, fits the applicator you already own, and lets that continue
+          without buying the instrument again.
+        </p>
+      </details>
+
+      <details class="zl-faq__item">
+        <summary class="zl-faq__q">Is it suitable for sensitive skin?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
+        <p class="zl-faq__a">
+          It is formulated for external facial application and intended to suit
+          most skin types. If your skin is sensitive, patch test on the inner
+          forearm first. Keep it away from the eye itself, from mucous membranes
+          and from broken skin. If irritation occurs, stop using it and speak to a
+          healthcare professional.
+        </p>
+      </details>
+
+      <details class="zl-faq__item">
+        <summary class="zl-faq__q">What happens if I stop using it?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
+        <p class="zl-faq__a">
+          The immediate effect is temporary: it fades as the application wears
+          off, in the same way makeup does. The support built through consistent
+          weekly use is designed to persist for a period afterwards and then
+          gradually diminish. Individual experience will vary.
+        </p>
+      </details>
+    </div>
+
+    <p class="zl-muted" data-reveal="fade" style="margin-top:2.5rem;font-size:.8125rem">
+      More in the <a href="/faq.html" style="color:var(--house);text-decoration:underline;text-underline-offset:.2em">general FAQ</a>,
+      or write to <a href="mailto:info@zerolines.life" style="color:var(--house);text-decoration:underline;text-underline-offset:.2em">info@zerolines.life</a>.
+    </p>
+  </div>
+</section>
+
+<!-- ── 9. Close — not yet for sale ──────────────────────────────────────── -->
+<section class="zl-section zl-dark zl-on-dark" id="waitlist">
   <div class="zl-container zl-container--narrow zl-center">
     <span class="zl-eyebrow zl-eyebrow--center" data-reveal>Early Access</span>
-    <h2 class="zl-display-l" data-reveal style="margin:1.5rem 0 1.5rem">
-      The key, <em class="zl-em">first</em>.
+    <h2 class="zl-display-l" data-reveal style="--reveal-delay:100ms;margin:1.5rem 0">
+      The key, <em class="zl-em--brand">first</em>.
     </h2>
-    <p class="zl-lead zl-center" data-reveal style="margin-bottom:2.75rem">
+    <p class="zl-lead zl-center" data-reveal style="--reveal-delay:180ms;margin-bottom:2.75rem">
       The Precision Collagen Activation Syringe is not yet available to purchase.
-      Register and we will write to you first — with early access and an
+      Register and we will write to you before it is — with early access and an
       invitation to a complimentary skin analysis.
     </p>
 
     <form name="waitlist" method="POST" action="/thank-you/"
           data-netlify="true" netlify-honeypot="bot-field"
-          data-reveal style="max-width:460px;margin-inline:auto;text-align:left">
+          data-reveal style="--reveal-delay:260ms;max-width:460px;margin-inline:auto;text-align:left">
       <input type="hidden" name="form-name" value="waitlist">
       <p class="zl-hp" aria-hidden="true"><label>Do not fill this in: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
 
@@ -828,22 +858,21 @@
       <input class="zl-input" type="email" id="wl-email" name="email" placeholder="your@email.com" required autocomplete="email">
 
       <div style="margin-top:1.75rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
-        <button class="zl-btn zl-btn--on-brand" type="submit">Register</button>
+        <button class="zl-btn zl-btn--light" type="submit">Register</button>
         <span class="zl-form__status" role="status" aria-live="polite"></span>
       </div>
 
       <p class="zl-form__note" style="margin-top:1.25rem">
         We write rarely, and only about the protocol. Unsubscribe at any time.
-        See our <a href="/privacy.html" style="color:var(--ink);text-decoration:underline">privacy policy</a>.
+        See our <a href="/privacy.html" style="color:var(--on-dark);text-decoration:underline">privacy policy</a>.
       </p>
     </form>
 
-    <hr class="zl-rule zl-draw" style="max-width:120px;margin:clamp(3rem,7vh,4.5rem) auto 2rem;background:rgba(255,255,255,.7);height:2px">
+    <hr class="zl-rule zl-draw" style="max-width:120px;margin:clamp(3rem,7vh,4.5rem) auto 2rem;background:var(--champagne);height:1px">
 
     <div data-reveal style="display:flex;justify-content:center;flex-wrap:wrap;gap:1.5rem 2.75rem">
-      <a class="zl-link" href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%27d%20like%20to%20know%20more%20about%20the%20Precision%20Collagen%20Activation%20Syringe.">Ask on WhatsApp <span class="zl-link__arrow" aria-hidden="true">→</span></a>
+      <a class="zl-link" href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%27d%20like%20to%20know%20more%20about%20the%20Precision%20Collagen%20Activation%20Syringe.">Message us on WhatsApp <span class="zl-link__arrow" aria-hidden="true">→</span></a>
       <a class="zl-link" href="/analyser/">Analyse my skin <span class="zl-link__arrow" aria-hidden="true">→</span></a>
-      <a class="zl-link" href="/protocol">The full protocol <span class="zl-link__arrow" aria-hidden="true">→</span></a>
     </div>
   </div>
 </section>

@@ -220,22 +220,22 @@
 
     var shown = false;
 
-    // The notice is fixed to the bottom, so on a narrow viewport it sits on top
-    // of whatever ends the page — which on several pages is the waitlist Register
-    // button and its privacy link, leaving them genuinely unclickable. Reserving
-    // matching space at the foot of the document lets the visitor scroll any
-    // covered control clear of it.
+    // The notice is fixed to the bottom edge, so it always sits over something.
+    // It used to be a 360x148 card, which measured as covering main content at
+    // 23 of 32 sampled scroll positions on mobile — including the entire body of
+    // the "Over time" panel. It is now a slim single-line bar; reserving matching
+    // space at the foot of the document keeps the very last elements reachable.
     function reserveSpace() {
       if (!shown) return;
       var h = banner.getBoundingClientRect().height;
-      var gap = window.innerWidth <= 560 ? 16 : 24;
-      document.body.style.paddingBottom = (h + gap * 2 + 52) + 'px';
+      document.body.style.paddingBottom = (h + 16) + 'px';
     }
 
     function open() {
       if (shown) return;
       shown = true;
       banner.setAttribute('data-open', 'true');
+      document.body.setAttribute('data-cookie-open', 'true');
       window.removeEventListener('scroll', onScroll);
       requestAnimationFrame(reserveSpace);
     }
@@ -243,6 +243,7 @@
     function close() {
       shown = false;
       banner.setAttribute('data-open', 'false');
+      document.body.removeAttribute('data-cookie-open');
       document.body.style.paddingBottom = '';
     }
 

@@ -4,21 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>The Longevity Protocol — Zero Lines | Six Formulations, One Sequence</title>
-<meta name="description" content="The Zero Lines Longevity Protocol: six formulations in a fixed order — Renew, Activate, Signal, Shield, Restore, Sustain. Why sequence is the active ingredient, and how to begin.">
+<title>The Longevity Protocol — Zero Lines | Six Steps, Two Effects Each</title>
+<meta name="description" content="Six steps in one order — Renew, Activate, Signal, Shield, Restore, Sustain. Every step does two things: something you see the same day, and something that builds with consistent use. The sequence is what makes the second one possible.">
 <link rel="canonical" href="https://zerolines.life/protocol/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zero Lines">
 <meta property="og:title" content="The Longevity Protocol — Zero Lines">
-<meta property="og:description" content="Six formulations. One integrated sequence. Sequence is the active ingredient.">
+<meta property="og:description" content="Six steps, two effects each. One you see the same day. One that builds with consistent use.">
 <meta property="og:url" content="https://zerolines.life/protocol/">
 <meta property="og:image" content="https://zerolines.life/assets/og/atmosphere-daily-ritual.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Longevity Protocol — Zero Lines">
-<meta name="twitter:description" content="Six formulations. One integrated sequence. Sequence is the active ingredient.">
+<meta name="twitter:description" content="Six steps, two effects each. One you see the same day. One that builds with consistent use.">
 <meta name="twitter:image" content="https://zerolines.life/assets/og/atmosphere-daily-ritual.jpg">
 
 <link rel="icon" href="/assets/logo-mark.png">
@@ -29,6 +29,170 @@
 <link rel="preload" as="image" href="/assets/atmosphere-daily-ritual.webp" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/zl.css">
+
+<style>
+/* ── Page-scoped components ──────────────────────────────────────────────────
+   Three things the design system does not carry: the hero's two-column
+   geometry, the full-bleed TWO EFFECTS band, and the per-step Immediately /
+   Over time pair that repeats six times down the page.
+
+   Nothing here hides content. Every hidden state is attached to [data-reveal]
+   or .zl-draw, which zl.js releases on intersection and hard-releases at 2.5s.
+   ========================================================================= */
+
+/* ---- 1. Hero — type left, the ritual right ----------------------------- */
+.zl-phero__grid {
+  display: grid; width: 100%;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(2.5rem, 5vw, 5.5rem);
+  align-items: center;
+}
+@media (max-width: 940px) { .zl-phero__grid { grid-template-columns: 1fr; gap: clamp(2.25rem, 6vw, 3rem); } }
+
+/* The metallic bracket, escaping the top-right corner of the frame */
+.zl-phero__frame { position: relative; }
+.zl-phero__frame::before {
+  content: ""; position: absolute;
+  top: -1.375rem; right: -1.375rem; left: 44%; bottom: 48%;
+  border-top: 1px solid var(--champagne);
+  border-right: 1px solid var(--champagne);
+}
+@media (max-width: 940px) { .zl-phero__frame::before { display: none; } }
+.zl-phero__meta {
+  margin-top: 1.75rem; padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+  font-size: .8125rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--house);
+}
+
+/* ---- 2. THE TWO EFFECTS — one band, two fields ------------------------- *
+   The immediate half on a pale wash; the lasting half on the house field.
+   A champagne hairline draws down the seam between them. Outer padding is
+   matched to the container so the copy keeps the page's left margin. */
+.zl-effects { position: relative; display: grid; grid-template-columns: 1fr 1fr; }
+.zl-effects__panel { padding: clamp(2.75rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3.5rem); }
+.zl-effects__panel > * { max-width: 40ch; }
+.zl-effects__panel--now {
+  background: var(--sage-wash);
+  padding-left: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+}
+.zl-effects__panel--later {
+  background: var(--house); color: var(--on-dark);
+  padding-right: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter)));
+}
+/* --mist measures 4.88:1 on the wash — passing, but with no margin. The two
+   labels that name the whole idea should not sit on the floor. */
+.zl-effects__panel--now .zl-eyebrow   { color: var(--ink-3); }
+.zl-effects__panel--later .zl-eyebrow { color: rgba(255,255,255,.86); }
+.zl-effects__panel--later .zl-eyebrow::before { background: var(--signal); }
+.zl-effects__panel--later strong { color: #fff; font-weight: 500; }
+.zl-effects__when {
+  font-family: var(--font-display); font-weight: 300; font-style: italic;
+  font-size: clamp(2rem, 3.6vw, 3.25rem); line-height: 1.1;
+  letter-spacing: -0.02em; margin: 1.25rem 0 0;
+}
+.zl-effects__lede { font-size: clamp(1rem, 1.05vw, 1.125rem); line-height: 1.75; margin-top: 1.5rem; }
+.zl-effects__panel--now .zl-effects__lede { color: var(--ink-3); }
+.zl-effects__foot { font-size: .8125rem; line-height: 1.75; margin-top: 1.75rem; padding-top: 1.25rem; }
+.zl-effects__panel--now   .zl-effects__foot { border-top: 1px solid rgba(11,13,13,.14); color: var(--ink-3); }
+.zl-effects__panel--later .zl-effects__foot { border-top: 1px solid rgba(255,255,255,.28); color: rgba(255,255,255,.88); }
+.zl-effects__foot a { color: inherit; text-decoration: underline; text-underline-offset: .2em; }
+.zl-effects__seam {
+  position: absolute; z-index: 2; top: 0; bottom: 0; left: 50%; width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--champagne) 14%, var(--champagne) 86%, transparent);
+}
+@media (max-width: 900px) {
+  .zl-effects { grid-template-columns: 1fr; }
+  .zl-effects__panel > * { max-width: none; }
+  .zl-effects__seam { display: none; }
+}
+
+/* Vertical draw — carries .zl-draw too, so zl.js observes it; these rules
+   land later in the cascade and win on transform. */
+.zl-js .zl-draw-y       { transform: scaleY(0); transform-origin: top; transition: transform 1400ms var(--ease); }
+.zl-js .zl-draw-y.is-in { transform: scaleY(1); }
+
+/* ---- 3. The per-step pair — the motif, repeated six times -------------- *
+   Two columns under every step: a signal-teal mark over what you see today,
+   a champagne mark over what accumulates. Marks are 2px rules, never text. */
+.zl-pair {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  margin-top: 1.875rem;
+}
+.zl-pair__col { padding-top: 1.25rem; border-top: 1px solid var(--rule); position: relative; }
+.zl-pair__mark {
+  position: absolute; top: -1px; left: 0; width: 68px; height: 2px;
+  transform-origin: left;
+}
+.zl-pair__col--now   .zl-pair__mark { background: var(--signal); }
+.zl-pair__col--later .zl-pair__mark { background: var(--champagne); }
+.zl-pair__label {
+  font-family: var(--font-display); font-weight: 400; font-style: italic;
+  font-size: 1.3125rem; line-height: 1.2; color: var(--house); margin-bottom: .625rem;
+}
+.zl-pair__body { font-size: .9375rem; line-height: 1.8; color: var(--ink-3); }
+.zl-pair__foot {
+  margin-top: .875rem; font-size: .6875rem; font-weight: 500;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--mist);
+}
+@media (max-width: 620px) { .zl-pair { grid-template-columns: 1fr; gap: 1.5rem; } }
+
+/* the dark section's variant */
+.zl-on-dark .zl-pair__col { border-top-color: var(--rule-dark); }
+.zl-on-dark .zl-pair__label { color: var(--tiffany-lift); }
+.zl-on-dark .zl-pair__body { color: var(--on-dark-2); }
+.zl-on-dark .zl-pair__foot { color: var(--on-dark-3); }
+
+/* ---- 4. Step scaffolding ---------------------------------------------- */
+.zl-step { padding-top: clamp(3rem, 8vh, 5.5rem); }
+.zl-step:first-of-type { padding-top: clamp(1rem, 3vh, 2rem); }
+.zl-step__rule { height: 2px; border: 0; margin: 0 0 clamp(1.75rem, 4vh, 2.75rem); max-width: 160px; background: var(--signal); }
+.zl-step__head { display: flex; align-items: baseline; gap: 1.25rem; flex-wrap: wrap; }
+.zl-step__product {
+  margin: .375rem 0 0; font-family: var(--font-display); font-style: italic;
+  font-size: 1.0625rem; color: var(--house);
+}
+.zl-on-dark .zl-step__product { color: var(--tiffany-lift); }
+.zl-step__meta {
+  margin-top: 1.5rem; padding-top: 1.125rem; border-top: 1px solid var(--rule);
+  display: grid; grid-template-columns: 6rem 1fr; gap: .625rem 1.5rem; font-size: .9375rem;
+}
+.zl-step__meta dt { font-size: .6875rem; letter-spacing: .2em; text-transform: uppercase; color: var(--mist); }
+.zl-step__meta dd { margin: 0; color: var(--ink-3); }
+
+/* ---- 5. Timeline — three markers on one drawn spine -------------------- */
+.zl-when { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(2rem, 4vw, 3.5rem); }
+.zl-when__spine { position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--champagne); }
+.zl-when__item { padding-top: 1.75rem; position: relative; }
+.zl-when__item::before {
+  content: ""; position: absolute; top: -4px; left: 0; width: 9px; height: 9px;
+  background: var(--house); border-radius: 50%;
+}
+.zl-when__key { font-size: .6875rem; font-weight: 500; letter-spacing: .26em; text-transform: uppercase; color: var(--house); }
+.zl-when__body { margin-top: 1rem; font-size: .9375rem; line-height: 1.85; color: var(--ink-3); }
+@media (max-width: 860px) {
+  .zl-when { grid-template-columns: 1fr; gap: 2.25rem; }
+  .zl-when__spine { display: none; }
+  .zl-when__item { border-top: 1px solid var(--champagne); }
+}
+
+/* ---- 6. Small pieces --------------------------------------------------- */
+.zl-note {
+  background: var(--sage-wash); border-left: 2px solid var(--signal);
+  padding: clamp(1.5rem, 3vw, 2.125rem); max-width: var(--measure);
+}
+.zl-note__label {
+  display: block; font-size: var(--t-eyebrow); font-weight: 500;
+  letter-spacing: .28em; text-transform: uppercase; color: var(--house); margin-bottom: .875rem;
+}
+.zl-note p { margin: 0; font-size: .9375rem; line-height: 1.8; color: var(--ink-3); }
+.zl-rota { list-style: none; padding: 0; margin: 1.25rem 0 0; }
+.zl-rota li { display: flex; gap: 1.25rem; padding: .9375rem 0; border-bottom: 1px solid var(--rule-dark-soft); }
+.zl-rota__n { color: var(--tiffany-lift); font-size: .75rem; letter-spacing: .2em; padding-top: .35rem; }
+.zl-rota strong { font-weight: 500; color: var(--on-dark); }
+.zl-rota span span { font-size: .9375rem; color: var(--on-dark-2); }
+</style>
 
 <script type="application/ld+json">
 {
@@ -50,73 +214,31 @@
 }
 </script>
 <script type="application/ld+json">
-{ "@context": "https://schema.org", "@type": "WebSite", "name": "Zero Lines", "url": "https://zerolines.life" }
-</script>
-<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
   "name": "The Zero Lines Longevity Protocol",
-  "description": "Six formulations applied in a fixed sequence. Each step prepares the skin for the one that follows: Renew, Activate, Signal, Shield, Restore, Sustain.",
-  "image": "https://zerolines.life/assets/og/atmosphere-daily-ritual.jpg",
+  "description": "Six steps in one order. Each contributes an effect visible the same day and an effect that builds with consistent use.",
   "totalTime": "PT5M",
-  "supply": [
-    { "@type": "HowToSupply", "name": "Bio-Renewal Peeling Gel" },
-    { "@type": "HowToSupply", "name": "Precision Collagen Activation Syringe" },
-    { "@type": "HowToSupply", "name": "BioSignal Facial Serum" },
-    { "@type": "HowToSupply", "name": "Environmental Shield Day Cream" },
-    { "@type": "HowToSupply", "name": "Renewal and Repair Night Cream" },
-    { "@type": "HowToSupply", "name": "Precision Collagen Activation Refill" }
-  ],
   "step": [
-    {
-      "@type": "HowToStep",
-      "position": 1,
-      "name": "Renew",
-      "text": "Once weekly, on cleansed skin, apply the Bio-Renewal Peeling Gel to lift away accumulated dead cells and prepare the surface for everything that follows.",
-      "url": "https://zerolines.life/protocol#step-01",
-      "image": "https://zerolines.life/assets/product-peeling.webp"
-    },
-    {
-      "@type": "HowToStep",
-      "position": 2,
-      "name": "Activate",
-      "text": "Once weekly, immediately after renewal, apply the Precision Collagen Activation Syringe to the areas where structure is thinning first.",
-      "url": "https://zerolines.life/protocol#step-02",
-      "image": "https://zerolines.life/assets/product-syringe.webp"
-    },
-    {
-      "@type": "HowToStep",
-      "position": 3,
-      "name": "Signal",
-      "text": "Twice daily, morning and night, apply the BioSignal Facial Serum to clean skin before any cream.",
-      "url": "https://zerolines.life/protocol#step-03",
-      "image": "https://zerolines.life/assets/product-serum.webp"
-    },
-    {
-      "@type": "HowToStep",
-      "position": 4,
-      "name": "Shield",
+    { "@type": "HowToStep", "position": 1, "name": "Renew",
+      "text": "Once weekly on cleansed skin, apply the Bio-Renewal Peeling Gel and rinse. The surface looks clearer that evening, and stays clear enough for the steps that follow to reach living skin.",
+      "url": "https://zerolines.life/protocol/#step-01" },
+    { "@type": "HowToStep", "position": 2, "name": "Activate",
+      "text": "Once weekly, minutes after renewal, place the Precision Collagen Activation Syringe along expression lines. Skin looks visibly smoother within minutes, and the collagen complex supports the skin's own structure over weeks.",
+      "url": "https://zerolines.life/protocol/#step-02" },
+    { "@type": "HowToStep", "position": 3, "name": "Signal",
+      "text": "Twice daily, morning and night, apply the BioSignal Facial Serum to clean skin before any cream. It keeps the instruction current between one weekly activation and the next.",
+      "url": "https://zerolines.life/protocol/#step-03" },
+    { "@type": "HowToStep", "position": 4, "name": "Shield",
       "text": "Every morning, over the serum, apply the Environmental Shield Day Cream as the last step before sun protection.",
-      "url": "https://zerolines.life/protocol#step-04",
-      "image": "https://zerolines.life/assets/product-day-cream.webp"
-    },
-    {
-      "@type": "HowToStep",
-      "position": 5,
-      "name": "Restore",
+      "url": "https://zerolines.life/protocol/#step-04" },
+    { "@type": "HowToStep", "position": 5, "name": "Restore",
       "text": "Every night, over the serum, apply the Renewal and Repair Night Cream as the last step before sleep.",
-      "url": "https://zerolines.life/protocol#step-05",
-      "image": "https://zerolines.life/assets/product-night-cream.webp"
-    },
-    {
-      "@type": "HowToStep",
-      "position": 6,
-      "name": "Sustain",
-      "text": "Replace the cartridge with the Precision Collagen Activation Refill when it is depleted — roughly twelve months of weekly use.",
-      "url": "https://zerolines.life/protocol#step-06",
-      "image": "https://zerolines.life/assets/product-syringe.webp"
-    }
+      "url": "https://zerolines.life/protocol/#step-05" },
+    { "@type": "HowToStep", "position": 6, "name": "Sustain",
+      "text": "Replace the cartridge with the Precision Collagen Activation Refill when it is depleted — around twelve months of weekly use — so the sequence continues without a break.",
+      "url": "https://zerolines.life/protocol/#step-06" }
   ]
 }
 </script>
@@ -131,7 +253,7 @@
     <a class="zl-logo" href="/">Zero Lines</a>
     <nav class="zl-header__nav" aria-label="Primary">
       <a class="zl-header__link" href="/science">Science</a>
-      <a class="zl-header__link" href="/protocol">Protocol</a>
+      <a class="zl-header__link" href="/protocol" aria-current="page">Protocol</a>
       <a class="zl-header__link" href="/products">Formulations</a>
       <a class="zl-header__link" href="/story">Story</a>
       <a class="zl-header__link" href="/analyser/">Analyser</a>
@@ -160,82 +282,140 @@
 
 <main id="main">
 
-<!-- ── 1. Hero — light split, masked line rise, wiped media ─────────────── -->
+<!-- ── 1. Hero — masked line rise on the headline, clip-path wipe on the
+        ritual, champagne bracket escaping the frame ────────────────────── -->
 <section class="zl-hero">
   <div class="zl-container">
-    <div class="zl-hero__grid">
+    <div class="zl-phero__grid">
       <div>
         <span class="zl-eyebrow" data-reveal>The Longevity Protocol</span>
 
-        <h1 class="zl-display-xl zl-hero__title" style="margin-top:1.5rem;max-width:15ch">
-          <span class="zl-rise" style="--reveal-delay:80ms"><span>Six formulations.</span></span>
-          <span class="zl-rise" style="--reveal-delay:200ms"><span>One <em class="zl-em--brand">sequence</em>.</span></span>
+        <h1 class="zl-display-xl" style="margin-top:1.5rem;max-width:12ch">
+          <span class="zl-rise" style="--reveal-delay:80ms"><span>Six steps.</span></span>
+          <span class="zl-rise" style="--reveal-delay:200ms"><span><em class="zl-em--brand">Two</em> effects</span></span>
+          <span class="zl-rise" style="--reveal-delay:320ms"><span>each.</span></span>
         </h1>
 
-        <p class="zl-lead zl-hero__lead" data-reveal style="--reveal-delay:560ms">
-          Zero Lines is not a collection of products. It is an order — each
-          formulation performing one biological function and preparing the skin
-          for the one that follows. That is what separates a routine from a
-          protocol.
+        <p class="zl-lead" data-reveal style="--reveal-delay:640ms;margin-top:clamp(1.25rem,2.4vh,1.75rem);max-width:44ch">
+          Every step gives you something the same day you use it, and something
+          that builds quietly underneath while you keep using it. Two effects,
+          six times over.
         </p>
 
-        <div class="zl-hero__actions" data-reveal style="--reveal-delay:680ms">
-          <a class="zl-btn zl-btn--brand" href="#step-01">Begin at step one</a>
-          <a class="zl-btn zl-btn--ghost" href="#begin">How to start</a>
+        <p class="zl-muted" data-reveal="fade" style="--reveal-delay:720ms;margin-top:1rem;font-size:.9375rem;max-width:44ch">
+          The order is what turns the second half from a hope into a system.
+        </p>
+
+        <p class="zl-phero__meta" data-reveal="fade" style="--reveal-delay:780ms">
+          Not yet available to purchase
+        </p>
+
+        <div class="zl-hero__actions" data-reveal style="--reveal-delay:860ms">
+          <a class="zl-btn zl-btn--brand" href="#the-six">See the six steps</a>
+          <a class="zl-btn zl-btn--ghost" href="#what-to-expect">A realistic timeline</a>
         </div>
       </div>
 
-      <div class="zl-hero__media">
-        <div class="zl-media" data-reveal="wipe" style="--reveal-delay:200ms">
-          <img src="/assets/atmosphere-daily-ritual.webp"
-               alt="A woman at the window of a marble bathroom, mid-ritual in morning light"
-               fetchpriority="high" width="2688" height="1536">
+      <figure style="margin:0">
+        <div class="zl-phero__frame">
+          <div class="zl-media" data-reveal="wipe" style="--reveal-delay:240ms;aspect-ratio:4/5">
+            <img src="/assets/atmosphere-daily-ritual.webp"
+                 alt="A woman at the window of a marble bathroom, mid-ritual in morning light"
+                 fetchpriority="high" width="2688" height="1536" data-parallax="0.05">
+          </div>
         </div>
-      </div>
+      </figure>
     </div>
   </div>
 </section>
 
-<!-- ── 2. Manifesto strip ──────────────────────────────────────────────── -->
-<section class="zl-section zl-section--sm">
-  <div class="zl-container zl-container--narrow zl-center">
-    <p class="zl-display-m" data-reveal="fade" style="font-family:var(--font-display);font-weight:300;line-height:1.3">
-      “A routine is a habit. A protocol is a
-      <em class="zl-em--brand">sequence</em> — and the sequence is doing as much
-      work as the formulations inside it.”
-    </p>
-    <hr class="zl-rule zl-draw" style="max-width:80px;margin:2.75rem auto 0;background:var(--tiffany);height:2px">
-  </div>
-</section>
-
-<!-- ── 3. The logic of order ───────────────────────────────────────────── -->
-<section class="zl-section zl-tint">
+<!-- ── 2. THE TWO EFFECTS — the spine of the range, stated once at full
+        scale. Panels wipe in sequence; the champagne seam draws down. ──── -->
+<section class="zl-section" id="two-effects">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
       <span class="zl-index-rule__num">01</span>
-      <span class="zl-eyebrow zl-eyebrow--bare">The Logic of Order</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">The Two Effects</span>
+    </div>
+
+    <div class="zl-split zl-split--wide-txt" style="align-items:end">
+      <h2 class="zl-display-l" style="max-width:15ch">
+        <span class="zl-rise"><span>One routine,</span></span>
+        <span class="zl-rise" style="--reveal-delay:140ms"><span>two <em class="zl-em--brand">timescales</em>.</span></span>
+      </h2>
+      <p class="zl-lead" data-reveal style="--reveal-delay:280ms">
+        The shape of every Zero Lines formulation, and the reason the range is a
+        protocol rather than a shelf. Read the six steps below twice: down the
+        left for tonight, down the right for the year.
+      </p>
+    </div>
+  </div>
+
+  <div class="zl-effects" style="margin-top:clamp(3rem,7vh,4.5rem)">
+    <span class="zl-effects__seam zl-draw zl-draw-y" aria-hidden="true"></span>
+
+    <div class="zl-effects__panel zl-effects__panel--now" data-reveal="wipe">
+      <span class="zl-eyebrow">Effect one</span>
+      <p class="zl-effects__when">Immediately.</p>
+      <p class="zl-effects__lede">
+        Visible from the very first application, that same day. On the Syringe it
+        is the clearest: placed along an expression line, the skin looks visibly
+        smoother within minutes and holds that look through the day.
+      </p>
+      <p class="zl-effects__lede" style="margin-top:1rem"><strong>Like makeup, except it is skincare.</strong></p>
+      <p class="zl-effects__foot">
+        This half is temporary, and it repeats every time you apply. It is also
+        the whole reason the <a href="/products/syringe-refill">Refill</a> exists
+        — some people will only ever want this effect, and they should be able to
+        keep having it.
+      </p>
+    </div>
+
+    <div class="zl-effects__panel zl-effects__panel--later" data-reveal="wipe" style="--reveal-delay:200ms">
+      <span class="zl-eyebrow">Effect two</span>
+      <p class="zl-effects__when"><em class="zl-em">Over time.</em></p>
+      <p class="zl-effects__lede">
+        Underneath that, with consistent use across weeks, the formulations are
+        designed to support the skin’s own structure — so that lines have less to
+        return to when expression relaxes.
+      </p>
+      <p class="zl-effects__lede" style="margin-top:1rem"><strong>Slower to show. Structural when it does.</strong></p>
+      <p class="zl-effects__foot">
+        Nothing here has been measured in a trial. Zero Lines has not launched,
+        and no figure, panel or study is cited anywhere on this site. This is
+        stated design intent, and individual experience will vary.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 3. Why the order exists — the argument, in three principles ─────── -->
+<section class="zl-section zl-tint">
+  <div class="zl-container">
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">02</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">Why the Order</span>
     </div>
 
     <div class="zl-split zl-split--wide-txt">
       <div data-reveal="far">
         <h2 class="zl-display-l" style="max-width:16ch">
-          Why protocol sequencing <em class="zl-em--brand">matters</em>.
+          The order is for the <em class="zl-em--brand">second</em> effect.
         </h2>
         <div class="zl-prose" style="margin-top:2rem">
           <p>
-            How much of an ingredient reaches living tissue is decided by when it
-            is applied, not only by what it contains. A serum laid over
-            unprepared skin travels a fraction of the distance it would over a
-            surface that has been cleared. A rich repair cream applied first
-            becomes a lid on everything that should have gone beneath it.
+            The immediate effect does not need a protocol. Any one of the six,
+            used alone and out of sequence, will still give you its same-day
+            result — that half works at the surface, and the surface is right
+            there.
           </p>
           <p>
-            So the protocol is written as an order. Clear the surface. Deliver
-            the activation while the skin is most receptive. Keep the instruction
-            current every day. Seal it in the morning against the environment and
-            at night against the hours of repair.
+            The lasting effect is the one that depends on order — on how much of
+            each formulation ever reaches living tissue. A serum laid over an
+            unprepared surface travels a fraction of the distance. A rich cream
+            applied first becomes a lid on everything meant to go beneath it.
           </p>
-          <p><strong>The order is not arbitrary. It is the formulation.</strong></p>
+          <p><strong>Applied out of order, six good products. Applied in order, a system.</strong></p>
         </div>
         <a class="zl-link" href="/science" style="margin-top:2.25rem">
           The science beneath it <span class="zl-link__arrow" aria-hidden="true">→</span>
@@ -250,85 +430,96 @@
       </div>
     </div>
 
-    <div class="zl-grid zl-grid--3" data-stagger style="margin-top:clamp(3.5rem,8vh,6rem)">
+    <div class="zl-grid zl-grid--3" data-stagger style="margin-top:clamp(3.5rem,8vh,5.5rem)">
       <div style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--tiffany-deep)">Principle I</span>
+        <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--house)">Principle I</span>
         <h3 class="zl-display-s" style="margin:.875rem 0 .625rem">Prepare</h3>
-        <p class="zl-muted" style="font-size:.9375rem;line-height:1.7">
-          Exfoliation leads. An active applied to a surface of accumulated dead
-          cells meets debris before it meets living tissue.
+        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
+          Renewal leads. An active applied over accumulated dead cells meets
+          debris before it meets living skin.
         </p>
       </div>
       <div style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--tiffany-deep)">Principle II</span>
+        <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--house)">Principle II</span>
         <h3 class="zl-display-s" style="margin:.875rem 0 .625rem">Deliver</h3>
-        <p class="zl-muted" style="font-size:.9375rem;line-height:1.7">
-          Thinnest to richest, always. The water-based formulations travel; the
-          creams that follow hold them in place.
+        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
+          Thinnest to richest, always. The water-based steps travel; the creams
+          that follow hold them where they landed.
         </p>
       </div>
       <div style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--tiffany-deep)">Principle III</span>
-        <h3 class="zl-display-s" style="margin:.875rem 0 .625rem">Repeat</h3>
-        <p class="zl-muted" style="font-size:.9375rem;line-height:1.7">
-          The weekly steps set the instruction. The daily steps keep it current.
-          Neither half of the protocol works alone.
+        <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--house)">Principle III</span>
+        <h3 class="zl-display-s" style="margin:.875rem 0 .625rem">Protect</h3>
+        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
+          What is not defended is repeated. An unprotected day spends the week
+          behind it, and nothing gets to accumulate.
         </p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── 4. Steps 01–03 — reset, activate, signal ────────────────────────── -->
-<section class="zl-section">
+<!-- ── 4. The six steps — each one carries the pair ────────────────────── -->
+<section class="zl-section" id="the-six">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
-      <span class="zl-index-rule__num">02</span>
+      <span class="zl-index-rule__num">03</span>
       <span class="zl-eyebrow zl-eyebrow--bare">The Six Steps</span>
     </div>
 
-    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(3rem,7vh,5rem)">
-      <h2 class="zl-display-l" style="max-width:15ch">
-        <span class="zl-rise"><span>Reset, activate,</span></span>
-        <span class="zl-rise" style="--reveal-delay:120ms"><span><em class="zl-em--brand">signal</em>.</span></span>
+    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(2.5rem,6vh,4rem)">
+      <h2 class="zl-display-l" style="max-width:16ch">
+        <span class="zl-rise"><span>What you see today.</span></span>
+        <span class="zl-rise" style="--reveal-delay:140ms"><span>What you are <em class="zl-em--brand">building</em>.</span></span>
       </h2>
-      <p class="zl-lead" data-reveal style="--reveal-delay:200ms">
-        The first three steps do the structural work. Two of them happen once a
-        week, in this order and no other. The third runs every day of the year.
+      <p class="zl-lead" data-reveal style="--reveal-delay:260ms">
+        Two of the six are weekly, four are daily, and every one is listed the
+        same way — the effect that arrives the same day, then the effect that
+        arrives if you keep going.
       </p>
     </div>
 
-    <!-- Step 01 — Renew -->
-    <article id="step-01" style="padding-top:clamp(2rem,5vh,3.5rem)">
-      <hr class="zl-rule zl-draw" style="background:var(--tiffany);height:2px;max-width:140px;margin-bottom:clamp(2rem,5vh,3.25rem)">
+    <!-- 01 Renew -->
+    <article class="zl-step" id="step-01">
+      <hr class="zl-step__rule zl-draw" aria-hidden="true">
       <div class="zl-split zl-split--wide-txt">
-        <div data-stagger>
-          <div style="display:flex;align-items:baseline;gap:1.25rem;flex-wrap:wrap">
+        <div>
+          <div class="zl-step__head" data-reveal>
             <span class="zl-num">01</span>
             <span class="zl-eyebrow zl-eyebrow--bare">Weekly · Surface renewal</span>
           </div>
-          <h3 class="zl-display-l" style="margin:.5rem 0 .25rem">Renew</h3>
-          <p style="font-size:1.0625rem;color:var(--tiffany-deep);font-family:var(--font-display);font-style:italic">
-            Bio-Renewal Peeling Gel
-          </p>
-          <div class="zl-prose" style="margin-top:1.5rem">
-            <p>
-              A gel exfoliant built on aloe vera juice and brown algae extract,
-              formulated to lift away accumulated dead cells without stripping
-              the barrier. It is not a scrub and it is not a polish. It is a
-              recalibration of the canvas, so that what comes next lands on
-              living skin rather than on the residue of the week behind it.
-            </p>
+          <h3 class="zl-display-l" data-reveal style="--reveal-delay:80ms;margin:.5rem 0 0">Renew</h3>
+          <p class="zl-step__product" data-reveal style="--reveal-delay:120ms">Bio-Renewal Peeling Gel</p>
+
+          <div class="zl-pair">
+            <div class="zl-pair__col zl-pair__col--now" data-reveal style="--reveal-delay:180ms">
+              <span class="zl-pair__mark zl-draw" aria-hidden="true"></span>
+              <p class="zl-pair__label">Immediately</p>
+              <p class="zl-pair__body">
+                Rinse, and the surface is smoother under your fingers and
+                brighter in the mirror. Light sits differently on the skin that
+                same evening.
+              </p>
+              <p class="zl-pair__foot">The same evening</p>
+            </div>
+            <div class="zl-pair__col zl-pair__col--later" data-reveal style="--reveal-delay:280ms">
+              <span class="zl-pair__mark zl-draw" aria-hidden="true"></span>
+              <p class="zl-pair__label">Over time</p>
+              <p class="zl-pair__body">
+                A weekly rhythm keeps the surface clear, so everything after it
+                meets living skin rather than the week that settled on it.
+                Texture looks more even as the weeks accumulate.
+              </p>
+              <p class="zl-pair__foot">Week over week</p>
+            </div>
           </div>
-          <dl style="margin-top:1.75rem;padding-top:1.375rem;border-top:1px solid var(--rule);display:grid;grid-template-columns:7.5rem 1fr;gap:.75rem 1.5rem;font-size:.9375rem">
-            <dt style="font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)">When</dt>
-            <dd style="margin:0;color:var(--ink-3)">Once weekly, on cleansed skin, in the evening</dd>
-            <dt style="font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)">Order</dt>
-            <dd style="margin:0;color:var(--ink-3)">First. Before every other step in the protocol</dd>
-            <dt style="font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)">Key</dt>
-            <dd style="margin:0;color:var(--ink-3)">Aloe vera juice · brown algae extract</dd>
+
+          <dl class="zl-step__meta" data-reveal style="--reveal-delay:340ms">
+            <dt>When</dt><dd>Once weekly, on cleansed skin, in the evening</dd>
+            <dt>Order</dt><dd>First. Before every other step in the protocol</dd>
           </dl>
-          <a class="zl-link" href="/products/peeling-gel" style="margin-top:2rem">
+
+          <a class="zl-link" href="/products/peeling-gel" style="margin-top:1.875rem">
             Bio-Renewal Peeling Gel <span class="zl-link__arrow" aria-hidden="true">→</span>
           </a>
         </div>
@@ -340,79 +531,100 @@
       </div>
     </article>
 
-    <!-- Step 02 — Activate (media leads) -->
-    <article id="step-02" style="padding-top:clamp(3.5rem,9vh,6.5rem)">
-      <hr class="zl-rule zl-draw" style="background:var(--tiffany);height:2px;max-width:140px;margin-bottom:clamp(2rem,5vh,3.25rem)">
+    <!-- 02 Activate — media leads -->
+    <article class="zl-step" id="step-02">
+      <hr class="zl-step__rule zl-draw" aria-hidden="true">
       <div class="zl-split zl-split--wide-img">
         <div class="zl-media zl-media--square" data-reveal="wipe" style="background:#fff">
           <img src="/assets/product-syringe.webp" alt="The Precision Collagen Activation Syringe" loading="lazy"
                style="object-fit:contain;mix-blend-mode:multiply;padding:0 clamp(.5rem,2%,1rem)">
         </div>
 
-        <div data-stagger>
-          <div style="display:flex;align-items:baseline;gap:1.25rem;flex-wrap:wrap">
+        <div>
+          <div class="zl-step__head" data-reveal>
             <span class="zl-num">02</span>
             <span class="zl-eyebrow zl-eyebrow--bare">Weekly · Precision activation</span>
           </div>
-          <h3 class="zl-display-l" style="margin:.5rem 0 .25rem">Activate</h3>
-          <p style="font-size:1.0625rem;color:var(--tiffany-deep);font-family:var(--font-display);font-style:italic">
-            Precision Collagen Activation Syringe
-          </p>
-          <div class="zl-prose" style="margin-top:1.5rem">
-            <p>
-              Hydrolysed collagen with a botanical extract complex — witch hazel,
-              calendula, chamomile, horse chestnut, yarrow, linden — delivered
-              through a precision cartridge to the places where structure thins
-              first. It is applied while the skin is still open from renewal,
-              which is the entire reason it is step two and not step one.
-            </p>
+          <h3 class="zl-display-l" data-reveal style="--reveal-delay:80ms;margin:.5rem 0 0">Activate</h3>
+          <p class="zl-step__product" data-reveal style="--reveal-delay:120ms">Precision Collagen Activation Syringe</p>
+
+          <div class="zl-pair">
+            <div class="zl-pair__col zl-pair__col--now" data-reveal style="--reveal-delay:180ms">
+              <span class="zl-pair__mark zl-draw" aria-hidden="true"></span>
+              <p class="zl-pair__label">Immediately</p>
+              <p class="zl-pair__body">
+                Placed along an expression line, the skin looks visibly smoother
+                within minutes and holds that look through the day. The step
+                where the immediate effect is impossible to miss.
+              </p>
+              <p class="zl-pair__foot">Within minutes</p>
+            </div>
+            <div class="zl-pair__col zl-pair__col--later" data-reveal style="--reveal-delay:280ms">
+              <span class="zl-pair__mark zl-draw" aria-hidden="true"></span>
+              <p class="zl-pair__label">Over time</p>
+              <p class="zl-pair__body">
+                Hydrolysed collagen and botanical signal peptides work with the
+                skin’s own structural proteins — formulated, with consistent
+                weekly use, to support that structure so lines have less to
+                return to.
+              </p>
+              <p class="zl-pair__foot">Week over week</p>
+            </div>
           </div>
-          <dl style="margin-top:1.75rem;padding-top:1.375rem;border-top:1px solid var(--rule);display:grid;grid-template-columns:7.5rem 1fr;gap:.75rem 1.5rem;font-size:.9375rem">
-            <dt style="font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)">When</dt>
-            <dd style="margin:0;color:var(--ink-3)">Once weekly, minutes after the peeling gel</dd>
-            <dt style="font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)">Order</dt>
-            <dd style="margin:0;color:var(--ink-3)">Second. Always after renewal, never before</dd>
-            <dt style="font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)">Key</dt>
-            <dd style="margin:0;color:var(--ink-3)">Hydrolysed collagen · botanical signal peptides</dd>
+
+          <dl class="zl-step__meta" data-reveal style="--reveal-delay:340ms">
+            <dt>When</dt><dd>Once weekly, minutes after the peeling gel</dd>
+            <dt>Order</dt><dd>Second. Always after renewal, never before</dd>
           </dl>
-          <a class="zl-link" href="/products/syringe" style="margin-top:2rem">
+
+          <a class="zl-link" href="/products/syringe" style="margin-top:1.875rem">
             Precision Collagen Activation Syringe <span class="zl-link__arrow" aria-hidden="true">→</span>
           </a>
         </div>
       </div>
     </article>
 
-    <!-- Step 03 — Signal -->
-    <article id="step-03" style="padding-top:clamp(3.5rem,9vh,6.5rem)">
-      <hr class="zl-rule zl-draw" style="background:var(--tiffany);height:2px;max-width:140px;margin-bottom:clamp(2rem,5vh,3.25rem)">
+    <!-- 03 Signal -->
+    <article class="zl-step" id="step-03">
+      <hr class="zl-step__rule zl-draw" aria-hidden="true">
       <div class="zl-split zl-split--wide-txt">
-        <div data-stagger>
-          <div style="display:flex;align-items:baseline;gap:1.25rem;flex-wrap:wrap">
+        <div>
+          <div class="zl-step__head" data-reveal>
             <span class="zl-num">03</span>
-            <span class="zl-eyebrow zl-eyebrow--bare">Daily, morning and night · The messenger</span>
+            <span class="zl-eyebrow zl-eyebrow--bare">Twice daily · The messenger</span>
           </div>
-          <h3 class="zl-display-l" style="margin:.5rem 0 .25rem">Signal</h3>
-          <p style="font-size:1.0625rem;color:var(--tiffany-deep);font-family:var(--font-display);font-style:italic">
-            BioSignal Facial Serum
-          </p>
-          <div class="zl-prose" style="margin-top:1.5rem">
-            <p>
-              A light aqueous serum carried on Pyrenean mineral water, with rose
-              and chamomile flower waters and a botanical peptide complex. This
-              is the step that never skips a day: the messenger that keeps the
-              instruction current in the six days between one activation and the
-              next. Everything else in the protocol is built around it.
-            </p>
+          <h3 class="zl-display-l" data-reveal style="--reveal-delay:80ms;margin:.5rem 0 0">Signal</h3>
+          <p class="zl-step__product" data-reveal style="--reveal-delay:120ms">BioSignal Facial Serum</p>
+
+          <div class="zl-pair">
+            <div class="zl-pair__col zl-pair__col--now" data-reveal style="--reveal-delay:180ms">
+              <span class="zl-pair__mark zl-draw" aria-hidden="true"></span>
+              <p class="zl-pair__label">Immediately</p>
+              <p class="zl-pair__body">
+                It absorbs in seconds. Skin looks plumper and more awake before
+                the cream goes on, and the morning face reads less tired than
+                the night it had.
+              </p>
+              <p class="zl-pair__foot">Within seconds</p>
+            </div>
+            <div class="zl-pair__col zl-pair__col--later" data-reveal style="--reveal-delay:280ms">
+              <span class="zl-pair__mark zl-draw" aria-hidden="true"></span>
+              <p class="zl-pair__label">Over time</p>
+              <p class="zl-pair__body">
+                The step that never skips a day. It keeps the instruction current
+                through the six days between one activation and the next — which
+                is what makes a weekly treatment behave like a continuous one.
+              </p>
+              <p class="zl-pair__foot">Day after day</p>
+            </div>
           </div>
-          <dl style="margin-top:1.75rem;padding-top:1.375rem;border-top:1px solid var(--rule);display:grid;grid-template-columns:7.5rem 1fr;gap:.75rem 1.5rem;font-size:.9375rem">
-            <dt style="font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)">When</dt>
-            <dd style="margin:0;color:var(--ink-3)">Twice daily — morning and night</dd>
-            <dt style="font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)">Order</dt>
-            <dd style="margin:0;color:var(--ink-3)">On clean skin, before any cream</dd>
-            <dt style="font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)">Key</dt>
-            <dd style="margin:0;color:var(--ink-3)">Rose + chamomile waters · Pyrenean mineral base</dd>
+
+          <dl class="zl-step__meta" data-reveal style="--reveal-delay:340ms">
+            <dt>When</dt><dd>Twice daily — morning and night</dd>
+            <dt>Order</dt><dd>On clean skin, before any cream</dd>
           </dl>
-          <a class="zl-link" href="/products/serum" style="margin-top:2rem">
+
+          <a class="zl-link" href="/products/serum" style="margin-top:1.875rem">
             BioSignal Facial Serum <span class="zl-link__arrow" aria-hidden="true">→</span>
           </a>
         </div>
@@ -423,145 +635,102 @@
         </div>
       </div>
     </article>
-  </div>
-</section>
 
-<!-- ── 5. Turquoise field — the one bold brand moment ──────────────────── -->
-<section class="zl-section zl-brand-field">
-  <div class="zl-container">
-    <div class="zl-split" style="align-items:end">
-      <div>
-        <span class="zl-eyebrow" data-reveal>The Whole Argument</span>
-        <h2 class="zl-display-l" style="margin-top:1.25rem;max-width:13ch">
-          <span class="zl-rise"><span>Sequence is the</span></span>
-          <span class="zl-rise" style="--reveal-delay:110ms"><span>active <em class="zl-em">ingredient</em>.</span></span>
-        </h2>
-      </div>
-      <p class="zl-lead" data-reveal style="--reveal-delay:220ms">
-        Six formulations, two of them weekly and four of them daily, arranged so
-        that no step undoes the one before it. Applied out of order they are six
-        good products. Applied in order they are a system.
-      </p>
-    </div>
-
-    <div class="zl-grid zl-grid--3" data-stagger style="margin-top:clamp(3.5rem,8vh,5.5rem)">
-      <div style="border-top:1px solid var(--rule-dark);padding-top:1.5rem">
-        <span class="zl-num" data-count="6" style="color:var(--ink)">6</span>
-        <p style="margin-top:.75rem;font-size:.9375rem;color:var(--ink);max-width:26ch">
-          formulations in the system, each written for one position in the order.
-        </p>
-      </div>
-      <div style="border-top:1px solid var(--rule-dark);padding-top:1.5rem">
-        <span class="zl-num" data-count="2" style="color:var(--ink)">2</span>
-        <p style="margin-top:.75rem;font-size:.9375rem;color:var(--ink);max-width:26ch">
-          weekly steps — renewal, then activation, in that order and no other.
-        </p>
-      </div>
-      <div style="border-top:1px solid var(--rule-dark);padding-top:1.5rem">
-        <span class="zl-num" data-count="12" style="color:var(--ink)">12</span>
-        <p style="margin-top:.75rem;font-size:.9375rem;color:var(--ink);max-width:26ch">
-          months of continuity from a single refill cartridge.
-        </p>
-      </div>
-    </div>
-
-    <div data-reveal style="margin-top:clamp(2.5rem,6vh,3.5rem)">
-      <a class="zl-btn zl-btn--on-brand" href="/products">See the formulations</a>
-    </div>
-  </div>
-</section>
-
-<!-- ── 6. Steps 04–06 — defend, restore, sustain ───────────────────────── -->
-<section class="zl-section zl-tint">
-  <div class="zl-container">
-    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(3rem,7vh,5rem)">
-      <div>
-        <span class="zl-eyebrow" data-reveal>Steps 04 – 06</span>
-        <h2 class="zl-display-l" style="margin-top:1.25rem;max-width:15ch">
-          <span class="zl-rise"><span>Defend, restore,</span></span>
-          <span class="zl-rise" style="--reveal-delay:120ms"><span><em class="zl-em--brand">sustain</em>.</span></span>
-        </h2>
-      </div>
-      <p class="zl-lead" data-reveal style="--reveal-delay:200ms">
-        The last three steps protect the work. Two of them close the morning and
-        the night; the third is the one that turns twelve weeks of effort into
-        twelve months of it.
-      </p>
-    </div>
-
-    <!-- Step 04 — Shield (media leads) -->
-    <article id="step-04">
-      <hr class="zl-rule zl-draw" style="background:var(--tiffany);height:2px;max-width:140px;margin-bottom:clamp(2rem,5vh,3.25rem)">
+    <!-- 04 Shield — media leads -->
+    <article class="zl-step" id="step-04">
+      <hr class="zl-step__rule zl-draw" aria-hidden="true">
       <div class="zl-split zl-split--wide-img">
         <div class="zl-media zl-media--square" data-reveal="wipe" style="background:#fff">
           <img src="/assets/product-day-cream.webp" alt="Environmental Shield Day Cream" loading="lazy"
                style="object-fit:contain;mix-blend-mode:multiply;padding:clamp(1.75rem,6%,3.25rem)">
         </div>
 
-        <div data-stagger>
-          <div style="display:flex;align-items:baseline;gap:1.25rem;flex-wrap:wrap">
+        <div>
+          <div class="zl-step__head" data-reveal>
             <span class="zl-num">04</span>
-            <span class="zl-eyebrow zl-eyebrow--bare">Morning · Environmental defence</span>
+            <span class="zl-eyebrow zl-eyebrow--bare">Every morning · Environmental defence</span>
           </div>
-          <h3 class="zl-display-l" style="margin:.5rem 0 .25rem">Shield</h3>
-          <p style="font-size:1.0625rem;color:var(--tiffany-deep);font-family:var(--font-display);font-style:italic">
-            Environmental Shield Day Cream
-          </p>
-          <div class="zl-prose" style="margin-top:1.5rem">
-            <p>
-              Sweet almond oil, shea butter and red algae extract over a Pyrenean
-              mineral complex of zinc, selenium and copper — the cofactors the
-              skin’s own antioxidant enzymes need in order to function. It closes
-              the morning: light enough to disappear under sun protection, dense
-              enough to hold the serum’s work against city air and dry heat.
-            </p>
+          <h3 class="zl-display-l" data-reveal style="--reveal-delay:80ms;margin:.5rem 0 0">Shield</h3>
+          <p class="zl-step__product" data-reveal style="--reveal-delay:120ms">Environmental Shield Day Cream</p>
+
+          <div class="zl-pair">
+            <div class="zl-pair__col zl-pair__col--now" data-reveal style="--reveal-delay:180ms">
+              <span class="zl-pair__mark zl-draw" aria-hidden="true"></span>
+              <p class="zl-pair__label">Immediately</p>
+              <p class="zl-pair__body">
+                A soft, even finish that make-up sits on rather than in, and skin
+                that still feels comfortable at four in the afternoon instead of
+                tight.
+              </p>
+              <p class="zl-pair__foot">All day</p>
+            </div>
+            <div class="zl-pair__col zl-pair__col--later" data-reveal style="--reveal-delay:280ms">
+              <span class="zl-pair__mark zl-draw" aria-hidden="true"></span>
+              <p class="zl-pair__label">Over time</p>
+              <p class="zl-pair__body">
+                Zinc, selenium and copper from Pyrenean mineral water are
+                cofactors the skin’s own antioxidant enzymes use. Defending the
+                barrier daily is what lets the other five steps accumulate
+                instead of starting over.
+              </p>
+              <p class="zl-pair__foot">Day after day</p>
+            </div>
           </div>
-          <dl style="margin-top:1.75rem;padding-top:1.375rem;border-top:1px solid var(--rule);display:grid;grid-template-columns:7.5rem 1fr;gap:.75rem 1.5rem;font-size:.9375rem">
-            <dt style="font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)">When</dt>
-            <dd style="margin:0;color:var(--ink-3)">Every morning, without exception</dd>
-            <dt style="font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)">Order</dt>
-            <dd style="margin:0;color:var(--ink-3)">Over the serum. Last step before sun protection</dd>
-            <dt style="font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)">Key</dt>
-            <dd style="margin:0;color:var(--ink-3)">Sweet almond oil · red algae · zinc, selenium, copper</dd>
+
+          <dl class="zl-step__meta" data-reveal style="--reveal-delay:340ms">
+            <dt>When</dt><dd>Every morning, without exception</dd>
+            <dt>Order</dt><dd>Over the serum. Last step before sun protection</dd>
           </dl>
-          <a class="zl-link" href="/products/day-cream" style="margin-top:2rem">
+
+          <a class="zl-link" href="/products/day-cream" style="margin-top:1.875rem">
             Environmental Shield Day Cream <span class="zl-link__arrow" aria-hidden="true">→</span>
           </a>
         </div>
       </div>
     </article>
 
-    <!-- Step 05 — Restore -->
-    <article id="step-05" style="padding-top:clamp(3.5rem,9vh,6.5rem)">
-      <hr class="zl-rule zl-draw" style="background:var(--tiffany);height:2px;max-width:140px;margin-bottom:clamp(2rem,5vh,3.25rem)">
+    <!-- 05 Restore -->
+    <article class="zl-step" id="step-05">
+      <hr class="zl-step__rule zl-draw" aria-hidden="true">
       <div class="zl-split zl-split--wide-txt">
-        <div data-stagger>
-          <div style="display:flex;align-items:baseline;gap:1.25rem;flex-wrap:wrap">
+        <div>
+          <div class="zl-step__head" data-reveal>
             <span class="zl-num">05</span>
-            <span class="zl-eyebrow zl-eyebrow--bare">Nightly · Overnight repair</span>
+            <span class="zl-eyebrow zl-eyebrow--bare">Every night · Overnight repair</span>
           </div>
-          <h3 class="zl-display-l" style="margin:.5rem 0 .25rem">Restore</h3>
-          <p style="font-size:1.0625rem;color:var(--tiffany-deep);font-family:var(--font-display);font-style:italic">
-            Renewal and Repair Night Cream
-          </p>
-          <div class="zl-prose" style="margin-top:1.5rem">
-            <p>
-              Hydrolysed collagen and shea butter with niacinamide and lavender
-              floral water, written for the hours when the skin’s own renewal is
-              at its most active. It is richer than the day cream on purpose:
-              the night asks for occlusion rather than defence, and there is no
-              make-up, no weather and no daylight to work around.
-            </p>
+          <h3 class="zl-display-l" data-reveal style="--reveal-delay:80ms;margin:.5rem 0 0">Restore</h3>
+          <p class="zl-step__product" data-reveal style="--reveal-delay:120ms">Renewal and Repair Night Cream</p>
+
+          <div class="zl-pair">
+            <div class="zl-pair__col zl-pair__col--now" data-reveal style="--reveal-delay:180ms">
+              <span class="zl-pair__mark zl-draw" aria-hidden="true"></span>
+              <p class="zl-pair__label">Immediately</p>
+              <p class="zl-pair__body">
+                You wake to skin that feels cushioned rather than drawn, and
+                looks rested. The overnight version of the same-day effect —
+                there on the first morning after the first night.
+              </p>
+              <p class="zl-pair__foot">By morning</p>
+            </div>
+            <div class="zl-pair__col zl-pair__col--later" data-reveal style="--reveal-delay:280ms">
+              <span class="zl-pair__mark zl-draw" aria-hidden="true"></span>
+              <p class="zl-pair__label">Over time</p>
+              <p class="zl-pair__body">
+                Applied through the hours when the skin’s own renewal is most
+                active and held there by a richer texture. Across weeks the tone
+                looks more even, and the fine lines that come from dryness look
+                less pronounced.
+              </p>
+              <p class="zl-pair__foot">Night after night</p>
+            </div>
           </div>
-          <dl style="margin-top:1.75rem;padding-top:1.375rem;border-top:1px solid var(--rule);display:grid;grid-template-columns:7.5rem 1fr;gap:.75rem 1.5rem;font-size:.9375rem">
-            <dt style="font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)">When</dt>
-            <dd style="margin:0;color:var(--ink-3)">Every night, as late in the evening as possible</dd>
-            <dt style="font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)">Order</dt>
-            <dd style="margin:0;color:var(--ink-3)">Over the serum. The last thing before sleep</dd>
-            <dt style="font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)">Key</dt>
-            <dd style="margin:0;color:var(--ink-3)">Niacinamide · lavender floral water · hydrolysed collagen</dd>
+
+          <dl class="zl-step__meta" data-reveal style="--reveal-delay:340ms">
+            <dt>When</dt><dd>Every night, as late in the evening as possible</dd>
+            <dt>Order</dt><dd>Over the serum. The last thing before sleep</dd>
           </dl>
-          <a class="zl-link" href="/products/night-cream" style="margin-top:2rem">
+
+          <a class="zl-link" href="/products/night-cream" style="margin-top:1.875rem">
             Renewal and Repair Night Cream <span class="zl-link__arrow" aria-hidden="true">→</span>
           </a>
         </div>
@@ -573,208 +742,252 @@
       </div>
     </article>
 
-    <!-- Step 06 — Sustain (media leads) -->
-    <article id="step-06" style="padding-top:clamp(3.5rem,9vh,6.5rem)">
-      <hr class="zl-rule zl-draw" style="background:var(--tiffany);height:2px;max-width:140px;margin-bottom:clamp(2rem,5vh,3.25rem)">
+    <!-- 06 Sustain — media leads -->
+    <article class="zl-step" id="step-06">
+      <hr class="zl-step__rule zl-draw" aria-hidden="true">
       <div class="zl-split zl-split--wide-img">
         <div class="zl-media zl-media--square" data-reveal="wipe" style="background:#fff">
-          <img src="/assets/product-syringe.webp" alt="Precision Collagen Activation Refill cartridge" loading="lazy"
-               style="object-fit:contain;mix-blend-mode:multiply;padding:clamp(1.75rem,6%,3.25rem)">
+          <img src="/assets/product-syringe.webp" alt="The Precision Collagen Activation Refill cartridge" loading="lazy"
+               style="object-fit:contain;mix-blend-mode:multiply;padding:0 clamp(.5rem,2%,1rem)">
         </div>
 
-        <div data-stagger>
-          <div style="display:flex;align-items:baseline;gap:1.25rem;flex-wrap:wrap">
+        <div>
+          <div class="zl-step__head" data-reveal>
             <span class="zl-num">06</span>
             <span class="zl-eyebrow zl-eyebrow--bare">Every twelve months · Continuity</span>
           </div>
-          <h3 class="zl-display-l" style="margin:.5rem 0 .25rem">Sustain</h3>
-          <p style="font-size:1.0625rem;color:var(--tiffany-deep);font-family:var(--font-display);font-style:italic">
-            Precision Collagen Activation Refill
-          </p>
-          <div class="zl-prose" style="margin-top:1.5rem">
-            <p>
-              The same hydrolysed collagen and botanical complex as step two, in
-              a cartridge for the precision instrument you already own. Skin
-              longevity is a compounding argument: it only holds if the protocol
-              keeps running. This is the step that makes carrying on the easy
-              option rather than a decision to be made again.
-            </p>
+          <h3 class="zl-display-l" data-reveal style="--reveal-delay:80ms;margin:.5rem 0 0">Sustain</h3>
+          <p class="zl-step__product" data-reveal style="--reveal-delay:120ms">Precision Collagen Activation Refill</p>
+
+          <div class="zl-pair">
+            <div class="zl-pair__col zl-pair__col--now" data-reveal style="--reveal-delay:180ms">
+              <span class="zl-pair__mark zl-draw" aria-hidden="true"></span>
+              <p class="zl-pair__label">Immediately</p>
+              <p class="zl-pair__body">
+                Nothing changes, and that is the point. A fresh cartridge in the
+                instrument you already own, and the same visible smoothing on
+                the same evening as the week before.
+              </p>
+              <p class="zl-pair__foot">Unbroken</p>
+            </div>
+            <div class="zl-pair__col zl-pair__col--later" data-reveal style="--reveal-delay:280ms">
+              <span class="zl-pair__mark zl-draw" aria-hidden="true"></span>
+              <p class="zl-pair__label">Over time</p>
+              <p class="zl-pair__body">
+                Only the second effect can be interrupted. The refill exists so
+                the sequence never stops — and so anyone who wants nothing but
+                the immediate effect can keep it for as long as they like.
+              </p>
+              <p class="zl-pair__foot">Year after year</p>
+            </div>
           </div>
-          <dl style="margin-top:1.75rem;padding-top:1.375rem;border-top:1px solid var(--rule);display:grid;grid-template-columns:7.5rem 1fr;gap:.75rem 1.5rem;font-size:.9375rem">
-            <dt style="font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)">When</dt>
-            <dd style="margin:0;color:var(--ink-3)">When the cartridge is depleted — around twelve months</dd>
-            <dt style="font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)">Order</dt>
-            <dd style="margin:0;color:var(--ink-3)">Replaces step 02. The sequence is unchanged</dd>
-            <dt style="font-size:.6875rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mist)">Key</dt>
-            <dd style="margin:0;color:var(--ink-3)">Hydrolysed collagen · precision cartridge system</dd>
+
+          <dl class="zl-step__meta" data-reveal style="--reveal-delay:340ms">
+            <dt>When</dt><dd>When the cartridge is depleted — around twelve months</dd>
+            <dt>Order</dt><dd>Replaces step 02. The sequence is unchanged</dd>
           </dl>
-          <a class="zl-link" href="/products/syringe-refill" style="margin-top:2rem">
+
+          <a class="zl-link" href="/products/syringe-refill" style="margin-top:1.875rem">
             Precision Collagen Activation Refill <span class="zl-link__arrow" aria-hidden="true">→</span>
           </a>
         </div>
       </div>
     </article>
+
+    <p class="zl-muted" data-reveal style="margin-top:clamp(3rem,7vh,4.5rem);font-size:.8125rem">
+      The six formulations are in pre-launch and not yet available to purchase.
+    </p>
   </div>
 </section>
 
-<!-- ── 7. The rhythm of a week — dark ──────────────────────────────────── -->
+<!-- ── 5. In practice — the week written out, on the dark field ────────── -->
 <section class="zl-section zl-dark zl-on-dark">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
-      <span class="zl-index-rule__num">03</span>
-      <span class="zl-eyebrow zl-eyebrow--bare">The Weekly Rhythm</span>
+      <span class="zl-index-rule__num">04</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">In Practice</span>
     </div>
 
-    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(3rem,7vh,4.5rem)">
+    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(2.5rem,6vh,4rem)">
       <h2 class="zl-display-l" style="max-width:14ch">
         <span class="zl-rise"><span>Two minutes,</span></span>
-        <span class="zl-rise" style="--reveal-delay:120ms"><span><em class="zl-em--brand">twice</em> a day.</span></span>
+        <span class="zl-rise" style="--reveal-delay:130ms"><span><em class="zl-em--brand">twice</em> a day.</span></span>
       </h2>
-      <p class="zl-lead" data-reveal style="--reveal-delay:200ms">
+      <p class="zl-lead" data-reveal style="--reveal-delay:220ms">
         Written out, the protocol is short. Two steps in the morning, two at
-        night, and one evening a week where the sequence opens with renewal and
-        activation before the daily steps resume.
+        night, and one evening a week that opens with renewal and activation
+        before the daily steps resume.
       </p>
     </div>
 
     <div class="zl-grid zl-grid--2" data-stagger>
       <div>
-        <div class="zl-media zl-media--square" data-reveal="wipe">
+        <div class="zl-media zl-media--wide" data-reveal="wipe">
           <img src="/assets/atmosphere-morning-ritual.webp"
                alt="A woman at a bright bathroom mirror during her morning ritual" loading="lazy">
         </div>
         <span class="zl-eyebrow" style="margin-top:1.75rem">Every morning</span>
-        <ol style="list-style:none;padding:0;margin-top:1.25rem">
-          <li style="display:flex;gap:1.25rem;padding:1rem 0;border-bottom:1px solid var(--rule-dark-soft)">
-            <span style="color:var(--tiffany-lift);font-size:.75rem;letter-spacing:.2em;padding-top:.35rem">03</span>
-            <span><strong style="font-weight:500;color:var(--on-dark)">Signal</strong><br>
-              <span style="font-size:.9375rem;color:var(--on-dark-2)">BioSignal Facial Serum, on clean skin</span></span>
-          </li>
-          <li style="display:flex;gap:1.25rem;padding:1rem 0;border-bottom:1px solid var(--rule-dark-soft)">
-            <span style="color:var(--tiffany-lift);font-size:.75rem;letter-spacing:.2em;padding-top:.35rem">04</span>
-            <span><strong style="font-weight:500;color:var(--on-dark)">Shield</strong><br>
-              <span style="font-size:.9375rem;color:var(--on-dark-2)">Environmental Shield Day Cream, then sun protection</span></span>
-          </li>
+        <ol class="zl-rota">
+          <li><span class="zl-rota__n">03</span><span><strong>Signal</strong><br><span>BioSignal Facial Serum, on clean skin</span></span></li>
+          <li><span class="zl-rota__n">04</span><span><strong>Shield</strong><br><span>Environmental Shield Day Cream, then sun protection</span></span></li>
         </ol>
       </div>
 
       <div>
-        <div class="zl-media zl-media--square" data-reveal="wipe" style="--reveal-delay:140ms">
+        <div class="zl-media zl-media--wide" data-reveal="wipe" style="--reveal-delay:140ms">
           <img src="/assets/night-sleeping-woman.webp"
                alt="A woman at rest in low candlelight during the hours of overnight repair" loading="lazy"
                data-parallax="0.06" style="position:absolute;top:-7%;left:0;width:100%;height:114%">
         </div>
         <span class="zl-eyebrow" style="margin-top:1.75rem">Every night</span>
-        <ol style="list-style:none;padding:0;margin-top:1.25rem">
-          <li style="display:flex;gap:1.25rem;padding:1rem 0;border-bottom:1px solid var(--rule-dark-soft)">
-            <span style="color:var(--tiffany-lift);font-size:.75rem;letter-spacing:.2em;padding-top:.35rem">03</span>
-            <span><strong style="font-weight:500;color:var(--on-dark)">Signal</strong><br>
-              <span style="font-size:.9375rem;color:var(--on-dark-2)">The same serum. The instruction does not pause</span></span>
-          </li>
-          <li style="display:flex;gap:1.25rem;padding:1rem 0;border-bottom:1px solid var(--rule-dark-soft)">
-            <span style="color:var(--tiffany-lift);font-size:.75rem;letter-spacing:.2em;padding-top:.35rem">05</span>
-            <span><strong style="font-weight:500;color:var(--on-dark)">Restore</strong><br>
-              <span style="font-size:.9375rem;color:var(--on-dark-2)">Renewal and Repair Night Cream, last of all</span></span>
-          </li>
+        <ol class="zl-rota">
+          <li><span class="zl-rota__n">03</span><span><strong>Signal</strong><br><span>The same serum. The instruction does not pause</span></span></li>
+          <li><span class="zl-rota__n">05</span><span><strong>Restore</strong><br><span>Renewal and Repair Night Cream, last of all</span></span></li>
         </ol>
       </div>
     </div>
 
-    <div class="zl-grid zl-grid--2" data-stagger style="margin-top:clamp(2.5rem,6vh,4rem)">
+    <div class="zl-grid zl-grid--3" data-stagger style="margin-top:clamp(3rem,7vh,4.5rem)">
       <div style="border-top:1px solid var(--rule-dark);padding-top:1.5rem">
-        <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--tiffany-lift)">One evening a week</span>
-        <p class="zl-lead" style="margin-top:1rem;font-size:1.0625rem">
-          <strong style="color:var(--on-dark);font-weight:400">01 Renew</strong>, then
-          <strong style="color:var(--on-dark);font-weight:400">02 Activate</strong> — the peeling gel
-          first, the syringe within minutes of it, then the evening’s serum and
-          night cream as usual.
+        <span class="zl-num" data-count="6">6</span>
+        <p style="margin-top:.75rem;font-size:.9375rem;max-width:30ch;color:var(--on-dark-2)">
+          steps, in one order, of which one evening a week uses all six and every
+          other day uses four.
         </p>
       </div>
       <div style="border-top:1px solid var(--rule-dark);padding-top:1.5rem">
-        <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--tiffany-lift)">Once a year</span>
-        <p class="zl-lead" style="margin-top:1rem;font-size:1.0625rem">
-          <strong style="color:var(--on-dark);font-weight:400">06 Sustain</strong> — a fresh cartridge
-          in the same instrument, and the protocol simply continues without a
-          break in the signal.
+        <span class="zl-num" data-count="12">12</span>
+        <p style="margin-top:.75rem;font-size:.9375rem;max-width:30ch;color:var(--on-dark-2)">
+          effects to expect from them — two from every step, one for today and
+          one for the year.
+        </p>
+      </div>
+      <div style="border-top:1px solid var(--rule-dark);padding-top:1.5rem">
+        <span class="zl-num" data-count="1">1</span>
+        <p style="margin-top:.75rem;font-size:.9375rem;max-width:30ch;color:var(--on-dark-2)">
+          cartridge a year, at which point
+          <strong style="color:var(--on-dark);font-weight:500">06 Sustain</strong> keeps the second half unbroken.
+        </p>
+      </div>
+    </div>
+
+    <div class="zl-pair" style="margin-top:clamp(3rem,7vh,4.5rem)">
+      <div class="zl-pair__col zl-pair__col--now" data-reveal>
+        <span class="zl-pair__mark zl-draw" aria-hidden="true"></span>
+        <p class="zl-pair__label">Begin gradually</p>
+        <p class="zl-pair__body">
+          Six formulations on one evening asks a great deal of a barrier that has
+          met none of them. Serum and day cream for a fortnight; then the night
+          cream; then the syringe weekly; then the peeling gel in front of it.
+          Six weeks, and the sequence is running.
+        </p>
+      </div>
+      <div class="zl-pair__col zl-pair__col--later" data-reveal style="--reveal-delay:140ms">
+        <span class="zl-pair__mark zl-draw" aria-hidden="true"></span>
+        <p class="zl-pair__label">Adjust it to your skin</p>
+        <p class="zl-pair__body">
+          Climate, sleep, sun and hormones all move the pace, and every skin
+          arrives differently. Our analyser reads yours and fits the sequence to
+          the routine you already have.
+        </p>
+        <p style="margin-top:1.25rem">
+          <a class="zl-btn zl-btn--on-dark-ghost" href="/analyser/">Analyse my skin</a>
         </p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── 8. Beginning the protocol ───────────────────────────────────────── -->
-<section class="zl-section" id="begin">
+<!-- ── 6. What to expect — the honest timeline ─────────────────────────── -->
+<section class="zl-section" id="what-to-expect">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
-      <span class="zl-index-rule__num">04</span>
-      <span class="zl-eyebrow zl-eyebrow--bare">Beginning the Protocol</span>
+      <span class="zl-index-rule__num">05</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">What to Expect</span>
     </div>
 
-    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(3rem,7vh,4.5rem)">
-      <h2 class="zl-display-l" data-reveal="far" style="max-width:16ch">
-        Begin gradually. The <em class="zl-em--brand">barrier</em> sets the pace.
+    <div class="zl-media zl-media--cinema" data-reveal="wipe" style="margin-bottom:clamp(3rem,7vh,4.5rem)">
+      <img src="/assets/atmosphere-neck-skin-detail.webp"
+           alt="Close detail of skin along the jaw and neck in raking light" loading="lazy" data-parallax="0.09">
+    </div>
+
+    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(2.5rem,6vh,4rem)">
+      <h2 class="zl-display-l" style="max-width:16ch">
+        <span class="zl-rise"><span>Honestly: what</span></span>
+        <span class="zl-rise" style="--reveal-delay:130ms"><span>happens, and <em class="zl-em--brand">when</em>.</span></span>
       </h2>
-      <p class="zl-lead" data-reveal style="--reveal-delay:140ms">
-        Introducing six formulations on the same evening asks a great deal of a
-        barrier that has met none of them before. We recommend building the
-        protocol in stages, over roughly ninety days.
+      <p class="zl-lead" data-reveal style="--reveal-delay:240ms">
+        One half of this you can judge on day one. The other asks for patience —
+        and we would rather say so here than let you measure it against the wrong
+        calendar.
       </p>
     </div>
 
-    <ol class="zl-grid zl-grid--2" style="list-style:none;padding:0" data-stagger>
-      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-num">01</span>
-        <h3 class="zl-display-s" style="margin:.625rem 0 .625rem">Weeks one and two</h3>
-        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
-          The serum morning and night; the day cream each morning. Nothing else.
-          Hydration and protection first — this is the base the rest of the
-          protocol is laid on.
-        </p>
-      </li>
-      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-num">02</span>
-        <h3 class="zl-display-s" style="margin:.625rem 0 .625rem">Weeks three and four</h3>
-        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
-          Add the night cream. The evening becomes serum then cream, and the
-          skin begins to do its repair work with something richer to hold it in
-          place.
-        </p>
-      </li>
-      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-num">03</span>
-        <h3 class="zl-display-s" style="margin:.625rem 0 .625rem">Weeks five and six</h3>
-        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
-          Add the collagen syringe, once weekly, on a single evening. The first
-          of the two weekly steps, and the first structural instruction of the
-          protocol.
-        </p>
-      </li>
-      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-num">04</span>
-        <h3 class="zl-display-s" style="margin:.625rem 0 .625rem">Week seven onwards</h3>
-        <p class="zl-muted" style="font-size:.9375rem;line-height:1.75">
-          Add the peeling gel on that same weekly evening, immediately before
-          the syringe. The full sequence is now running in its intended order.
-        </p>
-      </li>
-    </ol>
+    <div class="zl-when" data-stagger>
+      <span class="zl-when__spine zl-draw" aria-hidden="true"></span>
 
-    <div class="zl-split zl-split--wide-txt" data-reveal style="margin-top:clamp(3rem,7vh,4.5rem);align-items:center">
-      <p class="zl-prose" style="font-size:1.0625rem">
-        <strong>After twelve weeks</strong>, the protocol is simply the protocol:
-        two weekly steps, four daily ones, and a refill when the cartridge runs
-        out. Every skin arrives at that point differently — our analyser will
-        adjust the sequence to your climate, your concerns and the routine you
-        already have.
-      </p>
-      <div>
-        <a class="zl-btn zl-btn--ghost" href="/analyser/">Analyse my skin</a>
+      <div class="zl-when__item">
+        <span class="zl-when__key">The first week</span>
+        <p class="zl-when__body">
+          The immediate effect is there from the first application — the syringe
+          on the evening you first place it, the peeling gel the moment you
+          rinse. Nothing structural is visible yet. This week is for the routine
+          to settle and for skin to meet formulations it has not met before. If
+          anything feels reactive, slow the introduction down.
+        </p>
+      </div>
+
+      <div class="zl-when__item">
+        <span class="zl-when__key">The first month</span>
+        <p class="zl-when__body">
+          The same-day effect becomes familiar and repeatable, which is the point
+          of it. Alongside it, the everyday things: skin comfortable through the
+          afternoon, make-up sitting more evenly. The lasting effect is under way
+          and still invisible — anyone promising otherwise at four weeks is
+          selling you the first effect twice.
+        </p>
+      </div>
+
+      <div class="zl-when__item">
+        <span class="zl-when__key">Eight to twelve weeks</span>
+        <p class="zl-when__body">
+          Skin renews on its own schedule, and the deeper layers move slower than
+          the surface. This is the earliest honest window for the second effect
+          to read as more than a good day: the look more even overall, expression
+          lines softer at rest rather than only after application, and each
+          application starting from a better baseline.
+        </p>
+      </div>
+    </div>
+
+    <div class="zl-split zl-split--wide-txt" data-reveal style="margin-top:clamp(3rem,7vh,4.5rem);align-items:start">
+      <div class="zl-note">
+        <span class="zl-note__label">What we will not tell you</span>
+        <p>
+          No percentage, no panel, no trial, no before-and-after. Zero Lines has
+          not launched and has nothing to cite, so nothing is cited. Every
+          statement on this page describes how skin <em>looks</em> and what the
+          formulations are designed to support — never a permanent change to what
+          skin <em>is</em>.
+        </p>
+      </div>
+      <div class="zl-prose" style="font-size:.9375rem">
+        <p>
+          Consistency does more here than intensity. The protocol is written to be
+          survivable on a bad week: four small applications a day, one longer
+          evening, one cartridge a year.
+        </p>
+        <p style="margin-bottom:0">
+          If your skin is reactive, or you are pregnant or under a dermatologist’s
+          care, take this page to them before you begin. External use only. This
+          is not a medical treatment.
+        </p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── 9. Early access — pale turquoise close ──────────────────────────── -->
+<!-- ── 7. Early access ─────────────────────────────────────────────────── -->
 <section class="zl-section zl-wash" id="waitlist">
   <div class="zl-container zl-container--narrow zl-center">
     <span class="zl-eyebrow zl-eyebrow--center" data-reveal>Early Access</span>
@@ -803,15 +1016,15 @@
 
       <p class="zl-form__note" style="margin-top:1.25rem">
         We write rarely, and only about the protocol. Unsubscribe at any time.
-        See our <a href="/privacy.html" style="color:var(--tiffany-deep);text-decoration:underline">privacy policy</a>.
+        See our <a href="/privacy.html">privacy policy</a>.
       </p>
     </form>
 
-    <hr class="zl-rule zl-draw" style="max-width:120px;margin:clamp(3rem,7vh,4.5rem) auto 2rem;background:var(--tiffany);height:2px">
+    <hr class="zl-rule zl-draw" style="max-width:120px;margin:clamp(3rem,7vh,4.5rem) auto 2rem;background:var(--signal);height:2px">
 
     <div data-reveal style="display:flex;justify-content:center;flex-wrap:wrap;gap:1.5rem 2.75rem">
-      <a class="zl-link" href="/science">The science <span class="zl-link__arrow" aria-hidden="true">→</span></a>
       <a class="zl-link" href="/products">The formulations <span class="zl-link__arrow" aria-hidden="true">→</span></a>
+      <a class="zl-link" href="/science">The science <span class="zl-link__arrow" aria-hidden="true">→</span></a>
       <a class="zl-link" href="/blog/zero-lines-protocol.html">The protocol, in the journal <span class="zl-link__arrow" aria-hidden="true">→</span></a>
     </div>
   </div>

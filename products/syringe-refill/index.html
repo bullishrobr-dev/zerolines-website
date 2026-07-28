@@ -4,22 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Precision Collagen Activation Refill — Zero Lines</title>
-<meta name="description" content="Step 06 of the Zero Lines protocol. A continuation cartridge for the Precision Collagen Activation Syringe, carrying the same hydrolysed collagen and botanical peptide complex. Not yet available to purchase.">
+<title>Precision Collagen Activation Refill — Zero Lines | Step 06 of the Protocol</title>
+<meta name="description" content="Step 06 of the Zero Lines protocol. The continuation cartridge for the Precision Collagen Activation Syringe — the same formulation, the same visible smoothing from the first application, and twelve months of it. Requires the Syringe applicator. Not yet available to purchase.">
 <link rel="canonical" href="https://zerolines.life/products/syringe-refill/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zero Lines">
 <meta property="og:title" content="Precision Collagen Activation Refill — Zero Lines">
-<meta property="og:description" content="From mountain spring to molecular mastery. The cartridge that keeps the protocol running.">
+<meta property="og:description" content="The ritual continues. The same formulation, the same first-day smoothing — for twelve months, because the applicator is reused rather than replaced.">
 <meta property="og:url" content="https://zerolines.life/products/syringe-refill/">
-<meta property="og:image" content="https://zerolines.life/assets/og/product-syringe-refill.jpg">
+<meta property="og:image" content="https://zerolines.life/assets/og/atmosphere-botanical-petal.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Precision Collagen Activation Refill — Zero Lines">
-<meta name="twitter:description" content="From mountain spring to molecular mastery. The cartridge that keeps the protocol running.">
-<meta name="twitter:image" content="https://zerolines.life/assets/og/product-syringe-refill.jpg">
+<meta name="twitter:description" content="The ritual continues. The same formulation, the same first-day smoothing — for twelve months, because the applicator is reused rather than replaced.">
+<meta name="twitter:image" content="https://zerolines.life/assets/og/atmosphere-botanical-petal.jpg">
 
 <link rel="icon" href="/assets/logo-mark.png">
 <link rel="apple-touch-icon" href="/assets/logo-mark.png">
@@ -31,62 +31,150 @@
 <link rel="stylesheet" href="/assets/zl.css">
 
 <style>
-/* ── Page-scoped components the design system does not carry ──────────────
-   A disclosure accordion, a safety note, a breadcrumb and three small
-   editorial lists. Tokens only — no new colour, no new type family. Nothing
-   here sets opacity on content that is not natively collapsed by <details>. */
+/* ═══ Page-scoped layer ═══════════════════════════════════════════════════
+   Two jobs only: (a) components zl.css does not carry — a night hero, the
+   two-effects block, a ledger, an accordion; (b) contrast corrections, all of
+   them measured with .claude/a11y.js rather than guessed. Tokens only. No new
+   colour. Nothing here sets opacity on content that is not natively collapsed
+   by <details>.                                                             */
 
-.zl-crumbs { display:flex; align-items:center; gap:.625rem; font-size:.6875rem; letter-spacing:.22em; text-transform:uppercase; color:var(--mist); }
-.zl-crumbs a { transition:color var(--dur-ui) var(--ease); }
-.zl-crumbs a:hover { color:var(--tiffany-deep); }
-.zl-crumbs i { font-style:normal; color:var(--stone); }
+/* ── a. Contrast corrections ──────────────────────────────────────────────
+   --mist (#6B706D) measures 4.72:1 on --bone but only 4.33:1 on --bone-2, and
+   --on-dark-3 measures 4.46:1 on --ink. Both sit under the 4.5 AA floor for
+   the small sizes they are actually used at, so this page resolves them. */
+.zl-eyebrow, .zl-muted, .zl-crumbs { color: var(--mist-2); }
+.zl-on-dark .zl-eyebrow,
+.zl-on-dark .zl-muted,
+.zl-on-dark .zl-crumbs        { color: #8A8E8B; }          /* 6.32:1 on the night field */
+.zl-on-dark .zl-prose p       { color: var(--on-dark-2); }
+.zl-on-dark .zl-num           { color: var(--champagne); } /* --house on ink is 1.94:1 */
+.zl-on-dark .zl-form__note    { color: rgba(255,255,255,.8); }
+.zl-brand-field .zl-muted     { color: rgba(255,255,255,.88); }
+/* Champagne is this page's metallic note, so the eyebrow tick follows it on
+   every dark field rather than staying signal-turquoise. */
+.zl-on-dark .zl-eyebrow::before { background: var(--champagne); }
 
-/* Specification strip — product facts, not claims */
-.zl-spec { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(1.5rem,3vw,3rem); }
-.zl-spec > div { border-top:1px solid var(--rule); padding-top:1.125rem; }
-.zl-spec__label { display:block; margin-top:.625rem; font-size:.8125rem; line-height:1.6; color:var(--mist); }
-@media (max-width:560px) { .zl-spec { grid-template-columns:1fr; } }
+/* ── b. Night hero ────────────────────────────────────────────────────────
+   The hero photograph is a macro whose ground is measured pure #000. Dropping
+   it into a bone hero would lay a cream gradient over black; instead the
+   section takes exactly the same black, the frame edge disappears and the
+   petal floats in the page. Nothing here is a scrim over a face — the picture
+   has no subject to obscure, so no wash is needed at all.
+   .zl-on-dark is only a scoping hook in zl.css and sets no colour of its own,
+   so the field states its own foreground rather than inheriting body ink,
+   which measured 1.11:1 on the headline. */
+.zl-hero--night { background: #000; color: var(--on-dark); min-height: 0; padding-block: calc(var(--header-h) + clamp(3rem,9vh,6rem)) clamp(4rem,10vh,7rem); }
+.zl-hero--night h1, .zl-hero--night h2, .zl-hero--night h3 { color: var(--on-dark); }
+.zl-hero--night::after { background: linear-gradient(to right, var(--champagne), rgba(194,168,120,0) 62%); }
+/* Light nav over the black hero; the standard bone panel the moment the page
+   scrolls into the light half. Opaque either way — a blurred header does not
+   occlude, and translucency is how the previous build ghosted copy through it. */
+.zl-header--over-dark[data-scrolled="true"] {
+  background: var(--bone); color: var(--ink);
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+  border-bottom-color: var(--rule-soft);
+}
+.zl-header--over-dark[data-scrolled="true"] .zl-header__link { color: var(--ink-3); }
+.zl-header--over-dark[data-scrolled="true"] .zl-header__link:hover,
+.zl-header--over-dark[data-scrolled="true"] .zl-header__link[aria-current="page"] { color: var(--ink); }
+.zl-phero { display: grid; grid-template-columns: 5.5fr 6.5fr; gap: clamp(2.5rem,6vw,5.5rem); align-items: center; }
+.zl-phero__media { background: transparent; aspect-ratio: 4 / 3; }
+.zl-phero__media img { object-fit: cover; }
+@media (max-width: 900px) { .zl-phero { grid-template-columns: 1fr; gap: clamp(2rem,7vw,3rem); } }
 
-/* "Designed to support" — hairline tick rather than a bullet */
-.zl-support li { display:grid; grid-template-columns:auto 1fr; gap:1.25rem; align-items:start; border-top:1px solid var(--rule); padding-top:1.25rem; }
-.zl-support i { display:block; width:24px; height:1px; background:var(--tiffany); margin-top:.8125rem; }
-.zl-support p { margin:0; font-size:.9375rem; line-height:1.75; color:var(--ink-3); }
+.zl-crumbs { display: flex; align-items: center; gap: .625rem; font-size: .6875rem; letter-spacing: .22em; text-transform: uppercase; }
+.zl-crumbs a { transition: color var(--dur-ui) var(--ease); }
+.zl-crumbs a:hover { color: var(--champagne); }
+.zl-crumbs i { font-style: normal; opacity: .6; }
 
-/* Application protocol — numbered rows, a different rhythm to the grids */
-.zl-steps li { display:grid; grid-template-columns:auto 1fr; gap:clamp(1.25rem,3vw,2.75rem); align-items:baseline; border-top:1px solid var(--rule); padding:1.625rem 0; }
-.zl-steps li:last-child { border-bottom:1px solid var(--rule); }
-.zl-steps p { margin:.5rem 0 0; font-size:.9375rem; line-height:1.75; color:var(--ink-3); max-width:56ch; }
+.zl-avail { margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid rgba(194,168,120,.35);
+  font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; color: var(--champagne); }
 
-/* Safety note — legitimate, kept, and given weight */
-.zl-note { border-left:2px solid var(--gold-lift); background:rgba(255,255,255,.05); padding:1.5rem 1.75rem; max-width:var(--measure); }
-.zl-note__label { display:block; font-size:var(--t-eyebrow); font-weight:500; letter-spacing:.28em; text-transform:uppercase; color:var(--gold-lift); margin-bottom:.75rem; }
-.zl-note p { margin:0; font-size:.9375rem; line-height:1.8; color:var(--on-dark-2); }
+/* ── c. The two effects — the spine of the brand, so it gets the widest
+        column measure, the largest labels and a hairline of its own. ────── */
+.zl-two { display: grid; grid-template-columns: 1fr 1px 1fr; gap: clamp(2.25rem,5vw,4.5rem); align-items: start; }
+.zl-two__rule { align-self: stretch; width: 1px;
+  background: linear-gradient(to bottom, rgba(194,168,120,0), var(--champagne) 14%, var(--champagne) 86%, rgba(194,168,120,0)); }
+.zl-js .zl-two__rule.zl-draw          { transform: scaleY(0); transform-origin: top; transition: transform 1400ms var(--ease); }
+.zl-js .zl-two__rule.zl-draw.is-in    { transform: scaleY(1); }
+.zl-effect__tag { display: flex; align-items: center; gap: .75rem; font-size: var(--t-eyebrow); font-weight: 500;
+  letter-spacing: .3em; text-transform: uppercase; color: var(--mist-2); }
+.zl-effect__tag::before { content: ""; width: 26px; height: 1px; background: var(--champagne); flex: none; }
+.zl-effect h3 { margin: 1.125rem 0 0; }
+.zl-effect__when { margin-top: .875rem; font-size: .8125rem; letter-spacing: .14em; text-transform: uppercase; color: var(--house); }
+.zl-effect p { margin: 1.5rem 0 0; color: var(--ink-3); font-size: .9375rem; line-height: 1.85; max-width: 42ch; }
+.zl-effect__pull { margin-top: 1.75rem; font-family: var(--font-display); font-style: italic; font-weight: 300;
+  font-size: clamp(1.125rem,1.6vw,1.4375rem); line-height: 1.4; color: var(--house); max-width: 26ch; }
+.zl-effect__count { display: flex; align-items: baseline; gap: .75rem; margin-top: 1.75rem;
+  padding-top: 1.25rem; border-top: 1px solid var(--rule); }
+.zl-effect__unit { font-size: .8125rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mist-2); }
+@media (max-width: 900px) {
+  .zl-two { grid-template-columns: 1fr; gap: clamp(2rem,7vw,2.75rem); }
+  .zl-two__rule { width: auto; height: 1px; align-self: auto;
+    background: linear-gradient(to right, var(--champagne), rgba(194,168,120,0)); }
+  .zl-js .zl-two__rule.zl-draw       { transform: scaleX(0); transform-origin: left; }
+  .zl-js .zl-two__rule.zl-draw.is-in { transform: scaleX(1); }
+}
 
-/* The ritual, on the turquoise field */
-.zl-ritual li { border-top:1px solid var(--rule-dark); padding-top:1.5rem; }
-.zl-ritual b { display:block; font-family:var(--font-display); font-weight:300; font-size:clamp(2rem,3vw,2.75rem); line-height:1; color:rgba(255,255,255,.62); }
-.zl-ritual p { margin:.5rem 0 0; font-size:.9375rem; line-height:1.7; color:rgba(255,255,255,.86); }
+/* ── d. Specification strip, ingredient grid, sequence, note ────────────── */
+.zl-spec { display: grid; grid-template-columns: repeat(3,1fr); gap: clamp(1.5rem,3vw,3rem); }
+.zl-spec > div { border-top: 1px solid var(--rule); padding-top: 1.125rem; }
+.zl-spec__label { display: block; margin-top: .625rem; font-size: .8125rem; line-height: 1.65; color: var(--mist-2); }
+@media (max-width: 560px) { .zl-spec { grid-template-columns: 1fr; } }
 
-/* FAQ accordion */
-.zl-faq { border-top:1px solid var(--rule); }
-.zl-faq__item { border-bottom:1px solid var(--rule); }
-.zl-faq__q { display:flex; gap:1.5rem; align-items:flex-start; justify-content:space-between; list-style:none; cursor:pointer; padding:1.5rem 0; font-family:var(--font-display); font-weight:400; font-size:clamp(1.125rem,1.5vw,1.375rem); line-height:1.35; transition:color var(--dur-ui) var(--ease); }
-.zl-faq__q::-webkit-details-marker { display:none; }
-.zl-faq__q:hover { color:var(--tiffany-deep); }
-.zl-faq__sign { position:relative; flex:none; width:14px; height:14px; margin-top:.4375rem; }
-.zl-faq__sign::before, .zl-faq__sign::after { content:""; position:absolute; background:var(--tiffany); transition:transform 520ms var(--ease); }
-.zl-faq__sign::before { top:50%; left:0; width:14px; height:1px; }
-.zl-faq__sign::after { left:50%; top:0; width:1px; height:14px; }
-.zl-faq__item[open] .zl-faq__sign::after { transform:scaleY(0); }
-.zl-faq__a { padding:0 clamp(0rem,4vw,3.5rem) 1.75rem 0; max-width:64ch; }
-.zl-faq__a p { margin:0; font-size:.9375rem; line-height:1.85; color:var(--ink-3); }
-/* Opens with a clip-path wipe, echoing data-reveal="wipe". Deliberately never
-   animates opacity — nothing here can leave content stranded invisible. */
-.zl-faq__item[open] .zl-faq__a { animation:zl-faq-in 620ms var(--ease-io) both; }
-@keyframes zl-faq-in { from { clip-path:inset(0 0 100% 0); transform:translateY(-8px); } to { clip-path:inset(0 0 0 0); transform:none; } }
+.zl-ing li { border-top: 1px solid var(--rule-dark); padding-top: 1.375rem; }
+.zl-ing h3 { margin: .75rem 0 .625rem; }
+.zl-ing p  { font-size: .9375rem; line-height: 1.8; }
 
-/* Onward links */
-.zl-onward li { border-top:1px solid var(--rule); padding-top:1.5rem; }
+.zl-steps li { display: grid; grid-template-columns: auto 1fr; gap: clamp(1.25rem,3vw,2.5rem);
+  align-items: baseline; border-top: 1px solid var(--rule); padding: 1.5rem 0; }
+.zl-steps li:last-child { border-bottom: 1px solid var(--rule); }
+.zl-steps p { margin: .5rem 0 0; font-size: .9375rem; line-height: 1.8; color: var(--ink-3); max-width: 52ch; }
+
+.zl-note { border-left: 2px solid var(--champagne); background: var(--sage-wash);
+  padding: 1.375rem 1.625rem; max-width: var(--measure); }
+.zl-note__label { display: block; font-size: var(--t-eyebrow); font-weight: 500; letter-spacing: .28em;
+  text-transform: uppercase; color: var(--house); margin-bottom: .75rem; }
+.zl-note p { margin: 0; font-size: .9375rem; line-height: 1.8; color: var(--ink-3); }
+
+/* ── e. Protocol ledger — where step 06 sits in the sequence ────────────── */
+.zl-ledger { border-top: 1px solid var(--rule); }
+.zl-ledger li { border-bottom: 1px solid var(--rule); }
+.zl-ledger__row { display: grid; grid-template-columns: auto 1fr auto; gap: clamp(1rem,3vw,2.5rem);
+  align-items: baseline; padding: 1.3125rem 0; }
+.zl-ledger a.zl-ledger__row { transition: padding-left var(--dur-ui) var(--ease); }
+.zl-ledger a.zl-ledger__row:hover { padding-left: .75rem; }
+.zl-ledger__n { font-size: .6875rem; letter-spacing: .24em; color: var(--house); }
+.zl-ledger__step { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.25rem,2vw,1.625rem); line-height: 1.2; }
+.zl-ledger a:hover .zl-ledger__step { color: var(--house); }
+.zl-ledger__name { font-size: .8125rem; color: var(--mist-2); text-align: right; }
+.zl-ledger .is-here { border-left: 2px solid var(--champagne); }
+.zl-ledger .is-here .zl-ledger__row { padding-left: 1.25rem; }
+.zl-ledger .is-here .zl-ledger__name { color: var(--house); }
+@media (max-width: 640px) {
+  .zl-ledger__row { grid-template-columns: auto 1fr; row-gap: .375rem; }
+  .zl-ledger__name { grid-column: 2; text-align: left; }
+}
+
+/* ── f. FAQ — native <details>, so it is keyboard operable and announced
+        without a line of JavaScript. The open animation is a clip wipe and
+        never touches opacity, so nothing here can strand content invisible. */
+.zl-faq { border-top: 1px solid var(--rule); }
+.zl-faq__item { border-bottom: 1px solid var(--rule); }
+.zl-faq__q { list-style: none; cursor: pointer; display: flex; align-items: baseline; justify-content: space-between;
+  gap: 2rem; padding: 1.5rem 0; font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(1.125rem,1.6vw,1.375rem); line-height: 1.35; transition: color var(--dur-ui) var(--ease); }
+.zl-faq__q::-webkit-details-marker { display: none; }
+.zl-faq__q::marker { content: ""; }
+.zl-faq__q:hover, .zl-faq__item[open] > .zl-faq__q { color: var(--house); }
+.zl-faq__sign { flex: none; position: relative; top: .3em; width: 15px; height: 15px; }
+.zl-faq__sign::before, .zl-faq__sign::after { content: ""; position: absolute; left: 0; right: 0; top: 50%;
+  height: 1px; background: var(--signal); transition: transform 520ms var(--ease); }
+.zl-faq__sign::after { transform: rotate(90deg); }
+.zl-faq__item[open] .zl-faq__sign::after { transform: rotate(0deg); }
+.zl-faq__a { margin: 0; padding: 0 0 1.75rem; max-width: 64ch; color: var(--ink-3); font-size: .9375rem; line-height: 1.85; }
+.zl-faq__item[open] > .zl-faq__a { animation: zl-faq-in 620ms var(--ease-io) both; }
+@keyframes zl-faq-in { from { clip-path: inset(0 0 100% 0); transform: translateY(-8px); } to { clip-path: inset(0 0 0 0); transform: none; } }
 </style>
 
 <script type="application/ld+json">
@@ -115,19 +203,23 @@
   "@id": "https://zerolines.life/products/syringe-refill/#product",
   "name": "Precision Collagen Activation Refill",
   "url": "https://zerolines.life/products/syringe-refill/",
-  "description": "A continuation cartridge for the Precision Collagen Activation Syringe applicator, carrying the same hydrolysed collagen and botanical peptide complex. Step 06 of the Zero Lines protocol. Not yet available to purchase.",
+  "category": "Skin care treatment",
+  "description": "The continuation cartridge for the Precision Collagen Activation Syringe. It carries the identical formulation — hydrolysed collagen, botanical signal peptides and a botanical extract complex on a Pyrenean mineral water base — and is designed to do two things at once: visibly smooth the appearance of expression lines from the first application, and support the skin's own structure with consistent use. Requires the Syringe applicator and is not a standalone product. Step 06 of the Zero Lines Longevity Protocol. In pre-launch and not yet available to purchase.",
   "brand": { "@type": "Brand", "name": "Zero Lines" },
-  "category": "Skincare",
   "image": "https://zerolines.life/assets/product-syringe.webp",
+  "isFamilyFriendly": true,
   "isRelatedTo": {
     "@type": "Product",
     "name": "Precision Collagen Activation Syringe",
     "url": "https://zerolines.life/products/syringe/"
   },
   "additionalProperty": [
-    { "@type": "PropertyValue", "name": "Protocol step", "value": "06 — Continuation" },
-    { "@type": "PropertyValue", "name": "Key ingredients", "value": "Hydrolysed collagen; botanical extract complex; precision cartridge system" },
+    { "@type": "PropertyValue", "name": "Protocol step", "value": "06 — Sustain" },
     { "@type": "PropertyValue", "name": "Requires", "value": "Precision Collagen Activation Syringe applicator" },
+    { "@type": "PropertyValue", "name": "Applications per cartridge", "value": "Approximately 60" },
+    { "@type": "PropertyValue", "name": "Frequency", "value": "Once weekly, plus as needed before an occasion" },
+    { "@type": "PropertyValue", "name": "Key ingredients", "value": "Hydrolysed collagen; botanical signal peptides; botanical extract complex; Pyrenean mineral water" },
+    { "@type": "PropertyValue", "name": "Application", "value": "External facial use only" },
     { "@type": "PropertyValue", "name": "Availability", "value": "Pre-launch — not yet available to purchase" }
   ]
 }
@@ -150,43 +242,33 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Why does the Refill exist alongside the Syringe?",
-      "acceptedAnswer": { "@type": "Answer", "text": "The Syringe includes the precision applicator — the device that makes targeted delivery possible. The Refill is the treatment cartridge alone. Because the applicator is retained and reused, nothing about the mechanism has to be remade every cycle, which is better for the environment and makes long-term continuation straightforward." }
+      "name": "Can I use the Refill on its own?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. The Refill is a cartridge, not a complete product; it requires the Precision Collagen Activation Syringe applicator to work. The Syringe is bought once, the Refill afterwards." }
     },
     {
       "@type": "Question",
-      "name": "Is the formulation exactly the same?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes. The Refill carries the same hydrolysed collagen and botanical peptide complex as the original Syringe. There is no difference in concentration, quality or intended outcome — only the packaging." }
+      "name": "Is the formulation identical to the Syringe's?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. The same hydrolysed collagen, botanical signal peptides and botanical extract complex, on the same Pyrenean mineral water base. Nothing is diluted or simplified — only the packaging differs." }
     },
     {
       "@type": "Question",
-      "name": "Can the Refill be used without the Syringe?",
-      "acceptedAnswer": { "@type": "Answer", "text": "No. The cartridge requires the Precision Collagen Activation Syringe applicator in order to function and is not a standalone formulation. The Syringe comes first; the Refill continues it." }
+      "name": "What if I only want the immediate effect?",
+      "acceptedAnswer": { "@type": "Answer", "text": "A perfectly legitimate way to use the range — and the Refill is the affordable way to keep doing it. Because the applicator is reused rather than replaced, continuing indefinitely costs a fraction of starting again." }
     },
     {
       "@type": "Question",
-      "name": "How long does one Refill last?",
-      "acceptedAnswer": { "@type": "Answer", "text": "One cartridge is designed to deliver approximately sixty applications. At once-weekly use that is roughly a year of continuous protocol. Where as-needed application is added before events, the duration will be shorter." }
+      "name": "How long does one cartridge last?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Approximately sixty applications. At the once-weekly rhythm that is roughly twelve months; if you also apply it before occasions, sooner." }
     },
     {
       "@type": "Question",
-      "name": "How will I know when to replace it?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Plan the next cartridge when about two weeks of formulation remain. The protocol depends on continuity, and the point of the Refill is that there is never a gap in it." }
+      "name": "How do I change the cartridge?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Twist the spent cartridge off the base, seat the new one and twist until it locks, then turn the base once to prime the tip. Under a minute, no tools." }
     },
     {
       "@type": "Question",
-      "name": "What if the applicator is damaged?",
-      "acceptedAnswer": { "@type": "Answer", "text": "The precision applicator is engineered to be durable. In the rare event of damage, a replacement Syringe unit would be required in order to continue using Refills." }
-    },
-    {
-      "@type": "Question",
-      "name": "How many times can the applicator be reused?",
-      "acceptedAnswer": { "@type": "Answer", "text": "It is designed for repeated cartridge changes. With ordinary care it should carry many refill cycles across years of use — that longevity is the reason the system was built in two parts." }
-    },
-    {
-      "@type": "Question",
-      "name": "Why does the protocol begin with the Syringe rather than the Refill?",
-      "acceptedAnswer": { "@type": "Answer", "text": "The Syringe is the entrance to the system: the applicator itself, and the introduction to how the treatment is applied. The Refill assumes that groundwork. It is written for someone already inside the protocol." }
+      "name": "When can I buy it?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Zero Lines is in pre-launch and nothing in the range is available to purchase yet. The Refill arrives alongside the Syringe. Join the waitlist and we will write before ordering opens — or ask us on WhatsApp." }
     }
   ]
 }
@@ -197,7 +279,7 @@
 <a class="zl-skip" href="#main">Skip to main content</a>
 <div class="zl-progress" aria-hidden="true"></div>
 
-<header class="zl-header">
+<header class="zl-header zl-header--over-dark">
   <div class="zl-header__inner">
     <a class="zl-logo" href="/">Zero Lines</a>
     <nav class="zl-header__nav" aria-label="Primary">
@@ -231,10 +313,11 @@
 
 <main id="main">
 
-<!-- ── 1. Hero — light split. Family name quiet, the distinguishing word large ── -->
-<section class="zl-hero">
+<!-- ── 1. Hero — photo-led night field. The petal's own ground is near-black,
+        so the picture dissolves into the page instead of sitting in a box. ── -->
+<section class="zl-hero zl-hero--night zl-on-dark">
   <div class="zl-container">
-    <div class="zl-hero__grid">
+    <div class="zl-phero">
       <div>
         <nav class="zl-crumbs" aria-label="Breadcrumb" data-reveal="fade">
           <a href="/products">Formulations</a>
@@ -242,439 +325,500 @@
           <span aria-current="page">Refill</span>
         </nav>
 
-        <span class="zl-eyebrow" data-reveal style="--reveal-delay:60ms;margin-top:1.25rem">Step 06 · Continuation</span>
+        <span class="zl-eyebrow" data-reveal="fade" style="--reveal-delay:80ms;margin-top:1.5rem">Step 06 · Continuation</span>
 
-        <h1 class="zl-hero__title" style="margin-top:1.5rem;max-width:none">
-          <span class="zl-rise" style="display:block;--reveal-delay:120ms">
-            <span class="zl-display-s" style="color:var(--ink-3)">Precision Collagen Activation</span>
+        <h1 style="margin-top:1.5rem">
+          <span class="zl-rise" style="--reveal-delay:160ms">
+            <span class="zl-display-s" style="display:block;color:var(--on-dark-2)">Precision Collagen Activation</span>
           </span>
-          <span class="zl-rise" style="display:block;--reveal-delay:250ms">
-            <span class="zl-display-xl"><em class="zl-em--brand">Refill</em>.</span>
+          <span class="zl-rise" style="--reveal-delay:300ms">
+            <span class="zl-display-xl" style="display:block"><em class="zl-em">Refill</em>.</span>
           </span>
         </h1>
 
-        <p class="zl-lead zl-hero__lead" data-reveal style="--reveal-delay:600ms">
-          A continuation cartridge for the Precision Collagen Activation Syringe.
-          The same hydrolysed collagen and botanical peptide complex — carried in
-          a cartridge whose only purpose is to make sure the protocol never stops.
+        <p class="zl-lead" data-reveal style="--reveal-delay:620ms;margin-top:1.5rem;max-width:44ch">
+          The cartridge that keeps the Syringe running. The same formulation, the
+          same visible smoothing from the first application — and twelve months
+          of it, because you already own the applicator.
         </p>
 
-        <p data-reveal style="--reveal-delay:700ms;margin-top:1.5rem;font-size:.8125rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tiffany-deep)">
-          Not yet available to purchase — join the waitlist.
+        <p class="zl-avail" data-reveal="fade" style="--reveal-delay:720ms">
+          Not yet available to purchase — join the waitlist
         </p>
 
-        <div class="zl-hero__actions" data-reveal style="--reveal-delay:780ms">
+        <div class="zl-hero__actions" data-reveal style="--reveal-delay:800ms">
           <a class="zl-btn zl-btn--brand" href="#waitlist">Join the waitlist</a>
-          <a class="zl-btn zl-btn--ghost" href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%20would%20like%20to%20know%20more%20about%20the%20Precision%20Collagen%20Activation%20Refill.">Ask on WhatsApp</a>
+          <a class="zl-btn zl-btn--on-dark-ghost" href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%20would%20like%20to%20know%20more%20about%20the%20Precision%20Collagen%20Activation%20Refill.">Ask on WhatsApp</a>
         </div>
       </div>
 
-      <div class="zl-hero__media">
-        <div class="zl-media" data-reveal="wipe" style="--reveal-delay:200ms">
-          <img src="/assets/atmosphere-botanical-petal.webp"
-               alt="A single botanical petal resting on water, the visual signature of the Refill"
-               fetchpriority="high" width="1080" height="1350">
-        </div>
+      <div class="zl-media zl-phero__media" data-reveal="wipe" style="--reveal-delay:240ms">
+        <img src="/assets/atmosphere-botanical-petal.webp"
+             alt="A single petal on a black ground, beaded with turquoise droplets"
+             fetchpriority="high" width="2688" height="1536">
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── 2. What it is ───────────────────────────────────────────────────── -->
+<!-- ── 2. THE TWO EFFECTS — the brand spine. Widest measure on the page, the
+        largest labels, and a champagne hairline that draws down between them. ── -->
 <section class="zl-section">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
       <span class="zl-index-rule__num">01</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">Two Effects, One Cartridge</span>
+    </div>
+
+    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(3rem,7vh,4.5rem)">
+      <h2 class="zl-display-l" style="max-width:14ch">
+        <span class="zl-rise"><span>Two things at</span></span>
+        <span class="zl-rise" style="--reveal-delay:130ms"><span><em class="zl-em--brand">once</em>. Always.</span></span>
+      </h2>
+      <p class="zl-lead" data-reveal="far" style="--reveal-delay:260ms">
+        Every Zero Lines formulation works on two timescales at once. The Refill
+        is how you keep both running.
+      </p>
+    </div>
+
+    <div class="zl-two">
+      <div class="zl-effect" data-reveal style="--reveal-delay:60ms">
+        <span class="zl-effect__tag">The first effect</span>
+        <h3 class="zl-display-l">Immediately.</h3>
+        <span class="zl-effect__when">Within minutes of the first application</span>
+        <p>
+          Placed along an expression line, the surface phase begins at once: the
+          line looks visibly softer within minutes, and is designed to hold that
+          appearance through the day. Nothing here differs from the Syringe —
+          identical formulation, identical behaviour, first cartridge to last.
+        </p>
+        <p class="zl-effect__pull">Like makeup, except it is skincare.</p>
+      </div>
+
+      <div class="zl-two__rule zl-draw" aria-hidden="true"></div>
+
+      <div class="zl-effect" data-reveal="far" style="--reveal-delay:300ms">
+        <span class="zl-effect__tag">The second effect</span>
+        <h3 class="zl-display-l">Over time.</h3>
+        <span class="zl-effect__when">Built by repetition, week after week</span>
+        <p>
+          Underneath, hydrolysed collagen and botanical signal peptides are
+          formulated to support the skin's own structure, so lines have less to
+          return to. That half is slow and cumulative by design — which is
+          exactly why it needs continuity, and why the cartridge is sized in
+          months.
+        </p>
+        <div class="zl-effect__count">
+          <span class="zl-num" data-count="12">12</span>
+          <span class="zl-effect__unit">months in one cartridge</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="zl-muted" data-reveal="fade" style="margin-top:clamp(2.5rem,6vh,3.5rem);font-size:.8125rem;line-height:1.7;max-width:64ch">
+      Every line above describes what the formulation is designed to do. Zero
+      Lines is in pre-launch: no trial has been completed, and none is cited here.
+    </p>
+  </div>
+</section>
+
+<!-- ── 3. What it is — and the plain reason it exists at all ─────────────── -->
+<section class="zl-section zl-tint">
+  <div class="zl-container">
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">02</span>
       <span class="zl-eyebrow zl-eyebrow--bare">What It Is</span>
     </div>
 
     <div class="zl-split zl-split--wide-txt">
       <div>
         <h2 class="zl-display-l" data-reveal style="max-width:15ch">
-          Not a different product. The <em class="zl-em--brand">same</em> one, continued.
+          Not another product. The <em class="zl-em--brand">same</em> one, continued.
         </h2>
 
-        <div class="zl-prose" data-reveal style="--reveal-delay:120ms;margin-top:2rem">
+        <div class="zl-prose" data-reveal="far" style="--reveal-delay:200ms;margin-top:2rem">
           <p>
-            The Refill is not a lighter version, a starter size or a variant. It is
-            the identical Advanced Skin Correction treatment — the same hydrolysed
-            collagen, the same botanical extract complex, the same botanical signal
-            peptides — delivered in a continuation cartridge rather than a complete
-            unit.
+            The Refill is a cartridge. What it does not carry is the applicator —
+            the engineered part, the precision tip that places a measured dose on
+            a few square centimetres rather than a whole face. That is designed to
+            be kept; the Refill is what goes into it next.
           </p>
           <p>
-            The Precision Collagen Activation Syringe carries the precision
-            applicator: the engineered part, the piece that makes targeted delivery
-            possible at all. That applicator is designed to be kept. The Refill is
-            simply what goes into it next.
+            Which is the honest reason it exists. Some people will only ever want
+            the immediate effect — the line that looks softer by the evening, the
+            face that photographs better that day. That is a perfectly legitimate
+            way to use this range, and the Refill is how you do it indefinitely:
+            the applicator is bought once, and after that you replace only what
+            has been used.
           </p>
-          <p><strong>The device is the instrument. The cartridge is the treatment.</strong></p>
+          <p><strong>The applicator is the instrument. The cartridge is the treatment.</strong></p>
         </div>
 
-        <a class="zl-link" href="/products/syringe" style="margin-top:2.25rem">
+        <div class="zl-note" data-reveal style="--reveal-delay:280ms;margin-top:2.25rem">
+          <span class="zl-note__label">Requires the Syringe applicator</span>
+          <p>
+            Engineered exclusively for the Zero Lines precision applicator; it
+            cannot be used on its own. If you are starting the protocol, begin
+            with the Syringe.
+          </p>
+        </div>
+
+        <a class="zl-link" href="/products/syringe" style="margin-top:2rem">
           The Syringe, step 02 <span class="zl-link__arrow" aria-hidden="true">→</span>
         </a>
       </div>
 
-      <div class="zl-media zl-media--square" data-reveal="wipe" style="--reveal-delay:140ms;background:var(--bone-2)">
-        <img src="/assets/product-syringe.webp"
-             alt="The Precision Collagen Activation Refill cartridge"
-             loading="lazy" style="object-fit:contain;mix-blend-mode:multiply;padding:clamp(1.5rem,5%,3rem)">
-      </div>
+      <figure style="margin:0">
+        <div class="zl-media zl-media--wide" data-reveal="wipe" style="--reveal-delay:160ms;background:#fff">
+          <img src="/assets/product-syringe.webp"
+               alt="The Precision Collagen Activation applicator that the Refill is made for, laid flat"
+               loading="lazy" width="1248" height="832" style="mix-blend-mode:multiply">
+        </div>
+        <figcaption class="zl-muted" data-reveal="fade" style="--reveal-delay:400ms;margin-top:1.25rem;font-size:.75rem;line-height:1.65;max-width:40ch">
+          Shown: the applicator the cartridge is built for. The Refill's own
+          photography follows at launch.
+        </figcaption>
+      </figure>
     </div>
 
     <div class="zl-spec" data-stagger style="margin-top:clamp(3rem,7vh,4.5rem)">
       <div>
         <span class="zl-num" data-count="60">60</span>
-        <span class="zl-spec__label">Applications the cartridge is designed to deliver.</span>
+        <span class="zl-spec__label">Applications one cartridge is designed to deliver.</span>
       </div>
       <div>
-        <span class="zl-num" data-count="12">12</span>
-        <span class="zl-spec__label">Months of continuity at the once-weekly rhythm.</span>
+        <span class="zl-num">One</span>
+        <span class="zl-spec__label">Applicator, bought once and kept. Only the formulation is replaced.</span>
       </div>
       <div>
         <span class="zl-num" data-count="30" data-count-suffix="s">30s</span>
-        <span class="zl-spec__label">To change a cartridge. Twist off, twist on, prime.</span>
+        <span class="zl-spec__label">To change a cartridge. Twist off, seat, twist on.</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── 3. Designed to support ──────────────────────────────────────────── -->
-<section class="zl-section zl-tint">
-  <div class="zl-container">
-    <div class="zl-index-rule" data-reveal>
-      <span class="zl-index-rule__num">02</span>
-      <span class="zl-eyebrow zl-eyebrow--bare">Designed To Support</span>
-    </div>
-
-    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(2.5rem,6vh,4rem)">
-      <h2 class="zl-display-l" style="max-width:16ch">
-        <span class="zl-rise" style="display:block"><span>What the cartridge</span></span>
-        <span class="zl-rise" style="display:block;--reveal-delay:110ms"><span>is <em class="zl-em--brand">built</em> to do.</span></span>
-      </h2>
-      <p class="zl-lead" data-reveal style="--reveal-delay:200ms">
-        Written as intent, not as outcome. These are the things the formulation is
-        designed to support — the reasons it exists in this form.
-      </p>
-    </div>
-
-    <ul class="zl-support zl-grid zl-grid--2" data-stagger>
-      <li><i aria-hidden="true"></i><p>Allows the Advanced Skin Correction treatment to continue without interruption between cycles.</p></li>
-      <li><i aria-hidden="true"></i><p>Carries the same hydrolysed collagen and botanical peptide complex as the original Syringe.</p></li>
-      <li><i aria-hidden="true"></i><p>Formulated for weekly treatment continuation, and for as-needed application before an occasion.</p></li>
-      <li><i aria-hidden="true"></i><p>Supports sustained, long-term adherence to the protocol rather than a single course.</p></li>
-      <li><i aria-hidden="true"></i><p>An easily replaceable cartridge, so continuity never depends on remembering a procedure.</p></li>
-      <li><i aria-hidden="true"></i><p>Requires the Precision Collagen Activation Syringe applicator — it is not a standalone formulation.</p></li>
-    </ul>
-
-    <hr class="zl-rule zl-draw" style="margin-top:clamp(2.5rem,6vh,3.5rem);background:var(--tiffany);height:1px">
-  </div>
-</section>
-
-<!-- ── 4. How it works + the warning that stays ────────────────────────── -->
-<section class="zl-section zl-dark zl-on-dark">
+<!-- ── 4. Inside the cartridge — the page's one brand field ──────────────── -->
+<section class="zl-section zl-brand-field">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
       <span class="zl-index-rule__num">03</span>
-      <span class="zl-eyebrow zl-eyebrow--bare">How It Works</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">Inside The Cartridge</span>
     </div>
 
-    <div class="zl-split zl-split--wide-img">
-      <div class="zl-media zl-media--tall zl-split__media--first" data-reveal="wipe">
-        <img src="/assets/science-peptide-molecular.webp"
-             alt="Molecular study of a botanical signal peptide"
-             loading="lazy" data-parallax="0.07">
-      </div>
-
-      <div>
-        <h2 class="zl-display-l" data-reveal style="max-width:14ch">
-          The mechanism does not <em class="zl-em--brand">reset</em>.
-        </h2>
-
-        <div class="zl-prose" data-reveal style="--reveal-delay:120ms;margin-top:2rem">
-          <p>
-            When the original cartridge is spent, it is removed and the Refill takes
-            its place. The precision tip is retained, so the delivery characteristics
-            of the treatment — how much, how deep, how precisely placed — are
-            unchanged from the first application to the last.
-          </p>
-          <p>
-            Inside, the formulation is identical: the dual-action hydrolysed collagen
-            and botanical peptide complex, designed to work on the surface for
-            immediate visible refinement while the signalling components address
-            cellular communication over a longer horizon. Two timescales, one
-            cartridge.
-          </p>
-          <p>
-            That is the whole logic of the refill system. Continuity is the active
-            ingredient; a protocol interrupted is a protocol that starts again.
-          </p>
-        </div>
-
-        <div class="zl-note" data-reveal style="--reveal-delay:200ms;margin-top:2.5rem">
-          <strong class="zl-note__label">Requires the Syringe applicator · External use only</strong>
-          <p>
-            The Refill is designed exclusively for use with the Zero Lines precision
-            applicator and cannot be used on its own. For external use only. Avoid
-            direct contact with the eyes. Discontinue use if irritation occurs, and
-            keep out of reach of children.
-          </p>
-        </div>
-      </div>
+    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(2.5rem,6vh,4rem)">
+      <h2 class="zl-display-l" style="max-width:15ch">
+        <span class="zl-rise"><span>Four ingredients,</span></span>
+        <span class="zl-rise" style="--reveal-delay:130ms"><span>two <em class="zl-em">timescales</em>.</span></span>
+      </h2>
+      <p class="zl-lead" data-reveal="far" style="--reveal-delay:260ms">
+        Two are why you see something today. Two are why there is a reason to
+        keep going.
+      </p>
     </div>
+
+    <ol class="zl-ing zl-grid zl-grid--4" data-stagger style="list-style:none;padding:0">
+      <li>
+        <span class="zl-num">01</span>
+        <h3 class="zl-display-s">Hydrolysed collagen</h3>
+        <p>Cut small enough to be read as a signal rather than sit on the surface as a film. The slow, structural half.</p>
+      </li>
+      <li>
+        <span class="zl-num">02</span>
+        <h3 class="zl-display-s">Botanical signal peptides</h3>
+        <p>Carried on rose and chamomile flower waters. The half that is designed to be visible the same day.</p>
+      </li>
+      <li>
+        <span class="zl-num">03</span>
+        <h3 class="zl-display-s">Botanical extract complex</h3>
+        <p>Witch hazel, calendula, chamomile, horse chestnut, peppermint, yarrow, mallow, linden and St John's Wort — working on the look of tone and fluid balance.</p>
+      </li>
+      <li>
+        <span class="zl-num">04</span>
+        <h3 class="zl-display-s">Pyrenean mineral water</h3>
+        <p>The base. Zinc, selenium, copper and magnesium in ionic balance — cofactors the skin's own antioxidant enzymes need to function.</p>
+      </li>
+    </ol>
+
+    <hr class="zl-rule zl-draw" style="margin-top:clamp(2.5rem,6vh,3.5rem);background:var(--champagne);height:1px">
   </div>
 </section>
 
-<!-- ── 5. Application protocol ─────────────────────────────────────────── -->
+<!-- ── 5. How to use it — a short sequence, nothing to relearn ───────────── -->
 <section class="zl-section">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
       <span class="zl-index-rule__num">04</span>
-      <span class="zl-eyebrow zl-eyebrow--bare">Application Protocol</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">How To Use It</span>
     </div>
 
     <div class="zl-split zl-split--wide-txt">
       <div>
-        <h2 class="zl-display-m" data-reveal style="max-width:20ch">
-          The same protocol as the Syringe. Nothing to relearn.
+        <h2 class="zl-display-m" data-reveal style="max-width:18ch">
+          Change it. Then carry on exactly as before.
         </h2>
-        <p class="zl-lead" data-reveal style="--reveal-delay:100ms;margin-top:1.5rem">
-          Two approaches, and they are meant to coexist: a weekly application that
-          builds, and an occasional one that shows.
-        </p>
 
         <ol class="zl-steps" data-stagger style="margin-top:clamp(2rem,5vh,3rem)">
           <li>
             <span class="zl-num">01</span>
             <div>
-              <h3 class="zl-display-s">Replace the cartridge</h3>
-              <p>
-                Twist the depleted cartridge off the applicator base. Seat the Refill
-                and twist until secure. Under thirty seconds, and no tools.
-              </p>
+              <h3 class="zl-display-s">Change the cartridge</h3>
+              <p>Twist the spent cartridge off the base, seat the Refill, twist until it locks. One turn of the base primes the tip. Under a minute, no tools.</p>
             </div>
           </li>
           <li>
             <span class="zl-num">02</span>
             <div>
-              <h3 class="zl-display-s">Weekly treatment</h3>
-              <p>
-                Once a week, on the expression lines you are actually working on.
-                Same precision, same targeted delivery, same formulation as before.
-              </p>
+              <h3 class="zl-display-s">Weekly, as before</h3>
+              <p>Once a week, on clean dry skin, placed directly on the lines you are working on. Pat gently; do not rub.</p>
             </div>
           </li>
           <li>
             <span class="zl-num">03</span>
             <div>
-              <h3 class="zl-display-s">As-needed application</h3>
-              <p>
-                Before an occasion, apply thirty to sixty minutes ahead. The
-                surface-level peptide support is designed to hold through the day.
-              </p>
-            </div>
-          </li>
-          <li>
-            <span class="zl-num">04</span>
-            <div>
-              <h3 class="zl-display-s">Continue</h3>
-              <p>
-                Then keep going. The Refill exists so that consistency is the
-                default state of the protocol rather than an act of discipline.
-              </p>
+              <h3 class="zl-display-s">Or before an occasion</h3>
+              <p>Thirty to sixty minutes ahead, when what you want is the immediate effect to carry the evening.</p>
             </div>
           </li>
         </ol>
+
+        <div class="zl-note" data-reveal style="margin-top:clamp(2.5rem,5vh,3rem)">
+          <span class="zl-note__label">External use only</span>
+          <p>
+            For external facial application; no injection is required or
+            intended. Avoid the eyes, broken skin and mucous membranes, and keep
+            out of reach of children. If irritation occurs, discontinue use.
+          </p>
+        </div>
       </div>
 
-      <div class="zl-media zl-media--tall" data-reveal="wipe" style="--reveal-delay:160ms">
+      <div class="zl-media zl-media--tall" data-reveal="wipe" style="--reveal-delay:180ms">
         <img src="/assets/atmosphere-application-ritual.webp"
-             alt="Applying the treatment along an expression line"
-             loading="lazy" data-parallax="0.05">
+             alt="Treatment being pressed into the skin with a fingertip"
+             loading="lazy" width="2688" height="1536" data-parallax="0.06"
+             style="position:absolute;top:-7%;left:0;width:100%;height:114%">
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── 6. Editorial moment — the source ────────────────────────────────── -->
-<section class="zl-section zl-section--sm">
+<!-- ── 6. Editorial moment ───────────────────────────────────────────────── -->
+<section class="zl-section zl-section--sm zl-wash">
   <div class="zl-container">
     <div class="zl-media zl-media--cinema" data-reveal="wipe">
       <img src="/assets/story-alpine-spring-water.webp"
            alt="Spring water running clear over rock, high in the Pyrenees"
-           loading="lazy" data-parallax="0.1">
+           loading="lazy" width="2688" height="1536" data-parallax="0.1"
+           style="position:absolute;top:-8%;left:0;width:100%;height:116%">
     </div>
   </div>
 
-  <div class="zl-container" style="margin-top:clamp(3rem,7vh,5rem)">
+  <div class="zl-container" style="margin-top:clamp(2.5rem,6vh,4rem)">
     <div class="zl-split">
       <div>
-        <span class="zl-eyebrow" data-reveal>Origin</span>
+        <span class="zl-eyebrow" data-reveal>Continuity</span>
         <h2 class="zl-display-m" style="margin-top:1.25rem">
-          <span class="zl-rise" style="display:block"><span>From mountain spring</span></span>
-          <span class="zl-rise" style="display:block;--reveal-delay:120ms"><span>to <em class="zl-em--brand">molecular</em> mastery.</span></span>
+          <span class="zl-rise"><span>The ritual</span></span>
+          <span class="zl-rise" style="--reveal-delay:140ms"><span><em class="zl-em--brand">continues</em>.</span></span>
         </h2>
       </div>
 
-      <div class="zl-prose" data-reveal="far" style="--reveal-delay:180ms">
+      <div class="zl-prose" data-reveal="far" style="--reveal-delay:220ms">
         <p>
-          Every cartridge begins with water that has never known pollution — drawn
-          from high-altitude thermal springs in the Pyrenees, where the rock gives
-          up zinc, selenium, copper and magnesium in ionic balance rather than
-          in excess.
-        </p>
-        <p>
-          That elemental base is then met with biotechnology: hydrolysed collagen
-          cut to a molecular weight the skin will actually read, and botanical
-          signal peptides suspended in rose and chamomile flower waters. Neither
-          half works alone. The formulation is the argument that they should not
-          have to.
+          A spring does not begin again each morning; it simply keeps running,
+          and that is the whole of its usefulness. The Refill lets the protocol
+          behave the same way — the applicator stays where you left it, the
+          formulation is replaced, and between one cartridge and the next nothing
+          about the ritual changes.
         </p>
         <a class="zl-link" href="/story" style="margin-top:1rem">
-          Read our story <span class="zl-link__arrow" aria-hidden="true">→</span>
+          Where the water begins <span class="zl-link__arrow" aria-hidden="true">→</span>
         </a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── 7. The ritual — the page's turquoise moment ─────────────────────── -->
-<section class="zl-section zl-brand-field">
+<!-- ── 7. Where it sits in the protocol ──────────────────────────────────── -->
+<section class="zl-section zl-tint">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
-      <span class="zl-index-rule__num" style="color:var(--ink)">05</span>
-      <span class="zl-eyebrow zl-eyebrow--bare">The Ritual</span>
+      <span class="zl-index-rule__num">05</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">Where It Sits</span>
     </div>
 
-    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(2.5rem,6vh,4rem)">
-      <h2 class="zl-display-l" style="max-width:14ch">
-        <span class="zl-rise" style="display:block"><span>Four movements.</span></span>
-        <span class="zl-rise" style="display:block;--reveal-delay:110ms"><span>Under a <em class="zl-em">minute</em>.</span></span>
+    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(2.5rem,6vh,3.5rem)">
+      <h2 class="zl-display-m" data-reveal style="max-width:16ch">
+        Step 06 is step 02, <em class="zl-em--brand">continued</em>.
       </h2>
-      <p class="zl-lead" data-reveal style="--reveal-delay:200ms">
-        The change itself is deliberately unremarkable. It should feel like
-        replacing an ink cartridge in a good pen — quiet, certain, over.
+      <p class="zl-lead" data-reveal="far" style="--reveal-delay:200ms">
+        Six formulations in a fixed order. The Refill is not a seventh — it is
+        what keeps the second one from ever stopping.
       </p>
     </div>
 
-    <ol class="zl-ritual zl-grid zl-grid--4" data-stagger>
+    <ol class="zl-ledger" data-stagger>
       <li>
-        <b>1</b>
-        <h3 class="zl-display-s" style="margin:.75rem 0 0">Remove</h3>
-        <p>Twist the empty cartridge off the handle and set it aside.</p>
+        <a class="zl-ledger__row" href="/products/peeling-gel">
+          <span class="zl-ledger__n">01</span>
+          <span class="zl-ledger__step">Renew</span>
+          <span class="zl-ledger__name">Bio-Renewal Peeling Gel</span>
+        </a>
       </li>
       <li>
-        <b>2</b>
-        <h3 class="zl-display-s" style="margin:.75rem 0 0">Insert</h3>
-        <p>Align the new cartridge with the base. It seats with a single click.</p>
+        <a class="zl-ledger__row" href="/products/syringe">
+          <span class="zl-ledger__n">02</span>
+          <span class="zl-ledger__step">Activate</span>
+          <span class="zl-ledger__name">Precision Collagen Activation Syringe — required</span>
+        </a>
       </li>
       <li>
-        <b>3</b>
-        <h3 class="zl-display-s" style="margin:.75rem 0 0">Prime</h3>
-        <p>One pump to draw the formulation through the tip. Now it is ready.</p>
+        <a class="zl-ledger__row" href="/products/serum">
+          <span class="zl-ledger__n">03</span>
+          <span class="zl-ledger__step">Signal</span>
+          <span class="zl-ledger__name">BioSignal Facial Serum</span>
+        </a>
       </li>
       <li>
-        <b>4</b>
-        <h3 class="zl-display-s" style="margin:.75rem 0 0">Continue</h3>
-        <p>Return to the weekly rhythm. Nothing has restarted; it simply carries on.</p>
+        <a class="zl-ledger__row" href="/products/day-cream">
+          <span class="zl-ledger__n">04</span>
+          <span class="zl-ledger__step">Shield</span>
+          <span class="zl-ledger__name">Environmental Shield Day Cream</span>
+        </a>
+      </li>
+      <li>
+        <a class="zl-ledger__row" href="/products/night-cream">
+          <span class="zl-ledger__n">05</span>
+          <span class="zl-ledger__step">Restore</span>
+          <span class="zl-ledger__name">Renewal and Repair Night Cream</span>
+        </a>
+      </li>
+      <li class="is-here">
+        <div class="zl-ledger__row">
+          <span class="zl-ledger__n">06</span>
+          <span class="zl-ledger__step">Sustain</span>
+          <span class="zl-ledger__name">Precision Collagen Activation Refill — you are here</span>
+        </div>
       </li>
     </ol>
+
+    <div data-reveal style="margin-top:clamp(2.5rem,5vh,3.5rem);display:flex;flex-wrap:wrap;gap:1.25rem 2.75rem">
+      <a class="zl-link" href="/protocol">The full protocol <span class="zl-link__arrow" aria-hidden="true">→</span></a>
+      <a class="zl-link" href="/products">All six formulations <span class="zl-link__arrow" aria-hidden="true">→</span></a>
+    </div>
   </div>
 </section>
 
-<!-- ── 8. FAQ ──────────────────────────────────────────────────────────── -->
-<section class="zl-section zl-tint">
+<!-- ── The consultation — the skin analyser, offered rather than advertised ── -->
+<section class="zl-concierge" aria-labelledby="analysis-refill">
   <div class="zl-container">
+    <div class="zl-concierge__inner" data-reveal>
+        <span class="zl-concierge__mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke-width="1" width="56" height="56">
+            <path d="M32 5c10 0 17.5 8.6 17.5 20.2S41.6 59 32 59s-17.5-22.2-17.5-33.8S22 5 32 5Z" stroke="var(--champagne)"/>
+            <path class="zl-concierge__tick" style="--tick-delay:140ms" d="M18.5 24h12" stroke="var(--signal)" stroke-width="1.25"/>
+            <path class="zl-concierge__tick" style="--tick-delay:300ms" d="M33.5 34h12" stroke="var(--signal)" stroke-width="1.25"/>
+            <path class="zl-concierge__tick" style="--tick-delay:460ms" d="M20.5 44h11" stroke="var(--signal)" stroke-width="1.25"/>
+          </svg>
+        </span>
+      <div class="zl-concierge__body">
+        <span class="zl-eyebrow zl-eyebrow--bare zl-concierge__label">The Skin Analysis</span>
+        <h2 class="zl-display-s zl-concierge__title" id="analysis-refill">Is the immediate effect enough for <em class="zl-em--brand">you</em>?</h2>
+        <p class="zl-concierge__copy">Some people want only the smoother look on the day; others want the structure underneath supported as well. Ten questions and one photograph, and the analyser returns a written assessment across eight markers — and the honest answer for your skin.</p>
+      </div>
+      <div class="zl-concierge__action">
+        <a class="zl-btn zl-btn--ghost" href="/analyser/">Begin the analysis</a>
+        <span class="zl-concierge__note">Complimentary · Two minutes<br>Your photograph is not kept</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 8. FAQ ────────────────────────────────────────────────────────────── -->
+<section class="zl-section">
+  <div class="zl-container zl-container--mid">
     <div class="zl-index-rule" data-reveal>
       <span class="zl-index-rule__num">06</span>
       <span class="zl-eyebrow zl-eyebrow--bare">Questions</span>
     </div>
 
-    <h2 class="zl-display-l" data-reveal style="max-width:13ch;margin-bottom:clamp(2.5rem,6vh,3.5rem)">
-      Asked and <em class="zl-em--brand">answered</em>.
+    <h2 class="zl-display-l" style="max-width:13ch;margin-bottom:clamp(2.5rem,6vh,3.5rem)">
+      <span class="zl-rise"><span>Six worth</span></span>
+      <span class="zl-rise" style="--reveal-delay:130ms"><span><em class="zl-em--brand">asking</em>.</span></span>
     </h2>
 
-    <div class="zl-faq" data-stagger style="max-width:940px">
+    <div class="zl-faq" data-stagger>
       <details class="zl-faq__item">
-        <summary class="zl-faq__q">Why does the Refill exist alongside the Syringe?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
-        <div class="zl-faq__a"><p>The Syringe includes the precision applicator — the device that makes targeted delivery possible. The Refill is the treatment cartridge alone. Because the applicator is retained and reused, nothing about the mechanism has to be remade every cycle, which is better for the environment and makes long-term continuation straightforward.</p></div>
+        <summary class="zl-faq__q">Can I use the Refill on its own?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
+        <p class="zl-faq__a">
+          No. The Refill is a cartridge, not a complete product; it requires the
+          Precision Collagen Activation Syringe applicator to work. The Syringe is
+          bought once, the Refill afterwards.
+        </p>
       </details>
 
       <details class="zl-faq__item">
-        <summary class="zl-faq__q">Is the formulation exactly the same?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
-        <div class="zl-faq__a"><p>Yes. The Refill carries the same hydrolysed collagen and botanical peptide complex as the original Syringe. There is no difference in concentration, quality or intended outcome — only the packaging.</p></div>
+        <summary class="zl-faq__q">Is the formulation identical to the Syringe's?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
+        <p class="zl-faq__a">
+          Yes. The same hydrolysed collagen, botanical signal peptides and
+          botanical extract complex, on the same Pyrenean mineral water base.
+          Nothing is diluted or simplified — only the packaging differs.
+        </p>
       </details>
 
       <details class="zl-faq__item">
-        <summary class="zl-faq__q">Can the Refill be used without the Syringe?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
-        <div class="zl-faq__a"><p>No. The cartridge requires the Precision Collagen Activation Syringe applicator in order to function and is not a standalone formulation. The Syringe comes first; the Refill continues it.</p></div>
+        <summary class="zl-faq__q">What if I only want the immediate effect?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
+        <p class="zl-faq__a">
+          A perfectly legitimate way to use the range — and the Refill is the
+          affordable way to keep doing it. Because the applicator is reused rather
+          than replaced, continuing indefinitely costs a fraction of starting
+          again.
+        </p>
       </details>
 
       <details class="zl-faq__item">
-        <summary class="zl-faq__q">How long does one Refill last?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
-        <div class="zl-faq__a"><p>One cartridge is designed to deliver approximately sixty applications. At once-weekly use that is roughly a year of continuous protocol. Where as-needed application is added before events, the duration will be shorter.</p></div>
+        <summary class="zl-faq__q">How long does one cartridge last?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
+        <p class="zl-faq__a">
+          Approximately sixty applications. At the once-weekly rhythm that is
+          roughly twelve months; if you also apply it before occasions, sooner.
+        </p>
       </details>
 
       <details class="zl-faq__item">
-        <summary class="zl-faq__q">How will I know when to replace it?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
-        <div class="zl-faq__a"><p>Plan the next cartridge when about two weeks of formulation remain. The protocol depends on continuity, and the point of the Refill is that there is never a gap in it.</p></div>
+        <summary class="zl-faq__q">How do I change the cartridge?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
+        <p class="zl-faq__a">
+          Twist the spent cartridge off the base, seat the new one and twist until
+          it locks, then turn the base once to prime the tip. Under a minute, no
+          tools.
+        </p>
       </details>
 
       <details class="zl-faq__item">
-        <summary class="zl-faq__q">What if the applicator is damaged?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
-        <div class="zl-faq__a"><p>The precision applicator is engineered to be durable. In the rare event of damage, a replacement Syringe unit would be required in order to continue using Refills.</p></div>
-      </details>
-
-      <details class="zl-faq__item">
-        <summary class="zl-faq__q">How many times can the applicator be reused?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
-        <div class="zl-faq__a"><p>It is designed for repeated cartridge changes. With ordinary care it should carry many refill cycles across years of use — that longevity is the reason the system was built in two parts.</p></div>
-      </details>
-
-      <details class="zl-faq__item">
-        <summary class="zl-faq__q">Why does the protocol begin with the Syringe rather than the Refill?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
-        <div class="zl-faq__a"><p>The Syringe is the entrance to the system: the applicator itself, and the introduction to how the treatment is applied. The Refill assumes that groundwork. It is written for someone already inside the protocol.</p></div>
+        <summary class="zl-faq__q">When can I buy it?<span class="zl-faq__sign" aria-hidden="true"></span></summary>
+        <p class="zl-faq__a">
+          Zero Lines is in pre-launch and nothing in the range is available to
+          purchase yet. The Refill arrives alongside the Syringe. Join the
+          waitlist and we will write before ordering opens — or ask us on
+          WhatsApp.
+        </p>
       </details>
     </div>
 
-    <p class="zl-muted" data-reveal style="margin-top:2.5rem;font-size:.8125rem">
-      More in the <a href="/faq.html" style="color:var(--tiffany-deep);text-decoration:underline;text-underline-offset:.2em">general FAQ</a>,
-      or write to <a href="mailto:info@zerolines.life" style="color:var(--tiffany-deep);text-decoration:underline;text-underline-offset:.2em">info@zerolines.life</a>.
+    <p class="zl-muted" data-reveal="fade" style="margin-top:2.5rem;font-size:.8125rem">
+      More in the <a href="/faq.html" style="color:var(--house);text-decoration:underline;text-underline-offset:.2em">general FAQ</a>,
+      or write to <a href="mailto:info@zerolines.life" style="color:var(--house);text-decoration:underline;text-underline-offset:.2em">info@zerolines.life</a>.
     </p>
   </div>
 </section>
 
-<!-- ── 9. Onward ───────────────────────────────────────────────────────── -->
-<section class="zl-section zl-section--sm">
-  <div class="zl-container">
-    <ul class="zl-onward zl-grid zl-grid--3" data-stagger>
-      <li>
-        <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--tiffany-deep)">Step 02</span>
-        <h3 class="zl-display-s" style="margin:.625rem 0 1rem">Precision Collagen Activation Syringe</h3>
-        <a class="zl-link" href="/products/syringe">The applicator <span class="zl-link__arrow" aria-hidden="true">→</span></a>
-      </li>
-      <li>
-        <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--tiffany-deep)">Sequence</span>
-        <h3 class="zl-display-s" style="margin:.625rem 0 1rem">The Longevity Protocol</h3>
-        <a class="zl-link" href="/protocol">Six steps in order <span class="zl-link__arrow" aria-hidden="true">→</span></a>
-      </li>
-      <li>
-        <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--tiffany-deep)">Collection</span>
-        <h3 class="zl-display-s" style="margin:.625rem 0 1rem">All six formulations</h3>
-        <a class="zl-link" href="/products">Browse the house <span class="zl-link__arrow" aria-hidden="true">→</span></a>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<!-- ── 10. Waitlist ────────────────────────────────────────────────────── -->
+<!-- ── 9. Close — not yet for sale ───────────────────────────────────────── -->
 <section class="zl-section zl-dark zl-on-dark" id="waitlist">
   <div class="zl-container zl-container--narrow zl-center">
     <span class="zl-eyebrow zl-eyebrow--center" data-reveal>Early Access</span>
     <h2 class="zl-display-l" data-reveal style="--reveal-delay:80ms;margin:1.5rem 0">
-      Not yet available to <em class="zl-em--brand">purchase</em>.
+      Not yet available to <em class="zl-em">purchase</em>.
     </h2>
-    <p class="zl-lead zl-center" data-reveal style="--reveal-delay:140ms;margin-bottom:2.75rem">
+    <p class="zl-lead zl-center" data-reveal style="--reveal-delay:150ms;margin-bottom:2.75rem">
       The Refill arrives with the rest of the protocol, in sequence. Register and
       we will write to you first — with early access and an invitation to a
       complimentary skin analysis.
@@ -682,7 +826,7 @@
 
     <form name="waitlist" method="POST" action="/thank-you/"
           data-netlify="true" netlify-honeypot="bot-field"
-          data-reveal style="--reveal-delay:200ms;max-width:460px;margin-inline:auto;text-align:left">
+          data-reveal style="--reveal-delay:220ms;max-width:460px;margin-inline:auto;text-align:left">
       <input type="hidden" name="form-name" value="waitlist">
       <input type="hidden" name="interest" value="Precision Collagen Activation Refill">
       <p class="zl-hp" aria-hidden="true"><label>Do not fill this in: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
@@ -697,14 +841,16 @@
 
       <p class="zl-form__note" style="margin-top:1.25rem">
         We write rarely, and only about the protocol. Unsubscribe at any time.
-        See our <a href="/privacy.html" style="color:var(--ink);text-decoration:underline">privacy policy</a>.
+        See our <a href="/privacy.html" style="color:#fff;text-decoration:underline;text-underline-offset:.2em">privacy policy</a>.
       </p>
     </form>
 
-    <p data-reveal style="--reveal-delay:280ms;margin-top:2.75rem;font-size:.875rem;color:var(--on-dark-2)">
-      Or ask us anything directly —
-      <a href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%20would%20like%20to%20know%20more%20about%20the%20Precision%20Collagen%20Activation%20Refill." style="color:var(--tiffany-lift);text-decoration:underline;text-underline-offset:.2em">on WhatsApp</a>.
-    </p>
+    <hr class="zl-rule zl-draw" style="max-width:120px;margin:clamp(3rem,7vh,4.5rem) auto 2rem;background:var(--champagne);height:1px">
+
+    <div data-reveal style="display:flex;justify-content:center;flex-wrap:wrap;gap:1.25rem 2.75rem">
+      <a class="zl-link" href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%20would%20like%20to%20know%20more%20about%20the%20Precision%20Collagen%20Activation%20Refill.">Ask on WhatsApp <span class="zl-link__arrow" aria-hidden="true">→</span></a>
+      <a class="zl-link" href="/products/syringe">The Syringe, step 02 <span class="zl-link__arrow" aria-hidden="true">→</span></a>
+    </div>
   </div>
 </section>
 

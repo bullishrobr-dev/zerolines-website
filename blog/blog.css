@@ -534,7 +534,12 @@
 }
 .zl-blog-newsletter-form button:hover { border-color: var(--tiffany); }
 
-/* ---------- 10. THE ANALYSER FIELD — one turquoise moment per page ------- */
+/* ---------- 10. THE ANALYSER FIELD — one house-teal moment per page ------ *
+   This band was filled with --signal and set in white, which measures 2.5:1
+   for the heading and 2.3:1 for the copy — on 26 journal pages, and on the
+   journal index, where it is one of the few routes to the analyser at all.
+   Palette v3 reserves --signal for marks; the field is --house, where light
+   type measures 8.05:1. */
 
 .zl-blog-ai-analyst {
   position: relative;
@@ -545,8 +550,8 @@
   align-items: center;
   margin: clamp(3rem, 8vh, 5rem) 0;
   padding: clamp(2rem, 4.5vw, 3.25rem);
-  background: var(--tiffany);
-  color: #fff;
+  background: var(--house);
+  color: var(--on-dark);
 }
 .zl-blog-ai-analyst-eyebrow { color: rgba(255, 255, 255, 0.75); }
 .zl-blog-ai-analyst-eyebrow::before { background: rgba(255, 255, 255, 0.85); }
@@ -831,7 +836,7 @@
   font-weight: 500;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--tiffany);
+  color: var(--house);
 }
 .zl-blog-nav-title {
   font-family: var(--font-display);

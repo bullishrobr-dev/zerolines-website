@@ -30,6 +30,94 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/zl.css">
 
+<style>
+/* ============================================================================
+   Page-scoped only. Layout, colour and motion variants — nothing here hides
+   content; every rule inherits zl.css's visible-by-default safety model.
+   ========================================================================= */
+
+/* ---- 1. THE TWO EFFECTS — the brand spine ------------------------------
+   The same named band the product pages carry, at house scale: a full-bleed
+   split, the immediate effect on the pale wash, the lasting one on the house
+   field, a champagne hairline drawing down the seam between them. */
+.zl-duo { position: relative; display: grid; grid-template-columns: 1fr 1fr; }
+.zl-duo__panel { padding: clamp(2.75rem, 6vw, 4.75rem) clamp(1.5rem, 4vw, 3.5rem); }
+/* Outer edges align with the container, so panel copy sits on the same left
+   margin as the headline above it. */
+.zl-duo--now   { padding-left:  max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter))); background: var(--sage-wash); }
+.zl-duo--later { padding-right: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter))); background: var(--house); color: var(--on-dark); }
+.zl-duo__panel > * { max-width: 42ch; }
+/* Light type on the house field (7.3:1). The signal turquoise never sets type
+   here — it stays a mark, on the eyebrow tick alone. */
+.zl-duo--later .zl-eyebrow { color: rgba(255,255,255,.88); }
+.zl-duo--later .zl-eyebrow::before { background: var(--signal); }
+.zl-duo--later strong, .zl-duo--later .zl-em { color: #fff; font-weight: 500; }
+.zl-duo--now   strong { color: var(--ink); font-weight: 500; }
+
+.zl-duo__when {
+  font-family: var(--font-display); font-weight: 300; font-style: italic;
+  font-size: clamp(2rem, 3.6vw, 3.25rem); line-height: 1.1;
+  letter-spacing: -0.02em; margin: 1.125rem 0 0;
+}
+.zl-duo--now .zl-duo__when { color: var(--house); }
+.zl-duo__lede { font-size: clamp(1rem, 1.05vw, 1.125rem); line-height: 1.75; margin-top: 1.375rem; }
+.zl-duo--now .zl-duo__lede { color: var(--ink-3); }
+.zl-duo__foot { font-size: .8125rem; line-height: 1.75; margin-top: 1.5rem; padding-top: 1.25rem; }
+.zl-duo--now   .zl-duo__foot { border-top: 1px solid rgba(11,13,13,.14); color: var(--ink-3); }
+.zl-duo--later .zl-duo__foot { border-top: 1px solid rgba(255,255,255,.28); color: rgba(255,255,255,.88); }
+.zl-duo__foot a { color: inherit; text-decoration: underline; text-underline-offset: .2em; }
+.zl-duo__seam { position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; z-index: 2; background: var(--champagne); }
+@media (max-width: 900px) {
+  .zl-duo { grid-template-columns: 1fr; }
+  .zl-duo__seam { display: none; }
+  .zl-duo__panel > * { max-width: none; }
+  .zl-duo--now, .zl-duo--later { padding-inline: var(--gutter); }
+}
+
+/* The arithmetic that closes the band. Numerals count; the champagne hairline
+   above each one draws itself across the grey rule. */
+.zl-sum { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.5rem, 4vw, 3.25rem); }
+.zl-sum__item { position: relative; border-top: 1px solid var(--rule); padding-top: 1.375rem; }
+.zl-sum__bar { position: absolute; top: -1px; left: 0; width: 100%; height: 1px; background: var(--champagne); }
+.zl-sum__n {
+  display: block; font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(3rem, 6vw, 5rem); line-height: 1;
+  letter-spacing: -0.03em; color: var(--house);
+}
+.zl-sum__k { display: block; margin-top: .625rem; font-size: .8125rem; line-height: 1.65; color: var(--ink-3); max-width: 24ch; }
+@media (max-width: 640px) { .zl-sum { grid-template-columns: 1fr; gap: 1.75rem; } }
+
+/* ---- 2. The immediate-effect hint on each collection card --------------- */
+.zl-now { display: grid; gap: .375rem; margin-top: .625rem; padding-top: .8125rem; border-top: 1px solid var(--rule-soft); }
+.zl-now__k {
+  display: flex; align-items: center; gap: .5rem;
+  font-size: .625rem; font-weight: 500; letter-spacing: .26em;
+  text-transform: uppercase; color: var(--house);
+}
+.zl-now__k::before { content: ""; width: 16px; height: 1px; background: var(--signal); flex: none; }
+.zl-now__t { font-size: .8125rem; line-height: 1.65; color: var(--ink-3); }
+
+/* ---- 3. Protocol step — a signal hairline that draws itself in ---------- */
+.zl-step { position: relative; border-top: 1px solid var(--rule); padding-top: 1.5rem; }
+.zl-step__rail { position: absolute; top: -1px; left: 0; width: 100%; height: 1px; background: var(--signal); }
+
+/* ---- 4. Vertical variant of the draw ----------------------------------- *
+   Carries .zl-draw too so zl.js observes it; these rules land later in the
+   cascade and win on transform. */
+.zl-js .zl-draw--y       { transform: scaleY(0); transform-origin: top; transition: transform 1400ms var(--ease); }
+.zl-js .zl-draw--y.is-in { transform: scaleY(1); }
+
+/* ---- 5. Wipe + zoom on the same card ----------------------------------- *
+   The journal cards now wipe in AND keep their hover zoom. Those two rules
+   both set transform on the same <img>, and zl.css's settle rule
+   (.zl-js [data-reveal="wipe"].is-in img, 0-3-1) out-specifies the zoom
+   hover (a:hover .zl-media--zoom img, 0-2-2), so without this the wipe
+   silently kills the zoom. Restored above both. */
+.zl-js .zl-media--zoom.is-in img { transition: transform 1500ms var(--ease); }
+.zl-js a:hover .zl-media--zoom.is-in img,
+.zl-js .zl-media--zoom.is-in:hover img { transform: scale(1.05); }
+</style>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -125,79 +213,151 @@
   </div>
 </section>
 
-<!-- ── 2. Manifesto ────────────────────────────────────────────────────── -->
+<!-- ── 2. Manifesto — the quote now arrives a line at a time ───────────── -->
 <section class="zl-section zl-section--sm">
   <div class="zl-container zl-container--narrow zl-center">
-    <p class="zl-display-m" data-reveal style="font-family:var(--font-display);font-weight:300;line-height:1.3">
-      “We do not believe in erasing time. We believe in extending skin
-      health, structure and function — <em class="zl-em--brand">measurably</em>.”
+    <p class="zl-display-m" style="font-family:var(--font-display);font-weight:300;line-height:1.3">
+      <span class="zl-rise"><span>“We do not believe in erasing time.</span></span>
+      <span class="zl-rise" style="--reveal-delay:160ms"><span>We believe in extending skin</span></span>
+      <span class="zl-rise" style="--reveal-delay:320ms"><span>health, structure and function —</span></span>
+      <span class="zl-rise" style="--reveal-delay:480ms"><span><em class="zl-em--brand">measurably</em>.”</span></span>
     </p>
     <hr class="zl-rule zl-draw" style="max-width:80px;margin:2.75rem auto 0;background:var(--tiffany);height:2px">
   </div>
 </section>
 
-<!-- ── 3. The premise ──────────────────────────────────────────────────── -->
-<section class="zl-section zl-tint">
+<!-- ── 3. THE TWO EFFECTS — the brand spine, and the first real idea a
+        visitor meets. Headline rises line by line, the gel wipes in beside
+        it, then the full-bleed band drops in two sequenced panels with a
+        champagne hairline drawing down the seam. ─────────────────────────── -->
+<section class="zl-section" id="two-effects">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
       <span class="zl-index-rule__num">01</span>
-      <span class="zl-eyebrow zl-eyebrow--bare">The Clinical Premise</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">The Two Effects</span>
     </div>
 
-    <div class="zl-split zl-split--wide-txt">
-      <div data-reveal>
-        <h2 class="zl-display-l">We don’t treat symptoms.<br>We activate <em class="zl-em--brand">biology</em>.</h2>
-        <div class="zl-prose" style="margin-top:2rem">
-          <p>
-            Most skincare works on appearance. It hydrates the surface, fills a line,
-            reflects light differently for a few hours. Underneath, nothing has
-            changed — and the skin becomes reliant on the illusion.
-          </p>
-          <p>
-            We take the opposite position. Skin already carries the full instruction
-            set for its own repair; what degrades with age is the signalling between
-            cells, not the capability. Restore the signal and the tissue does the
-            work itself.
-          </p>
-          <p><strong>We are not the repair. We are the instructions.</strong></p>
-        </div>
-        <a class="zl-link" href="/science" style="margin-top:2.25rem">
-          Read the science <span class="zl-link__arrow" aria-hidden="true">→</span>
-        </a>
+    <div class="zl-split zl-split--wide-txt" style="align-items:end">
+      <div>
+        <h2 class="zl-display-l" style="max-width:15ch">
+          <span class="zl-rise"><span>Every formulation</span></span>
+          <span class="zl-rise" style="--reveal-delay:140ms"><span>does two things</span></span>
+          <span class="zl-rise" style="--reveal-delay:280ms"><span>at <em class="zl-em--brand">once</em>.</span></span>
+        </h2>
+        <p class="zl-lead" data-reveal="far" style="--reveal-delay:440ms;margin-top:1.875rem">
+          One effect you can see the same day it goes on. One that builds quietly
+          underneath it, week after week. The same application does both — which
+          is why nothing in this range asks you to choose between looking better
+          tonight and looking better in a year.
+        </p>
       </div>
 
-      <div class="zl-media zl-media--editorial" data-reveal="wipe" style="--reveal-delay:120ms">
-        <img src="/assets/science-skin-macro-droplets.webp" alt="Macro detail of hydrated skin" loading="lazy" data-parallax="0.08">
+      <!-- The wipe's clip-path opens a stacking context, so the image's
+           mix-blend-mode:multiply composites against THIS box rather than the
+           page. It must carry the page colour, or the swatch's white ground
+           renders as a visible white rectangle on bone. -->
+      <div class="zl-media zl-media--wide" data-reveal="wipe" style="--reveal-delay:220ms;background:var(--bone)">
+        <img src="/assets/atmosphere-teal-gel-swatch.webp" alt="The gel formulation, close" loading="lazy" style="object-fit:contain;mix-blend-mode:multiply" data-parallax="0.05">
+      </div>
+    </div>
+  </div>
+
+  <div class="zl-duo" style="margin-top:clamp(3rem,7vh,4.5rem)">
+    <span class="zl-duo__seam zl-draw zl-draw--y" aria-hidden="true"></span>
+
+    <div class="zl-duo__panel zl-duo--now" data-reveal="wipe">
+      <span class="zl-eyebrow">Immediately</span>
+      <p class="zl-duo__when">The same day.</p>
+      <p class="zl-duo__lede">
+        From the very first application. Worked along expression lines, the skin
+        looks visibly smoother within minutes and holds that look through the
+        day. This is the half of the formulation that works at the surface, and
+        the half people notice first.
+      </p>
+      <p class="zl-duo__lede" style="margin-top:1rem"><strong>Like makeup, except it is skincare.</strong></p>
+      <p class="zl-duo__foot">
+        It repeats every time you apply, and it is the entire reason the
+        <a href="/products/syringe-refill">Refill cartridge</a> exists — some
+        people will only ever want this half, and they should be able to keep it
+        running.
+      </p>
+    </div>
+
+    <div class="zl-duo__panel zl-duo--later" data-reveal="wipe" style="--reveal-delay:220ms">
+      <span class="zl-eyebrow">Over time</span>
+      <p class="zl-duo__when"><em class="zl-em">Week over week.</em></p>
+      <p class="zl-duo__lede">
+        Underneath that, hydrolysed collagen and botanical signal peptides work
+        on the skin’s own structural protein. With consistent use they are
+        formulated to support that structure — so the lines have less to return
+        to.
+      </p>
+      <p class="zl-duo__lede" style="margin-top:1rem"><strong>Slower to show. Structural when it does.</strong></p>
+      <p class="zl-duo__foot">
+        No figure, panel or study is cited anywhere on this site — the house has
+        not launched and has nothing to cite. This is stated design intent, and
+        individual experience will vary.
+      </p>
+    </div>
+  </div>
+
+  <div class="zl-container" style="margin-top:clamp(3rem,7vh,4.5rem)">
+    <div class="zl-sum" data-stagger>
+      <div class="zl-sum__item">
+        <span class="zl-sum__bar zl-draw" aria-hidden="true"></span>
+        <span class="zl-sum__n" data-count="6">6</span>
+        <span class="zl-sum__k">Formulations in the protocol</span>
+      </div>
+      <div class="zl-sum__item">
+        <span class="zl-sum__bar zl-draw" aria-hidden="true"></span>
+        <span class="zl-sum__n" data-count="2">2</span>
+        <span class="zl-sum__k">Effects in every one of them</span>
+      </div>
+      <div class="zl-sum__item">
+        <span class="zl-sum__bar zl-draw" aria-hidden="true"></span>
+        <span class="zl-sum__n" data-count="1">1</span>
+        <span class="zl-sum__k">Application doing both at once</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── 4. The signal — full-bleed brand field ──────────────────────────── -->
-<section class="zl-section zl-brand-field">
+<!-- ── 4. The premise ──────────────────────────────────────────────────── -->
+<section class="zl-section zl-tint">
   <div class="zl-container">
-    <div class="zl-split" style="align-items:center">
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">02</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">The Clinical Premise</span>
+    </div>
+
+    <div class="zl-split zl-split--wide-txt">
       <div>
-        <span class="zl-eyebrow" data-reveal>The Difference</span>
-        <h2 class="zl-display-l" data-reveal style="--reveal-delay:80ms;margin-top:1.25rem;max-width:13ch">
-          We restore the <em class="zl-em">signal</em>.
+        <h2 class="zl-display-l">
+          <span class="zl-rise"><span>We don’t treat symptoms.</span></span>
+          <span class="zl-rise" style="--reveal-delay:150ms"><span>We activate <em class="zl-em--brand">biology</em>.</span></span>
         </h2>
-        <p class="zl-lead" data-reveal style="--reveal-delay:160ms;margin-top:1.5rem">
-          Conventional skincare hydrates the surface and blurs the light. The line
-          looks softer tonight; the structure beneath is untouched.
-        </p>
-        <p class="zl-lead" data-reveal style="--reveal-delay:240ms;margin-top:1rem">
-          Botanical signal peptides and hydrolysed collagen work a layer deeper —
-          on cellular communication rather than appearance. Slower to show.
-          Structural when it does.
-        </p>
-        <div data-reveal style="--reveal-delay:340ms;margin-top:2.25rem">
-          <a class="zl-btn zl-btn--on-brand" href="/science">How it works</a>
+        <div class="zl-prose" data-reveal="far" style="--reveal-delay:320ms;margin-top:2rem">
+          <p>
+            Most skincare stops at the first effect. It hydrates the surface,
+            softens a line for the evening, and leaves the structure underneath
+            exactly as it found it. We have no argument with the immediate
+            effect — we build it in deliberately. The argument is with stopping
+            there.
+          </p>
+          <p>
+            Skin already carries the full instruction set for its own repair;
+            what degrades with age is the signalling between cells, not the
+            capability. Restore the signal and the tissue does the work itself.
+          </p>
+          <p><strong>We are not the repair. We are the instructions.</strong></p>
+        </div>
+        <div data-reveal style="--reveal-delay:520ms;margin-top:2.25rem">
+          <a class="zl-btn zl-btn--brand" href="/science">How it works</a>
         </div>
       </div>
 
-      <div class="zl-media zl-media--square" data-reveal="wipe" style="--reveal-delay:160ms;background:transparent">
-        <img src="/assets/atmosphere-teal-gel-swatch.webp" alt="The gel formulation, close" loading="lazy" style="object-fit:contain;mix-blend-mode:multiply">
+      <div class="zl-media zl-media--editorial" data-reveal="wipe" style="--reveal-delay:180ms">
+        <img src="/assets/science-skin-macro-droplets.webp" alt="Macro detail of hydrated skin" loading="lazy" data-parallax="0.08">
       </div>
     </div>
   </div>
@@ -207,15 +367,16 @@
 <section class="zl-section">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
-      <span class="zl-index-rule__num">02</span>
+      <span class="zl-index-rule__num">03</span>
       <span class="zl-eyebrow zl-eyebrow--bare">The Longevity Protocol</span>
     </div>
 
     <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(3rem,7vh,5rem)">
-      <h2 class="zl-display-l" data-reveal style="max-width:18ch">
-        Six formulations.<br>One <em class="zl-em--brand">integrated</em> system.
+      <h2 class="zl-display-l" style="max-width:18ch">
+        <span class="zl-rise"><span>Six formulations.</span></span>
+        <span class="zl-rise" style="--reveal-delay:140ms"><span>One <em class="zl-em--brand">integrated</em> system.</span></span>
       </h2>
-      <p class="zl-lead" data-reveal style="--reveal-delay:120ms">
+      <p class="zl-lead" data-reveal="far" style="--reveal-delay:300ms">
         Sequence is the active ingredient. Each formulation prepares the skin for
         the one that follows — which is why the protocol is designed as an order,
         not an assortment.
@@ -223,32 +384,38 @@
     </div>
 
     <ol class="zl-grid zl-grid--3" style="list-style:none;padding:0" data-stagger>
-      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
+      <li class="zl-step">
+        <span class="zl-step__rail zl-draw" aria-hidden="true"></span>
         <span class="zl-num">01</span>
         <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Renew</h3>
         <p class="zl-muted" style="font-size:.9375rem">Weekly exfoliation. Clears the canvas without stripping the barrier.</p>
       </li>
-      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
+      <li class="zl-step">
+        <span class="zl-step__rail zl-draw" aria-hidden="true"></span>
         <span class="zl-num">02</span>
         <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Activate</h3>
         <p class="zl-muted" style="font-size:.9375rem">Precision collagen activation, applied weekly to areas of concern.</p>
       </li>
-      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
+      <li class="zl-step">
+        <span class="zl-step__rail zl-draw" aria-hidden="true"></span>
         <span class="zl-num">03</span>
         <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Signal</h3>
         <p class="zl-muted" style="font-size:.9375rem">The daily messenger. Botanical peptides on Pyrenean mineral water.</p>
       </li>
-      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
+      <li class="zl-step">
+        <span class="zl-step__rail zl-draw" aria-hidden="true"></span>
         <span class="zl-num">04</span>
         <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Shield</h3>
         <p class="zl-muted" style="font-size:.9375rem">Morning defence against pollution and environmental stress.</p>
       </li>
-      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
+      <li class="zl-step">
+        <span class="zl-step__rail zl-draw" aria-hidden="true"></span>
         <span class="zl-num">05</span>
         <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Restore</h3>
         <p class="zl-muted" style="font-size:.9375rem">Overnight repair, timed to the skin’s own circadian renewal.</p>
       </li>
-      <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
+      <li class="zl-step">
+        <span class="zl-step__rail zl-draw" aria-hidden="true"></span>
         <span class="zl-num">06</span>
         <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Sustain</h3>
         <p class="zl-muted" style="font-size:.9375rem">Twelve months of continuity. The refill that keeps the protocol running.</p>
@@ -265,78 +432,108 @@
 <section class="zl-section zl-tint">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
-      <span class="zl-index-rule__num">03</span>
+      <span class="zl-index-rule__num">04</span>
       <span class="zl-eyebrow zl-eyebrow--bare">The Formulations</span>
     </div>
 
-    <h2 class="zl-display-l" data-reveal style="max-width:14ch;margin-bottom:clamp(3rem,7vh,4.5rem)">
-      The <em class="zl-em--brand">collection</em>.
-    </h2>
+    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(3rem,7vh,4.5rem)">
+      <h2 class="zl-display-l" style="max-width:14ch">
+        <span class="zl-rise"><span>The <em class="zl-em--brand">collection</em>.</span></span>
+      </h2>
+      <p class="zl-lead" data-reveal="far" style="--reveal-delay:260ms">
+        Six formulations, each carrying both halves of the effect. What every one
+        of them does on the first day is noted below its name.
+      </p>
+    </div>
 
     <div class="zl-grid zl-grid--3" data-stagger>
       <a class="zl-product" href="/products/peeling-gel">
-        <div class="zl-product__media">
+        <div class="zl-product__media" data-reveal="wipe">
           <span class="zl-product__idx">01</span>
           <img src="/assets/product-peeling.webp" alt="Bio-Renewal Peeling Gel" loading="lazy">
         </div>
         <div class="zl-product__body">
           <h3 class="zl-product__name">Bio-Renewal Peeling Gel</h3>
           <span class="zl-product__role">Weekly exfoliation · Aloe vera + brown algae</span>
+          <p class="zl-now">
+            <span class="zl-now__k">Immediately</span>
+            <span class="zl-now__t">Skin looks brighter and feels smoother from the first rinse.</span>
+          </p>
         </div>
       </a>
 
       <a class="zl-product" href="/products/syringe">
-        <div class="zl-product__media">
+        <div class="zl-product__media" data-reveal="wipe" style="--reveal-delay:90ms">
           <span class="zl-product__idx">02</span>
           <img src="/assets/product-syringe.webp" alt="Precision Collagen Activation Syringe" loading="lazy">
         </div>
         <div class="zl-product__body">
           <h3 class="zl-product__name">Precision Collagen Activation Syringe</h3>
           <span class="zl-product__role">Weekly treatment · Hydrolysed collagen complex</span>
+          <p class="zl-now">
+            <span class="zl-now__k">Immediately</span>
+            <span class="zl-now__t">Expression lines look visibly smoother within minutes, and hold through the day.</span>
+          </p>
         </div>
       </a>
 
       <a class="zl-product" href="/products/serum">
-        <div class="zl-product__media">
+        <div class="zl-product__media" data-reveal="wipe" style="--reveal-delay:180ms">
           <span class="zl-product__idx">03</span>
           <img src="/assets/product-serum.webp" alt="BioSignal Facial Serum" loading="lazy">
         </div>
         <div class="zl-product__body">
           <h3 class="zl-product__name">BioSignal Facial Serum</h3>
           <span class="zl-product__role">Daily treatment · Rose + chamomile waters</span>
+          <p class="zl-now">
+            <span class="zl-now__k">Immediately</span>
+            <span class="zl-now__t">Skin looks plumper and more even the moment it absorbs.</span>
+          </p>
         </div>
       </a>
 
       <a class="zl-product" href="/products/day-cream">
-        <div class="zl-product__media">
+        <div class="zl-product__media" data-reveal="wipe" style="--reveal-delay:270ms">
           <span class="zl-product__idx">04</span>
           <img src="/assets/product-day-cream.webp" alt="Environmental Shield Day Cream" loading="lazy">
         </div>
         <div class="zl-product__body">
           <h3 class="zl-product__name">Environmental Shield Day Cream</h3>
           <span class="zl-product__role">Morning protection · Sweet almond + red algae</span>
+          <p class="zl-now">
+            <span class="zl-now__k">Immediately</span>
+            <span class="zl-now__t">A soft, even finish that sits under make-up from the first morning.</span>
+          </p>
         </div>
       </a>
 
       <a class="zl-product" href="/products/night-cream">
-        <div class="zl-product__media">
+        <div class="zl-product__media" data-reveal="wipe" style="--reveal-delay:360ms">
           <span class="zl-product__idx">05</span>
           <img src="/assets/product-night-cream.webp" alt="Renewal and Repair Night Cream" loading="lazy">
         </div>
         <div class="zl-product__body">
           <h3 class="zl-product__name">Renewal and Repair Night Cream</h3>
           <span class="zl-product__role">Evening repair · Niacinamide + lavender</span>
+          <p class="zl-now">
+            <span class="zl-now__k">Immediately</span>
+            <span class="zl-now__t">Skin looks rested and feels cushioned by the next morning.</span>
+          </p>
         </div>
       </a>
 
       <a class="zl-product" href="/products/syringe-refill">
-        <div class="zl-product__media">
+        <div class="zl-product__media" data-reveal="wipe" style="--reveal-delay:450ms">
           <span class="zl-product__idx">06</span>
           <img src="/assets/product-syringe.webp" alt="Precision Collagen Activation Refill" loading="lazy">
         </div>
         <div class="zl-product__body">
           <h3 class="zl-product__name">Precision Collagen Activation Refill</h3>
           <span class="zl-product__role">Continuation · Twelve months of activation</span>
+          <p class="zl-now">
+            <span class="zl-now__k">Immediately</span>
+            <span class="zl-now__t">The same visible smoothing as the Syringe, kept running.</span>
+          </p>
         </div>
       </a>
     </div>
@@ -358,13 +555,15 @@
 
   <div class="zl-container" style="margin-top:clamp(3rem,7vh,5rem)">
     <div class="zl-split">
-      <div data-reveal>
-        <span class="zl-eyebrow">The Source</span>
+      <div>
+        <span class="zl-eyebrow" data-reveal>The Source</span>
         <h2 class="zl-display-m" style="margin-top:1.25rem">
-          Water that has never known <em class="zl-em--brand">pollution</em>.
+          <span class="zl-rise" style="--reveal-delay:120ms"><span>Water that has never</span></span>
+          <span class="zl-rise" style="--reveal-delay:260ms"><span>known <em class="zl-em--brand">pollution</em>.</span></span>
         </h2>
+        <hr class="zl-rule zl-draw" style="max-width:120px;margin-top:2rem;background:var(--champagne);height:1px">
       </div>
-      <div class="zl-prose" data-reveal style="--reveal-delay:120ms">
+      <div class="zl-prose" data-reveal="far" style="--reveal-delay:380ms">
         <p>
           Every formulation begins with mineral water drawn from thermal springs high
           in the Pyrenees. At altitude, water dissolves the rock it passes through
@@ -384,28 +583,29 @@
 </section>
 
 <!-- ── 8. The analyser ─────────────────────────────────────────────────── -->
-<section class="zl-section zl-dark zl-on-dark">
+<section class="zl-section zl-dark zl-on-dark" id="analyser">
   <div class="zl-container">
     <div class="zl-split zl-split--wide-img">
-      <div data-reveal>
-        <span class="zl-eyebrow">Skin Analysis</span>
+      <div>
+        <span class="zl-eyebrow" data-reveal>Skin Analysis</span>
         <h2 class="zl-display-l" style="margin:1.25rem 0 1.5rem;max-width:12ch">
-          See your skin as we <em class="zl-em--brand">see</em> it.
+          <span class="zl-rise" style="--reveal-delay:120ms"><span>See your skin</span></span>
+          <span class="zl-rise" style="--reveal-delay:260ms"><span>as we <em class="zl-em--brand">see</em> it.</span></span>
         </h2>
-        <p class="zl-lead">
+        <p class="zl-lead" data-reveal="far" style="--reveal-delay:400ms">
           Ten questions and one photograph. Our analyser reads texture, tone,
           hydration, pigmentation and the early structural signs of ageing — then
           returns a full written assessment and a protocol matched to it.
         </p>
-        <div style="margin-top:2.25rem">
+        <div data-reveal style="--reveal-delay:520ms;margin-top:2.25rem">
           <a class="zl-btn zl-btn--brand" href="/analyser/">Analyse my skin</a>
         </div>
-        <p style="margin-top:1.5rem;font-size:.75rem;color:var(--on-dark-3)">
+        <p data-reveal="fade" style="--reveal-delay:640ms;margin-top:1.5rem;font-size:.75rem;color:var(--on-dark-3)">
           Your photograph is analysed and discarded. It is never stored.
         </p>
       </div>
 
-      <div class="zl-media zl-media--portrait" data-reveal="wipe" style="--reveal-delay:120ms">
+      <div class="zl-media zl-media--portrait" data-reveal="wipe" style="--reveal-delay:180ms">
         <img src="/assets/hero-model-mature-black-woman.webp" alt="Portrait study of mature skin" loading="lazy" data-parallax="0.06">
       </div>
     </div>
@@ -416,13 +616,13 @@
 <section class="zl-section">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
-      <span class="zl-index-rule__num">04</span>
+      <span class="zl-index-rule__num">05</span>
       <span class="zl-eyebrow zl-eyebrow--bare">The Journal</span>
     </div>
 
     <div class="zl-grid zl-grid--3" data-stagger>
       <a class="zl-card" href="/blog/complete-guide-skin-aging.html">
-        <div class="zl-media zl-media--wide zl-media--zoom">
+        <div class="zl-media zl-media--wide zl-media--zoom" data-reveal="wipe">
           <img src="/assets/science-hero-dna-cellular.webp" alt="" loading="lazy">
         </div>
         <div class="zl-card__body">
@@ -433,7 +633,7 @@
       </a>
 
       <a class="zl-card" href="/blog/why-pyrenean-mineral-water.html">
-        <div class="zl-media zl-media--wide zl-media--zoom">
+        <div class="zl-media zl-media--wide zl-media--zoom" data-reveal="wipe" style="--reveal-delay:120ms">
           <img src="/assets/story-alpine-spring-water.webp" alt="" loading="lazy">
         </div>
         <div class="zl-card__body">
@@ -444,7 +644,7 @@
       </a>
 
       <a class="zl-card" href="/blog/zero-lines-protocol.html">
-        <div class="zl-media zl-media--wide zl-media--zoom">
+        <div class="zl-media zl-media--wide zl-media--zoom" data-reveal="wipe" style="--reveal-delay:240ms">
           <img src="/assets/atmosphere-daily-ritual.webp" alt="" loading="lazy">
         </div>
         <div class="zl-card__body">
@@ -465,10 +665,10 @@
 <section class="zl-section zl-brand-field" id="waitlist">
   <div class="zl-container zl-container--narrow zl-center">
     <span class="zl-eyebrow zl-eyebrow--center" data-reveal>Early Access</span>
-    <h2 class="zl-display-l" data-reveal style="margin:1.5rem 0 1.5rem">
-      Before it <em class="zl-em">launches</em>.
+    <h2 class="zl-display-l" style="margin:1.5rem 0 1.5rem">
+      <span class="zl-rise" style="--reveal-delay:120ms"><span>Before it <em class="zl-em">launches</em>.</span></span>
     </h2>
-    <p class="zl-lead zl-center" data-reveal style="margin-bottom:2.75rem">
+    <p class="zl-lead zl-center" data-reveal="far" style="--reveal-delay:300ms;margin-bottom:2.75rem">
       The protocol is not yet available to buy. Register and we will write to you
       first — with early access and an invitation to a complimentary skin analysis.
     </p>
@@ -489,7 +689,7 @@
 
       <p class="zl-form__note" style="margin-top:1.25rem">
         We write rarely, and only about the protocol. Unsubscribe at any time.
-        See our <a href="/privacy.html" style="color:var(--ink);text-decoration:underline">privacy policy</a>.
+        See our <a href="/privacy.html">privacy policy</a>.
       </p>
     </form>
   </div>

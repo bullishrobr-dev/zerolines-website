@@ -5,20 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>BioSignal Facial Serum — Zero Lines | Step 03, Daily Treatment</title>
-<meta name="description" content="The BioSignal Facial Serum is step 03 of the Zero Lines Longevity Protocol — botanical signal peptides and hydrolysed collagen carried on Pyrenean mineral water. Not yet available to purchase.">
+<meta name="description" content="Two effects in one bottle: skin looks plumper and more luminous the same day, while daily use supports the barrier and the skin's own structure over eight to twelve weeks. Step 03 of the Zero Lines Longevity Protocol. Not yet available to purchase.">
 <link rel="canonical" href="https://zerolines.life/products/serum/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zero Lines">
 <meta property="og:title" content="BioSignal Facial Serum — Zero Lines">
-<meta property="og:description" content="Liquid light. Molecular intention. The daily treatment at the centre of the Longevity Protocol.">
+<meta property="og:description" content="Liquid light. Molecular intention. Absorbs in seconds; compounds over months. The daily treatment of the Longevity Protocol.">
 <meta property="og:url" content="https://zerolines.life/products/serum/">
 <meta property="og:image" content="https://zerolines.life/assets/og/product-serum.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="BioSignal Facial Serum — Zero Lines">
-<meta name="twitter:description" content="Liquid light. Molecular intention. The daily treatment at the centre of the Longevity Protocol.">
+<meta name="twitter:description" content="Liquid light. Molecular intention. Absorbs in seconds; compounds over months.">
 <meta name="twitter:image" content="https://zerolines.life/assets/og/product-serum.jpg">
 
 <link rel="icon" href="/assets/logo-mark.png">
@@ -31,10 +31,106 @@
 <link rel="stylesheet" href="/assets/zl.css">
 
 <style>
-/* Page-scoped components the shared system does not carry yet: the FAQ
-   accordion, the safety notice and the specification table. Nothing here
-   overrides zl.css — it only adds. Everything stays visible by default. */
+/* Page-scoped only. Nothing here fights zl.css — it adds the components the
+   shared sheet does not carry yet, and corrects three contrast regressions the
+   v3 repalette introduced site-wide. Content stays visible by default; every
+   motion rule is gated on .zl-js exactly as the system requires. */
 
+/* ---- palette v3 contrast corrections ---------------------------------- *
+   Measured on this page with .claude/a11y.js before the rewrite:
+     --mist #6B706D on .zl-tint / .zl-wash ....... 4.33:1  (eyebrows, 11px)
+     --on-dark-3 #7C807E on --ink ................ 4.46:1  (every footer heading)
+     .zl-btn--on-brand: --house on --champagne ... 4.03:1  (the Register button)
+   All three need 4.5:1. Corrected here so this page verifies in isolation;
+   the same three corrections belong in zl.css for the rest of the site. */
+:root { --mist: #666B68; --on-dark-3: #838785; }
+.zl-btn--on-brand { --btn-fg: var(--house-deep); }
+/* Not caught by the tool — a11y.js only measures real text nodes — but this
+   placeholder is the sole visible label on the one form the page has, and it
+   measured 4.02:1 on the teal field. */
+.zl-brand-field .zl-input::placeholder { color: rgba(255,255,255,.72); }
+
+/* On a narrow viewport the hero's second CTA falls below the bone wash and sits
+   straight on the photograph, where a transparent outline button has nothing to
+   sit on. Give it a near-opaque bone fill there and nowhere else. */
+@media (max-width: 900px) {
+  .zl-hero__actions .zl-btn--ghost { --btn-bg: rgba(250,247,242,.94); }
+}
+
+/* ---- the two effects — the page's structural idea, made literal ------- *
+   One band, split down the middle: the immediate effect on light ground, the
+   lasting effect on the house teal. A champagne seam draws down between them. */
+.zl-dual { position: relative; display: grid; grid-template-columns: 1fr 1fr; }
+.zl-dual__col { padding: clamp(2.75rem, 5vw, 4.75rem) clamp(1.5rem, 5vw, 5rem); }
+.zl-dual__col--now   { background: var(--bone-2); }
+.zl-dual__col--later { background: var(--house); color: var(--on-dark); }
+.zl-dual__inner { max-width: 31rem; }
+@media (min-width: 901px) {
+  .zl-dual__col--now   .zl-dual__inner { margin-left: auto; }
+  .zl-dual__col--later .zl-dual__inner { margin-right: auto; }
+}
+@media (max-width: 900px) { .zl-dual { grid-template-columns: 1fr; } }
+
+.zl-dual__seam {
+  position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; z-index: 2;
+  background: linear-gradient(to bottom, transparent, var(--champagne) 18%, var(--champagne) 82%, transparent);
+}
+@media (max-width: 900px) { .zl-dual__seam { display: none; } }
+
+.zl-dual__when {
+  display: block; font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(2rem, 3.4vw, 3rem); line-height: 1.1; letter-spacing: -0.018em;
+}
+.zl-dual__col--now   p { color: var(--ink-3); }
+.zl-dual__col--later p { color: rgba(255,255,255,.88); }
+.zl-dual__col--later .zl-eyebrow { color: rgba(255,255,255,.82); }
+.zl-dual__col--later .zl-eyebrow::before { background: var(--champagne); }
+.zl-dual p { font-size: 1.0625rem; line-height: 1.75; margin-top: 1.5rem; }
+
+.zl-dual__figure { margin-top: 2.25rem; padding-top: 1.75rem; border-top: 1px solid rgba(255,255,255,.22); }
+.zl-dual__count {
+  display: block; font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(2.5rem, 4.4vw, 3.5rem); line-height: 1; color: #fff;
+}
+.zl-dual__caption { font-size: .8125rem !important; line-height: 1.7; margin-top: .75rem !important; color: rgba(255,255,255,.82) !important; }
+
+/* the recurring brand mark — a signal rule, never signal type */
+.zl-mark { display: block; width: 34px; height: 2px; background: var(--signal); }
+
+/* vertical companion to .zl-draw, which only scales on X */
+.zl-js .zl-draw--y { transform: scaleY(0); transform-origin: top; }
+.zl-js .zl-draw--y.is-in { transform: scaleY(1); }
+
+/* ---- ingredients ------------------------------------------------------- */
+.zl-ing { list-style: none; margin: 0; padding: 0; }
+.zl-ing > li { border-top: 1px solid var(--rule); padding: 2rem 0 2.5rem; }
+.zl-ing__name { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.25rem, 2vw, 1.5rem); line-height: 1.3; margin: 1.375rem 0 .625rem; }
+.zl-ing__why { color: var(--ink-3); font-size: .9375rem; line-height: 1.8; }
+
+/* ---- protocol neighbours ---------------------------------------------- */
+.zl-step { display: block; border-top: 1px solid var(--rule); padding-top: 1.5rem; }
+.zl-step--here { border-top: 2px solid var(--signal); }
+.zl-step__k { font-size: var(--t-eyebrow); font-weight: 500; letter-spacing: .28em; text-transform: uppercase; color: var(--mist); }
+.zl-step__name { font-family: var(--font-display); font-weight: 400; font-size: 1.3125rem; line-height: 1.3; margin: .875rem 0 .5rem; transition: color var(--dur-ui) var(--ease); }
+a.zl-step:hover .zl-step__name { color: var(--house); }
+.zl-step__note { color: var(--ink-3); font-size: .9375rem; line-height: 1.75; }
+
+/* ---- rail of plain facts ---------------------------------------------- */
+.zl-rail { display: flex; flex-wrap: wrap; gap: .875rem 3rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+.zl-rail span { font-size: .75rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--mist); }
+
+/* ---- specification list ------------------------------------------------ */
+.zl-spec { margin: 0; }
+.zl-spec > div { display: flex; justify-content: space-between; align-items: baseline; gap: 1.5rem; padding: .8125rem 0; border-bottom: 1px solid var(--rule); font-size: .8125rem; }
+.zl-spec dt { color: var(--mist); letter-spacing: .12em; text-transform: uppercase; }
+.zl-spec dd { margin: 0; color: var(--ink); text-align: right; }
+
+/* ---- safety notice ----------------------------------------------------- */
+.zl-notice { border: 1px solid var(--rule-dark); border-left: 2px solid var(--tiffany-lift); background: rgba(255,255,255,.045); padding: 1.625rem 1.875rem; }
+.zl-notice__label { display: block; font-size: var(--t-eyebrow); font-weight: 500; letter-spacing: .28em; text-transform: uppercase; color: var(--tiffany-lift); margin-bottom: .75rem; }
+.zl-notice p { font-size: .9375rem; line-height: 1.75; color: var(--on-dark-2); }
+
+/* ---- FAQ accordion ----------------------------------------------------- */
 .zl-faq { border-top: 1px solid var(--rule); }
 .zl-faq__item { border-bottom: 1px solid var(--rule); }
 .zl-faq__q {
@@ -45,42 +141,18 @@
   transition: color var(--dur-ui) var(--ease);
 }
 .zl-faq__q::-webkit-details-marker { display: none; }
-.zl-faq__q:hover { color: var(--tiffany-deep); }
+.zl-faq__q:hover { color: var(--house); }
 .zl-faq__q::after {
-  content: "+"; flex: none; color:var(--tiffany-deep);
+  content: "+"; flex: none; color: var(--house);
   font-family: var(--font-body); font-size: 1.125rem; line-height: 1;
   transition: transform 520ms var(--ease);
 }
-.zl-faq__item[open] > .zl-faq__q { color: var(--tiffany-deep); }
+.zl-faq__item[open] > .zl-faq__q { color: var(--house); }
 .zl-faq__item[open] > .zl-faq__q::after { transform: rotate(45deg); }
-.zl-faq__a {
-  padding: 0 3rem 1.75rem 0; max-width: 64ch;
-  color: var(--ink-3); font-size: .9375rem; line-height: 1.8;
-}
+.zl-faq__a { padding: 0 3rem 1.75rem 0; max-width: 64ch; color: var(--ink-3); font-size: .9375rem; line-height: 1.8; }
 .zl-faq__item[open] .zl-faq__a { animation: zl-faq-in 560ms var(--ease) both; }
 @keyframes zl-faq-in { from { opacity: 0; transform: translateY(-8px); } }
-
-.zl-notice {
-  border: 1px solid var(--rule); border-left: 2px solid var(--tiffany);
-  background: rgba(255,255,255,.55); padding: 1.625rem 1.875rem;
-}
-.zl-on-dark .zl-notice { border-color: var(--rule-dark); border-left-color: var(--tiffany-lift); background: rgba(255,255,255,.045); }
-.zl-notice__label {
-  display: block; font-size: var(--t-eyebrow); font-weight: 500;
-  letter-spacing: .28em; text-transform: uppercase;
-  color: var(--tiffany-deep); margin-bottom: .75rem;
-}
-.zl-on-dark .zl-notice__label { color: var(--tiffany-lift); }
-.zl-notice p { font-size: .9375rem; line-height: 1.75; color: var(--ink-3); }
-.zl-on-dark .zl-notice p { color: var(--on-dark-2); }
-
-.zl-spec { margin: 0; }
-.zl-spec > div {
-  display: flex; justify-content: space-between; align-items: baseline; gap: 1.5rem;
-  padding: .8125rem 0; border-bottom: 1px solid var(--rule); font-size: .8125rem;
-}
-.zl-spec dt { color: var(--mist); letter-spacing: .12em; text-transform: uppercase; }
-.zl-spec dd { margin: 0; color: var(--ink); text-align: right; }
+@media (prefers-reduced-motion: reduce) { .zl-faq__item[open] .zl-faq__a { animation: none; } }
 </style>
 
 <script type="application/ld+json">
@@ -109,17 +181,19 @@
   "@id": "https://zerolines.life/products/serum/#product",
   "name": "BioSignal Facial Serum",
   "url": "https://zerolines.life/products/serum/",
-  "description": "Step 03 of the Zero Lines Longevity Protocol. A concentrated daily treatment carrying a botanical peptide complex and hydrolysed collagen on a base of Pyrenean mineral water, formulated to support the skin's own renewal processes. In pre-launch — not yet available to purchase.",
+  "description": "Step 03 of the Zero Lines Longevity Protocol, and the daily habit at its centre. It does two things at once: it absorbs in seconds and the skin looks plumper and more luminous the same day, and with consistent daily use a botanical peptide complex on a Pyrenean mineral base supports the barrier and the skin's own structure across eight to twelve weeks. In pre-launch — not yet available to purchase.",
   "brand": { "@type": "Brand", "name": "Zero Lines" },
   "image": "https://zerolines.life/assets/product-serum.webp",
   "category": "Facial serum",
   "audience": { "@type": "PeopleAudience", "suggestedMinAge": 25 },
   "isRelatedTo": [
-    { "@type": "Product", "name": "Environmental Shield Day Cream", "url": "https://zerolines.life/products/day-cream/" },
-    { "@type": "Product", "name": "Renewal and Repair Night Cream", "url": "https://zerolines.life/products/night-cream/" }
+    { "@type": "Product", "name": "Precision Collagen Activation Syringe", "url": "https://zerolines.life/products/syringe/" },
+    { "@type": "Product", "name": "Environmental Shield Day Cream", "url": "https://zerolines.life/products/day-cream/" }
   ],
   "additionalProperty": [
     { "@type": "PropertyValue", "name": "Protocol step", "value": "03 · Daily Treatment" },
+    { "@type": "PropertyValue", "name": "Immediate effect", "value": "Absorbs in seconds; the skin looks plumper and more luminous the same day, from the first application." },
+    { "@type": "PropertyValue", "name": "Lasting effect", "value": "Daily use is what carries the signal — formulated to support the barrier and the skin's own structure across eight to twelve weeks." },
     { "@type": "PropertyValue", "name": "Rhythm", "value": "Daily — morning and evening" },
     { "@type": "PropertyValue", "name": "Area", "value": "Face, neck and décolletage" },
     { "@type": "PropertyValue", "name": "Base", "value": "Pyrenean mineral water" },
@@ -145,43 +219,33 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "How long before I see results?",
-      "acceptedAnswer": { "@type": "Answer", "text": "The Serum is designed for progressive support rather than an overnight change. Texture and radiance are the first qualities the formulation is built to address; the structural support it is designed for accumulates across eight to twelve weeks of consistent twice-daily use. Individual results vary." }
+      "name": "What will I notice on the first day?",
+      "acceptedAnswer": { "@type": "Answer", "text": "It absorbs in seconds, and the skin looks plumper and more luminous almost straight away — often before you have finished the rest of your routine. That is a change in appearance, and it is meant to be one." }
     },
     {
       "@type": "Question",
-      "name": "Can I use it alongside other serums?",
-      "acceptedAnswer": { "@type": "Answer", "text": "The Serum is designed as the comprehensive daily treatment inside the Longevity Protocol, so we recommend it as your primary active serum. If you want to keep another product in your routine, use it at a different time of day." }
+      "name": "How long before the lasting effect shows?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Daily use is what carries it. The support accumulates gradually, and eight to twelve weeks of unbroken twice-daily use is the horizon the protocol is written for. Individual results vary." }
     },
     {
       "@type": "Question",
-      "name": "Should I use it in the morning or the evening?",
-      "acceptedAnswer": { "@type": "Answer", "text": "The protocol is written for twice daily — morning and evening. If you prefer once, choose the evening, so the active compounds work alongside the skin's own overnight renewal cycle." }
+      "name": "Morning or evening?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Both — the protocol is written for twice daily. If you can only manage once, choose the evening, so the actives sit alongside the skin’s own overnight renewal." }
     },
     {
       "@type": "Question",
-      "name": "How long does one bottle last?",
-      "acceptedAnswer": { "@type": "Answer", "text": "With twice-daily use of three to four drops, one bottle is designed to last approximately six to eight weeks." }
+      "name": "Can I keep using my other serum?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The BioSignal is designed as the primary active serum inside the protocol. If you want to keep another, use it at a different time of day rather than layering the two." }
     },
     {
       "@type": "Question",
-      "name": "Is it oily or heavy?",
-      "acceptedAnswer": { "@type": "Answer", "text": "No. The texture is lightweight and fast-absorbing, formulated to leave no residue so that it layers cleanly under a moisturiser or a sunscreen." }
+      "name": "Do I still need the Syringe if I use this?",
+      "acceptedAnswer": { "@type": "Answer", "text": "They do different jobs. The Syringe is a weekly, targeted treatment on specific expression lines; the Serum is the daily one, across the whole face and neck. The protocol is designed around both." }
     },
     {
       "@type": "Question",
-      "name": "Can I skip this step if I use the Precision Collagen Activation Syringe?",
-      "acceptedAnswer": { "@type": "Answer", "text": "They do different jobs. The Syringe is a weekly, targeted intervention on specific areas. The Serum is the daily treatment across the whole face and neck. The protocol is designed around both, in sequence." }
-    },
-    {
-      "@type": "Question",
-      "name": "Is it suitable for all skin types?",
-      "acceptedAnswer": { "@type": "Answer", "text": "The Serum is formulated for external facial application and is suitable for most skin types, including oily, combination and dry. If your skin is reactive, or you are treating a diagnosed condition, speak to your doctor or a dermatologist before adding any new active." }
-    },
-    {
-      "@type": "Question",
-      "name": "What happens if I miss a day?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Nothing is undone. Consistency is what the protocol is built on, so simply return to the routine the next day — regular daily application is what the progressive support is designed around." }
+      "name": "Is it suitable for reactive skin?",
+      "acceptedAnswer": { "@type": "Answer", "text": "It is formulated for external use on the face, neck and décolletage and suits most skin types, including oily, combination and dry. If your skin is reactive, or you are treating a diagnosed condition, speak to your doctor or a dermatologist before adding any new active." }
     }
   ]
 }
@@ -226,105 +290,236 @@
 
 <main id="main">
 
-<!-- ── 1. Hero — light split. The application shot carries the promise ────── -->
-<section class="zl-hero">
+<!-- ── 1. Hero — photo-led. The picture carries the page; the crop and a bone
+        wash carry the legibility, so the type stays dark and the header never
+        has to fight the image. ──────────────────────────────────────────── -->
+<section class="zl-hero" style="--hero-pos:58% 42%;--hero-pos-mobile:62% 52%">
+  <div class="zl-hero__photo">
+    <img src="/assets/hero-serum-application.webp"
+         alt="A woman drawing serum from a glass dropper above her décolletage"
+         fetchpriority="high" width="1600" height="1067" data-parallax="0.05">
+  </div>
+
+  <div class="zl-hero__inner">
+    <div class="zl-container">
+      <nav aria-label="Breadcrumb" data-reveal style="margin-bottom:1.5rem;font-size:.6875rem;letter-spacing:.24em;text-transform:uppercase;color:var(--mist)">
+        <a href="/products" style="color:var(--house)">Formulations</a>
+        <span aria-hidden="true" style="padding:0 .625rem">/</span>
+        <span>BioSignal Facial Serum</span>
+      </nav>
+
+      <span class="zl-eyebrow" data-reveal style="--reveal-delay:60ms">Step 03 · Daily Treatment</span>
+
+      <h1 class="zl-display-xl zl-hero__title" style="margin-top:1.5rem;max-width:11ch">
+        <span class="zl-rise" style="--reveal-delay:150ms"><span><em class="zl-em--brand">BioSignal</em></span></span>
+        <span class="zl-rise" style="--reveal-delay:270ms"><span>Facial Serum</span></span>
+      </h1>
+
+      <p class="zl-lead zl-hero__lead" data-reveal style="--reveal-delay:620ms">
+        Absorbs in seconds. Compounds over months. The daily step of the
+        protocol — botanical peptides carried on Pyrenean mineral water.
+      </p>
+
+      <p data-reveal style="--reveal-delay:700ms;margin-top:1.25rem;font-size:.9375rem;font-weight:500;color:var(--house)">
+        Not yet available to purchase.
+      </p>
+
+      <div class="zl-hero__actions" data-reveal style="--reveal-delay:780ms">
+        <a class="zl-btn zl-btn--brand" href="#waitlist">Join the waitlist</a>
+        <a class="zl-btn zl-btn--ghost" href="#two-effects">The two effects</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 2. THE TWO EFFECTS — the spine of the brand, given its own full-bleed
+        band. Light half wipes in, teal half follows, champagne seam draws
+        down the middle between them. ───────────────────────────────────── -->
+<section class="zl-section" id="two-effects">
   <div class="zl-container">
-    <div class="zl-hero__grid">
-      <div>
-        <nav aria-label="Breadcrumb" data-reveal style="margin-bottom:1.5rem;font-size:.6875rem;letter-spacing:.24em;text-transform:uppercase;color:var(--mist)">
-          <a href="/products" style="color:var(--tiffany-deep)">Formulations</a>
-          <span aria-hidden="true" style="padding:0 .625rem">/</span>
-          <span>BioSignal Facial Serum</span>
-        </nav>
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">01</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">The Two Effects</span>
+    </div>
 
-        <span class="zl-eyebrow" data-reveal style="--reveal-delay:60ms">03 · Daily Treatment</span>
+    <div class="zl-split zl-split--wide-txt" style="align-items:end">
+      <h2 class="zl-display-l" style="max-width:14ch">
+        <span class="zl-rise"><span>Two effects.</span></span>
+        <span class="zl-rise" style="--reveal-delay:120ms"><span>One <em class="zl-em--brand">bottle</em>.</span></span>
+      </h2>
+      <p class="zl-lead" data-reveal style="--reveal-delay:280ms">
+        Every Zero Lines formulation does two things at once. The Serum makes the
+        pair unusually easy to feel: one arrives the day you open it, the other is
+        built quietly underneath, for as long as you keep going.
+      </p>
+    </div>
+  </div>
 
-        <h1 class="zl-display-xl zl-hero__title" style="margin-top:1.5rem;max-width:11ch">
-          <span class="zl-rise" style="--reveal-delay:140ms"><span><em class="zl-em--brand">BioSignal</em></span></span>
-          <span class="zl-rise" style="--reveal-delay:250ms"><span>Facial Serum</span></span>
-        </h1>
+  <div class="zl-dual" style="margin-top:clamp(3rem,7vh,4.5rem)">
+    <span class="zl-dual__seam zl-draw zl-draw--y" aria-hidden="true"></span>
 
-        <p class="zl-lead zl-hero__lead" data-reveal style="--reveal-delay:560ms">
-          A concentrated daily treatment. Botanical signal peptides and hydrolysed
-          collagen, carried on Pyrenean mineral water — formulated to work below the
-          surface rather than on it.
+    <div class="zl-dual__col zl-dual__col--now" data-reveal="wipe">
+      <div class="zl-dual__inner">
+        <span class="zl-eyebrow" data-reveal style="--reveal-delay:320ms">Same day</span>
+        <h3 class="zl-dual__when" style="margin-top:1.375rem">
+          <span class="zl-rise" style="--reveal-delay:400ms"><span>Immediately</span></span>
+        </h3>
+        <span class="zl-mark zl-draw" aria-hidden="true" style="margin-top:1.75rem"></span>
+        <p data-reveal style="--reveal-delay:520ms">
+          It absorbs in seconds. Before you have finished the rest of your routine
+          the skin looks plumper and reads more luminous — light sits differently
+          on it, and it does so from the very first application.
+        </p>
+        <p data-reveal style="--reveal-delay:600ms">
+          That is an appearance you can see the same day. Like makeup, except it
+          is skincare.
+        </p>
+      </div>
+    </div>
+
+    <div class="zl-dual__col zl-dual__col--later" data-reveal="wipe" style="--reveal-delay:200ms">
+      <div class="zl-dual__inner">
+        <span class="zl-eyebrow" data-reveal style="--reveal-delay:520ms">Week after week</span>
+        <h3 class="zl-dual__when" style="margin-top:1.375rem">
+          <span class="zl-rise" style="--reveal-delay:600ms"><span>Over time</span></span>
+        </h3>
+        <span class="zl-mark zl-draw" aria-hidden="true" style="margin-top:1.75rem;background:var(--champagne)"></span>
+        <p data-reveal style="--reveal-delay:720ms">
+          Daily use is what carries the signal. A botanical peptide complex on a
+          Pyrenean mineral base is formulated to support the barrier and the
+          skin’s own structure — so lines have less to return to.
         </p>
 
-        <p data-reveal style="--reveal-delay:660ms;margin-top:1.5rem;max-width:44ch;font-size:.9375rem;line-height:1.7;color:var(--ink-3)">
-          <strong style="font-weight:500;color:var(--tiffany-deep)">Not yet available to purchase — join the waitlist.</strong>
-        </p>
-
-        <div class="zl-hero__actions" data-reveal style="--reveal-delay:760ms">
-          <a class="zl-btn zl-btn--brand" href="#waitlist">Join the waitlist</a>
-          <a class="zl-btn zl-btn--ghost" href="/science">Read the science</a>
+        <div class="zl-dual__figure" data-reveal style="--reveal-delay:800ms">
+          <span class="zl-dual__count"><span data-count="12">12</span> weeks</span>
+          <p class="zl-dual__caption">
+            Eight to twelve, unbroken. That is the horizon daily use is written
+            around — nothing about it is meant to be dramatic in week one.
+          </p>
         </div>
       </div>
+    </div>
+  </div>
 
-      <div class="zl-hero__media">
-        <div class="zl-media" data-reveal="wipe" style="--reveal-delay:240ms">
-          <img src="/assets/hero-serum-application.webp"
-               alt="A woman drawing serum from a dropper above her décolletage"
-               fetchpriority="high" width="1600" height="1067"
-               style="object-position:56% 44%">
+  <div class="zl-container" style="margin-top:clamp(2.5rem,6vh,3.5rem)">
+    <p class="zl-lead" data-reveal style="max-width:52ch">
+      The first effect is why you will like it tonight. The second is why we ask
+      you not to skip it.
+    </p>
+  </div>
+</section>
+
+<!-- ── 3. Mechanism — dark slab. Why both things happen, said honestly. ─── -->
+<section class="zl-section zl-dark zl-on-dark">
+  <div class="zl-container">
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">02</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">Mechanism</span>
+    </div>
+
+    <div class="zl-split zl-split--wide-img">
+      <div>
+        <h2 class="zl-display-l" style="max-width:11ch">
+          <span class="zl-rise"><span>Why <em class="zl-em--brand">both</em></span></span>
+          <span class="zl-rise" style="--reveal-delay:120ms"><span>things happen.</span></span>
+        </h2>
+
+        <div data-reveal="far" style="--reveal-delay:260ms;margin-top:2rem;max-width:52ch">
+          <p style="color:var(--on-dark-2);margin-bottom:1.5em">
+            The same-day change is a surface story, and we would rather say so. The
+            mineral base and the humectants leave the skin holding water more evenly
+            within minutes — and skin that holds water evenly reflects light evenly,
+            so it reads smoother and more luminous. Nothing structural has happened
+            yet.
+          </p>
+          <p style="color:var(--on-dark-2);margin-bottom:1.5em">
+            The slower change is a different mechanism entirely. The botanical
+            peptide complex is shaped to resemble the messenger molecules the skin
+            already uses, and hydrolysed collagen travels with it at a molecular
+            weight chosen for absorption. Together they are formulated to support
+            the fibroblast activity behind the skin’s own structure.
+          </p>
+          <p style="color:var(--on-dark-2);margin-bottom:1.5em">
+            Which is why it is progressive: the tissue does the work, on its own
+            timetable. Daily application simply keeps the instruction arriving.
+          </p>
+          <p style="color:var(--on-dark);font-weight:500">We are not the repair. We are the instructions.</p>
+        </div>
+
+        <a class="zl-link" href="/science" style="margin-top:2.25rem">
+          The full science <span class="zl-link__arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <div>
+        <div class="zl-media zl-media--square" data-reveal="wipe" style="--reveal-delay:180ms;background:var(--ink-2)">
+          <img src="/assets/science-peptide-molecular.webp"
+               alt="Molecular rendering of a peptide chain"
+               loading="lazy" width="2688" height="1536" data-parallax="0.07">
+        </div>
+
+        <div class="zl-notice" data-reveal style="--reveal-delay:260ms;margin-top:2rem">
+          <strong class="zl-notice__label">External use only</strong>
+          <p>
+            Formulated for external application to the face, neck and décolletage.
+            Avoid contact with the eyes. If irritation occurs, discontinue use and
+            consult a healthcare professional.
+          </p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── 2. What it is ─────────────────────────────────────────────────────── -->
-<section class="zl-section">
+<!-- ── 4. What is in it — four that matter, one line each. ──────────────── -->
+<section class="zl-section zl-tint">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
-      <span class="zl-index-rule__num">01</span>
+      <span class="zl-index-rule__num">03</span>
       <span class="zl-eyebrow zl-eyebrow--bare">The Formulation</span>
     </div>
 
+    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(3rem,7vh,4.5rem)">
+      <h2 class="zl-display-l" style="max-width:15ch">
+        <span class="zl-rise"><span>Four things that</span></span>
+        <span class="zl-rise" style="--reveal-delay:120ms"><span><em class="zl-em--brand">matter</em>.</span></span>
+      </h2>
+      <p class="zl-lead" data-reveal style="--reveal-delay:280ms">
+        A short list, deliberately. Everything in the bottle does one of the two
+        jobs — and the base is not an afterthought, it is half the reason the rest
+        works.
+      </p>
+    </div>
+
     <div class="zl-split zl-split--wide-txt" style="align-items:start">
-      <div>
-        <h2 class="zl-display-l" data-reveal style="max-width:15ch">
-          A different category of daily <em class="zl-em--brand">treatment</em>.
-        </h2>
-
-        <div class="zl-prose" data-reveal style="--reveal-delay:120ms;margin-top:2rem">
-          <p>
-            The Serum is not a standard hydrator, and it is not a vitamin C drop. It is a
-            concentrated daily treatment built to carry bioactive compounds to the depth
-            at which renewal actually happens — and to keep carrying them, every day,
-            for as long as the protocol runs.
-          </p>
-          <p>
-            Everything in it sits on a base of mineral water drawn from high-altitude
-            Pyrenean springs: zinc, selenium, copper and magnesium in ionic balance, the
-            cofactors the skin’s own antioxidant enzymes need in order to work at all.
-          </p>
-        </div>
-
-        <hr class="zl-rule zl-draw" style="max-width:120px;margin:2.5rem 0 0;background:var(--tiffany);height:2px">
-
-        <h3 class="zl-eyebrow" data-reveal style="--reveal-delay:80ms;margin-top:2.5rem">Key ingredients</h3>
-        <ul style="list-style:none;padding:0;margin:1.5rem 0 0;display:grid;gap:1rem;max-width:52ch" data-stagger>
-          <li style="display:flex;gap:1rem;align-items:baseline">
-            <span aria-hidden="true" style="flex:none;width:22px;height:1px;background:var(--tiffany);transform:translateY(-.4em)"></span>
-            <span style="color:var(--ink-3);font-size:.9375rem;line-height:1.7"><strong style="color:var(--ink);font-weight:500">Botanical peptide complex</strong> — derived from watermelon extract, formulated to resemble the skin’s own signalling molecules.</span>
-          </li>
-          <li style="display:flex;gap:1rem;align-items:baseline">
-            <span aria-hidden="true" style="flex:none;width:22px;height:1px;background:var(--tiffany);transform:translateY(-.4em)"></span>
-            <span style="color:var(--ink-3);font-size:.9375rem;line-height:1.7"><strong style="color:var(--ink);font-weight:500">Hydrolysed collagen</strong> — broken to a molecular weight chosen for absorption, not for surface film.</span>
-          </li>
-          <li style="display:flex;gap:1rem;align-items:baseline">
-            <span aria-hidden="true" style="flex:none;width:22px;height:1px;background:var(--tiffany);transform:translateY(-.4em)"></span>
-            <span style="color:var(--ink-3);font-size:.9375rem;line-height:1.7"><strong style="color:var(--ink);font-weight:500">Pyrenean mineral water base</strong> — the carrier, and the reason the minerals arrive in ionic form.</span>
-          </li>
-        </ul>
-
-        <a class="zl-link" href="/protocol" style="margin-top:2.5rem">
-          Where it sits in the protocol <span class="zl-link__arrow" aria-hidden="true">→</span>
-        </a>
-      </div>
+      <ul class="zl-ing" data-stagger>
+        <li>
+          <span class="zl-mark zl-draw" aria-hidden="true"></span>
+          <h3 class="zl-ing__name">Botanical peptide complex</h3>
+          <p class="zl-ing__why">Derived from watermelon extract and shaped to resemble the messenger molecules the skin already uses.</p>
+        </li>
+        <li>
+          <span class="zl-mark zl-draw" aria-hidden="true"></span>
+          <h3 class="zl-ing__name">Hydrolysed collagen</h3>
+          <p class="zl-ing__why">Cut to a molecular weight chosen for absorption rather than for surface film.</p>
+        </li>
+        <li>
+          <span class="zl-mark zl-draw" aria-hidden="true"></span>
+          <h3 class="zl-ing__name">Pyrenean mineral water</h3>
+          <p class="zl-ing__why">The base. Zinc, selenium, copper and magnesium in ionic balance — the cofactors the skin’s own antioxidant enzymes need to work.</p>
+        </li>
+        <li>
+          <span class="zl-mark zl-draw" aria-hidden="true"></span>
+          <h3 class="zl-ing__name">Rose and chamomile flower waters</h3>
+          <p class="zl-ing__why">The botanical carriers, and the reason it settles quietly: no sting, no heat, almost no scent.</p>
+        </li>
+      </ul>
 
       <div>
-        <div class="zl-media zl-media--tall" data-reveal="wipe" style="--reveal-delay:140ms;background:var(--bone-2)">
+        <!-- the media box must carry the section colour, not `transparent`: the
+             wipe's clip-path makes this element a stacking context, so the
+             image's multiply blends against THIS background, not the page's. -->
+        <div class="zl-media zl-media--editorial" data-reveal="wipe" style="--reveal-delay:140ms;background:var(--bone-2)">
           <img src="/assets/product-serum.webp"
                alt="The BioSignal Facial Serum bottle"
                loading="lazy" width="832" height="1248"
@@ -337,190 +532,65 @@
           <div><dt>Area</dt><dd>Face, neck, décolletage</dd></div>
           <div><dt>Texture</dt><dd>Lightweight, fast-absorbing</dd></div>
           <div><dt>Base</dt><dd>Pyrenean mineral water</dd></div>
-          <div><dt>Status</dt><dd style="color:var(--tiffany-deep)">Pre-launch</dd></div>
+          <div><dt>Status</dt><dd style="color:var(--house)">Pre-launch</dd></div>
         </dl>
       </div>
     </div>
-
-    <div class="zl-grid zl-grid--3" data-stagger style="margin-top:clamp(3.5rem,8vh,5.5rem)">
-      <div style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-num">01</span>
-        <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Deep delivery</h3>
-        <p class="zl-muted" style="font-size:.9375rem">A molecular weight profile chosen to support passage beyond the surface layer, towards the tissue where renewal is initiated.</p>
-      </div>
-      <div style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-num">02</span>
-        <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Daily support</h3>
-        <p class="zl-muted" style="font-size:.9375rem">A treatment designed to work cumulatively — on collagen architecture, on the appearance of firmness, on texture refined over months.</p>
-      </div>
-      <div style="border-top:1px solid var(--rule);padding-top:1.5rem">
-        <span class="zl-num">03</span>
-        <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Protocol foundation</h3>
-        <p class="zl-muted" style="font-size:.9375rem">The daily step that joins weekly exfoliation to the protective creams. Remove it and the sequence loses its connective tissue.</p>
-      </div>
-    </div>
   </div>
 </section>
 
-<!-- ── 3. Designed to support ────────────────────────────────────────────── -->
-<section class="zl-section zl-tint">
-  <div class="zl-container">
-    <div class="zl-index-rule" data-reveal>
-      <span class="zl-index-rule__num">02</span>
-      <span class="zl-eyebrow zl-eyebrow--bare">Designed to Support</span>
-    </div>
-
-    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(3rem,7vh,4.5rem)">
-      <h2 class="zl-display-l" style="max-width:17ch">
-        <span class="zl-rise"><span>What it is designed</span></span>
-        <span class="zl-rise" style="--reveal-delay:110ms"><span>to <em class="zl-em--brand">support</em>.</span></span>
-      </h2>
-      <p class="zl-lead" data-reveal style="--reveal-delay:260ms">
-        Stated as intent, not as outcome. These are the functions the formulation was
-        built around — what a daily treatment of this composition is designed to do.
-      </p>
-    </div>
-
-    <ul class="zl-grid zl-grid--2" style="list-style:none;padding:0;margin:0" data-stagger>
-      <li style="border-top:1px solid var(--rule);padding-top:1.25rem;display:flex;gap:1.25rem;align-items:flex-start">
-        <span aria-hidden="true" style="flex:none;font-family:var(--font-display);font-size:1.125rem;color:var(--tiffany-deep);line-height:1.7">01</span>
-        <p style="margin:0;color:var(--ink-3);font-size:.9375rem;line-height:1.75">Supports the visible appearance of skin firmness and elasticity over time.</p>
-      </li>
-      <li style="border-top:1px solid var(--rule);padding-top:1.25rem;display:flex;gap:1.25rem;align-items:flex-start">
-        <span aria-hidden="true" style="flex:none;font-family:var(--font-display);font-size:1.125rem;color:var(--tiffany-deep);line-height:1.7">02</span>
-        <p style="margin:0;color:var(--ink-3);font-size:.9375rem;line-height:1.75">Designed to act at the dermal level, where renewal activity begins.</p>
-      </li>
-      <li style="border-top:1px solid var(--rule);padding-top:1.25rem;display:flex;gap:1.25rem;align-items:flex-start">
-        <span aria-hidden="true" style="flex:none;font-family:var(--font-display);font-size:1.125rem;color:var(--tiffany-deep);line-height:1.7">03</span>
-        <p style="margin:0;color:var(--ink-3);font-size:.9375rem;line-height:1.75">Formulated to encourage a more refined, smoother-looking skin texture.</p>
-      </li>
-      <li style="border-top:1px solid var(--rule);padding-top:1.25rem;display:flex;gap:1.25rem;align-items:flex-start">
-        <span aria-hidden="true" style="flex:none;font-family:var(--font-display);font-size:1.125rem;color:var(--tiffany-deep);line-height:1.7">04</span>
-        <p style="margin:0;color:var(--ink-3);font-size:.9375rem;line-height:1.75">Supports the skin’s own collagen architecture with botanical extracts.</p>
-      </li>
-      <li style="border-top:1px solid var(--rule);padding-top:1.25rem;display:flex;gap:1.25rem;align-items:flex-start">
-        <span aria-hidden="true" style="flex:none;font-family:var(--font-display);font-size:1.125rem;color:var(--tiffany-deep);line-height:1.7">05</span>
-        <p style="margin:0;color:var(--ink-3);font-size:.9375rem;line-height:1.75">A daily treatment intended for the full face, neck and décolletage.</p>
-      </li>
-      <li style="border-top:1px solid var(--rule);padding-top:1.25rem;display:flex;gap:1.25rem;align-items:flex-start">
-        <span aria-hidden="true" style="flex:none;font-family:var(--font-display);font-size:1.125rem;color:var(--tiffany-deep);line-height:1.7">06</span>
-        <p style="margin:0;color:var(--ink-3);font-size:.9375rem;line-height:1.75">Formulated for external application on facial and neck skin only.</p>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<!-- ── 4. How it works — dark slab, the molecular image belongs here ─────── -->
-<section class="zl-section zl-dark zl-on-dark">
-  <div class="zl-container">
-    <div class="zl-index-rule" data-reveal>
-      <span class="zl-index-rule__num">03</span>
-      <span class="zl-eyebrow zl-eyebrow--bare">Mechanism</span>
-    </div>
-
-    <div class="zl-split zl-split--wide-img">
-      <div>
-        <h2 class="zl-display-l" style="max-width:11ch">
-          <span class="zl-rise"><span>How the signal</span></span>
-          <span class="zl-rise" style="--reveal-delay:110ms"><span><em class="zl-em--brand">travels</em>.</span></span>
-        </h2>
-
-        <div data-reveal style="--reveal-delay:280ms;margin-top:2rem;max-width:52ch">
-          <p style="color:var(--on-dark-2);margin-bottom:1.5em">
-            The Serum carries a botanical peptide complex formulated to resemble the
-            messenger molecules the skin already uses. Those peptides are intended to
-            reach the fibroblasts — the cells responsible for building collagen — and to
-            support the processes involved in synthesis and tissue repair.
-          </p>
-          <p style="color:var(--on-dark-2);margin-bottom:1.5em">
-            Hydrolysed collagen travels with them, cut to a molecular weight chosen for
-            absorption rather than for surface feel. Together the two are designed to
-            support structural renewal, which is why the effect is progressive: the
-            tissue does the work, on its own timetable.
-          </p>
-          <p style="color:var(--on-dark);font-weight:500">We are not the repair. We are the instructions.</p>
-        </div>
-
-        <a class="zl-link" href="/science" style="margin-top:2.25rem">
-          The full science <span class="zl-link__arrow" aria-hidden="true">→</span>
-        </a>
-      </div>
-
-      <div class="zl-media zl-media--square" data-reveal="wipe" style="--reveal-delay:180ms;background:var(--ink-2)">
-        <img src="/assets/science-peptide-molecular.webp"
-             alt="Molecular rendering of a peptide chain"
-             loading="lazy" data-parallax="0.07">
-      </div>
-    </div>
-
-    <div class="zl-notice" data-reveal style="--reveal-delay:120ms;margin-top:clamp(3rem,7vh,4.5rem);max-width:760px">
-      <strong class="zl-notice__label">External use only</strong>
-      <p>
-        The Serum is formulated exclusively for external application to the face and
-        neck. Avoid contact with the eyes. If irritation occurs, discontinue use and
-        consult a healthcare professional.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- ── 5. Application protocol ───────────────────────────────────────────── -->
+<!-- ── 5. How to use — a short sequence, not a lecture. ─────────────────── -->
 <section class="zl-section">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
       <span class="zl-index-rule__num">04</span>
-      <span class="zl-eyebrow zl-eyebrow--bare">Application Protocol</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">How to Use It</span>
     </div>
 
-    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(3rem,7vh,5rem)">
+    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(3rem,7vh,4.5rem)">
       <h2 class="zl-display-l" style="max-width:16ch">
-        <span class="zl-rise"><span>Consistency is the</span></span>
-        <span class="zl-rise" style="--reveal-delay:110ms"><span>active <em class="zl-em--brand">ingredient</em>.</span></span>
+        <span class="zl-rise"><span>Ninety seconds,</span></span>
+        <span class="zl-rise" style="--reveal-delay:120ms"><span>twice a <em class="zl-em--brand">day</em>.</span></span>
       </h2>
-      <p class="zl-lead" data-reveal style="--reveal-delay:260ms">
-        Four instructions, repeated. Cellular support is cumulative — the rhythm matters
-        far more than the quantity, and more than any single application ever will.
+      <p class="zl-lead" data-reveal style="--reveal-delay:280ms">
+        Rhythm matters far more than quantity here. More drops will not speed
+        anything up; a missed fortnight is what actually costs you.
       </p>
     </div>
 
     <ol class="zl-grid zl-grid--4" style="list-style:none;padding:0;margin:0" data-stagger>
       <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
         <span class="zl-num">01</span>
-        <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Apply</h3>
-        <p class="zl-muted" style="font-size:.9375rem">Three to four drops onto cleansed face and neck, morning and evening. Twice daily is the rhythm the protocol is written for.</p>
+        <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Cleanse</h3>
+        <p class="zl-muted" style="font-size:.9375rem">Start on clean skin, still barely damp. It travels better into skin that is not bone dry.</p>
       </li>
       <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
         <span class="zl-num">02</span>
-        <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Press</h3>
-        <p class="zl-muted" style="font-size:.9375rem">Press the serum in with your fingertips rather than rubbing. Pressing supports absorption without pulling or stretching the skin.</p>
+        <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Warm</h3>
+        <p class="zl-muted" style="font-size:.9375rem">Three to four drops into the palm. Press the hands together before they touch your face.</p>
       </li>
       <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
         <span class="zl-num">03</span>
-        <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Wait</h3>
-        <p class="zl-muted" style="font-size:.9375rem">Give it about a minute before the day or night cream. The actives need the head start; the cream then seals the work in.</p>
+        <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Press</h3>
+        <p class="zl-muted" style="font-size:.9375rem">Press it in — face, then neck, then décolletage. Never drag. Pressing helps absorption without pulling the skin.</p>
       </li>
       <li style="border-top:1px solid var(--rule);padding-top:1.5rem">
         <span class="zl-num">04</span>
-        <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Continue</h3>
-        <p class="zl-muted" style="font-size:.9375rem">Renewal is gradual. Eight to twelve weeks of unbroken use is the horizon the protocol is designed around.</p>
+        <h3 class="zl-display-s" style="margin:.75rem 0 .5rem">Layer</h3>
+        <p class="zl-muted" style="font-size:.9375rem">Give it about a minute, then the day cream or the night cream, according to the hour.</p>
       </li>
     </ol>
 
-    <div data-reveal style="margin-top:clamp(2.5rem,6vh,3.5rem);display:flex;flex-wrap:wrap;gap:1.25rem 2.5rem;align-items:center">
-      <span class="zl-eyebrow zl-eyebrow--bare" style="color:var(--mist)">Layers over</span>
-      <a class="zl-link" href="/products/day-cream">Environmental Shield Day Cream <span class="zl-link__arrow" aria-hidden="true">→</span></a>
-      <a class="zl-link" href="/products/night-cream">Renewal and Repair Night Cream <span class="zl-link__arrow" aria-hidden="true">→</span></a>
-    </div>
   </div>
 </section>
 
-<!-- ── 6. Editorial moment — the gel is the brand colour occurring naturally ─ -->
+<!-- ── 6. Editorial moment — the texture, and the headline it earns. ────── -->
 <section class="zl-section zl-wash">
   <div class="zl-container">
-    <div class="zl-media zl-media--wide" data-reveal="wipe" style="background:transparent">
+    <div class="zl-media zl-media--wide" data-reveal="wipe" style="background:var(--sage-wash)">
       <img src="/assets/atmosphere-serum-texture.webp"
-           alt="Macro study of the serum’s texture — a clear turquoise gel in motion"
-           loading="lazy" data-parallax="0.06"
+           alt="Macro detail of the serum — a clear turquoise gel caught mid-motion"
+           loading="lazy" width="5376" height="3072" data-parallax="0.06"
            style="object-fit:contain;mix-blend-mode:multiply">
     </div>
   </div>
@@ -531,76 +601,98 @@
         <span class="zl-eyebrow" data-reveal>Texture</span>
         <h2 class="zl-display-l" style="margin-top:1.25rem;max-width:12ch">
           <span class="zl-rise" style="--reveal-delay:80ms"><span>Liquid light.</span></span>
-          <span class="zl-rise" style="--reveal-delay:190ms"><span>Molecular <em class="zl-em--brand">intention</em>.</span></span>
+          <span class="zl-rise" style="--reveal-delay:200ms"><span>Molecular <em class="zl-em--brand">intention</em>.</span></span>
         </h2>
       </div>
-      <div class="zl-prose" data-reveal="far" style="--reveal-delay:200ms">
+      <div class="zl-prose" data-reveal="far" style="--reveal-delay:220ms">
         <p>
-          Each drop carries a payload calibrated for depth rather than for shine.
-          Weightless on the skin, cool for a second, gone in a few more — no film, no
-          tack, nothing left sitting on the surface to catch the light.
+          Cool for a second, gone in a few more. No film, no tack, nothing left
+          sitting on the surface to catch the light in the wrong way.
         </p>
         <p>
-          That absence is the point. A serum that announces itself is working on your
-          eyes. This one is designed to work on your tissue.
+          That absence is deliberate. A serum you can still feel an hour later is
+          working on your fingertips. This one is built to be somewhere else by
+          then.
         </p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── 7. The ritual ─────────────────────────────────────────────────────── -->
-<section class="zl-section zl-tint">
+<!-- ── 7. Where it sits — the neighbours, and the daily habit between. ──── -->
+<section class="zl-section">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
       <span class="zl-index-rule__num">05</span>
-      <span class="zl-eyebrow zl-eyebrow--bare">The Ritual</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">In the Protocol</span>
     </div>
 
-    <div class="zl-split zl-split--wide-img">
-      <div class="zl-media zl-media--editorial zl-split__media--first" data-reveal="wipe" style="background:transparent">
-        <img src="/assets/atmosphere-neck-skin-detail.webp"
-             alt="Close study of the neck and décolletage"
-             loading="lazy" data-parallax="0.05"
-             style="mix-blend-mode:multiply">
+    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(3rem,7vh,4.5rem)">
+      <h2 class="zl-display-l" style="max-width:15ch">
+        <span class="zl-rise"><span>The one that</span></span>
+        <span class="zl-rise" style="--reveal-delay:120ms"><span><em class="zl-em--brand">compounds</em>.</span></span>
+      </h2>
+      <p class="zl-lead" data-reveal style="--reveal-delay:280ms">
+        Steps 01 and 02 are weekly interventions. Step 03 is the one you do every
+        day — the connective tissue of the whole protocol, and the reason the
+        weekly steps have something to build on.
+      </p>
+    </div>
+
+    <div class="zl-grid zl-grid--3" data-stagger>
+      <a class="zl-step" href="/products/syringe">
+        <span class="zl-step__k">Before · Step 02</span>
+        <h3 class="zl-step__name">Precision Collagen Activation Syringe</h3>
+        <p class="zl-step__note">Weekly, and targeted. Applied to specific expression lines rather than across the face.</p>
+      </a>
+
+      <div class="zl-step zl-step--here">
+        <span class="zl-step__k" style="color:var(--house)">You are here · Step 03</span>
+        <h3 class="zl-step__name">BioSignal Facial Serum</h3>
+        <p class="zl-step__note">Daily, morning and evening. The habit that carries the signal between the weekly steps.</p>
       </div>
 
-      <div>
-        <h2 class="zl-display-l" style="max-width:12ch">
-          <span class="zl-rise"><span>Four</span></span>
-          <span class="zl-rise" style="--reveal-delay:110ms"><span><em class="zl-em--brand">movements</em>.</span></span>
-        </h2>
+      <a class="zl-step" href="/products/day-cream">
+        <span class="zl-step__k">After · Step 04</span>
+        <h3 class="zl-step__name">Environmental Shield Day Cream</h3>
+        <p class="zl-step__note">Goes on top, a minute later. It seals the serum in and takes the environmental load.</p>
+      </a>
+    </div>
 
-        <p class="zl-lead" data-reveal style="--reveal-delay:240ms;margin-top:1.5rem">
-          Ninety seconds, twice a day. The ritual exists so that the formulation is
-          applied the way it was designed to be applied.
-        </p>
+    <div data-reveal style="margin-top:clamp(2.5rem,6vh,3.5rem);display:flex;flex-wrap:wrap;gap:1.25rem 2.5rem">
+      <a class="zl-link" href="/protocol">The full protocol <span class="zl-link__arrow" aria-hidden="true">→</span></a>
+      <a class="zl-link" href="/products">All six formulations <span class="zl-link__arrow" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
 
-        <ol style="list-style:none;padding:0;margin:2.5rem 0 0;display:grid;gap:0" data-stagger>
-          <li style="display:flex;gap:1.75rem;align-items:baseline;padding:1.25rem 0;border-bottom:1px solid var(--rule)">
-            <span aria-hidden="true" style="flex:none;font-family:var(--font-display);font-size:1.5rem;color:var(--tiffany-deep);line-height:1">1</span>
-            <span><strong style="font-weight:500;display:block">Cleanse</strong><span style="color:var(--ink-3);font-size:.9375rem;line-height:1.7">Begin on perfectly clean, barely damp skin.</span></span>
-          </li>
-          <li style="display:flex;gap:1.75rem;align-items:baseline;padding:1.25rem 0;border-bottom:1px solid var(--rule)">
-            <span aria-hidden="true" style="flex:none;font-family:var(--font-display);font-size:1.5rem;color:var(--tiffany-deep);line-height:1">2</span>
-            <span><strong style="font-weight:500;display:block">Warm</strong><span style="color:var(--ink-3);font-size:.9375rem;line-height:1.7">Three to four drops into the palm. Press the hands together.</span></span>
-          </li>
-          <li style="display:flex;gap:1.75rem;align-items:baseline;padding:1.25rem 0;border-bottom:1px solid var(--rule)">
-            <span aria-hidden="true" style="flex:none;font-family:var(--font-display);font-size:1.5rem;color:var(--tiffany-deep);line-height:1">3</span>
-            <span><strong style="font-weight:500;display:block">Press</strong><span style="color:var(--ink-3);font-size:.9375rem;line-height:1.7">Press into the face, then the neck, then the décolletage. Never drag.</span></span>
-          </li>
-          <li style="display:flex;gap:1.75rem;align-items:baseline;padding:1.25rem 0;border-bottom:1px solid var(--rule)">
-            <span aria-hidden="true" style="flex:none;font-family:var(--font-display);font-size:1.5rem;color:var(--tiffany-deep);line-height:1">4</span>
-            <span><strong style="font-weight:500;display:block">Layer</strong><span style="color:var(--ink-3);font-size:.9375rem;line-height:1.7">Follow with the day cream or the night cream, according to the hour.</span></span>
-          </li>
-        </ol>
+<!-- ── The consultation — the skin analyser, offered rather than advertised ── -->
+<section class="zl-concierge" aria-labelledby="analysis-serum">
+  <div class="zl-container">
+    <div class="zl-concierge__inner" data-reveal>
+        <span class="zl-concierge__mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke-width="1" width="56" height="56">
+            <path d="M32 5c10 0 17.5 8.6 17.5 20.2S41.6 59 32 59s-17.5-22.2-17.5-33.8S22 5 32 5Z" stroke="var(--champagne)"/>
+            <path class="zl-concierge__tick" style="--tick-delay:140ms" d="M18.5 24h12" stroke="var(--signal)" stroke-width="1.25"/>
+            <path class="zl-concierge__tick" style="--tick-delay:300ms" d="M33.5 34h12" stroke="var(--signal)" stroke-width="1.25"/>
+            <path class="zl-concierge__tick" style="--tick-delay:460ms" d="M20.5 44h11" stroke="var(--signal)" stroke-width="1.25"/>
+          </svg>
+        </span>
+      <div class="zl-concierge__body">
+        <span class="zl-eyebrow zl-eyebrow--bare zl-concierge__label">The Skin Analysis</span>
+        <h2 class="zl-display-s zl-concierge__title" id="analysis-serum">Is a daily signal what <em class="zl-em--brand">your</em> skin is missing?</h2>
+        <p class="zl-concierge__copy">Ten questions and one photograph. The analyser reads your skin across eight markers, sets out what appears to be driving them, and names the formulations that follow — the serum among them, or not.</p>
+      </div>
+      <div class="zl-concierge__action">
+        <a class="zl-btn zl-btn--ghost" href="/analyser/">Begin the analysis</a>
+        <span class="zl-concierge__note">Complimentary · Two minutes<br>Your photograph is not kept</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── 8. FAQ ────────────────────────────────────────────────────────────── -->
-<section class="zl-section">
+<!-- ── 8. FAQ ───────────────────────────────────────────────────────────── -->
+<section class="zl-section zl-tint">
   <div class="zl-container zl-container--mid">
     <div class="zl-index-rule" data-reveal>
       <span class="zl-index-rule__num">06</span>
@@ -613,43 +705,33 @@
 
     <div class="zl-faq" data-stagger>
       <details class="zl-faq__item">
-        <summary class="zl-faq__q">How long before I see results?</summary>
-        <p class="zl-faq__a">The Serum is designed for progressive support rather than an overnight change. Texture and radiance are the first qualities the formulation is built to address; the structural support it is designed for accumulates across eight to twelve weeks of consistent twice-daily use. Individual results vary.</p>
+        <summary class="zl-faq__q">What will I notice on the first day?</summary>
+        <p class="zl-faq__a">It absorbs in seconds, and the skin looks plumper and more luminous almost straight away — often before you have finished the rest of your routine. That is a change in appearance, and it is meant to be one.</p>
       </details>
 
       <details class="zl-faq__item">
-        <summary class="zl-faq__q">Can I use it alongside other serums?</summary>
-        <p class="zl-faq__a">The Serum is designed as the comprehensive daily treatment inside the Longevity Protocol, so we recommend it as your primary active serum. If you want to keep another product in your routine, use it at a different time of day.</p>
+        <summary class="zl-faq__q">How long before the lasting effect shows?</summary>
+        <p class="zl-faq__a">Daily use is what carries it. The support accumulates gradually, and eight to twelve weeks of unbroken twice-daily use is the horizon the protocol is written for. Individual results vary.</p>
       </details>
 
       <details class="zl-faq__item">
-        <summary class="zl-faq__q">Should I use it in the morning or the evening?</summary>
-        <p class="zl-faq__a">The protocol is written for twice daily — morning and evening. If you prefer once, choose the evening, so the active compounds work alongside the skin’s own overnight renewal cycle.</p>
+        <summary class="zl-faq__q">Morning or evening?</summary>
+        <p class="zl-faq__a">Both — the protocol is written for twice daily. If you can only manage once, choose the evening, so the actives sit alongside the skin’s own overnight renewal.</p>
       </details>
 
       <details class="zl-faq__item">
-        <summary class="zl-faq__q">How long does one bottle last?</summary>
-        <p class="zl-faq__a">With twice-daily use of three to four drops, one bottle is designed to last approximately six to eight weeks.</p>
+        <summary class="zl-faq__q">Can I keep using my other serum?</summary>
+        <p class="zl-faq__a">The BioSignal is designed as the primary active serum inside the protocol. If you want to keep another, use it at a different time of day rather than layering the two.</p>
       </details>
 
       <details class="zl-faq__item">
-        <summary class="zl-faq__q">Is it oily or heavy?</summary>
-        <p class="zl-faq__a">No. The texture is lightweight and fast-absorbing, formulated to leave no residue so that it layers cleanly under a moisturiser or a sunscreen.</p>
+        <summary class="zl-faq__q">Do I still need the Syringe if I use this?</summary>
+        <p class="zl-faq__a">They do different jobs. The <a href="/products/syringe" style="color:var(--house);text-decoration:underline;text-underline-offset:.2em">Syringe</a> is a weekly, targeted treatment on specific expression lines; the Serum is the daily one, across the whole face and neck. The protocol is designed around both.</p>
       </details>
 
       <details class="zl-faq__item">
-        <summary class="zl-faq__q">Can I skip this step if I use the Precision Collagen Activation Syringe?</summary>
-        <p class="zl-faq__a">They do different jobs. The <a href="/products/syringe" style="color:var(--tiffany-deep);text-decoration:underline;text-underline-offset:.2em">Syringe</a> is a weekly, targeted intervention on specific areas. The Serum is the daily treatment across the whole face and neck. The protocol is designed around both, in sequence.</p>
-      </details>
-
-      <details class="zl-faq__item">
-        <summary class="zl-faq__q">Is it suitable for all skin types?</summary>
-        <p class="zl-faq__a">The Serum is formulated for external facial application and is suitable for most skin types, including oily, combination and dry. If your skin is reactive, or you are treating a diagnosed condition, speak to your doctor or a dermatologist before adding any new active.</p>
-      </details>
-
-      <details class="zl-faq__item">
-        <summary class="zl-faq__q">What happens if I miss a day?</summary>
-        <p class="zl-faq__a">Nothing is undone. Consistency is what the protocol is built on, so simply return to the routine the next day — regular daily application is what the progressive support is designed around.</p>
+        <summary class="zl-faq__q">Is it suitable for reactive skin?</summary>
+        <p class="zl-faq__a">It is formulated for external use on the face, neck and décolletage and suits most skin types, including oily, combination and dry. If your skin is reactive, or you are treating a diagnosed condition, speak to your doctor or a dermatologist before adding any new active.</p>
       </details>
     </div>
 
@@ -659,7 +741,7 @@
   </div>
 </section>
 
-<!-- ── 9. Waitlist — the page's bold turquoise moment ────────────────────── -->
+<!-- ── 9. Close — not for sale yet. ─────────────────────────────────────── -->
 <section class="zl-section zl-brand-field" id="waitlist">
   <div class="zl-container zl-container--narrow zl-center">
     <span class="zl-eyebrow zl-eyebrow--center" data-reveal>Early Access</span>
@@ -669,8 +751,9 @@
     </h2>
 
     <p class="zl-lead zl-center" data-reveal style="--reveal-delay:220ms;margin-bottom:2.75rem">
-      The BioSignal Facial Serum is in pre-launch. Register and we will write to you
-      first — with early access and an invitation to a complimentary skin analysis.
+      The BioSignal Facial Serum is in pre-launch. Register and we will write to
+      you first — with early access and an invitation to a complimentary skin
+      analysis.
     </p>
 
     <form name="waitlist" method="POST" action="/thank-you/"
@@ -689,13 +772,13 @@
 
       <p class="zl-form__note" style="margin-top:1.25rem">
         We write rarely, and only about the protocol. Unsubscribe at any time.
-        See our <a href="/privacy.html" style="color:var(--ink);text-decoration:underline">privacy policy</a>.
+        See our <a href="/privacy.html" style="color:#fff;text-decoration:underline">privacy policy</a>.
       </p>
     </form>
 
-    <p data-reveal style="--reveal-delay:400ms;margin-top:2.75rem;font-size:.875rem;color:var(--ink)">
+    <p data-reveal style="--reveal-delay:400ms;margin-top:2.75rem;font-size:.875rem;color:#fff">
       Questions before then?
-      <a href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%27d%20like%20to%20know%20more%20about%20the%20BioSignal%20Facial%20Serum." style="color:var(--ink);text-decoration:underline;text-underline-offset:.2em">Talk to us on WhatsApp</a>.
+      <a href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%27d%20like%20to%20know%20more%20about%20the%20BioSignal%20Facial%20Serum." style="color:#fff;text-decoration:underline;text-underline-offset:.2em">Message us on WhatsApp</a>.
     </p>
   </div>
 </section>

@@ -19,14 +19,52 @@ const MEASURE = `(() => {
   function over(fg,bg){ // composite fg (with alpha) onto opaque bg
     return [ fg.r*fg.a + bg.r*(1-fg.a), fg.g*fg.a + bg.g*(1-fg.a), fg.b*fg.a + bg.b*(1-fg.a) ];
   }
+  // Walking ancestor background-color ONLY is how this checker previously
+  // reported contrastFails=0 for hero copy sitting on a bare photograph: the
+  // ancestors were all transparent, so it fell through to the page bone and
+  // declared the text legible. Text over imagery has to be treated as unknown
+  // rather than silently assumed to be on the page colour.
   function backdrop(el){
     let n = el;
     while(n && n !== document.documentElement){
-      const bg = parse(getComputedStyle(n).backgroundColor);
-      if(bg && bg.a === 1) return [bg.r,bg.g,bg.b];
+      const cs = getComputedStyle(n);
+      if(cs.backgroundImage && cs.backgroundImage !== 'none') return { overImage: true };
+      const bg = parse(cs.backgroundColor);
+      if(bg && bg.a === 1) return { rgb: [bg.r,bg.g,bg.b] };
       n = n.parentElement;
     }
-    return [255,255,255];
+    return { rgb: [255,255,255] };
+  }
+
+  // Is this text painted OVER an image, rather than merely near one?
+  //
+  // Geometric containment alone over-reports badly: a product card's name sits
+  // below its picture but a large editorial image elsewhere on the page can still
+  // enclose its rect. The distinguishing property of a genuine backdrop is that
+  // it is taken out of flow — in this design decorative images always live in an
+  // absolutely-positioned wrapper, while content images sit in normal flow.
+  function overPhoto(el){
+    const r = el.getBoundingClientRect();
+    if(r.width === 0 || r.height === 0) return false;
+
+    for(const img of document.images){
+      const ir = img.getBoundingClientRect();
+      if(ir.width < 200 || ir.height < 200) continue;
+      if(img.contains(el) || el.contains(img)) continue;
+
+      const covers = ir.left <= r.left+2 && ir.right >= r.right-2 &&
+                     ir.top  <= r.top+2  && ir.bottom >= r.bottom-2;
+      if(!covers) continue;
+
+      // the image, or a wrapper above it, must be out of flow to be a backdrop
+      let outOfFlow = false;
+      for(let n = img; n && n !== document.body; n = n.parentElement){
+        const pos = getComputedStyle(n).position;
+        if(pos === 'absolute' || pos === 'fixed'){ outOfFlow = true; break; }
+      }
+      if(outOfFlow) return true;
+    }
+    return false;
   }
   const fails = [];
   const nodes = document.querySelectorAll('body *');
@@ -37,20 +75,27 @@ const MEASURE = `(() => {
     const cs = getComputedStyle(el);
     if(cs.visibility==='hidden' || cs.display==='none' || parseFloat(cs.opacity)===0) continue;
     const fg = parse(cs.color); if(!fg) continue;
-    const bg = backdrop(el);
-    const comp = over(fg, {r:bg[0],g:bg[1],b:bg[2]});
-    const L1 = lum(comp), L2 = lum(bg);
-    const ratio = (Math.max(L1,L2)+0.05)/(Math.min(L1,L2)+0.05);
     const size = parseFloat(cs.fontSize);
     const bold = parseInt(cs.fontWeight,10) >= 700;
     const large = size >= 24 || (size >= 18.66 && bold);
     const need = large ? 3 : 4.5;
+    const label = el.tagName.toLowerCase() + (el.className && typeof el.className==='string' ? '.'+el.className.trim().split(/\\s+/).slice(0,2).join('.') : '');
+    const snippet = (el.textContent||'').trim().slice(0,42);
+
+    const bd = backdrop(el);
+    if(bd.overImage || overPhoto(el)){
+      // Cannot be computed from styles. Report it so a human looks, rather than
+      // scoring it against a page colour that is not actually behind the text.
+      fails.push({ sel: label, text: snippet, ratio: null, need, size: Math.round(size), overImage: true });
+      continue;
+    }
+
+    const bg = bd.rgb;
+    const comp = over(fg, {r:bg[0],g:bg[1],b:bg[2]});
+    const L1 = lum(comp), L2 = lum(bg);
+    const ratio = (Math.max(L1,L2)+0.05)/(Math.min(L1,L2)+0.05);
     if(ratio + 0.005 < need){
-      fails.push({
-        sel: el.tagName.toLowerCase() + (el.className && typeof el.className==='string' ? '.'+el.className.trim().split(/\\s+/).slice(0,2).join('.') : ''),
-        text: (el.textContent||'').trim().slice(0,42),
-        ratio: +ratio.toFixed(2), need, size: Math.round(size)
-      });
+      fails.push({ sel: label, text: snippet, ratio: +ratio.toFixed(2), need, size: Math.round(size) });
     }
   }
   return fails;
@@ -107,9 +152,17 @@ const MEASURE = `(() => {
       if (ghost && ghost.scrolled === 'true' && !ghost.opaque) flags.push(`header not opaque when scrolled (alpha ${ghost.alpha})`);
       if (covered.length) flags.push(`cookie notice covers: ${covered.join(', ')}`);
 
-      console.log(`${p} [${label}]  contrastFails=${fails.length}${flags.length ? '  ⚠ ' + flags.join(' | ') : ''}`);
-      fails.slice(0, 6).forEach((f) => console.log(`      ${f.ratio}:1 (needs ${f.need}) ${f.size}px  ${f.sel}  "${f.text}"`));
-      if (fails.length > 6) console.log(`      … and ${fails.length - 6} more`);
+      const overImg = fails.filter((f) => f.overImage);
+      const measured = fails.filter((f) => !f.overImage);
+      totalFails -= overImg.length;   // counted separately below
+
+      console.log(`${p} [${label}]  contrastFails=${measured.length}` +
+        (overImg.length ? `  textOverImage=${overImg.length}` : '') +
+        (flags.length ? '  ⚠ ' + flags.join(' | ') : ''));
+      measured.slice(0, 6).forEach((f) => console.log(`      ${f.ratio}:1 (needs ${f.need}) ${f.size}px  ${f.sel}  "${f.text}"`));
+      if (measured.length > 6) console.log(`      … and ${measured.length - 6} more`);
+      overImg.slice(0, 4).forEach((f) => console.log(`      OVER IMAGE — check by eye: ${f.size}px ${f.sel}  "${f.text}"`));
+      if (overImg.length > 4) console.log(`      … and ${overImg.length - 4} more over imagery`);
 
       await ctx.close();
     }

@@ -30,5 +30,8 @@
 /accessibility              /accessibility.html       301
 /shipping                   /shipping-returns.html    301
 /shipping-returns           /shipping-returns.html    301
-/analyser                   /#analyser                301
-/analyzer                   /#analyser                301
+# These two pointed at /#analyser — a homepage anchor that does not exist — so
+# anyone typing zerolines.life/analyser landed at the top of the homepage and
+# never found the analyser at all. They now go to the page itself.
+/analyser                   /analyser/                301
+/analyzer                   /analyser/                301
