@@ -108,6 +108,12 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 1.5rem);
 }
+/* When lenis is driving the scroll it must own it outright. CSS smooth-scroll
+   animates the same property lenis is writing each frame, and the two fight:
+   in-page anchors were landing ~1,100px short of their target on every jump.
+   zl.js adds this class only when a lenis instance actually starts, so viewports
+   without it keep native smooth scrolling. */
+html.zl-lenis { scroll-behavior: auto; }
 
 body {
   margin: 0;
@@ -357,6 +363,14 @@ input, textarea, select { font: inherit; color: inherit; }
 .zl-btn--brand:hover { border-color: var(--ink); }
 /* On a turquoise field: white fill, ink label. Turquoise-on-white was 2.41:1. */
 .zl-btn--on-brand { --btn-fg: var(--ink); --btn-bg: #fff; --btn-bd: #fff; --btn-hover-bg: var(--ink); }
+/* Outline pairing for the turquoise field. */
+.zl-btn--on-brand-ghost { --btn-fg: var(--ink); --btn-bg: transparent; --btn-bd: rgba(11,13,13,.45); --btn-hover-bg: var(--ink); }
+.zl-btn--on-brand-ghost:hover { color: #fff; border-color: var(--ink); }
+/* Defensive: the dark-field ghost is easy to reach for by mistake on a
+   turquoise section, where its light label measures 2.23:1. Resolve it to
+   ink there rather than depending on every page choosing the right variant. */
+.zl-brand-field .zl-btn--on-dark-ghost { --btn-fg: var(--ink); --btn-bd: rgba(11,13,13,.45); }
+.zl-brand-field .zl-btn--on-dark-ghost:hover { color: #fff; }
 .zl-btn--on-brand:hover { color: #fff; }
 
 .zl-link {

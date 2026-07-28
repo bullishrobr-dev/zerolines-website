@@ -83,3 +83,32 @@
    "Zero Lines" [/]  ->  /
    "Science" [/science]  ->  /science
    "Protocol" [/protocol]  ->  /protocol
+   "Formulations" [/products]  ->  /products
+   "Story" [/story]  ->  /story
+   "Analyser" [/analyser/]  ->  /analyser/
+   "Journal" [/blog/]  ->  /blog/
+   "Contact" [/contact]  ->  /contact
+
+=== /analyser/
+   "Zero Lines" [/]  ->  /
+   "Science" [/science]  ->  /science
+   "Protocol" [/protocol]  ->  /protocol
+   "Formulations" [/products]  ->  /products
+   "Story" [/story]  ->  /story
+   "Analyser" [/analyser/]  ->  /analyser/
+   "Journal" [/blog/]  ->  /blog/
+   "Contact" [/contact]  ->  /contact
+
+=== /faq.html
+   "Zero Lines" [/]  ->  /
+   "Science" [/science]  ->  /science
+   "Protocol" [/protocol]  ->  /protocol
+   "Formulations" [/products]  ->  /products
+   "Story" [/story]  ->  /story
+   "Analyser" [/analyser/]  ->  /analyser/
+   "Journal" [/blog/]  ->  /blog/
+   "Contact" [/contact]  ->  /contact
+   "01
+        The science" [#science]  ->  CLICK FAILED
+   "02
+        The protoco" [#protocol]  ->  CLICK FAILED
