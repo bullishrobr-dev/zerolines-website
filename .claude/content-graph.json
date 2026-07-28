@@ -4,22 +4,23 @@
   {
    "path": "/blog/algae-marine-ingredients.html",
    "file": "blog/algae-marine-ingredients.html",
-   "title": "Brown Algae and Red Algae: Marine Ingredients That Actually Work — Zero Lines",
-   "description": "Marine algae have evolved UV-protective compounds, antioxidant systems, and moisture-retention mechanisms that translate directly to skin benefits.",
+   "title": "Marine Algae Skincare: Brown & Red — Zero Lines Journal",
+   "description": "Brown algae exfoliate gently, red algae shield against UV, and green algae lock in moisture. Here's how marine ingredients earn their place in skincare.",
    "h1": "Brown Algae and Red Algae: Marine Ingredients That Actually Work",
    "h2s": [
     "Brown Algae: The Exfoliation Expert",
     "Red Algae: The UV Protector",
     "Why Marine Ingredients Work",
     "Green Algae: The Hydration Specialist",
-    "Sustainability Considerations",
+    "Are Marine Ingredients Sustainable?",
     "Marine Ingredients in the Zero Lines Range",
-    "Future Directions in Marine Skincare"
+    "What's Next for Marine Skincare?"
    ],
    "keywords": [
-    "brown",
-    "algae",
     "marine",
+    "algae",
+    "brown",
+    "journal",
     "ingredients",
     "actually",
     "work",
@@ -29,27 +30,26 @@
     "green",
     "hydration",
     "specialist",
-    "sustainability",
-    "considerations",
+    "sustainable",
     "range",
-    "future",
-    "directions"
+    "next"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/weekly-exfoliation-vs-daily.html",
-    "/products/peeling-gel",
-    "/products/day-cream",
-    "/blog/spf-every-day-habit.html",
-    "/blog/read-skincare-label.html",
-    "/blog/niacinamide-ingredient-over-30.html",
+    "/products/peeling-gel/",
+    "/products/day-cream/",
+    "/blog/morning-vs-night-routine.html",
+    "/blog/hydrolyzed-collagen-myth-miracle.html",
     "/blog/botanical-vs-synthetic-peptides.html",
+    "/blog/niacinamide-ingredient-over-30.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -57,66 +57,71 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 951,
+   "words": 983,
    "linksIn": [
     "/blog/botanical-vs-synthetic-peptides.html",
     "/blog/category-ingredients.html",
+    "/blog/hydrolyzed-collagen-myth-miracle.html",
     "/blog/",
     "/blog/niacinamide-ingredient-over-30.html",
     "/blog/read-skincare-label.html",
-    "/blog/weekly-exfoliation-vs-daily.html"
+    "/blog/weekly-exfoliation-vs-daily.html",
+    "/blog/zero-lines-protocol.html",
+    "/products/peeling-gel"
    ]
   },
   {
    "path": "/blog/andorra-alpine-secret.html",
    "file": "blog/andorra-alpine-secret.html",
-   "title": "Andorra's Alpine Secret: The Science Behind High-Altitude Spring Water — Zero Lines",
-   "description": "Tucked between France and Spain, Andorra's Pyrenean springs produce water with a mineral balance that mirrors the skin's natural hydration factors.",
+   "title": "Andorra's High-Altitude Spring Water — Zero Lines Journal",
+   "description": "Why Zero Lines builds every formulation on high-altitude spring water from Andorra: the mineral profile, the granite aquifers, and what it does for skin.",
    "h1": "Andorra's Alpine Secret: The Science Behind High-Altitude Spring Water",
    "h2s": [
-    "A Unique Geological Position",
-    "The Mineral Signature",
+    "Where Does Andorra's Spring Water Come From?",
+    "What Minerals Are in Andorran Spring Water?",
     "Why Andorra, Not Elsewhere?",
-    "From Spring to Serum",
+    "How Does the Water Get from Spring to Serum?",
     "Mineral Water vs. Purified Water in Skincare",
     "The Future of Water in Skincare"
    ],
    "keywords": [
     "andorra",
+    "high-altitude",
+    "spring",
+    "water",
+    "journal",
     "alpine",
     "secret",
     "science",
     "behind",
-    "high-altitude",
-    "spring",
-    "water",
-    "unique",
-    "geological",
-    "position",
-    "mineral",
-    "signature",
+    "come",
+    "minerals",
+    "andorran",
     "elsewhere",
     "serum",
+    "mineral",
     "purified",
     "future"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/pyrenees-to-barcelona.html",
-    "/products/serum",
-    "/products/day-cream",
-    "/products/night-cream",
-    "/products/peeling-gel",
     "/blog/why-pyrenean-mineral-water.html",
     "/blog/how-altitude-changes-water.html",
+    "/blog/climate-skincare-needs.html",
+    "/products/serum/",
+    "/products/day-cream/",
+    "/products/night-cream/",
+    "/products/peeling-gel/",
     "/blog/how-to-layer-skincare.html",
     "/blog/read-skincare-label.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -124,37 +129,41 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 818,
+   "words": 865,
    "linksIn": [
     "/blog/category-brand-story.html",
+    "/blog/climate-skincare-needs.html",
     "/blog/how-altitude-changes-water.html",
     "/blog/how-to-layer-skincare.html",
     "/blog/",
     "/blog/inside-the-lab.html",
     "/blog/pyrenees-to-barcelona.html",
     "/blog/read-skincare-label.html",
-    "/blog/why-pyrenean-mineral-water.html"
+    "/blog/why-pyrenean-mineral-water.html",
+    "/products/",
+    "/story"
    ]
   },
   {
    "path": "/blog/botanical-vs-synthetic-peptides.html",
    "file": "blog/botanical-vs-synthetic-peptides.html",
-   "title": "Botanical Peptides vs. Synthetic Peptides: What's the Difference? — Zero Lines",
-   "description": "Plant-derived signalling molecules versus lab-engineered amino acid chains. Both have merit, but their mechanisms and skin compatibility differ in important ways.",
+   "title": "Botanical vs Synthetic Peptides — Zero Lines Journal",
+   "description": "Botanical peptides come from plants, synthetic ones from the lab. How the two differ in signalling, complexity, and skin tolerance — and why we use both.",
    "h1": "Botanical Peptides vs. Synthetic Peptides: What's the Difference?",
    "h2s": [
     "What Peptides Actually Do",
     "Synthetic Peptides: Precision Engineering",
     "Botanical Peptides: Nature's Complexity",
     "The Zero Lines Approach: Both",
-    "How to Choose",
+    "How to Choose Between Botanical and Synthetic Peptides",
     "Signal Peptides: How They Work",
     "The Zero Lines Approach: Hybrid Peptide Technology"
    ],
    "keywords": [
     "botanical",
-    "peptides",
     "synthetic",
+    "peptides",
+    "journal",
     "difference",
     "actually",
     "precision",
@@ -164,6 +173,7 @@
     "approach",
     "both",
     "choose",
+    "between",
     "signal",
     "they",
     "work",
@@ -172,20 +182,21 @@
     "technology"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
-    "/blog/collagen-decline-biological-clock.html",
-    "/products/syringe",
+    "/contact/",
     "/blog/hydrolyzed-collagen-myth-miracle.html",
-    "/blog/zero-lines-protocol.html",
+    "/products/syringe/",
+    "/blog/collagen-decline-biological-clock.html",
+    "/products/serum/",
     "/blog/algae-marine-ingredients.html",
     "/blog/weekly-exfoliation-vs-daily.html",
-    "/products/syringe-refill",
+    "/products/syringe-refill/",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -193,43 +204,54 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 912,
+   "words": 929,
    "linksIn": [
     "/blog/algae-marine-ingredients.html",
     "/blog/category-ingredients.html",
     "/blog/collagen-decline-biological-clock.html",
+    "/blog/fine-lines-vs-wrinkles.html",
     "/blog/hydrolyzed-collagen-myth-miracle.html",
     "/blog/",
+    "/blog/morning-vs-night-routine.html",
     "/blog/read-skincare-label.html",
+    "/blog/spf-every-day-habit.html",
     "/blog/weekly-exfoliation-vs-daily.html",
+    "/blog/zero-lines-protocol.html",
     "/products/",
+    "/products/syringe",
+    "/products/serum",
+    "/products/syringe-refill",
     "/science"
    ]
   },
   {
    "path": "/blog/category-brand-story.html",
    "file": "blog/category-brand-story.html",
-   "title": "Brand Story | Zero Lines Journal",
-   "description": "The origin, sourcing, and philosophy behind Zero Lines.",
+   "title": "Brand Story — Zero Lines Journal | Source &amp; Craft",
+   "description": "From Andorran spring water to a Barcelona laboratory: the places, the decisions and the four years of formulation work behind Zero Lines.",
    "h1": "Brand Story",
    "h2s": [],
    "keywords": [
     "brand",
     "story",
-    "journal"
+    "journal",
+    "source",
+    "craft"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
-    "/blog/why-pyrenean-mineral-water.html",
-    "/blog/andorra-alpine-secret.html",
+    "/contact/",
     "/blog/pyrenees-to-barcelona.html",
     "/blog/inside-the-lab.html",
+    "/blog/andorra-alpine-secret.html",
+    "/blog/why-pyrenean-mineral-water.html",
+    "/blog/category-brand-story.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -237,32 +259,38 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 68,
-   "linksIn": []
+   "words": 132,
+   "linksIn": [
+    "/blog/"
+   ]
   },
   {
    "path": "/blog/category-ingredients.html",
    "file": "blog/category-ingredients.html",
-   "title": "Ingredients | Zero Lines Journal",
-   "description": "Deep dives into the active ingredients that power effective formulations.",
+   "title": "Ingredients — Zero Lines Journal | Actives, Explained",
+   "description": "Niacinamide, hydrolysed collagen, marine algae and botanical peptides — what each active actually does in skin and how to judge it on a label.",
    "h1": "Ingredients",
    "h2s": [],
    "keywords": [
     "ingredients",
-    "journal"
+    "journal",
+    "actives",
+    "explained"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/niacinamide-ingredient-over-30.html",
-    "/blog/algae-marine-ingredients.html",
     "/blog/hydrolyzed-collagen-myth-miracle.html",
     "/blog/botanical-vs-synthetic-peptides.html",
+    "/blog/category-ingredients.html",
+    "/blog/algae-marine-ingredients.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -270,31 +298,37 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 65,
-   "linksIn": []
+   "words": 129,
+   "linksIn": [
+    "/blog/"
+   ]
   },
   {
    "path": "/blog/category-lifestyle.html",
    "file": "blog/category-lifestyle.html",
-   "title": "Lifestyle | Zero Lines Journal",
-   "description": "How sleep, stress, diet, and environment affect your skin.",
+   "title": "Lifestyle — Zero Lines Journal | Sleep, Stress, Skin",
+   "description": "How sleep debt, cortisol and daily habits show up on your face — three articles on the lifestyle side of skin ageing and what to change first.",
    "h1": "Lifestyle",
    "h2s": [],
    "keywords": [
     "lifestyle",
-    "journal"
+    "journal",
+    "sleep",
+    "stress"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
+    "/blog/sleep-repairs-skin.html",
     "/blog/cortisol-stress-aging.html",
     "/blog/lifestyle-factors-aging.html",
-    "/blog/sleep-repairs-skin.html",
+    "/blog/category-lifestyle.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -302,34 +336,41 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 60,
-   "linksIn": []
+   "words": 108,
+   "linksIn": [
+    "/blog/"
+   ]
   },
   {
    "path": "/blog/category-routine.html",
    "file": "blog/category-routine.html",
-   "title": "Routine | Zero Lines Journal",
-   "description": "Step-by-step guides to building effective morning, evening, and weekly skincare routines.",
+   "title": "Routine — Zero Lines Journal | Order, Timing, Habit",
+   "description": "Practical guides to sequence: layering order, morning versus night, weekly exfoliation, daily SPF and what the first thirty days of a protocol feel like.",
    "h1": "Routine",
    "h2s": [],
    "keywords": [
     "routine",
-    "journal"
+    "journal",
+    "order",
+    "timing",
+    "habit"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/zero-lines-protocol.html",
-    "/blog/first-30-days-protocol.html",
     "/blog/how-to-layer-skincare.html",
+    "/blog/first-30-days-protocol.html",
+    "/blog/category-routine.html",
     "/blog/spf-every-day-habit.html",
     "/blog/morning-vs-night-routine.html",
     "/blog/weekly-exfoliation-vs-daily.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -337,36 +378,41 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 85,
-   "linksIn": []
+   "words": 159,
+   "linksIn": [
+    "/blog/"
+   ]
   },
   {
    "path": "/blog/category-science.html",
    "file": "blog/category-science.html",
-   "title": "Science | Zero Lines Journal",
-   "description": "Science-backed insights into skin biology, ageing mechanisms, and ingredient research.",
+   "title": "Science — Zero Lines Journal | How Skin Ages",
+   "description": "Eight articles on the biology of visible ageing: collagen decline, fine lines versus wrinkles, water chemistry and how climate shapes what skin needs.",
    "h1": "Science",
    "h2s": [],
    "keywords": [
     "science",
-    "journal"
+    "journal",
+    "ages"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/complete-guide-skin-aging.html",
     "/blog/collagen-decline-biological-clock.html",
     "/blog/fine-lines-vs-wrinkles.html",
+    "/blog/category-science.html",
     "/blog/drinking-water-better-skin.html",
     "/blog/understanding-skin-type.html",
     "/blog/how-altitude-changes-water.html",
     "/blog/climate-skincare-needs.html",
     "/blog/read-skincare-label.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -374,64 +420,72 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 90,
-   "linksIn": []
+   "words": 176,
+   "linksIn": [
+    "/blog/"
+   ]
   },
   {
    "path": "/blog/climate-skincare-needs.html",
    "file": "blog/climate-skincare-needs.html",
-   "title": "Barcelona to Gibraltar: How Climate Affects Your Skincare Needs — Zero Lines",
-   "description": "Mediterranean humidity, coastal salt air, and alpine dryness — why a formulation made for one climate may underperform in another.",
+   "title": "Climate Skincare Needs, Zone by Zone — Zero Lines Journal",
+   "description": "Barcelona humidity, Gibraltar salt air, Andorran alpine cold: how climate changes your skincare needs and what to adjust when you move between zones.",
    "h1": "Barcelona to Gibraltar: How Climate Affects Your Skincare Needs",
    "h2s": [
-    "Mediterranean Humidity: Barcelona & Marbella",
-    "Coastal Salt Air: Gibraltar",
-    "Alpine Dryness: Andorra",
-    "Seasonal Variation",
-    "Adapting Your Routine to Travel",
-    "The Formulation Challenge",
-    "Building a Climate-Adaptive Protocol"
+    "Humid Climate Skincare: Barcelona & Marbella",
+    "What Salt Air Does to Skin: Gibraltar",
+    "High-Altitude Skincare: Andorra",
+    "How Seasons Change Your Skincare Needs",
+    "How to Adapt Your Skincare Routine for Travel",
+    "Can One Formulation Work in Every Climate?",
+    "How to Build a Climate-Adaptive Skincare Routine"
    ],
    "keywords": [
+    "climate",
+    "needs",
+    "zone",
+    "journal",
     "barcelona",
     "gibraltar",
-    "climate",
     "affects",
-    "needs",
-    "mediterranean",
-    "humidity",
+    "humid",
     "marbella",
-    "coastal",
     "salt",
-    "alpine",
-    "dryness",
+    "high-altitude",
     "andorra",
-    "seasonal",
-    "variation",
-    "adapting",
+    "seasons",
+    "change",
+    "adapt",
     "routine",
     "travel",
     "formulation",
-    "challenge",
-    "building",
-    "climate-adaptive",
-    "protocol"
+    "work",
+    "build",
+    "climate-adaptive"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
+    "/blog/andorra-alpine-secret.html",
     "/blog/spf-every-day-habit.html",
-    "/products/serum",
-    "/products/day-cream",
-    "/products/night-cream",
-    "/blog/drinking-water-better-skin.html",
+    "/blog/weekly-exfoliation-vs-daily.html",
+    "/products/serum/",
+    "/products/day-cream/",
+    "/products/night-cream/",
     "/blog/why-pyrenean-mineral-water.html",
+    "/blog/understanding-skin-type.html",
+    "/blog/cortisol-stress-aging.html",
+    "/blog/pyrenees-to-barcelona.html",
+    "/products/peeling-gel/",
+    "/blog/zero-lines-protocol.html",
     "/blog/first-30-days-protocol.html",
+    "/blog/drinking-water-better-skin.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -439,21 +493,24 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 889,
+   "words": 965,
    "linksIn": [
+    "/blog/andorra-alpine-secret.html",
     "/blog/category-science.html",
     "/blog/drinking-water-better-skin.html",
     "/blog/first-30-days-protocol.html",
     "/blog/",
+    "/blog/pyrenees-to-barcelona.html",
     "/blog/spf-every-day-habit.html",
-    "/blog/understanding-skin-type.html"
+    "/blog/understanding-skin-type.html",
+    "/products/day-cream"
    ]
   },
   {
    "path": "/blog/collagen-decline-biological-clock.html",
    "file": "blog/collagen-decline-biological-clock.html",
-   "title": "Collagen Decline: The Biological Clock You Can Slow Down — Zero Lines",
-   "description": "We lose 1% of collagen per year after 30. But that decline is not inevitable — here's what the research says about slowing it.",
+   "title": "Collagen Decline: Slow the Clock — Zero Lines Journal",
+   "description": "After 30, your skin makes less collagen every year, but that decline is not inevitable. Here's what slows collagen loss, from peptides to daily SPF.",
    "h1": "Collagen Decline: The Biological Clock You Can Slow Down",
    "h2s": [
     "Why Collagen Declines",
@@ -466,9 +523,10 @@
    "keywords": [
     "collagen",
     "decline",
-    "biological",
-    "clock",
     "slow",
+    "clock",
+    "journal",
+    "biological",
     "declines",
     "research",
     "says",
@@ -483,20 +541,24 @@
     "factors"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/hydrolyzed-collagen-myth-miracle.html",
-    "/products/syringe",
     "/blog/complete-guide-skin-aging.html",
     "/blog/botanical-vs-synthetic-peptides.html",
+    "/products/syringe/",
+    "/blog/lifestyle-factors-aging.html",
+    "/blog/drinking-water-better-skin.html",
+    "/blog/understanding-skin-type.html",
     "/blog/how-altitude-changes-water.html",
     "/blog/how-to-layer-skincare.html",
-    "/products/syringe-refill",
+    "/products/syringe-refill/",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -504,25 +566,31 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 988,
+   "words": 987,
    "linksIn": [
     "/blog/botanical-vs-synthetic-peptides.html",
     "/blog/category-science.html",
     "/blog/complete-guide-skin-aging.html",
+    "/blog/cortisol-stress-aging.html",
+    "/blog/drinking-water-better-skin.html",
     "/blog/fine-lines-vs-wrinkles.html",
     "/blog/how-altitude-changes-water.html",
     "/blog/how-to-layer-skincare.html",
     "/blog/hydrolyzed-collagen-myth-miracle.html",
     "/blog/",
-    "/science"
+    "/blog/lifestyle-factors-aging.html",
+    "/products/syringe",
+    "/products/syringe-refill",
+    "/science",
+    "/faq.html"
    ]
   },
   {
    "path": "/blog/complete-guide-skin-aging.html",
    "file": "blog/complete-guide-skin-aging.html",
-   "title": "The Complete Guide to Skin Aging: What Actually Happens After 30 — Zero Lines",
-   "description": "Collagen loss, cellular senescence, and the four mechanisms that drive visible ageing after 30 — explained by the Zero Lines formulation team.",
-   "h1": "The Complete Guide to Skin Aging: What Actually Happens After 30",
+   "title": "Skin Ageing After 30: What Happens — Zero Lines Journal",
+   "description": "Skin ageing after 30 runs on four mechanisms: collagen loss, zombie cells, barrier decline and uneven pigment. Here's what drives each, and what slows it.",
+   "h1": "The Complete Guide to Skin Ageing: What Actually Happens After 30",
    "h2s": [
     "The Four Mechanisms of Skin Ageing",
     "Collagen Loss: The 1% Rule",
@@ -532,12 +600,12 @@
     "What Actually Works to Slow It Down"
    ],
    "keywords": [
-    "aging",
-    "actually",
+    "ageing",
     "happens",
+    "journal",
+    "actually",
     "four",
     "mechanisms",
-    "ageing",
     "collagen",
     "loss",
     "rule",
@@ -555,19 +623,22 @@
     "slow"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/zero-lines-protocol.html",
-    "/products/syringe",
-    "/blog/why-pyrenean-mineral-water.html",
     "/blog/collagen-decline-biological-clock.html",
+    "/blog/hydrolyzed-collagen-myth-miracle.html",
+    "/products/syringe/",
+    "/blog/why-pyrenean-mineral-water.html",
     "/blog/lifestyle-factors-aging.html",
-    "/products/night-cream",
+    "/blog/understanding-skin-type.html",
+    "/products/night-cream/",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -575,15 +646,18 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 1001,
+   "words": 1021,
    "linksIn": [
     "/blog/category-science.html",
     "/blog/collagen-decline-biological-clock.html",
     "/blog/fine-lines-vs-wrinkles.html",
+    "/blog/hydrolyzed-collagen-myth-miracle.html",
     "/blog/",
+    "/blog/lifestyle-factors-aging.html",
     "/blog/spf-every-day-habit.html",
     "/blog/understanding-skin-type.html",
     "/blog/zero-lines-protocol.html",
+    "/products/",
     "/faq.html",
     "/"
    ]
@@ -591,8 +665,8 @@
   {
    "path": "/blog/cortisol-stress-aging.html",
    "file": "blog/cortisol-stress-aging.html",
-   "title": "Cortisol and Your Face: The Stress-Ageing Connection Science Confirms — Zero Lines",
-   "description": "Chronic stress elevates cortisol, which breaks down collagen, thins the skin, and impairs barrier repair. The mechanism is now well understood.",
+   "title": "Cortisol, Stress and Skin Ageing — Zero Lines Journal",
+   "description": "Chronic stress raises cortisol, which breaks down collagen, thins skin, and slows barrier repair. Here's how the stress-ageing link works, and what helps.",
    "h1": "Cortisol and Your Face: The Stress-Ageing Connection Science Confirms",
    "h2s": [
     "What Cortisol Does to Skin",
@@ -604,6 +678,9 @@
    ],
    "keywords": [
     "cortisol",
+    "stress",
+    "ageing",
+    "journal",
     "face",
     "stress-ageing",
     "connection",
@@ -611,25 +688,26 @@
     "confirms",
     "research",
     "evidence",
-    "stress",
     "understanding",
     "cortisol-skin",
     "lower",
     "better"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/lifestyle-factors-aging.html",
-    "/products/night-cream",
-    "/products/serum",
-    "/blog/sleep-repairs-skin.html",
+    "/blog/collagen-decline-biological-clock.html",
     "/blog/niacinamide-ingredient-over-30.html",
+    "/products/night-cream/",
+    "/products/serum/",
+    "/blog/sleep-repairs-skin.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -637,62 +715,71 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 784,
+   "words": 779,
    "linksIn": [
     "/blog/category-lifestyle.html",
+    "/blog/climate-skincare-needs.html",
     "/blog/",
     "/blog/lifestyle-factors-aging.html",
     "/blog/niacinamide-ingredient-over-30.html",
-    "/blog/sleep-repairs-skin.html"
+    "/blog/sleep-repairs-skin.html",
+    "/products/night-cream"
    ]
   },
   {
    "path": "/blog/drinking-water-better-skin.html",
    "file": "blog/drinking-water-better-skin.html",
-   "title": "Drinking Water for Better Skin: How Much Is Actually Enough? — Zero Lines",
-   "description": "The 8 glasses a day rule is outdated. Here's what dermatologists actually recommend, and why water quality matters as much as quantity.",
+   "title": "Drinking Water for Better Skin — Zero Lines Journal",
+   "description": "Drinking water for better skin works best when you're correcting dehydration. How much to drink each day, the best times, and why mineral content matters.",
    "h1": "Drinking Water for Better Skin: How Much Is Actually Enough?",
    "h2s": [
     "What the Research Actually Says",
-    "How Much Is Actually Enough?",
-    "Water Quality Matters",
-    "When to Drink",
-    "The Bottom Line",
+    "How Much Water Should You Drink a Day?",
+    "Why Water Quality Matters for Skin",
+    "The Best Times to Drink Water",
+    "Does Drinking More Water Improve Skin?",
     "How Water Reaches Your Skin",
-    "The Role of Electrolytes"
+    "Electrolytes and Skin Hydration"
    ],
    "keywords": [
     "drinking",
     "water",
     "better",
+    "journal",
     "much",
     "actually",
     "enough",
     "research",
     "says",
+    "drink",
     "quality",
     "matters",
-    "drink",
-    "bottom",
-    "line",
+    "best",
+    "times",
+    "improve",
     "reaches",
-    "role",
-    "electrolytes"
+    "electrolytes",
+    "hydration"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/why-pyrenean-mineral-water.html",
+    "/blog/collagen-decline-biological-clock.html",
+    "/blog/sleep-repairs-skin.html",
+    "/blog/niacinamide-ingredient-over-30.html",
+    "/blog/pyrenees-to-barcelona.html",
     "/blog/lifestyle-factors-aging.html",
     "/blog/climate-skincare-needs.html",
     "/blog/inside-the-lab.html",
-    "/products/serum",
-    "/products/day-cream",
+    "/products/serum/",
+    "/products/day-cream/",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -700,65 +787,69 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 749,
+   "words": 728,
    "linksIn": [
     "/blog/category-science.html",
     "/blog/climate-skincare-needs.html",
+    "/blog/collagen-decline-biological-clock.html",
+    "/blog/fine-lines-vs-wrinkles.html",
     "/blog/",
     "/blog/inside-the-lab.html",
     "/blog/lifestyle-factors-aging.html",
+    "/blog/niacinamide-ingredient-over-30.html",
+    "/blog/sleep-repairs-skin.html",
     "/blog/why-pyrenean-mineral-water.html"
    ]
   },
   {
    "path": "/blog/fine-lines-vs-wrinkles.html",
    "file": "blog/fine-lines-vs-wrinkles.html",
-   "title": "Fine Lines vs. Wrinkles: Understanding the Difference — Zero Lines",
-   "description": "One is dynamic and reversible. The other is structural and requires a different approach. Knowing which you're dealing with changes everything.",
+   "title": "Fine Lines vs Wrinkles: How to Tell — Zero Lines Journal",
+   "description": "Fine lines vs wrinkles: one softens with sleep and hydration, the other is a structural fold. A mirror test to tell them apart, and what helps each.",
    "h1": "Fine Lines vs. Wrinkles: Understanding the Difference",
    "h2s": [
-    "Fine Lines: Dynamic and Reversible",
-    "Wrinkles: Structural and Persistent",
-    "The Transition Zone",
-    "How to Tell What You Have",
-    "Prevention: The Critical Window",
-    "When to Consider Professional Intervention"
+    "What Are Fine Lines?",
+    "What Are Wrinkles?",
+    "When Do Fine Lines Become Wrinkles?",
+    "How to Tell Fine Lines from Wrinkles",
+    "How to Prevent Wrinkles Before They Form",
+    "When to Consider Professional Treatments"
    ],
    "keywords": [
     "fine",
     "wrinkles",
+    "tell",
+    "journal",
     "understanding",
     "difference",
-    "dynamic",
-    "reversible",
-    "structural",
-    "persistent",
-    "transition",
-    "zone",
-    "tell",
-    "have",
-    "prevention",
-    "critical",
-    "window",
+    "become",
+    "prevent",
+    "they",
+    "form",
     "consider",
     "professional",
-    "intervention"
+    "treatments"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/collagen-decline-biological-clock.html",
+    "/blog/drinking-water-better-skin.html",
+    "/blog/weekly-exfoliation-vs-daily.html",
+    "/blog/botanical-vs-synthetic-peptides.html",
     "/blog/complete-guide-skin-aging.html",
+    "/products/syringe/",
+    "/blog/sleep-repairs-skin.html",
+    "/blog/spf-every-day-habit.html",
     "/blog/zero-lines-protocol.html",
     "/blog/read-skincare-label.html",
-    "/blog/spf-every-day-habit.html",
-    "/products/serum",
-    "/products/syringe",
+    "/products/serum/",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -766,19 +857,21 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 861,
+   "words": 857,
    "linksIn": [
     "/blog/category-science.html",
     "/blog/",
     "/blog/read-skincare-label.html",
-    "/blog/spf-every-day-habit.html"
+    "/blog/spf-every-day-habit.html",
+    "/products/syringe",
+    "/faq.html"
    ]
   },
   {
    "path": "/blog/first-30-days-protocol.html",
    "file": "blog/first-30-days-protocol.html",
-   "title": "The First 30 Days: What to Expect When Starting a Clinical Protocol — Zero Lines",
-   "description": "Week 1: adjustment. Week 2: hydration shift. Week 3: texture improvement. Week 4: the foundation is set. A day-by-day guide to the transition.",
+   "title": "First 30 Days of a Skincare Protocol — Zero Lines Journal",
+   "description": "What to expect in the first 30 days of a skincare protocol: the week-one adjustment, the hydration shift, and the common mistakes that stall progress.",
    "h1": "The First 30 Days: What to Expect When Starting a Clinical Protocol",
    "h2s": [
     "Days 1–7: Adjustment",
@@ -786,17 +879,18 @@
     "Days 15–21: Texture Improvement",
     "Days 22–30: Foundation Set",
     "What If You Don't See Results?",
-    "The Onboarding Sequence",
+    "How to Introduce New Skincare Products",
     "Why the First 30 Days Matter",
-    "Common First-Month Mistakes"
+    "Common First-Month Skincare Mistakes"
    ],
    "keywords": [
     "first",
     "days",
+    "protocol",
+    "journal",
     "expect",
     "starting",
     "clinical",
-    "protocol",
     "adjustment",
     "hydration",
     "shift",
@@ -804,30 +898,34 @@
     "improvement",
     "foundation",
     "results",
-    "onboarding",
-    "sequence",
+    "introduce",
+    "products",
     "matter",
     "common",
     "first-month",
     "mistakes"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/zero-lines-protocol.html",
-    "/products/serum",
-    "/products/peeling-gel",
+    "/products/serum/",
+    "/products/peeling-gel/",
+    "/blog/weekly-exfoliation-vs-daily.html",
+    "/blog/sleep-repairs-skin.html",
+    "/products/day-cream/",
+    "/products/night-cream/",
+    "/products/syringe/",
+    "/blog/spf-every-day-habit.html",
     "/blog/how-to-layer-skincare.html",
     "/blog/morning-vs-night-routine.html",
-    "/blog/weekly-exfoliation-vs-daily.html",
     "/blog/climate-skincare-needs.html",
-    "/products/day-cream",
-    "/products/night-cream",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -835,64 +933,73 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 725,
+   "words": 793,
    "linksIn": [
     "/blog/category-routine.html",
     "/blog/climate-skincare-needs.html",
     "/blog/how-to-layer-skincare.html",
     "/blog/",
+    "/blog/spf-every-day-habit.html",
     "/blog/understanding-skin-type.html",
     "/blog/weekly-exfoliation-vs-daily.html",
-    "/blog/zero-lines-protocol.html"
+    "/blog/zero-lines-protocol.html",
+    "/products/peeling-gel",
+    "/products/serum",
+    "/protocol"
    ]
   },
   {
    "path": "/blog/how-altitude-changes-water.html",
    "file": "blog/how-altitude-changes-water.html",
-   "title": "How Altitude Changes Water — And Why Your Skin Cares — Zero Lines",
-   "description": "The science of orography, mineral dissolution, and why water sourced above 1,000 metres has a fundamentally different composition.",
+   "title": "Altitude Changes Water: Why Skin Cares — Zero Lines Journal",
+   "description": "Altitude changes water: mountain springs seep through granite for years, so the silica, calcium and magnesium your skin needs arrive already dissolved.",
    "h1": "How Altitude Changes Water — And Why Your Skin Cares",
    "h2s": [
-    "Orography and Mineral Dissolution",
-    "Cold Water Holds More",
-    "The Granite Difference",
+    "How Mountain Rock Adds Minerals to Water",
+    "Why Cold Water Holds More Minerals",
+    "What Granite Adds to the Water",
     "What This Means for Skincare",
     "Protecting the Source",
-    "The Physics of Altitude and Water",
-    "Altitude and Your Skin"
+    "Why Water Behaves Differently at Altitude",
+    "How Altitude Affects Your Skin"
    ],
    "keywords": [
     "altitude",
     "changes",
     "water",
     "cares",
-    "orography",
-    "mineral",
-    "dissolution",
+    "journal",
+    "mountain",
+    "rock",
+    "adds",
+    "minerals",
     "cold",
     "holds",
     "granite",
-    "difference",
     "means",
     "protecting",
     "source",
-    "physics"
+    "behaves",
+    "differently",
+    "affects"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/andorra-alpine-secret.html",
-    "/products/serum",
-    "/blog/why-pyrenean-mineral-water.html",
     "/blog/pyrenees-to-barcelona.html",
-    "/blog/lifestyle-factors-aging.html",
     "/blog/collagen-decline-biological-clock.html",
-    "/products/day-cream",
+    "/blog/why-pyrenean-mineral-water.html",
+    "/products/serum/",
+    "/blog/spf-every-day-habit.html",
+    "/blog/lifestyle-factors-aging.html",
+    "/products/day-cream/",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -900,67 +1007,76 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 1044,
+   "words": 1042,
    "linksIn": [
     "/blog/andorra-alpine-secret.html",
     "/blog/category-science.html",
     "/blog/collagen-decline-biological-clock.html",
     "/blog/",
     "/blog/lifestyle-factors-aging.html",
+    "/blog/pyrenees-to-barcelona.html",
     "/blog/why-pyrenean-mineral-water.html",
+    "/products/day-cream",
     "/science"
    ]
   },
   {
    "path": "/blog/how-to-layer-skincare.html",
    "file": "blog/how-to-layer-skincare.html",
-   "title": "How to Layer Skincare: The Order That Actually Matters — Zero Lines",
-   "description": "Thinnest to thickest is only half the story. Molecular weight, pH, and delivery systems determine whether your products work together or cancel each other out.",
+   "title": "How to Layer Skincare: The Right Order — Zero Lines Journal",
+   "description": "How to layer skincare in the right order: pH first, water before oil, thin before thick, and the ingredient pairs that should never share a routine.",
    "h1": "How to Layer Skincare: The Order That Actually Matters",
    "h2s": [
-    "The Three Rules of Layering",
+    "The Three Rules of Layering Skincare",
     "The Zero Lines Layering Sequence",
-    "Wait Times: Myth or Necessity?",
-    "When Less Is More",
-    "Why Layering Order Matters",
-    "The Wait-Time Question"
+    "How Long Should You Wait Between Skincare Layers?",
+    "Can You Use Too Many Skincare Products?",
+    "Why Does Skincare Layering Order Matter?"
    ],
    "keywords": [
     "layer",
+    "right",
     "order",
+    "journal",
     "actually",
     "matters",
     "three",
     "rules",
     "layering",
     "sequence",
+    "long",
     "wait",
-    "times",
-    "myth",
-    "necessity",
-    "wait-time",
-    "question"
+    "between",
+    "layers",
+    "many",
+    "products",
+    "matter"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/read-skincare-label.html",
-    "/blog/zero-lines-protocol.html",
-    "/products/serum",
-    "/products/syringe",
-    "/products/day-cream",
-    "/products/peeling-gel",
-    "/products/syringe-refill",
-    "/products/night-cream",
+    "/blog/hydrolyzed-collagen-myth-miracle.html",
     "/blog/morning-vs-night-routine.html",
+    "/blog/weekly-exfoliation-vs-daily.html",
+    "/blog/niacinamide-ingredient-over-30.html",
+    "/blog/zero-lines-protocol.html",
+    "/products/serum/",
+    "/products/syringe/",
+    "/products/day-cream/",
+    "/products/peeling-gel/",
+    "/products/syringe-refill/",
+    "/products/night-cream/",
+    "/blog/inside-the-lab.html",
     "/blog/first-30-days-protocol.html",
     "/blog/collagen-decline-biological-clock.html",
     "/blog/andorra-alpine-secret.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -968,24 +1084,28 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 771,
+   "words": 769,
    "linksIn": [
     "/blog/andorra-alpine-secret.html",
     "/blog/category-routine.html",
     "/blog/collagen-decline-biological-clock.html",
     "/blog/first-30-days-protocol.html",
+    "/blog/hydrolyzed-collagen-myth-miracle.html",
     "/blog/",
+    "/blog/inside-the-lab.html",
     "/blog/morning-vs-night-routine.html",
     "/blog/niacinamide-ingredient-over-30.html",
-    "/blog/weekly-exfoliation-vs-daily.html",
-    "/blog/zero-lines-protocol.html"
+    "/blog/understanding-skin-type.html",
+    "/blog/zero-lines-protocol.html",
+    "/products/",
+    "/protocol"
    ]
   },
   {
    "path": "/blog/hydrolyzed-collagen-myth-miracle.html",
    "file": "blog/hydrolyzed-collagen-myth-miracle.html",
-   "title": "Hydrolysed Collagen in Skincare: Myth or Miracle? — Zero Lines",
-   "description": "Can collagen molecules actually penetrate the skin barrier? We examine the molecular weight debate, clinical studies, and what hydrolysed really means.",
+   "title": "Hydrolysed Collagen: Myth or Miracle? — Zero Lines Journal",
+   "description": "Can hydrolysed collagen penetrate skin, or does it just sit on the surface? We unpack the molecular-weight problem and what actually works for collagen.",
    "h1": "Hydrolysed Collagen in Skincare: Myth or Miracle?",
    "h2s": [
     "The Molecular Weight Problem",
@@ -1001,6 +1121,7 @@
     "collagen",
     "myth",
     "miracle",
+    "journal",
     "molecular",
     "weight",
     "problem",
@@ -1019,19 +1140,24 @@
     "size"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/botanical-vs-synthetic-peptides.html",
-    "/products/syringe",
+    "/products/syringe/",
+    "/blog/algae-marine-ingredients.html",
+    "/blog/how-to-layer-skincare.html",
+    "/blog/niacinamide-ingredient-over-30.html",
+    "/blog/complete-guide-skin-aging.html",
     "/blog/collagen-decline-biological-clock.html",
     "/blog/zero-lines-protocol.html",
     "/blog/pyrenees-to-barcelona.html",
     "/blog/morning-vs-night-routine.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -1039,23 +1165,31 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 1061,
+   "words": 1231,
    "linksIn": [
+    "/blog/algae-marine-ingredients.html",
     "/blog/botanical-vs-synthetic-peptides.html",
     "/blog/category-ingredients.html",
     "/blog/collagen-decline-biological-clock.html",
+    "/blog/complete-guide-skin-aging.html",
+    "/blog/how-to-layer-skincare.html",
     "/blog/",
     "/blog/morning-vs-night-routine.html",
+    "/blog/niacinamide-ingredient-over-30.html",
     "/blog/pyrenees-to-barcelona.html",
     "/blog/read-skincare-label.html",
+    "/blog/zero-lines-protocol.html",
+    "/products/syringe",
+    "/products/serum",
+    "/products/syringe-refill",
     "/science"
    ]
   },
   {
    "path": "/blog/",
    "file": "blog/index.html",
-   "title": "The Journal — Zero Lines | Skin Science, Alpine Ingredients & Longevity",
-   "description": "Explore skin science, alpine ingredients, and the art of ageing well. The Zero Lines Journal features expert insights on collagen, hydration, and the protocol that changes everything.",
+   "title": "The Zero Lines Journal — Skin Science &amp; Alpine Ritual",
+   "description": "Twenty-five articles from the Zero Lines formulation team: collagen science, Pyrenean water, routine order and the habits that shape how skin ages.",
    "h1": "Skin science.Alpine wisdom.",
    "h2s": [
     "Most Read",
@@ -1069,14 +1203,13 @@
     "How Altitude Changes Water — And Why Your Skin Cares",
     "Collagen Decline: The Biological Clock You Can Slow Down",
     "How to Layer Skincare: The Order That Actually Matters",
-    "Andorra's Alpine Secret: The Science Behind High-Altitude Spring Water"
+    "Andorra’s Alpine Secret: The Science Behind High-Altitude Spring Water"
    ],
    "keywords": [
     "journal",
     "science",
     "alpine",
-    "ingredients",
-    "longevity",
+    "ritual",
     "wisdom",
     "read",
     "ageing",
@@ -1085,6 +1218,7 @@
     "protocol",
     "6-step",
     "system",
+    "longevity",
     "habit",
     "prevents",
     "visible",
@@ -1114,13 +1248,18 @@
     "spring"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
+    "/blog/category-science.html",
+    "/blog/category-ingredients.html",
+    "/blog/category-routine.html",
+    "/blog/category-lifestyle.html",
+    "/blog/category-brand-story.html",
     "/blog/complete-guide-skin-aging.html",
     "/blog/zero-lines-protocol.html",
     "/blog/spf-every-day-habit.html",
@@ -1146,6 +1285,7 @@
     "/blog/drinking-water-better-skin.html",
     "/blog/inside-the-lab.html",
     "/blog/understanding-skin-type.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -1153,7 +1293,7 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 774,
+   "words": 777,
    "linksIn": [
     "/blog/algae-marine-ingredients.html",
     "/blog/andorra-alpine-secret.html",
@@ -1205,51 +1345,62 @@
   {
    "path": "/blog/inside-the-lab.html",
    "file": "blog/inside-the-lab.html",
-   "title": "Inside the Lab: Four Years of Formulation at Zero Lines — Zero Lines",
-   "description": "From the first prototype to the final six-formulation protocol — the iterations, the failures, and the breakthroughs that defined the journey.",
+   "title": "Inside the Lab: 4 Years of Formulation — Zero Lines Journal",
+   "description": "Inside the lab at Zero Lines: four years, 14 spring waters, 200+ prototypes and the failures that shaped a six-formulation protocol made in Barcelona.",
    "h1": "Inside the Lab: Four Years of Formulation at Zero Lines",
    "h2s": [
-    "Year One: The Question",
-    "Year Two: The Prototypes",
-    "Year Three: The Failures",
-    "Year Four: The System",
-    "The Testing Process",
-    "What's Next",
-    "The Formulation Philosophy",
-    "From Concept to Product"
+    "Year One: Why Does Most Skincare Fail?",
+    "Year Two: Testing 14 Mineral Waters",
+    "Year Three: The Prototypes That Failed",
+    "Year Four: Building the 6-Step System",
+    "How Zero Lines Formulations Are Tested",
+    "What's Next for Zero Lines",
+    "The Zero Lines Formulation Philosophy",
+    "How a Formula Goes From Concept to Product"
    ],
    "keywords": [
     "inside",
-    "four",
     "years",
     "formulation",
+    "journal",
+    "four",
     "year",
-    "question",
-    "prototypes",
-    "three",
-    "failures",
-    "system",
+    "fail",
     "testing",
-    "process",
+    "mineral",
+    "waters",
+    "three",
+    "prototypes",
+    "failed",
+    "building",
+    "6-step",
+    "system",
+    "formulations",
+    "tested",
     "next",
     "philosophy",
+    "formula",
+    "goes",
     "concept",
     "product"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/pyrenees-to-barcelona.html",
+    "/products/peeling-gel/",
+    "/blog/how-to-layer-skincare.html",
     "/blog/zero-lines-protocol.html",
+    "/products/syringe/",
     "/blog/andorra-alpine-secret.html",
     "/blog/drinking-water-better-skin.html",
     "/blog/understanding-skin-type.html",
-    "/products/syringe",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -1257,10 +1408,11 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 1138,
+   "words": 1149,
    "linksIn": [
     "/blog/category-brand-story.html",
     "/blog/drinking-water-better-skin.html",
+    "/blog/how-to-layer-skincare.html",
     "/blog/",
     "/blog/pyrenees-to-barcelona.html",
     "/blog/understanding-skin-type.html",
@@ -1270,22 +1422,23 @@
   {
    "path": "/blog/lifestyle-factors-aging.html",
    "file": "blog/lifestyle-factors-aging.html",
-   "title": "7 Lifestyle Factors That Accelerate Skin Ageing — Zero Lines",
-   "description": "Sleep, stress, alcohol, sun exposure, and hydration — how daily choices compound into visible difference over decades.",
+   "title": "7 Lifestyle Factors That Age Skin — Zero Lines Journal",
+   "description": "UV, short sleep, chronic stress, alcohol, smoking, sugar and dehydration — the seven lifestyle factors that age skin fastest, and what to change first.",
    "h1": "7 Lifestyle Factors That Accelerate Skin Ageing",
    "h2s": [
     "1. UV Exposure Without Protection",
     "2. Chronic Sleep Deprivation",
-    "3. Chronic Stress",
-    "4. Dehydration",
-    "5. Alcohol",
-    "6. Smoking",
-    "7. Poor Diet",
+    "3. Chronic Stress and Cortisol",
+    "4. Dehydration and Fine Lines",
+    "5. Alcohol and Your Skin",
+    "6. Smoking and Premature Ageing",
+    "7. Diet, Sugar and Glycation",
     "The Compound Effect"
    ],
    "keywords": [
     "lifestyle",
     "factors",
+    "journal",
     "accelerate",
     "ageing",
     "exposure",
@@ -1295,30 +1448,37 @@
     "sleep",
     "deprivation",
     "stress",
+    "cortisol",
     "dehydration",
+    "fine",
     "alcohol",
     "smoking",
-    "poor",
+    "premature",
     "diet",
+    "sugar",
+    "glycation",
     "compound",
     "effect"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
+    "/blog/complete-guide-skin-aging.html",
     "/blog/sleep-repairs-skin.html",
     "/blog/spf-every-day-habit.html",
     "/blog/cortisol-stress-aging.html",
     "/blog/drinking-water-better-skin.html",
+    "/blog/collagen-decline-biological-clock.html",
     "/blog/why-pyrenean-mineral-water.html",
     "/blog/how-altitude-changes-water.html",
-    "/products/day-cream",
-    "/products/night-cream",
+    "/products/day-cream/",
+    "/products/night-cream/",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -1326,9 +1486,10 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 950,
+   "words": 964,
    "linksIn": [
     "/blog/category-lifestyle.html",
+    "/blog/collagen-decline-biological-clock.html",
     "/blog/complete-guide-skin-aging.html",
     "/blog/cortisol-stress-aging.html",
     "/blog/drinking-water-better-skin.html",
@@ -1336,14 +1497,15 @@
     "/blog/",
     "/blog/sleep-repairs-skin.html",
     "/blog/spf-every-day-habit.html",
-    "/blog/why-pyrenean-mineral-water.html"
+    "/blog/why-pyrenean-mineral-water.html",
+    "/products/day-cream"
    ]
   },
   {
    "path": "/blog/morning-vs-night-routine.html",
    "file": "blog/morning-vs-night-routine.html",
-   "title": "Morning Routine vs. Night Routine: Why One Size Doesn't Fit Both — Zero Lines",
-   "description": "Your skin's circadian rhythm means it needs protection by day and repair by night. Here's how to build two routines that respect that biology.",
+   "title": "Morning vs. Night Skincare Routine — Zero Lines Journal",
+   "description": "Your skin protects by day and repairs by night. Here's how to build a morning routine and a night routine that work with its circadian rhythm.",
    "h1": "Morning Routine vs. Night Routine: Why One Size Doesn't Fit Both",
    "h2s": [
     "The Skin's Daily Cycle",
@@ -1357,8 +1519,9 @@
    ],
    "keywords": [
     "morning",
-    "routine",
     "night",
+    "routine",
+    "journal",
     "size",
     "doesn",
     "both",
@@ -1375,23 +1538,27 @@
     "best"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/sleep-repairs-skin.html",
-    "/products/serum",
-    "/products/syringe",
-    "/products/day-cream",
-    "/products/peeling-gel",
-    "/products/syringe-refill",
-    "/products/night-cream",
+    "/blog/spf-every-day-habit.html",
+    "/products/serum/",
+    "/products/syringe/",
+    "/products/day-cream/",
+    "/blog/weekly-exfoliation-vs-daily.html",
+    "/products/peeling-gel/",
+    "/products/syringe-refill/",
+    "/products/night-cream/",
+    "/blog/botanical-vs-synthetic-peptides.html",
     "/blog/how-to-layer-skincare.html",
     "/blog/zero-lines-protocol.html",
     "/blog/hydrolyzed-collagen-myth-miracle.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -1399,63 +1566,67 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 818,
+   "words": 819,
    "linksIn": [
+    "/blog/algae-marine-ingredients.html",
     "/blog/category-routine.html",
     "/blog/first-30-days-protocol.html",
     "/blog/how-to-layer-skincare.html",
     "/blog/hydrolyzed-collagen-myth-miracle.html",
     "/blog/",
-    "/blog/sleep-repairs-skin.html"
+    "/blog/sleep-repairs-skin.html",
+    "/products/serum",
+    "/products/night-cream"
    ]
   },
   {
    "path": "/blog/niacinamide-ingredient-over-30.html",
    "file": "blog/niacinamide-ingredient-over-30.html",
-   "title": "Niacinamide: The One Ingredient Everyone Over 30 Should Know — Zero Lines",
-   "description": "Vitamin B3 does more than brighten. It strengthens the barrier, regulates sebum, minimises pores, and supports collagen — all in one molecule.",
+   "title": "Niacinamide Benefits for Skin Over 30 — Zero Lines Journal",
+   "description": "Niacinamide strengthens the skin barrier, calms redness, evens tone and supports collagen. One vitamin B3 active that suits almost every skin over 30.",
    "h1": "Niacinamide: The One Ingredient Everyone Over 30 Should Know",
    "h2s": [
     "What Niacinamide Actually Is",
-    "What It Does: The Complete List",
+    "What Niacinamide Does for Skin",
     "The Optimal Concentration",
-    "Compatibility: The Ultimate Team Player",
+    "What Niacinamide Can Be Layered With",
     "Who Should Use It",
-    "Niacinamide: The Multi-Tasking Molecule",
+    "How Niacinamide Works in the Skin",
     "Concentration Matters"
    ],
    "keywords": [
     "niacinamide",
+    "benefits",
+    "journal",
     "ingredient",
     "everyone",
     "know",
     "actually",
-    "list",
     "optimal",
     "concentration",
-    "compatibility",
-    "ultimate",
-    "team",
-    "player",
-    "multi-tasking",
-    "molecule",
+    "layered",
+    "works",
     "matters"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/how-to-layer-skincare.html",
-    "/products/night-cream",
-    "/products/serum",
+    "/blog/drinking-water-better-skin.html",
+    "/blog/hydrolyzed-collagen-myth-miracle.html",
+    "/products/night-cream/",
+    "/products/serum/",
+    "/blog/why-pyrenean-mineral-water.html",
     "/blog/read-skincare-label.html",
     "/blog/cortisol-stress-aging.html",
     "/blog/zero-lines-protocol.html",
     "/blog/algae-marine-ingredients.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -1463,75 +1634,84 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 912,
+   "words": 971,
    "linksIn": [
     "/blog/algae-marine-ingredients.html",
     "/blog/category-ingredients.html",
     "/blog/cortisol-stress-aging.html",
+    "/blog/drinking-water-better-skin.html",
+    "/blog/how-to-layer-skincare.html",
+    "/blog/hydrolyzed-collagen-myth-miracle.html",
     "/blog/",
-    "/blog/read-skincare-label.html"
+    "/blog/read-skincare-label.html",
+    "/blog/why-pyrenean-mineral-water.html",
+    "/products/night-cream"
    ]
   },
   {
    "path": "/blog/pyrenees-to-barcelona.html",
    "file": "blog/pyrenees-to-barcelona.html",
-   "title": "From Pyrenees to Barcelona: Tracing Zero Lines' Alpine Ingredients — Zero Lines",
-   "description": "The journey from high-altitude spring to finished formulation — how geography, geology, and craftsmanship converge in every bottle.",
+   "title": "Pyrenees to Barcelona: Alpine Sourcing — Zero Lines Journal",
+   "description": "The route our alpine ingredients take, from a Pyrenean spring at 1,834 metres to our Barcelona lab, and why the cold chain matters at every step.",
    "h1": "From Pyrenees to Barcelona: Tracing Zero Lines' Alpine Ingredients",
    "h2s": [
-    "The Source: 1,800 Metres Above Sea Level",
-    "The Journey: Cold Chain from Mountain to Lab",
-    "Barcelona: Where Geography Meets Craft",
-    "Beyond Water: Alpine Botanicals",
-    "The Craft of Formulation",
+    "Where the Water Comes From: 1,800 Metres Above Sea Level",
+    "How Cold-Chain Transport Protects Mineral Water",
+    "Why We Formulate in Barcelona",
+    "Alpine Botanicals in Skincare: Edelweiss and Gentian",
+    "How a Zero Lines Formula Is Developed",
     "Quality Control: From Batch to Bottle",
-    "The Packaging Decision"
+    "Why We Use Airless Packaging"
    ],
    "keywords": [
     "pyrenees",
     "barcelona",
-    "tracing",
     "alpine",
+    "sourcing",
+    "journal",
+    "tracing",
     "ingredients",
-    "source",
+    "water",
+    "comes",
     "metres",
     "above",
     "level",
-    "journey",
-    "cold",
-    "chain",
-    "mountain",
-    "geography",
-    "meets",
-    "craft",
-    "beyond",
-    "water",
+    "cold-chain",
+    "transport",
+    "protects",
+    "mineral",
+    "formulate",
     "botanicals",
-    "formulation",
+    "edelweiss",
+    "gentian",
+    "formula",
+    "developed",
     "quality",
     "control",
     "batch",
     "bottle",
-    "packaging",
-    "decision"
+    "airless",
+    "packaging"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
-    "/blog/inside-the-lab.html",
-    "/products/serum",
-    "/products/syringe",
-    "/products/day-cream",
-    "/products/night-cream",
+    "/contact/",
     "/blog/andorra-alpine-secret.html",
-    "/blog/why-pyrenean-mineral-water.html",
+    "/blog/inside-the-lab.html",
+    "/blog/how-altitude-changes-water.html",
+    "/products/serum/",
+    "/products/syringe/",
+    "/products/day-cream/",
+    "/products/night-cream/",
+    "/blog/climate-skincare-needs.html",
     "/blog/spf-every-day-habit.html",
     "/blog/hydrolyzed-collagen-myth-miracle.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -1539,36 +1719,40 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 832,
+   "words": 829,
    "linksIn": [
     "/blog/andorra-alpine-secret.html",
     "/blog/category-brand-story.html",
+    "/blog/climate-skincare-needs.html",
+    "/blog/drinking-water-better-skin.html",
     "/blog/how-altitude-changes-water.html",
     "/blog/hydrolyzed-collagen-myth-miracle.html",
     "/blog/",
     "/blog/inside-the-lab.html",
-    "/blog/spf-every-day-habit.html"
+    "/blog/spf-every-day-habit.html",
+    "/story"
    ]
   },
   {
    "path": "/blog/read-skincare-label.html",
    "file": "blog/read-skincare-label.html",
-   "title": "How to Read a Skincare Label Like a Formulator — Zero Lines",
-   "description": "INCI lists, concentration percentages, and the difference between active and marketing ingredients — a field guide to decoding any product.",
+   "title": "How to Read a Skincare Label — Zero Lines Journal",
+   "description": "How to read a skincare label like a formulator: what the ingredient order reveals, where the 1% line sits, and which INCI names expose weak actives.",
    "h1": "How to Read a Skincare Label Like a Formulator",
    "h2s": [
     "Rule 1: The First Five Ingredients Tell the Story",
-    "Rule 2: 1% Is the Magic Line",
+    "Rule 2: How to Find the 1% Line",
     "Rule 3: Marketing Names vs. INCI Names",
     "Rule 4: Fragrance Is Never Your Friend",
     "Rule 5: The \"Free From\" Fallacy",
     "Reading the Zero Lines Labels",
-    "Decoding Ingredient Lists",
-    "Marketing Terms vs. Reality"
+    "How to Check a Label in 30 Seconds",
+    "What Skincare Marketing Claims Really Mean"
    ],
    "keywords": [
     "read",
     "label",
+    "journal",
     "like",
     "formulator",
     "rule",
@@ -1577,7 +1761,7 @@
     "ingredients",
     "tell",
     "story",
-    "magic",
+    "find",
     "line",
     "marketing",
     "names",
@@ -1589,28 +1773,31 @@
     "fallacy",
     "reading",
     "labels",
-    "decoding",
-    "ingredient",
-    "lists",
-    "terms",
-    "reality"
+    "check",
+    "seconds",
+    "claims",
+    "really",
+    "mean"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/botanical-vs-synthetic-peptides.html",
-    "/products/night-cream",
+    "/blog/understanding-skin-type.html",
     "/blog/niacinamide-ingredient-over-30.html",
+    "/products/night-cream/",
+    "/blog/why-pyrenean-mineral-water.html",
     "/blog/hydrolyzed-collagen-myth-miracle.html",
     "/blog/algae-marine-ingredients.html",
     "/blog/andorra-alpine-secret.html",
     "/blog/fine-lines-vs-wrinkles.html",
-    "/products/serum",
+    "/products/serum/",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -1618,27 +1805,27 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 874,
+   "words": 902,
    "linksIn": [
-    "/blog/algae-marine-ingredients.html",
     "/blog/andorra-alpine-secret.html",
     "/blog/category-science.html",
     "/blog/fine-lines-vs-wrinkles.html",
     "/blog/how-to-layer-skincare.html",
     "/blog/",
-    "/blog/niacinamide-ingredient-over-30.html"
+    "/blog/niacinamide-ingredient-over-30.html",
+    "/products/syringe"
    ]
   },
   {
    "path": "/blog/sleep-repairs-skin.html",
    "file": "blog/sleep-repairs-skin.html",
-   "title": "How Sleep Repairs Your Skin (And What Happens When You Don't) — Zero Lines",
-   "description": "Between 11 PM and 2 AM, your skin enters peak repair mode. Miss that window consistently, and the effects show faster than you'd think.",
+   "title": "How Sleep Repairs Your Skin — Zero Lines Journal",
+   "description": "How sleep repairs your skin: growth hormone peaks, collagen rebuilds and cell turnover surges between 11 PM and 2 AM. Miss that window and it shows.",
    "h1": "How Sleep Repairs Your Skin (And What Happens When You Don't)",
    "h2s": [
-    "The Nighttime Repair Window",
+    "When Does Skin Repair Itself at Night?",
     "What Sleep Deprivation Does to Skin",
-    "Sleep Quality, Not Just Quantity",
+    "Why Sleep Quality Matters as Much as Quantity",
     "Skincare That Supports Sleep",
     "The 7-Day Sleep Challenge",
     "The Stages of Sleep and Skin Repair",
@@ -1647,33 +1834,36 @@
    "keywords": [
     "sleep",
     "repairs",
+    "journal",
     "happens",
-    "nighttime",
     "repair",
-    "window",
+    "itself",
+    "night",
     "deprivation",
     "quality",
-    "just",
+    "matters",
+    "much",
     "quantity",
     "supports",
     "7-day",
     "challenge",
     "stages",
-    "much",
     "need"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/cortisol-stress-aging.html",
-    "/products/night-cream",
-    "/blog/lifestyle-factors-aging.html",
     "/blog/morning-vs-night-routine.html",
+    "/blog/lifestyle-factors-aging.html",
+    "/products/night-cream/",
+    "/blog/drinking-water-better-skin.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -1681,66 +1871,76 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 840,
+   "words": 852,
    "linksIn": [
     "/blog/category-lifestyle.html",
     "/blog/cortisol-stress-aging.html",
+    "/blog/drinking-water-better-skin.html",
+    "/blog/fine-lines-vs-wrinkles.html",
+    "/blog/first-30-days-protocol.html",
     "/blog/",
     "/blog/lifestyle-factors-aging.html",
     "/blog/morning-vs-night-routine.html",
+    "/blog/zero-lines-protocol.html",
     "/products/night-cream"
    ]
   },
   {
    "path": "/blog/spf-every-day-habit.html",
    "file": "blog/spf-every-day-habit.html",
-   "title": "SPF Every Day: The Habit That Prevents 80% of Visible Ageing — Zero Lines",
-   "description": "UV exposure is responsible for up to 80% of visible facial ageing. Yet most people still treat sunscreen as a beach accessory, not a daily essential.",
+   "title": "SPF Every Day: Why Sunscreen Matters — Zero Lines Journal",
+   "description": "Why SPF every day is the single most effective anti-ageing habit: UVA vs UVB, mineral vs chemical filters, how much to apply and when to reapply.",
    "h1": "SPF Every Day: The Habit That Prevents 80% of Visible Ageing",
    "h2s": [
-    "UVA vs. UVB: Both Damage, Differently",
-    "Mineral vs. Chemical: The Real Difference",
-    "The Reapplication Problem",
-    "SPF in Skincare: The Shortcut That Isn't",
-    "Blue Light and Infrared: The New Frontier",
+    "UVA vs. UVB: What's the Difference?",
+    "Mineral vs. Chemical Sunscreen: Which Is Better?",
+    "How Often Should You Reapply Sunscreen?",
+    "Is SPF in Moisturiser or Foundation Enough?",
+    "Does Blue Light Damage Your Skin?",
     "Common SPF Mistakes"
    ],
    "keywords": [
+    "sunscreen",
+    "matters",
+    "journal",
     "habit",
     "prevents",
     "visible",
     "ageing",
-    "both",
-    "damage",
-    "differently",
+    "difference",
     "mineral",
     "chemical",
-    "real",
-    "difference",
-    "reapplication",
-    "problem",
-    "shortcut",
+    "which",
+    "better",
+    "often",
+    "reapply",
+    "moisturiser",
+    "foundation",
+    "enough",
     "blue",
     "light",
-    "infrared",
-    "frontier",
+    "damage",
     "common",
     "mistakes"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
+    "/blog/botanical-vs-synthetic-peptides.html",
     "/blog/climate-skincare-needs.html",
-    "/products/day-cream",
+    "/products/day-cream/",
+    "/blog/first-30-days-protocol.html",
+    "/products/serum/",
     "/blog/lifestyle-factors-aging.html",
     "/blog/complete-guide-skin-aging.html",
     "/blog/fine-lines-vs-wrinkles.html",
     "/blog/pyrenees-to-barcelona.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -1748,36 +1948,42 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 891,
+   "words": 928,
    "linksIn": [
-    "/blog/algae-marine-ingredients.html",
     "/blog/category-routine.html",
     "/blog/climate-skincare-needs.html",
     "/blog/fine-lines-vs-wrinkles.html",
+    "/blog/first-30-days-protocol.html",
+    "/blog/how-altitude-changes-water.html",
     "/blog/",
     "/blog/lifestyle-factors-aging.html",
-    "/blog/pyrenees-to-barcelona.html"
+    "/blog/morning-vs-night-routine.html",
+    "/blog/pyrenees-to-barcelona.html",
+    "/products/peeling-gel",
+    "/products/day-cream"
    ]
   },
   {
    "path": "/blog/understanding-skin-type.html",
    "file": "blog/understanding-skin-type.html",
-   "title": "Understanding Your Skin Type: A Guide to the Zero Lines Analyzer — Zero Lines",
-   "description": "Dry, oily, combination, or sensitive — most people misidentify their skin type. Our AI-powered analyser removes the guesswork entirely.",
+   "title": "Skin Type: How to Identify Yours — Zero Lines Journal",
+   "description": "Most people misread their skin type. Learn the five types, why yours changes with age and climate, and how the Zero Lines AI analyser gets it right.",
    "h1": "Understanding Your Skin Type: A Guide to the Zero Lines Analyser",
    "h2s": [
-    "Why Skin Type Is Hard to Self-Diagnose",
-    "The Four (Actually Five) Skin Types",
-    "How the Zero Lines Analyser Works",
-    "What Makes It Different",
-    "Skin Type Can Change",
-    "Why Skin Type Changes",
-    "Beyond the Four Types"
+    "Why Is Skin Type So Hard to Self-Diagnose?",
+    "What Are the Four (Actually Five) Skin Types?",
+    "How Does the Zero Lines Analyser Work?",
+    "What Makes the Analyser Different from a Skin Quiz?",
+    "How Often Should You Reassess Your Skin Type?",
+    "Why Does Skin Type Change?",
+    "Are There More Than Four Skin Types?"
    ],
    "keywords": [
-    "understanding",
     "type",
-    "analyzer",
+    "identify",
+    "yours",
+    "journal",
+    "understanding",
     "analyser",
     "hard",
     "self-diagnose",
@@ -1785,26 +1991,31 @@
     "actually",
     "five",
     "types",
-    "works",
+    "work",
     "makes",
     "different",
+    "quiz",
+    "often",
+    "reassess",
     "change",
-    "changes",
-    "beyond"
+    "there"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/complete-guide-skin-aging.html",
+    "/blog/how-to-layer-skincare.html",
+    "/blog/weekly-exfoliation-vs-daily.html",
     "/blog/first-30-days-protocol.html",
     "/blog/zero-lines-protocol.html",
     "/blog/climate-skincare-needs.html",
     "/blog/inside-the-lab.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -1812,123 +2023,138 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 1052,
+   "words": 1026,
    "linksIn": [
     "/blog/category-science.html",
+    "/blog/climate-skincare-needs.html",
+    "/blog/collagen-decline-biological-clock.html",
+    "/blog/complete-guide-skin-aging.html",
     "/blog/",
-    "/blog/inside-the-lab.html"
+    "/blog/inside-the-lab.html",
+    "/blog/read-skincare-label.html"
    ]
   },
   {
    "path": "/blog/weekly-exfoliation-vs-daily.html",
    "file": "blog/weekly-exfoliation-vs-daily.html",
-   "title": "Why Weekly Exfoliation Outperforms Daily Scrubs — Zero Lines",
-   "description": "Daily physical scrubs create micro-tears. Weekly chemical exfoliation removes dead cells without compromising the barrier. The difference is structural.",
+   "title": "Weekly Exfoliation vs. Daily Scrubs — Zero Lines Journal",
+   "description": "Daily scrubs leave micro-tears and a weakened barrier. Here's why weekly exfoliation with enzymes clears dead cells more safely, and how to spot overuse.",
    "h1": "Why Weekly Exfoliation Outperforms Daily Scrubs",
    "h2s": [
     "What Daily Scrubs Actually Do",
     "Chemical Exfoliation: A Smarter Approach",
-    "Why Weekly, Not Daily?",
+    "How Often Should You Exfoliate?",
     "The Zero Lines Approach",
     "Signs You're Over-Exfoliating",
-    "The Science of Skin Cell Turnover",
+    "How Skin Cell Turnover Changes With Age",
     "Physical vs. Chemical vs. Enzymatic Exfoliation"
    ],
    "keywords": [
     "weekly",
     "exfoliation",
-    "outperforms",
     "daily",
     "scrubs",
+    "journal",
+    "outperforms",
     "actually",
     "chemical",
     "smarter",
     "approach",
+    "often",
+    "exfoliate",
     "signs",
     "over-exfoliating",
-    "science",
     "cell",
     "turnover",
+    "changes",
     "physical",
     "enzymatic"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/first-30-days-protocol.html",
-    "/products/peeling-gel",
-    "/blog/zero-lines-protocol.html",
-    "/blog/how-to-layer-skincare.html",
     "/blog/algae-marine-ingredients.html",
+    "/products/peeling-gel/",
+    "/blog/zero-lines-protocol.html",
     "/blog/botanical-vs-synthetic-peptides.html",
     "/faq.html",
+    "/testimonials/",
     "/shipping-returns.html",
     "/privacy.html",
     "/terms.html",
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 953,
+   "words": 1001,
    "linksIn": [
     "/blog/algae-marine-ingredients.html",
     "/blog/botanical-vs-synthetic-peptides.html",
     "/blog/category-routine.html",
+    "/blog/climate-skincare-needs.html",
+    "/blog/fine-lines-vs-wrinkles.html",
     "/blog/first-30-days-protocol.html",
-    "/blog/"
+    "/blog/how-to-layer-skincare.html",
+    "/blog/",
+    "/blog/morning-vs-night-routine.html",
+    "/blog/understanding-skin-type.html",
+    "/blog/zero-lines-protocol.html",
+    "/products/peeling-gel",
+    "/faq.html"
    ]
   },
   {
    "path": "/blog/why-pyrenean-mineral-water.html",
    "file": "blog/why-pyrenean-mineral-water.html",
-   "title": "Why Pyrenean Mineral Water Is the Most Underrated Skincare Ingredient — Zero Lines",
-   "description": "High-altitude spring water from the Pyrenees carries a mineral profile unlike anything in tap or filtered water. Here's why that matters for your skin.",
+   "title": "Pyrenean Mineral Water in Skincare — Zero Lines Journal",
+   "description": "Pyrenean mineral water carries magnesium, calcium and silica in a balance close to the skin's own. Here's why every Zero Lines formulation starts with it.",
    "h1": "Why Pyrenean Mineral Water Is the Most Underrated Skincare Ingredient",
    "h2s": [
-    "Not All Water Is Created Equal",
-    "The Mineral Profile That Matters",
-    "Altitude Changes Everything",
-    "Why We Don't Just Use Tap Water",
-    "Where You'll Find It in Our Formulations"
+    "Why the Water in Skincare Matters",
+    "What Minerals Are in Pyrenean Spring Water?",
+    "Why High-Altitude Spring Water Is Different",
+    "Tap Water vs. Mineral Water in Skincare",
+    "Which Zero Lines Formulations Use Pyrenean Water?"
    ],
    "keywords": [
     "pyrenean",
     "mineral",
     "water",
+    "journal",
     "underrated",
     "ingredient",
-    "created",
-    "equal",
-    "profile",
     "matters",
-    "altitude",
-    "changes",
-    "everything",
-    "just",
-    "find",
+    "minerals",
+    "spring",
+    "high-altitude",
+    "different",
+    "which",
     "formulations"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
+    "/blog/niacinamide-ingredient-over-30.html",
     "/blog/andorra-alpine-secret.html",
-    "/blog/how-altitude-changes-water.html",
-    "/products/serum",
-    "/products/day-cream",
-    "/products/night-cream",
-    "/products/peeling-gel",
     "/blog/drinking-water-better-skin.html",
+    "/blog/how-altitude-changes-water.html",
+    "/products/serum/",
+    "/products/day-cream/",
+    "/products/night-cream/",
+    "/products/peeling-gel/",
     "/blog/zero-lines-protocol.html",
     "/blog/lifestyle-factors-aging.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -1936,7 +2162,7 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 694,
+   "words": 704,
    "linksIn": [
     "/blog/andorra-alpine-secret.html",
     "/blog/category-brand-story.html",
@@ -1946,9 +2172,14 @@
     "/blog/how-altitude-changes-water.html",
     "/blog/",
     "/blog/lifestyle-factors-aging.html",
-    "/blog/pyrenees-to-barcelona.html",
+    "/blog/niacinamide-ingredient-over-30.html",
+    "/blog/read-skincare-label.html",
     "/blog/zero-lines-protocol.html",
+    "/products/",
+    "/products/serum",
     "/products/day-cream",
+    "/products/syringe-refill",
+    "/science",
     "/story",
     "/faq.html",
     "/"
@@ -1957,24 +2188,27 @@
   {
    "path": "/blog/zero-lines-protocol.html",
    "file": "blog/zero-lines-protocol.html",
-   "title": "The Zero Lines Protocol: A 6-Step System for Skin Longevity — Zero Lines",
-   "description": "How six bioactive formulations work in sequence to restore cellular communication, barrier integrity, and collagen density — the complete Zero Lines Protocol explained.",
+   "title": "Zero Lines Protocol: The 6-Step System — Zero Lines Journal",
+   "description": "The Zero Lines Protocol explained: six formulations in a deliberate sequence, what each step does, and the week-by-week plan for introducing them safely.",
    "h1": "The Zero Lines Protocol: A 6-Step System for Skin Longevity",
    "h2s": [
-    "Why a Protocol, Not a Product",
+    "Why Use a Protocol Instead of a Single Product?",
     "Step 1: Bio-Renewal Peeling Gel",
     "Step 2: Precision Collagen Activation Syringe",
     "Step 3: BioSignal Facial Serum",
     "Step 4: Environmental Shield Day Cream",
     "Step 5: Renewal and Repair Night Cream",
     "Step 6: Precision Collagen Activation Refill",
-    "The Sequence Matters"
+    "How to Start the Protocol: The Onboarding Sequence"
    ],
    "keywords": [
     "protocol",
     "6-step",
     "system",
+    "journal",
     "longevity",
+    "instead",
+    "single",
     "product",
     "step",
     "bio-renewal",
@@ -1993,27 +2227,34 @@
     "repair",
     "night",
     "refill",
-    "sequence",
-    "matters"
+    "start",
+    "onboarding",
+    "sequence"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/first-30-days-protocol.html",
     "/blog/complete-guide-skin-aging.html",
-    "/products/peeling-gel",
-    "/products/syringe",
-    "/products/serum",
-    "/products/day-cream",
-    "/products/night-cream",
-    "/products/syringe-refill",
+    "/blog/weekly-exfoliation-vs-daily.html",
+    "/products/peeling-gel/",
+    "/blog/hydrolyzed-collagen-myth-miracle.html",
+    "/blog/botanical-vs-synthetic-peptides.html",
+    "/products/syringe/",
+    "/products/serum/",
+    "/blog/algae-marine-ingredients.html",
+    "/products/day-cream/",
+    "/blog/sleep-repairs-skin.html",
+    "/products/night-cream/",
+    "/products/syringe-refill/",
     "/blog/how-to-layer-skincare.html",
     "/blog/why-pyrenean-mineral-water.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -2021,10 +2262,10 @@
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 1298,
+   "words": 1296,
    "linksIn": [
-    "/blog/botanical-vs-synthetic-peptides.html",
     "/blog/category-routine.html",
+    "/blog/climate-skincare-needs.html",
     "/blog/complete-guide-skin-aging.html",
     "/blog/fine-lines-vs-wrinkles.html",
     "/blog/first-30-days-protocol.html",
@@ -2037,6 +2278,9 @@
     "/blog/understanding-skin-type.html",
     "/blog/weekly-exfoliation-vs-daily.html",
     "/blog/why-pyrenean-mineral-water.html",
+    "/products/",
+    "/products/peeling-gel",
+    "/products/syringe-refill",
     "/protocol",
     "/faq.html",
     "/"
@@ -2054,6 +2298,7 @@
     "One water. Six instructions.",
     "The order is part of the formula.",
     "Botanical signal, not synthetic mimicry.",
+    "The collection, in longer form.",
     "Ahead of the launch."
    ],
    "keywords": [
@@ -2073,32 +2318,40 @@
     "signal",
     "synthetic",
     "mimicry",
+    "longer",
+    "form",
     "ahead",
     "launch"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
-    "/products/peeling-gel",
-    "/products/syringe",
-    "/products/serum",
-    "/products/day-cream",
-    "/products/night-cream",
-    "/products/syringe-refill",
+    "/contact/",
+    "/products/peeling-gel/",
+    "/products/syringe/",
+    "/products/serum/",
+    "/products/day-cream/",
+    "/products/night-cream/",
+    "/products/syringe-refill/",
+    "/blog/andorra-alpine-secret.html",
+    "/blog/how-to-layer-skincare.html",
     "/blog/botanical-vs-synthetic-peptides.html",
+    "/blog/zero-lines-protocol.html",
+    "/blog/why-pyrenean-mineral-water.html",
+    "/blog/complete-guide-skin-aging.html",
     "/faq.html",
+    "/testimonials/",
     "/shipping-returns.html",
     "/privacy.html",
     "/terms.html",
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 535,
+   "words": 598,
    "linksIn": [
     "/blog/algae-marine-ingredients.html",
     "/blog/andorra-alpine-secret.html",
@@ -2150,7 +2403,7 @@
   {
    "path": "/products/peeling-gel",
    "file": "products/peeling-gel/index.html",
-   "title": "Bio-Renewal Peeling Gel — Zero Lines | Step 01, Weekly Exfoliation",
+   "title": "Bio-Renewal Peeling Gel — Zero Lines",
    "description": "Step 01 of the Zero Lines Longevity Protocol. A weekly gel exfoliation with no grit in it: the surface looks clearer the same evening, and stays clear enough for the rest of the protocol to reach the skin. In pre-launch — not yet available to purchase.",
    "h1": "Bio-Renewal Peeling Gel.",
    "h2s": [
@@ -2162,15 +2415,13 @@
     "Everything after this depends on it.",
     "How often should you renew?",
     "Before you begin.",
+    "The reading behind renewal.",
     "Before it launches.",
     "Six steps, in order."
    ],
    "keywords": [
     "bio-renewal",
     "peeling",
-    "step",
-    "weekly",
-    "exfoliation",
     "formulation",
     "things",
     "once",
@@ -2191,37 +2442,48 @@
     "often",
     "renew",
     "begin",
+    "reading",
+    "behind",
+    "renewal",
     "launches",
     "steps",
     "order"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
-    "/products/syringe",
-    "/products/serum",
+    "/contact/",
+    "/blog/zero-lines-protocol.html",
+    "/products/syringe/",
+    "/products/serum/",
+    "/blog/spf-every-day-habit.html",
     "/faq.html",
+    "/blog/weekly-exfoliation-vs-daily.html",
+    "/blog/algae-marine-ingredients.html",
+    "/blog/first-30-days-protocol.html",
     "/privacy.html",
-    "/products/peeling-gel",
-    "/products/day-cream",
-    "/products/night-cream",
-    "/products/syringe-refill",
+    "/products/peeling-gel/",
+    "/products/day-cream/",
+    "/products/night-cream/",
+    "/products/syringe-refill/",
+    "/testimonials/",
     "/shipping-returns.html",
     "/terms.html",
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 968,
+   "words": 1049,
    "linksIn": [
     "/blog/algae-marine-ingredients.html",
     "/blog/andorra-alpine-secret.html",
+    "/blog/climate-skincare-needs.html",
     "/blog/first-30-days-protocol.html",
     "/blog/how-to-layer-skincare.html",
+    "/blog/inside-the-lab.html",
     "/blog/morning-vs-night-routine.html",
     "/blog/weekly-exfoliation-vs-daily.html",
     "/blog/why-pyrenean-mineral-water.html",
@@ -2239,7 +2501,7 @@
   {
    "path": "/products/syringe",
    "file": "products/syringe/index.html",
-   "title": "Precision Collagen Activation Syringe — Zero Lines | Step 02 of the Protocol",
+   "title": "Precision Collagen Activation Syringe — Zero Lines",
    "description": "Step 02 of the Zero Lines Longevity Protocol. A precision applicator that places hydrolysed collagen and botanical signal peptides on expression lines. Two effects from one dose — visibly smoother-looking lines the same day, and support for the skin's own structure over weeks. External use only: no needle, no injection. Not yet available to purchase.",
    "h1": "Precision Collagen Activation Syringe",
    "h2s": [
@@ -2251,6 +2513,7 @@
     "Step two of six.",
     "Is activation where you should begin?",
     "Six things worth asking.",
+    "The reading behind the Syringe.",
     "The key, first.",
     "Six steps, in order."
    ],
@@ -2259,8 +2522,6 @@
     "collagen",
     "activation",
     "syringe",
-    "step",
-    "protocol",
     "application",
     "timescales",
     "cream",
@@ -2278,40 +2539,50 @@
     "intervention",
     "transformative",
     "results",
+    "step",
     "begin",
     "worth",
     "asking",
+    "reading",
+    "behind",
     "first",
     "steps",
     "order"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
-    "/products/syringe-refill",
-    "/products/peeling-gel",
-    "/products/serum",
+    "/contact/",
+    "/products/syringe-refill/",
+    "/blog/fine-lines-vs-wrinkles.html",
+    "/blog/read-skincare-label.html",
+    "/products/peeling-gel/",
+    "/products/serum/",
     "/faq.html",
+    "/blog/collagen-decline-biological-clock.html",
+    "/blog/hydrolyzed-collagen-myth-miracle.html",
+    "/blog/botanical-vs-synthetic-peptides.html",
     "/privacy.html",
-    "/products/syringe",
-    "/products/day-cream",
-    "/products/night-cream",
+    "/products/syringe/",
+    "/products/day-cream/",
+    "/products/night-cream/",
+    "/testimonials/",
     "/shipping-returns.html",
     "/terms.html",
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 1210,
+   "words": 1299,
    "linksIn": [
     "/blog/botanical-vs-synthetic-peptides.html",
     "/blog/collagen-decline-biological-clock.html",
     "/blog/complete-guide-skin-aging.html",
     "/blog/fine-lines-vs-wrinkles.html",
+    "/blog/first-30-days-protocol.html",
     "/blog/how-to-layer-skincare.html",
     "/blog/hydrolyzed-collagen-myth-miracle.html",
     "/blog/inside-the-lab.html",
@@ -2331,7 +2602,7 @@
   {
    "path": "/products/serum",
    "file": "products/serum/index.html",
-   "title": "BioSignal Facial Serum — Zero Lines | Step 03, Daily Treatment",
+   "title": "BioSignal Facial Serum — Zero Lines",
    "description": "Two effects in one bottle: skin looks plumper and more luminous the same day, while daily use supports the barrier and the skin's own structure over eight to twelve weeks. Step 03 of the Zero Lines Longevity Protocol. Not yet available to purchase.",
    "h1": "BioSignal Facial Serum",
    "h2s": [
@@ -2343,6 +2614,7 @@
     "The one that compounds.",
     "Is a daily signal what your skin is missing?",
     "Frequently asked.",
+    "The reading behind the daily step.",
     "Not yet for sale.",
     "Six steps, in order."
    ],
@@ -2350,9 +2622,6 @@
     "biosignal",
     "facial",
     "serum",
-    "step",
-    "daily",
-    "treatment",
     "effects",
     "bottle",
     "both",
@@ -2368,38 +2637,49 @@
     "molecular",
     "intention",
     "compounds",
+    "daily",
     "signal",
     "missing",
     "frequently",
     "asked",
+    "reading",
+    "behind",
+    "step",
     "sale",
     "steps",
     "order"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
-    "/products/syringe",
-    "/products/day-cream",
+    "/contact/",
+    "/blog/hydrolyzed-collagen-myth-miracle.html",
+    "/products/syringe/",
+    "/products/day-cream/",
+    "/blog/morning-vs-night-routine.html",
     "/faq.html",
+    "/blog/botanical-vs-synthetic-peptides.html",
+    "/blog/why-pyrenean-mineral-water.html",
+    "/blog/first-30-days-protocol.html",
     "/privacy.html",
-    "/products/peeling-gel",
-    "/products/serum",
-    "/products/night-cream",
-    "/products/syringe-refill",
+    "/products/peeling-gel/",
+    "/products/serum/",
+    "/products/night-cream/",
+    "/products/syringe-refill/",
+    "/testimonials/",
     "/shipping-returns.html",
     "/terms.html",
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 1017,
+   "words": 1090,
    "linksIn": [
     "/blog/andorra-alpine-secret.html",
+    "/blog/botanical-vs-synthetic-peptides.html",
     "/blog/climate-skincare-needs.html",
     "/blog/cortisol-stress-aging.html",
     "/blog/drinking-water-better-skin.html",
@@ -2411,6 +2691,7 @@
     "/blog/niacinamide-ingredient-over-30.html",
     "/blog/pyrenees-to-barcelona.html",
     "/blog/read-skincare-label.html",
+    "/blog/spf-every-day-habit.html",
     "/blog/why-pyrenean-mineral-water.html",
     "/blog/zero-lines-protocol.html",
     "/products/",
@@ -2426,7 +2707,7 @@
   {
    "path": "/products/day-cream",
    "file": "products/day-cream/index.html",
-   "title": "Environmental Shield Day Cream — Zero Lines | Step 04, Morning Protection",
+   "title": "Environmental Shield Day Cream — Zero Lines",
    "description": "Step 04 of the Zero Lines Longevity Protocol. A weightless day cream that sets to a smooth base the moment it is on, and builds a daily barrier against pollution and environmental stress with Pyrenean minerals — zinc, selenium and copper.",
    "h1": "Environmental Shield Day Cream.",
    "h2s": [
@@ -2438,6 +2719,7 @@
     "Step 4 of 6.",
     "How much shielding does your skin want?",
     "Asked and answered.",
+    "The reading behind the shield.",
     "Before it launches.",
     "Six steps, in order."
    ],
@@ -2445,9 +2727,6 @@
     "environmental",
     "shield",
     "cream",
-    "step",
-    "morning",
-    "protection",
     "effects",
     "protective",
     "layer",
@@ -2456,42 +2735,52 @@
     "things",
     "matter",
     "movements",
+    "morning",
     "weightless",
     "silk",
     "boundless",
+    "protection",
+    "step",
     "much",
     "shielding",
     "want",
     "asked",
     "answered",
+    "reading",
+    "behind",
     "launches",
     "steps",
     "order"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
-    "/protocol#step-04",
+    "/contact/",
+    "/protocol/#step-04",
     "/blog/why-pyrenean-mineral-water.html",
-    "/products/peeling-gel",
-    "/products/syringe",
-    "/products/serum",
-    "/products/night-cream",
-    "/products/syringe-refill",
+    "/products/peeling-gel/",
+    "/products/syringe/",
+    "/products/serum/",
+    "/products/night-cream/",
+    "/products/syringe-refill/",
+    "/blog/how-altitude-changes-water.html",
     "/faq.html",
+    "/blog/spf-every-day-habit.html",
+    "/blog/climate-skincare-needs.html",
+    "/blog/lifestyle-factors-aging.html",
     "/privacy.html",
-    "/products/day-cream",
+    "/products/day-cream/",
+    "/testimonials/",
     "/shipping-returns.html",
     "/terms.html",
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 1145,
+   "words": 1213,
    "linksIn": [
     "/blog/algae-marine-ingredients.html",
     "/blog/andorra-alpine-secret.html",
@@ -2519,7 +2808,7 @@
   {
    "path": "/products/night-cream",
    "file": "products/night-cream/index.html",
-   "title": "Renewal and Repair Night Cream — Zero Lines | Step 05 · Evening Repair",
+   "title": "Renewal &amp; Repair Night Cream — Zero Lines",
    "description": "Step 05 of the Zero Lines Longevity Protocol. A rich overnight cream timed to the skin's own night-time renewal — skin that looks plumper and rested the very first morning, and barrier support that builds night after night. Not yet available to purchase.",
    "h1": "Renewal and Repair Night Cream.",
    "h2s": [
@@ -2531,6 +2820,7 @@
     "Either side of it in the protocol.",
     "What should your skin be doing overnight?",
     "Six questions, answered.",
+    "The reading behind the night.",
     "Before it launches.",
     "Six steps, in order."
    ],
@@ -2539,8 +2829,6 @@
     "repair",
     "night",
     "cream",
-    "step",
-    "evening",
     "effects",
     "best",
     "work",
@@ -2560,33 +2848,39 @@
     "doing",
     "questions",
     "answered",
+    "reading",
+    "behind",
     "launches",
     "steps",
     "order"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
-    "/products/day-cream",
-    "/products/serum",
+    "/contact/",
+    "/products/day-cream/",
+    "/blog/niacinamide-ingredient-over-30.html",
+    "/products/serum/",
     "/blog/sleep-repairs-skin.html",
-    "/products/syringe-refill",
+    "/products/syringe-refill/",
     "/faq.html",
+    "/blog/morning-vs-night-routine.html",
+    "/blog/cortisol-stress-aging.html",
     "/privacy.html",
-    "/products/peeling-gel",
-    "/products/syringe",
-    "/products/night-cream",
+    "/products/peeling-gel/",
+    "/products/syringe/",
+    "/products/night-cream/",
+    "/testimonials/",
     "/shipping-returns.html",
     "/terms.html",
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 1118,
+   "words": 1183,
    "linksIn": [
     "/blog/andorra-alpine-secret.html",
     "/blog/climate-skincare-needs.html",
@@ -2615,7 +2909,7 @@
   {
    "path": "/products/syringe-refill",
    "file": "products/syringe-refill/index.html",
-   "title": "Precision Collagen Activation Refill — Zero Lines | Step 06 of the Protocol",
+   "title": "Precision Collagen Activation Refill — Zero Lines",
    "description": "Step 06 of the Zero Lines protocol. The continuation cartridge for the Precision Collagen Activation Syringe — the same formulation, the same visible smoothing from the first application, and twelve months of it. Requires the Syringe applicator. Not yet available to purchase.",
    "h1": "Precision Collagen Activation Refill.",
    "h2s": [
@@ -2627,6 +2921,7 @@
     "Step 06 is step 02, continued.",
     "Is the immediate effect enough for you?",
     "Six worth asking.",
+    "The reading behind continuity.",
     "Not yet available to purchase.",
     "Six steps, in order."
    ],
@@ -2635,8 +2930,6 @@
     "collagen",
     "activation",
     "refill",
-    "step",
-    "protocol",
     "things",
     "once",
     "always",
@@ -2652,38 +2945,48 @@
     "exactly",
     "ritual",
     "continues",
+    "step",
     "immediate",
     "effect",
     "enough",
     "worth",
     "asking",
+    "reading",
+    "behind",
+    "continuity",
     "available",
     "purchase",
     "steps",
     "order"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
-    "/products/syringe",
-    "/products/peeling-gel",
-    "/products/serum",
-    "/products/day-cream",
-    "/products/night-cream",
+    "/contact/",
+    "/blog/hydrolyzed-collagen-myth-miracle.html",
+    "/products/syringe/",
+    "/products/peeling-gel/",
+    "/products/serum/",
+    "/products/day-cream/",
+    "/products/night-cream/",
+    "/blog/why-pyrenean-mineral-water.html",
     "/faq.html",
+    "/blog/collagen-decline-biological-clock.html",
+    "/blog/botanical-vs-synthetic-peptides.html",
+    "/blog/zero-lines-protocol.html",
     "/privacy.html",
-    "/products/syringe-refill",
+    "/products/syringe-refill/",
+    "/testimonials/",
     "/shipping-returns.html",
     "/terms.html",
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 933,
+   "words": 994,
    "linksIn": [
     "/blog/botanical-vs-synthetic-peptides.html",
     "/blog/collagen-decline-biological-clock.html",
@@ -2703,7 +3006,7 @@
   {
    "path": "/science",
    "file": "science/index.html",
-   "title": "The Science — Zero Lines | Hydrolysed Collagen, Peptides &amp; Pyrenean Minerals",
+   "title": "The Science of Skin Longevity — Zero Lines",
    "description": "We don't treat symptoms. We activate biology. The science behind Zero Lines — hydrolysed collagen, botanical signal peptides and the Pyrenean mineral complex, engineered in Catalonia.",
    "h1": "We don’t treat symptoms. We activate biology.",
    "h2s": [
@@ -2716,11 +3019,7 @@
    ],
    "keywords": [
     "science",
-    "hydrolysed",
-    "collagen",
-    "peptides",
-    "pyrenean",
-    "minerals",
+    "longevity",
     "treat",
     "symptoms",
     "activate",
@@ -2742,17 +3041,19 @@
     "ritual"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/blog/hydrolyzed-collagen-myth-miracle.html",
     "/blog/botanical-vs-synthetic-peptides.html",
+    "/blog/why-pyrenean-mineral-water.html",
     "/blog/collagen-decline-biological-clock.html",
     "/blog/how-altitude-changes-water.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -2840,23 +3141,26 @@
     "interest"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
+    "/blog/andorra-alpine-secret.html",
     "/blog/why-pyrenean-mineral-water.html",
+    "/blog/pyrenees-to-barcelona.html",
     "/blog/inside-the-lab.html",
     "/privacy.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/terms.html",
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 995,
+   "words": 997,
    "linksIn": [
     "/blog/algae-marine-ingredients.html",
     "/blog/andorra-alpine-secret.html",
@@ -2908,7 +3212,7 @@
   {
    "path": "/protocol",
    "file": "protocol/index.html",
-   "title": "The Longevity Protocol — Zero Lines | Six Steps, Two Effects Each",
+   "title": "The Longevity Protocol — Zero Lines",
    "description": "Six steps in one order — Renew, Activate, Signal, Shield, Restore, Sustain. Every step does two things: something you see the same day, and something that builds with consistent use. The sequence is what makes the second one possible.",
    "h1": "Six steps. Two effects each.",
    "h2s": [
@@ -2938,28 +3242,31 @@
     "first"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
-    "/products/syringe-refill",
-    "/products/peeling-gel",
-    "/products/syringe",
-    "/products/serum",
-    "/products/day-cream",
-    "/products/night-cream",
+    "/contact/",
+    "/products/syringe-refill/",
+    "/blog/how-to-layer-skincare.html",
+    "/products/peeling-gel/",
+    "/products/syringe/",
+    "/products/serum/",
+    "/products/day-cream/",
+    "/products/night-cream/",
+    "/blog/first-30-days-protocol.html",
     "/privacy.html",
     "/blog/zero-lines-protocol.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/terms.html",
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 1403,
+   "words": 1421,
    "linksIn": [
     "/blog/algae-marine-ingredients.html",
     "/blog/andorra-alpine-secret.html",
@@ -3052,14 +3359,15 @@
     "saying"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/privacy.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/terms.html",
@@ -3067,7 +3375,53 @@
     "/cookies.html"
    ],
    "words": 628,
-   "linksIn": []
+   "linksIn": [
+    "/blog/algae-marine-ingredients.html",
+    "/blog/andorra-alpine-secret.html",
+    "/blog/botanical-vs-synthetic-peptides.html",
+    "/blog/category-brand-story.html",
+    "/blog/category-ingredients.html",
+    "/blog/category-lifestyle.html",
+    "/blog/category-routine.html",
+    "/blog/category-science.html",
+    "/blog/climate-skincare-needs.html",
+    "/blog/collagen-decline-biological-clock.html",
+    "/blog/complete-guide-skin-aging.html",
+    "/blog/cortisol-stress-aging.html",
+    "/blog/drinking-water-better-skin.html",
+    "/blog/fine-lines-vs-wrinkles.html",
+    "/blog/first-30-days-protocol.html",
+    "/blog/how-altitude-changes-water.html",
+    "/blog/how-to-layer-skincare.html",
+    "/blog/hydrolyzed-collagen-myth-miracle.html",
+    "/blog/",
+    "/blog/inside-the-lab.html",
+    "/blog/lifestyle-factors-aging.html",
+    "/blog/morning-vs-night-routine.html",
+    "/blog/niacinamide-ingredient-over-30.html",
+    "/blog/pyrenees-to-barcelona.html",
+    "/blog/read-skincare-label.html",
+    "/blog/sleep-repairs-skin.html",
+    "/blog/spf-every-day-habit.html",
+    "/blog/understanding-skin-type.html",
+    "/blog/weekly-exfoliation-vs-daily.html",
+    "/blog/why-pyrenean-mineral-water.html",
+    "/blog/zero-lines-protocol.html",
+    "/products/",
+    "/products/peeling-gel",
+    "/products/syringe",
+    "/products/serum",
+    "/products/day-cream",
+    "/products/night-cream",
+    "/products/syringe-refill",
+    "/science",
+    "/story",
+    "/protocol",
+    "/contact",
+    "/faq.html",
+    "/",
+    "/analyser/"
+   ]
   },
   {
    "path": "/contact",
@@ -3109,15 +3463,16 @@
     "here"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
     "/privacy.html",
     "/faq.html",
+    "/testimonials/",
     "/shipping-returns.html",
     "/terms.html",
     "/accessibility.html",
@@ -3175,7 +3530,7 @@
   {
    "path": "/faq.html",
    "file": "faq.html",
-   "title": "FAQ — Zero Lines | The Science, the Protocol and the Formulations",
+   "title": "Questions &amp; Answers — Zero Lines",
    "description": "Twenty-three answers about Zero Lines — the PRNS Protocol, the six formulations, ingredients and safety, availability, and the house behind them.",
    "h1": "Everything you want to know.",
    "h2s": [
@@ -3187,9 +3542,8 @@
     "Ask us the one we missed."
    ],
    "keywords": [
-    "science",
-    "protocol",
-    "formulations",
+    "questions",
+    "answers",
     "everything",
     "want",
     "know",
@@ -3204,24 +3558,28 @@
     "missed"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
+    "/blog/collagen-decline-biological-clock.html",
+    "/blog/fine-lines-vs-wrinkles.html",
+    "/blog/weekly-exfoliation-vs-daily.html",
+    "/blog/why-pyrenean-mineral-water.html",
     "/shipping-returns.html",
     "/blog/zero-lines-protocol.html",
     "/blog/complete-guide-skin-aging.html",
-    "/blog/why-pyrenean-mineral-water.html",
+    "/testimonials/",
     "/faq.html",
     "/privacy.html",
     "/terms.html",
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 2592,
+   "words": 2610,
    "linksIn": [
     "/blog/algae-marine-ingredients.html",
     "/blog/andorra-alpine-secret.html",
@@ -3311,36 +3669,37 @@
     "launches"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
-    "/products/syringe-refill",
-    "/products/peeling-gel",
-    "/products/syringe",
-    "/products/serum",
-    "/products/day-cream",
-    "/products/night-cream",
+    "/contact/",
+    "/products/syringe-refill/",
+    "/products/peeling-gel/",
+    "/products/syringe/",
+    "/products/serum/",
+    "/products/day-cream/",
+    "/products/night-cream/",
     "/blog/complete-guide-skin-aging.html",
     "/blog/why-pyrenean-mineral-water.html",
     "/blog/zero-lines-protocol.html",
     "/privacy.html",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/terms.html",
     "/accessibility.html",
     "/cookies.html"
    ],
-   "words": 714,
+   "words": 721,
    "linksIn": []
   },
   {
    "path": "/analyser/",
    "file": "analyser/index.html",
-   "title": "Skin Analyser — Zero Lines | A Written Assessment of Your Skin",
+   "title": "Skin Analyser — Zero Lines",
    "description": "Ten questions and one photograph. The Zero Lines analyser reads texture, tone, hydration, pores, pigmentation, lines, elasticity and sun exposure, then returns a written assessment and the protocol that follows from it.",
    "h1": "See your skin as we see it.",
    "h2s": [
@@ -3352,25 +3711,26 @@
    ],
    "keywords": [
     "analyser",
-    "written",
-    "assessment",
     "becomes",
     "picture",
     "clear",
     "photograph",
     "being",
     "read",
+    "written",
+    "assessment",
     "could",
     "just"
    ],
    "linksOut": [
-    "/science",
-    "/protocol",
-    "/products",
-    "/story",
+    "/science/",
+    "/protocol/",
+    "/products/",
+    "/story/",
     "/analyser/",
     "/blog/",
-    "/contact",
+    "/contact/",
+    "/testimonials/",
     "/faq.html",
     "/shipping-returns.html",
     "/privacy.html",
@@ -3433,46 +3793,65 @@
    "from": "/blog/algae-marine-ingredients.html",
    "candidates": [
     {
-     "to": "/products/peeling-gel",
+     "to": "/blog/botanical-vs-synthetic-peptides.html",
      "shared": [
-      "ingredients",
-      "work",
-      "exfoliation"
+      "journal",
+      "actually",
+      "work"
      ]
     },
     {
-     "to": "/blog/botanical-vs-synthetic-peptides.html",
+     "to": "/blog/drinking-water-better-skin.html",
      "shared": [
+      "journal",
       "actually",
-      "work"
+      "hydration"
      ]
     },
     {
      "to": "/blog/hydrolyzed-collagen-myth-miracle.html",
      "shared": [
+      "journal",
       "actually",
       "work"
      ]
     },
     {
-     "to": "/blog/",
+     "to": "/blog/morning-vs-night-routine.html",
      "shared": [
+      "journal",
       "ingredients",
-      "actually"
+      "work"
      ]
     },
     {
-     "to": "/blog/morning-vs-night-routine.html",
+     "to": "/blog/understanding-skin-type.html",
      "shared": [
-      "ingredients",
+      "journal",
+      "actually",
       "work"
      ]
     },
     {
      "to": "/blog/weekly-exfoliation-vs-daily.html",
      "shared": [
+      "journal",
       "actually",
       "exfoliation"
+     ]
+    },
+    {
+     "to": "/blog/climate-skincare-needs.html",
+     "shared": [
+      "journal",
+      "work"
+     ]
+    },
+    {
+     "to": "/blog/complete-guide-skin-aging.html",
+     "shared": [
+      "journal",
+      "actually"
      ]
     }
    ]
@@ -3484,13 +3863,34 @@
      "to": "/blog/",
      "shared": [
       "andorra",
+      "high-altitude",
+      "spring",
+      "water",
+      "journal",
       "alpine",
       "secret",
       "science",
       "behind",
+      "mineral"
+     ]
+    },
+    {
+     "to": "/blog/why-pyrenean-mineral-water.html",
+     "shared": [
       "high-altitude",
       "spring",
       "water",
+      "journal",
+      "minerals",
+      "mineral"
+     ]
+    },
+    {
+     "to": "/blog/pyrenees-to-barcelona.html",
+     "shared": [
+      "water",
+      "journal",
+      "alpine",
       "mineral"
      ]
     },
@@ -3498,27 +3898,36 @@
      "to": "/blog/climate-skincare-needs.html",
      "shared": [
       "andorra",
-      "alpine"
+      "high-altitude",
+      "journal"
      ]
     },
     {
      "to": "/blog/how-altitude-changes-water.html",
      "shared": [
       "water",
-      "mineral"
+      "journal",
+      "minerals"
      ]
     },
     {
-     "to": "/blog/pyrenees-to-barcelona.html",
+     "to": "/blog/cortisol-stress-aging.html",
      "shared": [
-      "alpine",
-      "water"
+      "journal",
+      "science"
      ]
     },
     {
-     "to": "/blog/why-pyrenean-mineral-water.html",
+     "to": "/blog/drinking-water-better-skin.html",
      "shared": [
       "water",
+      "journal"
+     ]
+    },
+    {
+     "to": "/blog/inside-the-lab.html",
+     "shared": [
+      "journal",
       "mineral"
      ]
     }
@@ -3539,13 +3948,31 @@
     {
      "to": "/blog/algae-marine-ingredients.html",
      "shared": [
+      "journal",
       "actually",
       "work"
      ]
     },
     {
+     "to": "/blog/fine-lines-vs-wrinkles.html",
+     "shared": [
+      "journal",
+      "difference",
+      "they"
+     ]
+    },
+    {
+     "to": "/blog/how-to-layer-skincare.html",
+     "shared": [
+      "journal",
+      "actually",
+      "between"
+     ]
+    },
+    {
      "to": "/blog/hydrolyzed-collagen-myth-miracle.html",
      "shared": [
+      "journal",
       "actually",
       "work"
      ]
@@ -3553,36 +3980,25 @@
     {
      "to": "/blog/morning-vs-night-routine.html",
      "shared": [
+      "journal",
       "both",
       "work"
      ]
     },
     {
-     "to": "/blog/spf-every-day-habit.html",
+     "to": "/blog/understanding-skin-type.html",
      "shared": [
-      "difference",
-      "both"
+      "journal",
+      "actually",
+      "work"
      ]
     },
     {
      "to": "/blog/weekly-exfoliation-vs-daily.html",
      "shared": [
+      "journal",
       "actually",
       "approach"
-     ]
-    },
-    {
-     "to": "/products/syringe",
-     "shared": [
-      "precision",
-      "work"
-     ]
-    },
-    {
-     "to": "/products/serum",
-     "shared": [
-      "both",
-      "signal"
      ]
     }
    ]
@@ -3591,27 +4007,35 @@
    "from": "/blog/climate-skincare-needs.html",
    "candidates": [
     {
+     "to": "/blog/andorra-alpine-secret.html",
+     "shared": [
+      "journal",
+      "high-altitude",
+      "andorra"
+     ]
+    },
+    {
      "to": "/blog/",
      "shared": [
-      "alpine",
-      "andorra",
-      "protocol"
+      "journal",
+      "high-altitude",
+      "andorra"
      ]
     },
     {
-     "to": "/blog/pyrenees-to-barcelona.html",
+     "to": "/blog/morning-vs-night-routine.html",
      "shared": [
-      "barcelona",
-      "alpine",
-      "formulation"
-     ]
-    },
-    {
-     "to": "/protocol",
-     "shared": [
+      "journal",
       "routine",
-      "building",
-      "protocol"
+      "work"
+     ]
+    },
+    {
+     "to": "/blog/understanding-skin-type.html",
+     "shared": [
+      "journal",
+      "change",
+      "work"
      ]
     },
     {
@@ -3623,10 +4047,24 @@
      ]
     },
     {
-     "to": "/blog/andorra-alpine-secret.html",
+     "to": "/blog/algae-marine-ingredients.html",
      "shared": [
-      "alpine",
-      "andorra"
+      "journal",
+      "work"
+     ]
+    },
+    {
+     "to": "/blog/botanical-vs-synthetic-peptides.html",
+     "shared": [
+      "journal",
+      "work"
+     ]
+    },
+    {
+     "to": "/blog/collagen-decline-biological-clock.html",
+     "shared": [
+      "journal",
+      "change"
      ]
     }
    ]
@@ -3639,31 +4077,26 @@
      "shared": [
       "collagen",
       "decline",
-      "biological",
-      "clock",
       "slow",
+      "clock",
+      "journal",
+      "biological",
       "lifestyle",
       "factors"
-     ]
-    },
-    {
-     "to": "/blog/understanding-skin-type.html",
-     "shared": [
-      "change",
-      "types",
-      "beyond"
      ]
     },
     {
      "to": "/blog/complete-guide-skin-aging.html",
      "shared": [
       "collagen",
-      "slow"
+      "slow",
+      "journal"
      ]
     },
     {
      "to": "/blog/drinking-water-better-skin.html",
      "shared": [
+      "journal",
       "research",
       "says"
      ]
@@ -3671,15 +4104,38 @@
     {
      "to": "/blog/lifestyle-factors-aging.html",
      "shared": [
+      "journal",
       "lifestyle",
       "factors"
      ]
     },
     {
-     "to": "/products/syringe-refill",
+     "to": "/blog/understanding-skin-type.html",
      "shared": [
-      "collagen",
+      "journal",
+      "change",
+      "types"
+     ]
+    },
+    {
+     "to": "/blog/botanical-vs-synthetic-peptides.html",
+     "shared": [
+      "journal",
+      "approach"
+     ]
+    },
+    {
+     "to": "/blog/climate-skincare-needs.html",
+     "shared": [
+      "journal",
       "change"
+     ]
+    },
+    {
+     "to": "/blog/cortisol-stress-aging.html",
+     "shared": [
+      "journal",
+      "research"
      ]
     }
    ]
@@ -3690,9 +4146,10 @@
     {
      "to": "/blog/",
      "shared": [
-      "actually",
-      "happens",
       "ageing",
+      "happens",
+      "journal",
+      "actually",
       "collagen",
       "slow"
      ]
@@ -3700,23 +4157,17 @@
     {
      "to": "/blog/hydrolyzed-collagen-myth-miracle.html",
      "shared": [
-      "actually",
       "happens",
-      "collagen",
-      "works"
-     ]
-    },
-    {
-     "to": "/blog/understanding-skin-type.html",
-     "shared": [
+      "journal",
       "actually",
-      "four",
+      "collagen",
       "works"
      ]
     },
     {
      "to": "/blog/collagen-decline-biological-clock.html",
      "shared": [
+      "journal",
       "collagen",
       "slow"
      ]
@@ -3725,28 +4176,38 @@
      "to": "/blog/lifestyle-factors-aging.html",
      "shared": [
       "ageing",
+      "journal",
       "dehydration"
      ]
     },
     {
-     "to": "/products/syringe",
+     "to": "/blog/niacinamide-ingredient-over-30.html",
      "shared": [
-      "four",
-      "collagen"
-     ]
-    },
-    {
-     "to": "/products/syringe-refill",
-     "shared": [
-      "four",
-      "collagen"
-     ]
-    },
-    {
-     "to": "/faq.html",
-     "shared": [
+      "journal",
       "actually",
       "works"
+     ]
+    },
+    {
+     "to": "/blog/understanding-skin-type.html",
+     "shared": [
+      "journal",
+      "actually",
+      "four"
+     ]
+    },
+    {
+     "to": "/blog/algae-marine-ingredients.html",
+     "shared": [
+      "journal",
+      "actually"
+     ]
+    },
+    {
+     "to": "/blog/botanical-vs-synthetic-peptides.html",
+     "shared": [
+      "journal",
+      "actually"
      ]
     }
    ]
@@ -3755,10 +4216,64 @@
    "from": "/blog/cortisol-stress-aging.html",
    "candidates": [
     {
+     "to": "/blog/lifestyle-factors-aging.html",
+     "shared": [
+      "cortisol",
+      "stress",
+      "ageing",
+      "journal"
+     ]
+    },
+    {
      "to": "/blog/drinking-water-better-skin.html",
      "shared": [
+      "journal",
       "research",
       "better"
+     ]
+    },
+    {
+     "to": "/blog/",
+     "shared": [
+      "ageing",
+      "journal",
+      "science"
+     ]
+    },
+    {
+     "to": "/blog/spf-every-day-habit.html",
+     "shared": [
+      "ageing",
+      "journal",
+      "better"
+     ]
+    },
+    {
+     "to": "/blog/andorra-alpine-secret.html",
+     "shared": [
+      "journal",
+      "science"
+     ]
+    },
+    {
+     "to": "/blog/collagen-decline-biological-clock.html",
+     "shared": [
+      "journal",
+      "research"
+     ]
+    },
+    {
+     "to": "/blog/complete-guide-skin-aging.html",
+     "shared": [
+      "ageing",
+      "journal"
+     ]
+    },
+    {
+     "to": "/blog/fine-lines-vs-wrinkles.html",
+     "shared": [
+      "journal",
+      "understanding"
      ]
     }
    ]
@@ -3770,6 +4285,7 @@
      "to": "/blog/hydrolyzed-collagen-myth-miracle.html",
      "shared": [
       "better",
+      "journal",
       "actually",
       "matters"
      ]
@@ -3778,13 +4294,41 @@
      "to": "/blog/",
      "shared": [
       "water",
+      "journal",
       "actually",
       "matters"
      ]
     },
     {
+     "to": "/blog/sleep-repairs-skin.html",
+     "shared": [
+      "journal",
+      "much",
+      "quality",
+      "matters"
+     ]
+    },
+    {
+     "to": "/blog/spf-every-day-habit.html",
+     "shared": [
+      "better",
+      "journal",
+      "enough",
+      "matters"
+     ]
+    },
+    {
+     "to": "/blog/algae-marine-ingredients.html",
+     "shared": [
+      "journal",
+      "actually",
+      "hydration"
+     ]
+    },
+    {
      "to": "/blog/collagen-decline-biological-clock.html",
      "shared": [
+      "journal",
       "research",
       "says"
      ]
@@ -3793,80 +4337,135 @@
      "to": "/blog/cortisol-stress-aging.html",
      "shared": [
       "better",
+      "journal",
       "research"
      ]
     },
     {
      "to": "/blog/how-to-layer-skincare.html",
      "shared": [
+      "journal",
       "actually",
       "matters"
-     ]
-    },
-    {
-     "to": "/blog/niacinamide-ingredient-over-30.html",
-     "shared": [
-      "actually",
-      "matters"
-     ]
-    },
-    {
-     "to": "/blog/pyrenees-to-barcelona.html",
-     "shared": [
-      "water",
-      "quality"
-     ]
-    },
-    {
-     "to": "/blog/sleep-repairs-skin.html",
-     "shared": [
-      "much",
-      "quality"
      ]
     }
    ]
   },
   {
    "from": "/blog/fine-lines-vs-wrinkles.html",
-   "candidates": []
-  },
-  {
-   "from": "/blog/first-30-days-protocol.html",
    "candidates": [
     {
-     "to": "/products/syringe",
+     "to": "/blog/botanical-vs-synthetic-peptides.html",
      "shared": [
-      "first",
-      "protocol",
-      "results"
+      "journal",
+      "difference",
+      "they"
+     ]
+    },
+    {
+     "to": "/blog/cortisol-stress-aging.html",
+     "shared": [
+      "journal",
+      "understanding"
+     ]
+    },
+    {
+     "to": "/blog/lifestyle-factors-aging.html",
+     "shared": [
+      "fine",
+      "journal"
+     ]
+    },
+    {
+     "to": "/blog/read-skincare-label.html",
+     "shared": [
+      "tell",
+      "journal"
      ]
     },
     {
      "to": "/blog/spf-every-day-habit.html",
      "shared": [
+      "journal",
+      "difference"
+     ]
+    },
+    {
+     "to": "/blog/understanding-skin-type.html",
+     "shared": [
+      "journal",
+      "understanding"
+     ]
+    },
+    {
+     "to": "/products/",
+     "shared": [
+      "they",
+      "form"
+     ]
+    }
+   ]
+  },
+  {
+   "from": "/blog/first-30-days-protocol.html",
+   "candidates": [
+    {
+     "to": "/blog/spf-every-day-habit.html",
+     "shared": [
+      "journal",
+      "foundation",
       "common",
       "mistakes"
+     ]
+    },
+    {
+     "to": "/blog/how-to-layer-skincare.html",
+     "shared": [
+      "journal",
+      "products",
+      "matter"
+     ]
+    },
+    {
+     "to": "/blog/algae-marine-ingredients.html",
+     "shared": [
+      "journal",
+      "hydration"
+     ]
+    },
+    {
+     "to": "/blog/drinking-water-better-skin.html",
+     "shared": [
+      "journal",
+      "hydration"
+     ]
+    },
+    {
+     "to": "/blog/",
+     "shared": [
+      "protocol",
+      "journal"
+     ]
+    },
+    {
+     "to": "/blog/morning-vs-night-routine.html",
+     "shared": [
+      "journal",
+      "products"
+     ]
+    },
+    {
+     "to": "/blog/read-skincare-label.html",
+     "shared": [
+      "first",
+      "journal"
      ]
     },
     {
      "to": "/blog/zero-lines-protocol.html",
      "shared": [
       "protocol",
-      "sequence"
-     ]
-    },
-    {
-     "to": "/products/night-cream",
-     "shared": [
-      "protocol",
-      "matter"
-     ]
-    },
-    {
-     "to": "/protocol",
-     "shared": [
-      "first",
-      "protocol"
+      "journal"
      ]
     }
    ]
@@ -3881,38 +4480,58 @@
       "changes",
       "water",
       "cares",
-      "mineral"
-     ]
-    },
-    {
-     "to": "/blog/why-pyrenean-mineral-water.html",
-     "shared": [
-      "altitude",
-      "changes",
-      "water",
-      "mineral"
-     ]
-    },
-    {
-     "to": "/blog/pyrenees-to-barcelona.html",
-     "shared": [
-      "water",
-      "cold",
-      "source"
+      "journal"
      ]
     },
     {
      "to": "/blog/andorra-alpine-secret.html",
      "shared": [
       "water",
-      "mineral"
+      "journal",
+      "minerals"
      ]
     },
     {
-     "to": "/blog/spf-every-day-habit.html",
+     "to": "/blog/why-pyrenean-mineral-water.html",
      "shared": [
-      "mineral",
-      "difference"
+      "water",
+      "journal",
+      "minerals"
+     ]
+    },
+    {
+     "to": "/blog/climate-skincare-needs.html",
+     "shared": [
+      "journal",
+      "affects"
+     ]
+    },
+    {
+     "to": "/blog/drinking-water-better-skin.html",
+     "shared": [
+      "water",
+      "journal"
+     ]
+    },
+    {
+     "to": "/blog/hydrolyzed-collagen-myth-miracle.html",
+     "shared": [
+      "journal",
+      "source"
+     ]
+    },
+    {
+     "to": "/blog/pyrenees-to-barcelona.html",
+     "shared": [
+      "water",
+      "journal"
+     ]
+    },
+    {
+     "to": "/blog/weekly-exfoliation-vs-daily.html",
+     "shared": [
+      "changes",
+      "journal"
      ]
     }
    ]
@@ -3925,58 +4544,64 @@
      "shared": [
       "layer",
       "order",
+      "journal",
       "actually",
       "matters"
      ]
     },
     {
-     "to": "/blog/hydrolyzed-collagen-myth-miracle.html",
+     "to": "/blog/botanical-vs-synthetic-peptides.html",
      "shared": [
+      "journal",
       "actually",
-      "matters",
-      "myth"
+      "between"
      ]
     },
     {
      "to": "/blog/drinking-water-better-skin.html",
      "shared": [
+      "journal",
       "actually",
       "matters"
      ]
     },
     {
-     "to": "/blog/inside-the-lab.html",
+     "to": "/blog/first-30-days-protocol.html",
      "shared": [
-      "three",
-      "question"
+      "journal",
+      "products",
+      "matter"
+     ]
+    },
+    {
+     "to": "/blog/hydrolyzed-collagen-myth-miracle.html",
+     "shared": [
+      "journal",
+      "actually",
+      "matters"
      ]
     },
     {
      "to": "/blog/niacinamide-ingredient-over-30.html",
      "shared": [
+      "journal",
       "actually",
       "matters"
      ]
     },
     {
-     "to": "/blog/zero-lines-protocol.html",
+     "to": "/products/day-cream",
      "shared": [
-      "matters",
-      "sequence"
+      "layer",
+      "order",
+      "matter"
      ]
     },
     {
-     "to": "/products/peeling-gel",
+     "to": "/blog/algae-marine-ingredients.html",
      "shared": [
-      "order",
-      "three"
-     ]
-    },
-    {
-     "to": "/products/syringe",
-     "shared": [
-      "order",
-      "three"
+      "journal",
+      "actually"
      ]
     }
    ]
@@ -3988,6 +4613,7 @@
      "to": "/blog/complete-guide-skin-aging.html",
      "shared": [
       "collagen",
+      "journal",
       "happens",
       "works",
       "actually"
@@ -3997,6 +4623,7 @@
      "to": "/blog/",
      "shared": [
       "collagen",
+      "journal",
       "happens",
       "matters",
       "actually"
@@ -4005,22 +4632,34 @@
     {
      "to": "/blog/drinking-water-better-skin.html",
      "shared": [
+      "journal",
       "better",
       "matters",
       "actually"
      ]
     },
     {
-     "to": "/blog/how-to-layer-skincare.html",
+     "to": "/blog/niacinamide-ingredient-over-30.html",
      "shared": [
-      "myth",
+      "journal",
+      "works",
       "matters",
       "actually"
      ]
     },
     {
+     "to": "/blog/spf-every-day-habit.html",
+     "shared": [
+      "journal",
+      "which",
+      "better",
+      "matters"
+     ]
+    },
+    {
      "to": "/blog/algae-marine-ingredients.html",
      "shared": [
+      "journal",
       "actually",
       "work"
      ]
@@ -4028,20 +4667,15 @@
     {
      "to": "/blog/botanical-vs-synthetic-peptides.html",
      "shared": [
+      "journal",
       "actually",
       "work"
      ]
     },
     {
-     "to": "/blog/morning-vs-night-routine.html",
+     "to": "/blog/how-to-layer-skincare.html",
      "shared": [
-      "work",
-      "size"
-     ]
-    },
-    {
-     "to": "/blog/niacinamide-ingredient-over-30.html",
-     "shared": [
+      "journal",
       "matters",
       "actually"
      ]
@@ -4052,59 +4686,67 @@
    "from": "/blog/inside-the-lab.html",
    "candidates": [
     {
-     "to": "/blog/how-to-layer-skincare.html",
+     "to": "/blog/",
      "shared": [
-      "question",
-      "three"
+      "journal",
+      "mineral",
+      "6-step",
+      "system"
      ]
     },
     {
      "to": "/blog/zero-lines-protocol.html",
      "shared": [
+      "journal",
+      "6-step",
       "system",
       "product"
      ]
     },
     {
-     "to": "/products/peeling-gel",
+     "to": "/blog/pyrenees-to-barcelona.html",
+     "shared": [
+      "journal",
+      "mineral",
+      "formula"
+     ]
+    },
+    {
+     "to": "/blog/why-pyrenean-mineral-water.html",
+     "shared": [
+      "journal",
+      "mineral",
+      "formulations"
+     ]
+    },
+    {
+     "to": "/faq.html",
+     "shared": [
+      "philosophy",
+      "formula",
+      "goes"
+     ]
+    },
+    {
+     "to": "/",
      "shared": [
       "formulation",
-      "three"
+      "system",
+      "formulations"
      ]
     },
     {
-     "to": "/products/syringe",
+     "to": "/blog/algae-marine-ingredients.html",
      "shared": [
-      "four",
-      "three"
+      "journal",
+      "next"
      ]
     },
     {
-     "to": "/products/syringe-refill",
+     "to": "/blog/andorra-alpine-secret.html",
      "shared": [
-      "four",
-      "product"
-     ]
-    },
-    {
-     "to": "/science",
-     "shared": [
-      "formulation",
-      "three"
-     ]
-    },
-    {
-     "to": "/story",
-     "shared": [
-      "question",
-      "product"
-     ]
-    },
-    {
-     "to": "/contact",
-     "shared": [
-      "four",
-      "three"
+      "journal",
+      "mineral"
      ]
     }
    ]
@@ -4117,20 +4759,32 @@
      "shared": [
       "lifestyle",
       "factors",
+      "journal",
       "accelerate",
       "ageing"
+     ]
+    },
+    {
+     "to": "/blog/cortisol-stress-aging.html",
+     "shared": [
+      "journal",
+      "ageing",
+      "stress",
+      "cortisol"
      ]
     },
     {
      "to": "/blog/collagen-decline-biological-clock.html",
      "shared": [
       "lifestyle",
-      "factors"
+      "factors",
+      "journal"
      ]
     },
     {
      "to": "/blog/complete-guide-skin-aging.html",
      "shared": [
+      "journal",
       "ageing",
       "dehydration"
      ]
@@ -4138,8 +4792,23 @@
     {
      "to": "/blog/sleep-repairs-skin.html",
      "shared": [
+      "journal",
       "sleep",
       "deprivation"
+     ]
+    },
+    {
+     "to": "/blog/fine-lines-vs-wrinkles.html",
+     "shared": [
+      "journal",
+      "fine"
+     ]
+    },
+    {
+     "to": "/blog/spf-every-day-habit.html",
+     "shared": [
+      "journal",
+      "ageing"
      ]
     }
    ]
@@ -4147,6 +4816,46 @@
   {
    "from": "/blog/morning-vs-night-routine.html",
    "candidates": [
+    {
+     "to": "/blog/algae-marine-ingredients.html",
+     "shared": [
+      "journal",
+      "ingredients",
+      "work"
+     ]
+    },
+    {
+     "to": "/blog/botanical-vs-synthetic-peptides.html",
+     "shared": [
+      "journal",
+      "both",
+      "work"
+     ]
+    },
+    {
+     "to": "/blog/climate-skincare-needs.html",
+     "shared": [
+      "routine",
+      "journal",
+      "work"
+     ]
+    },
+    {
+     "to": "/blog/hydrolyzed-collagen-myth-miracle.html",
+     "shared": [
+      "journal",
+      "size",
+      "work"
+     ]
+    },
+    {
+     "to": "/blog/understanding-skin-type.html",
+     "shared": [
+      "journal",
+      "different",
+      "work"
+     ]
+    },
     {
      "to": "/products/night-cream",
      "shared": [
@@ -4156,38 +4865,17 @@
      ]
     },
     {
-     "to": "/blog/algae-marine-ingredients.html",
+     "to": "/blog/drinking-water-better-skin.html",
      "shared": [
-      "ingredients",
-      "work"
+      "journal",
+      "best"
      ]
     },
     {
-     "to": "/blog/botanical-vs-synthetic-peptides.html",
+     "to": "/blog/first-30-days-protocol.html",
      "shared": [
-      "both",
-      "work"
-     ]
-    },
-    {
-     "to": "/blog/hydrolyzed-collagen-myth-miracle.html",
-     "shared": [
-      "size",
-      "work"
-     ]
-    },
-    {
-     "to": "/products/peeling-gel",
-     "shared": [
-      "ingredients",
-      "work"
-     ]
-    },
-    {
-     "to": "/products/serum",
-     "shared": [
-      "both",
-      "daily"
+      "journal",
+      "products"
      ]
     }
    ]
@@ -4196,16 +4884,35 @@
    "from": "/blog/niacinamide-ingredient-over-30.html",
    "candidates": [
     {
+     "to": "/blog/hydrolyzed-collagen-myth-miracle.html",
+     "shared": [
+      "journal",
+      "actually",
+      "works",
+      "matters"
+     ]
+    },
+    {
      "to": "/blog/",
      "shared": [
+      "journal",
       "ingredient",
       "actually",
       "matters"
      ]
     },
     {
+     "to": "/blog/complete-guide-skin-aging.html",
+     "shared": [
+      "journal",
+      "actually",
+      "works"
+     ]
+    },
+    {
      "to": "/blog/drinking-water-better-skin.html",
      "shared": [
+      "journal",
       "actually",
       "matters"
      ]
@@ -4213,13 +4920,7 @@
     {
      "to": "/blog/how-to-layer-skincare.html",
      "shared": [
-      "actually",
-      "matters"
-     ]
-    },
-    {
-     "to": "/blog/hydrolyzed-collagen-myth-miracle.html",
-     "shared": [
+      "journal",
       "actually",
       "matters"
      ]
@@ -4227,6 +4928,7 @@
     {
      "to": "/blog/why-pyrenean-mineral-water.html",
      "shared": [
+      "journal",
       "ingredient",
       "matters"
      ]
@@ -4235,6 +4937,14 @@
      "to": "/faq.html",
      "shared": [
       "know",
+      "actually",
+      "works"
+     ]
+    },
+    {
+     "to": "/blog/algae-marine-ingredients.html",
+     "shared": [
+      "journal",
       "actually"
      ]
     }
@@ -4244,61 +4954,65 @@
    "from": "/blog/pyrenees-to-barcelona.html",
    "candidates": [
     {
-     "to": "/blog/climate-skincare-needs.html",
+     "to": "/blog/andorra-alpine-secret.html",
      "shared": [
-      "barcelona",
       "alpine",
-      "formulation"
-     ]
-    },
-    {
-     "to": "/blog/how-altitude-changes-water.html",
-     "shared": [
-      "source",
-      "cold",
-      "water"
+      "journal",
+      "water",
+      "mineral"
      ]
     },
     {
      "to": "/blog/",
      "shared": [
       "alpine",
-      "ingredients",
-      "water"
-     ]
-    },
-    {
-     "to": "/blog/andorra-alpine-secret.html",
-     "shared": [
-      "alpine",
-      "water"
+      "journal",
+      "water",
+      "mineral"
      ]
     },
     {
      "to": "/blog/drinking-water-better-skin.html",
      "shared": [
+      "journal",
       "water",
       "quality"
      ]
     },
     {
-     "to": "/products/peeling-gel",
+     "to": "/blog/inside-the-lab.html",
      "shared": [
-      "ingredients",
-      "formulation"
+      "journal",
+      "mineral",
+      "formula"
      ]
     },
     {
-     "to": "/science",
+     "to": "/blog/why-pyrenean-mineral-water.html",
      "shared": [
-      "pyrenees",
-      "formulation"
+      "journal",
+      "water",
+      "mineral"
      ]
     },
     {
-     "to": "/story",
+     "to": "/blog/algae-marine-ingredients.html",
      "shared": [
-      "mountain",
+      "journal",
+      "ingredients"
+     ]
+    },
+    {
+     "to": "/blog/climate-skincare-needs.html",
+     "shared": [
+      "barcelona",
+      "journal"
+     ]
+    },
+    {
+     "to": "/blog/how-altitude-changes-water.html",
+     "shared": [
+      "journal",
       "water"
      ]
     }
@@ -4308,18 +5022,59 @@
    "from": "/blog/read-skincare-label.html",
    "candidates": [
     {
-     "to": "/blog/",
+     "to": "/blog/algae-marine-ingredients.html",
      "shared": [
-      "read",
-      "ingredients",
-      "ingredient"
+      "journal",
+      "ingredients"
      ]
     },
     {
-     "to": "/testimonials",
+     "to": "/blog/complete-guide-skin-aging.html",
      "shared": [
-      "first",
-      "never"
+      "journal",
+      "rule"
+     ]
+    },
+    {
+     "to": "/blog/fine-lines-vs-wrinkles.html",
+     "shared": [
+      "journal",
+      "tell"
+     ]
+    },
+    {
+     "to": "/blog/first-30-days-protocol.html",
+     "shared": [
+      "journal",
+      "first"
+     ]
+    },
+    {
+     "to": "/blog/",
+     "shared": [
+      "read",
+      "journal"
+     ]
+    },
+    {
+     "to": "/blog/morning-vs-night-routine.html",
+     "shared": [
+      "journal",
+      "ingredients"
+     ]
+    },
+    {
+     "to": "/blog/pyrenees-to-barcelona.html",
+     "shared": [
+      "journal",
+      "ingredients"
+     ]
+    },
+    {
+     "to": "/blog/understanding-skin-type.html",
+     "shared": [
+      "journal",
+      "five"
      ]
     }
    ]
@@ -4330,15 +5085,63 @@
     {
      "to": "/blog/drinking-water-better-skin.html",
      "shared": [
+      "journal",
       "quality",
+      "matters",
       "much"
+     ]
+    },
+    {
+     "to": "/blog/hydrolyzed-collagen-myth-miracle.html",
+     "shared": [
+      "journal",
+      "happens",
+      "matters"
+     ]
+    },
+    {
+     "to": "/blog/",
+     "shared": [
+      "journal",
+      "happens",
+      "matters"
      ]
     },
     {
      "to": "/blog/lifestyle-factors-aging.html",
      "shared": [
       "sleep",
+      "journal",
       "deprivation"
+     ]
+    },
+    {
+     "to": "/blog/zero-lines-protocol.html",
+     "shared": [
+      "journal",
+      "repair",
+      "night"
+     ]
+    },
+    {
+     "to": "/blog/complete-guide-skin-aging.html",
+     "shared": [
+      "journal",
+      "happens"
+     ]
+    },
+    {
+     "to": "/blog/how-to-layer-skincare.html",
+     "shared": [
+      "journal",
+      "matters"
+     ]
+    },
+    {
+     "to": "/blog/morning-vs-night-routine.html",
+     "shared": [
+      "journal",
+      "night"
      ]
     }
    ]
@@ -4349,6 +5152,8 @@
     {
      "to": "/blog/",
      "shared": [
+      "matters",
+      "journal",
       "habit",
       "prevents",
       "visible",
@@ -4357,31 +5162,62 @@
      ]
     },
     {
-     "to": "/blog/botanical-vs-synthetic-peptides.html",
+     "to": "/blog/drinking-water-better-skin.html",
      "shared": [
-      "both",
-      "difference"
+      "matters",
+      "journal",
+      "better",
+      "enough"
      ]
     },
     {
      "to": "/blog/first-30-days-protocol.html",
      "shared": [
+      "journal",
+      "foundation",
       "common",
       "mistakes"
      ]
     },
     {
-     "to": "/blog/how-altitude-changes-water.html",
+     "to": "/blog/hydrolyzed-collagen-myth-miracle.html",
      "shared": [
-      "mineral",
-      "difference"
+      "matters",
+      "journal",
+      "which",
+      "better"
      ]
     },
     {
-     "to": "/products/serum",
+     "to": "/blog/why-pyrenean-mineral-water.html",
      "shared": [
-      "both",
-      "light"
+      "matters",
+      "journal",
+      "mineral",
+      "which"
+     ]
+    },
+    {
+     "to": "/blog/cortisol-stress-aging.html",
+     "shared": [
+      "journal",
+      "ageing",
+      "better"
+     ]
+    },
+    {
+     "to": "/blog/weekly-exfoliation-vs-daily.html",
+     "shared": [
+      "journal",
+      "chemical",
+      "often"
+     ]
+    },
+    {
+     "to": "/blog/andorra-alpine-secret.html",
+     "shared": [
+      "journal",
+      "mineral"
      ]
     }
    ]
@@ -4390,47 +5226,67 @@
    "from": "/blog/understanding-skin-type.html",
    "candidates": [
     {
+     "to": "/blog/algae-marine-ingredients.html",
+     "shared": [
+      "journal",
+      "actually",
+      "work"
+     ]
+    },
+    {
+     "to": "/blog/botanical-vs-synthetic-peptides.html",
+     "shared": [
+      "journal",
+      "actually",
+      "work"
+     ]
+    },
+    {
+     "to": "/blog/climate-skincare-needs.html",
+     "shared": [
+      "journal",
+      "work",
+      "change"
+     ]
+    },
+    {
      "to": "/blog/collagen-decline-biological-clock.html",
      "shared": [
+      "journal",
       "types",
-      "change",
-      "beyond"
+      "change"
      ]
     },
     {
      "to": "/blog/complete-guide-skin-aging.html",
      "shared": [
+      "journal",
       "four",
-      "actually",
-      "works"
+      "actually"
      ]
     },
     {
      "to": "/blog/hydrolyzed-collagen-myth-miracle.html",
      "shared": [
+      "journal",
       "actually",
-      "works"
+      "work"
      ]
     },
     {
-     "to": "/blog/",
+     "to": "/blog/morning-vs-night-routine.html",
      "shared": [
-      "actually",
-      "changes"
+      "journal",
+      "work",
+      "different"
      ]
     },
     {
-     "to": "/products/syringe-refill",
+     "to": "/blog/weekly-exfoliation-vs-daily.html",
      "shared": [
-      "four",
-      "change"
-     ]
-    },
-    {
-     "to": "/faq.html",
-     "shared": [
+      "journal",
       "actually",
-      "works"
+      "often"
      ]
     }
    ]
@@ -4442,12 +5298,14 @@
      "to": "/blog/algae-marine-ingredients.html",
      "shared": [
       "exfoliation",
+      "journal",
       "actually"
      ]
     },
     {
      "to": "/blog/botanical-vs-synthetic-peptides.html",
      "shared": [
+      "journal",
       "actually",
       "approach"
      ]
@@ -4455,22 +5313,46 @@
     {
      "to": "/blog/",
      "shared": [
+      "journal",
       "actually",
-      "science"
+      "changes"
      ]
     },
     {
-     "to": "/products/peeling-gel",
+     "to": "/blog/spf-every-day-habit.html",
      "shared": [
-      "weekly",
-      "exfoliation"
+      "journal",
+      "chemical",
+      "often"
      ]
     },
     {
-     "to": "/faq.html",
+     "to": "/blog/understanding-skin-type.html",
      "shared": [
+      "journal",
       "actually",
-      "science"
+      "often"
+     ]
+    },
+    {
+     "to": "/blog/collagen-decline-biological-clock.html",
+     "shared": [
+      "journal",
+      "approach"
+     ]
+    },
+    {
+     "to": "/blog/complete-guide-skin-aging.html",
+     "shared": [
+      "journal",
+      "actually"
+     ]
+    },
+    {
+     "to": "/blog/drinking-water-better-skin.html",
+     "shared": [
+      "journal",
+      "actually"
      ]
     }
    ]
@@ -4484,62 +5366,72 @@
       "pyrenean",
       "mineral",
       "water",
+      "journal",
       "underrated",
       "ingredient",
       "matters",
-      "altitude",
-      "changes"
-     ]
-    },
-    {
-     "to": "/blog/how-altitude-changes-water.html",
-     "shared": [
-      "mineral",
-      "water",
-      "altitude",
-      "changes"
+      "spring",
+      "high-altitude"
      ]
     },
     {
      "to": "/blog/andorra-alpine-secret.html",
      "shared": [
       "mineral",
-      "water"
+      "water",
+      "journal",
+      "minerals",
+      "spring",
+      "high-altitude"
+     ]
+    },
+    {
+     "to": "/blog/spf-every-day-habit.html",
+     "shared": [
+      "mineral",
+      "journal",
+      "matters",
+      "which"
      ]
     },
     {
      "to": "/blog/drinking-water-better-skin.html",
      "shared": [
       "water",
+      "journal",
       "matters"
+     ]
+    },
+    {
+     "to": "/blog/how-altitude-changes-water.html",
+     "shared": [
+      "water",
+      "journal",
+      "minerals"
+     ]
+    },
+    {
+     "to": "/blog/hydrolyzed-collagen-myth-miracle.html",
+     "shared": [
+      "journal",
+      "matters",
+      "which"
+     ]
+    },
+    {
+     "to": "/blog/inside-the-lab.html",
+     "shared": [
+      "mineral",
+      "journal",
+      "formulations"
      ]
     },
     {
      "to": "/blog/niacinamide-ingredient-over-30.html",
      "shared": [
+      "journal",
       "ingredient",
       "matters"
-     ]
-    },
-    {
-     "to": "/products/",
-     "shared": [
-      "water",
-      "formulations"
-     ]
-    },
-    {
-     "to": "/faq.html",
-     "shared": [
-      "everything",
-      "formulations"
-     ]
-    },
-    {
-     "to": "/",
-     "shared": [
-      "water",
-      "formulations"
      ]
     }
    ]
@@ -4550,7 +5442,6 @@
     {
      "to": "/products/syringe",
      "shared": [
-      "protocol",
       "step",
       "precision",
       "collagen",
@@ -4561,9 +5452,19 @@
      ]
     },
     {
-     "to": "/products/syringe-refill",
+     "to": "/blog/",
      "shared": [
       "protocol",
+      "6-step",
+      "system",
+      "journal",
+      "longevity",
+      "collagen"
+     ]
+    },
+    {
+     "to": "/products/syringe-refill",
+     "shared": [
       "product",
       "step",
       "precision",
@@ -4573,25 +5474,22 @@
      ]
     },
     {
-     "to": "/blog/",
-     "shared": [
-      "protocol",
-      "6-step",
-      "system",
-      "longevity",
-      "collagen",
-      "matters"
-     ]
-    },
-    {
      "to": "/products/night-cream",
      "shared": [
       "protocol",
-      "step",
       "cream",
       "renewal",
       "repair",
       "night"
+     ]
+    },
+    {
+     "to": "/blog/inside-the-lab.html",
+     "shared": [
+      "6-step",
+      "system",
+      "journal",
+      "product"
      ]
     },
     {
@@ -4613,19 +5511,11 @@
      ]
     },
     {
-     "to": "/products/peeling-gel",
+     "to": "/blog/sleep-repairs-skin.html",
      "shared": [
-      "step",
-      "bio-renewal",
-      "peeling"
-     ]
-    },
-    {
-     "to": "/",
-     "shared": [
-      "system",
-      "longevity",
-      "repair"
+      "journal",
+      "repair",
+      "night"
      ]
     }
    ]

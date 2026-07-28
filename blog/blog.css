@@ -299,7 +299,7 @@
   color: var(--tiffany-deep);
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-decoration-color: rgba(10, 186, 181, 0.45);
+  text-decoration-color: rgba(79, 179, 172, 0.45);
   text-underline-offset: 0.22em;
   transition: color var(--dur-ui) var(--ease), text-decoration-color var(--dur-ui) var(--ease);
 }
@@ -316,12 +316,27 @@
   text-decoration: none;
 }
 
-/* ---------- 5. PULL QUOTE ------------------------------------------------ */
+/* ---------- 5. PULL QUOTE ------------------------------------------------ *
+   v3 treatment: the quote sits between two champagne hairlines, with a short
+   signal mark laid over the top one — marks in signal, hairlines in champagne,
+   exactly as the palette intends. The words stay Cormorant italic on alabaster;
+   the attribution takes the house green with a champagne dash. */
 
 .zl-blog-content blockquote {
-  margin: clamp(2.5rem, 6vh, 4rem) 0;
-  padding-left: clamp(1.5rem, 4vw, 2.75rem);
-  border-left: 1px solid var(--tiffany);
+  position: relative;
+  margin: clamp(2.75rem, 7vh, 4.25rem) 0;
+  padding: clamp(1.625rem, 4vh, 2.375rem) 0 clamp(1.5rem, 3.5vh, 2.125rem);
+  border-top: 1px solid var(--champagne);
+  border-bottom: 1px solid var(--champagne);
+}
+.zl-blog-content blockquote::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 44px;
+  height: 1px;
+  background: var(--signal);
 }
 .zl-blog-content blockquote p {
   margin: 0;
@@ -334,16 +349,51 @@
   color: var(--ink);
 }
 .zl-blog-content blockquote cite {
-  display: block;
-  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.375rem;
   font-family: var(--font-body);
   font-style: normal;
   font-size: 0.625rem;
   font-weight: 500;
   letter-spacing: 0.28em;
   text-transform: uppercase;
+  color: var(--house);
+}
+.zl-blog-content blockquote cite::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: var(--champagne);
+  flex: none;
+}
+
+/* ---------- 5b. FIGURES -------------------------------------------------- *
+   Any figure inside the reading column: full-measure image on the bone-3
+   plate, caption seated under a champagne hairline in the small caption
+   voice. The article hero figure closes on the same hairline so photography
+   always hands back to text across champagne. */
+
+.zl-blog-content figure {
+  margin: clamp(2.5rem, 6vh, 4rem) 0;
+}
+.zl-blog-content figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--bone-3);
+}
+.zl-blog-content figcaption {
+  margin-top: 0.9375rem;
+  padding-top: 0.8125rem;
+  border-top: 1px solid var(--champagne);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
   color: var(--mist);
 }
+.zl-blog-hero-figure { border-bottom: 1px solid var(--champagne); }
 
 /* ---------- 6. TABLE OF CONTENTS ----------------------------------------- */
 
@@ -865,7 +915,7 @@
   color: var(--tiffany-deep);
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-decoration-color: rgba(10, 186, 181, 0.45);
+  text-decoration-color: rgba(79, 179, 172, 0.45);
   text-underline-offset: 0.22em;
   transition: color var(--dur-ui) var(--ease), text-decoration-color var(--dur-ui) var(--ease);
 }
@@ -910,6 +960,24 @@
   text-transform: uppercase;
   color: var(--ink);
 }
+/* On listing pages the badge is a sibling of the image link — a real link of
+   its own to the category page — so it carries the positioning directly. */
+.zl-blog-card > .zl-blog-card-category {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  padding: 0.5rem 0.75rem;
+  background: rgba(251, 250, 248, 0.94);
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color var(--dur-ui) var(--ease);
+}
+.zl-blog-card > a.zl-blog-card-category:hover { color: var(--tiffany-deep); }
 .zl-blog-card-content { padding-top: 1.25rem; }
 .zl-blog-card-content .zl-blog-card-category {
   margin: 0;
@@ -959,6 +1027,13 @@
   color: var(--mist);
 }
 .zl-blog-landing-card-meta span:first-child { color: var(--tiffany-deep); }
+/* the category item in the meta row is a live link to its category page */
+.zl-blog-landing-card-cat {
+  color: var(--tiffany-deep);
+  text-decoration: none;
+  transition: color var(--dur-ui) var(--ease);
+}
+.zl-blog-landing-card-cat:hover { color: var(--ink); }
 .zl-blog-landing-card-title {
   margin: 0.75rem 0 0;
   font-family: var(--font-display);
@@ -970,6 +1045,7 @@
   transition: color var(--dur-ui) var(--ease);
 }
 .zl-blog-landing-card:hover .zl-blog-landing-card-title { color: var(--tiffany-deep); }
+.zl-blog-landing-card-title a { color: inherit; text-decoration: none; }
 .zl-blog-landing-card-excerpt {
   margin: 0.75rem 0 0;
   font-size: 0.9375rem;
@@ -1021,6 +1097,8 @@
   gap: 0.5rem clamp(1.25rem, 2.5vw, 2.25rem);
   margin-top: clamp(2.25rem, 5vh, 3rem);
 }
+/* the chips are real links to the category pages; same underline choreography */
+a.zl-blog-category-btn { text-decoration: none; }
 .zl-blog-category-btn {
   position: relative;
   padding: 0.5rem 0;
@@ -1157,6 +1235,28 @@ section.zl-blog-ai-analyst {
   padding-bottom: clamp(2rem, 5vh, 3.25rem);
 }
 .zl-blog-main > .zl-blog-hero .zl-blog-hero-title { max-width: 16ch; }
+
+/* the editorial welcome under each category masthead — one paragraph, seated
+   on a champagne hairline, with prose links into the section's anchor pieces */
+.zl-blog-category-intro {
+  max-width: var(--measure);
+  margin-top: clamp(1.5rem, 3vh, 2rem);
+  padding-top: clamp(1.125rem, 2.5vh, 1.5rem);
+  border-top: 1px solid var(--champagne);
+  font-size: 1.0625rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--ink-3);
+}
+.zl-blog-category-intro a {
+  color: var(--tiffany-deep);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(79, 179, 172, 0.45);
+  text-underline-offset: 0.22em;
+  transition: color var(--dur-ui) var(--ease), text-decoration-color var(--dur-ui) var(--ease);
+}
+.zl-blog-category-intro a:hover { color: var(--ink); text-decoration-color: var(--tiffany); }
 
 .zl-blog-grid {
   width: 100%;
