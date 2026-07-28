@@ -1,6 +1,12 @@
 {
  "verified": [
   {
+   "asset": "atmosphere-application-ritual.webp",
+   "pages": 15,
+   "verified": true,
+   "kb": 165
+  },
+  {
    "asset": "product-serum.webp",
    "pages": 8,
    "verified": true,
@@ -127,12 +133,6 @@
    "pages": 20,
    "verified": false,
    "kb": 16
-  },
-  {
-   "asset": "atmosphere-application-ritual.webp",
-   "pages": 15,
-   "verified": false,
-   "kb": 91
   },
   {
    "asset": "story-alpine-spring-water.webp",
