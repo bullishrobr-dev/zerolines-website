@@ -14,19 +14,12 @@
 # Hash fragments are never sent to the server, so these cannot be redirected
 # server-side; zl.js rewrites them client-side on load. Listed here as a record.
 
-# --- Trailing-slash normalisation --------------------------------------------
-/science/                   /science                  301
-/protocol/                  /protocol                 301
-/story/                     /story                    301
-/testimonials/              /testimonials             301
-/contact/                   /contact                  301
-/products/                  /products                 301
-/products/serum/            /products/serum           301
-/products/night-cream/      /products/night-cream     301
-/products/day-cream/        /products/day-cream       301
-/products/peeling-gel/      /products/peeling-gel     301
-/products/syringe/          /products/syringe         301
-/products/syringe-refill/   /products/syringe-refill  301
+# --- Trailing slashes ---------------------------------------------------------
+# Netlify serves directory routes WITH a trailing slash and 301s /science to
+# /science/ itself. Declaring the reverse here created two rules pointing in
+# opposite directions — dormant today because Netlify's own handling wins, but a
+# redirect loop waiting to happen. Canonicals now use the trailing-slash form
+# that is actually served, and no rule is needed.
 
 # --- Convenience aliases ------------------------------------------------------
 /journal                    /blog/                    301
