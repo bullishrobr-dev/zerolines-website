@@ -28,30 +28,39 @@
 
 :root {
   /* Surface */
-  --bone:        #FBFAF8;
-  --bone-2:      #F4F1EC;
-  --bone-3:      #EBE6DE;
+  --bone:        #FAF7F2;
+  --bone-2:      #F2EDE5;
+  --bone-3:      #E7E0D5;
   --stone:       #DDD6CA;
 
   /* Ink */
-  --ink:         #0B0D0D;
-  --ink-2:       #1F2222;
-  --ink-3:       #474B4B;
+  --ink:         #14181A;
+  --ink-2:       #262B2C;
+  --ink-3:       #3C4142;
   /* #7E827F measured 3.74:1 on bone — below the 4.5:1 AA floor for body text.
      #6B6F6C measures 4.89:1. */
-  --mist:        #6B6F6C;
+  --mist:        #6B706D;
   --mist-2:      #676B68;   /* #8E918E measured 2.83:1 on the tint — used for real copy, so it must pass */
 
-  /* THE BRAND — Tiffany turquoise */
-  --tiffany:      #0ABAB5;
-  --tiffany-lift: #34D2CD;   /* hover / on-dark */
-  --tiffany-deep: #06736F;   /* passes contrast as text on bone */
-  --tiffany-ink:  #04403E;   /* deep field */
-  --tiffany-wash: #E8F8F7;   /* tint surface */
+  /* THE BRAND
+     House teal carries large areas; signal is the turquoise mark. */
+  --house:        #1F4F4A;   /* full-bleed brand sections, buttons, teal text */
+  --house-deep:   #12332F;   /* deeper field where two teals meet */
+  --house-lift:   #2C6A63;   /* hover */
+  --signal:       #4FB3AC;   /* RULES AND MARKS ONLY — 2.35:1, never set text in it */
+  --sage-wash:    #E8EFEC;   /* tint surface */
+
+  /* Back-compat aliases so existing rules keep resolving */
+  --tiffany:      var(--signal);
+  --tiffany-lift: #6FC7C0;
+  --tiffany-deep: var(--house);
+  --tiffany-ink:  var(--house-deep);
+  --tiffany-wash: var(--sage-wash);
 
   /* Rare metallic */
-  --gold:        #A98C54;
-  --gold-lift:   #C6A874;
+  --champagne:    #C2A878;
+  --gold:        #C2A878;
+  --gold-lift:   #D4BE94;
 
   /* On dark / on turquoise */
   --on-dark:     #F7F6F3;
@@ -136,7 +145,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 input, textarea, select { font: inherit; color: inherit; }
 
 :focus-visible { outline: 2px solid var(--tiffany); outline-offset: 3px; border-radius: 2px; }
-::selection { background: var(--tiffany); color: #fff; }
+::selection { background: var(--house); color: var(--on-dark); }
 
 /* ---------- 3. TYPOGRAPHY ------------------------------------------------ */
 
@@ -156,17 +165,15 @@ input, textarea, select { font: inherit; color: inherit; }
 .zl-em--brand { color: var(--tiffany-deep); font-style: italic; }
 .zl-on-dark .zl-em--brand { color: var(--tiffany-lift); }
 /* on the turquoise field the accent word cannot be turquoise — go to full ink */
-.zl-brand-field .zl-em--brand { color: var(--ink); }
+.zl-brand-field .zl-em--brand { color: var(--signal); }
 /* Everything on the turquoise field resolves to ink. White on #0ABAB5 is
    2.41:1; page authors reaching for white here is an easy mistake to make,
    so the system answers it rather than relying on each page getting it right. */
 .zl-brand-field .zl-num,
-.zl-brand-field .zl-muted,
 .zl-brand-field dt,
-.zl-brand-field dd,
 .zl-brand-field p,
-.zl-brand-field li { color: var(--ink); }
-.zl-brand-field .zl-muted, .zl-brand-field dd { color: rgba(11,13,13,0.78); }
+.zl-brand-field li { color: var(--on-dark); }
+.zl-brand-field .zl-muted, .zl-brand-field dd { color: var(--on-dark-2); }
 
 .zl-eyebrow {
   display: flex; align-items: center; gap: 0.75rem;
@@ -182,15 +189,15 @@ input, textarea, select { font: inherit; color: inherit; }
 .zl-eyebrow--bare::before { display: none; }
 .zl-eyebrow--center { justify-content: center; }
 .zl-on-dark .zl-eyebrow { color: var(--on-dark-3); }
-.zl-brand-field .zl-eyebrow { color: rgba(11,13,13,0.8); }  /* 0.66 measured 4.3:1 */
-.zl-brand-field .zl-eyebrow::before { background: rgba(11,13,13,0.7); }
+.zl-brand-field .zl-eyebrow { color: rgba(255,255,255,0.78); }
+.zl-brand-field .zl-eyebrow::before { background: var(--signal); }
 
 .zl-lead {
   font-size: var(--t-lead); line-height: 1.7;
   color: var(--ink-3); font-weight: 300; max-width: var(--measure);
 }
 .zl-on-dark .zl-lead { color: var(--on-dark-2); }
-.zl-brand-field .zl-lead { color: rgba(11,13,13,0.82); }
+.zl-brand-field .zl-lead { color: rgba(255,255,255,0.9); }
 
 .zl-prose { max-width: var(--measure); }
 .zl-prose p { margin-bottom: 1.5em; color: var(--ink-3); }
@@ -226,8 +233,8 @@ input, textarea, select { font: inherit; color: inherit; }
    2.41:1, well under the 4.5:1 AA floor, and it visibly washes out. Ink on the
    same turquoise measures 8.08:1 — and dark-on-turquoise is the more assured
    look besides. */
-.zl-brand-field { background: var(--tiffany); color: var(--ink); }
-.zl-brand-field h1, .zl-brand-field h2, .zl-brand-field h3 { color: var(--ink); }
+.zl-brand-field { background: var(--house); color: var(--on-dark); }
+.zl-brand-field h1, .zl-brand-field h2, .zl-brand-field h3 { color: var(--on-dark); }
 /* Deep variant for when a turquoise field genuinely needs light type */
 .zl-brand-field--deep { background: var(--tiffany-ink); color: var(--on-dark); }
 .zl-brand-field--deep h1, .zl-brand-field--deep h2, .zl-brand-field--deep h3 { color: var(--on-dark); }
@@ -358,20 +365,20 @@ input, textarea, select { font: inherit; color: inherit; }
 /* The one place turquoise IS the button — primary conversion only */
 /* Ink on turquoise (8.08:1), not white (2.41:1). This is the hero CTA and the
    waitlist submit — the two things that must never be hard to read. */
-.zl-btn--brand { --btn-fg: var(--ink); --btn-bg: var(--tiffany); --btn-bd: var(--tiffany); --btn-hover-bg: var(--ink); }
+.zl-btn--brand { --btn-fg: var(--on-dark); --btn-bg: var(--house); --btn-bd: var(--house); --btn-hover-bg: var(--ink); }
 .zl-btn--brand:hover { color: #fff; }
 .zl-btn--brand:hover { border-color: var(--ink); }
 /* On a turquoise field: white fill, ink label. Turquoise-on-white was 2.41:1. */
-.zl-btn--on-brand { --btn-fg: var(--ink); --btn-bg: #fff; --btn-bd: #fff; --btn-hover-bg: var(--ink); }
+.zl-btn--on-brand { --btn-fg: var(--house); --btn-bg: var(--champagne); --btn-bd: var(--champagne); --btn-hover-bg: #fff; }
 /* Outline pairing for the turquoise field. */
-.zl-btn--on-brand-ghost { --btn-fg: var(--ink); --btn-bg: transparent; --btn-bd: rgba(11,13,13,.45); --btn-hover-bg: var(--ink); }
-.zl-btn--on-brand-ghost:hover { color: #fff; border-color: var(--ink); }
+.zl-btn--on-brand-ghost { --btn-fg: var(--on-dark); --btn-bg: transparent; --btn-bd: rgba(255,255,255,.45); --btn-hover-bg: #fff; }
+.zl-btn--on-brand-ghost:hover { color: var(--house); border-color: #fff; }
 /* Defensive: the dark-field ghost is easy to reach for by mistake on a
    turquoise section, where its light label measures 2.23:1. Resolve it to
    ink there rather than depending on every page choosing the right variant. */
-.zl-brand-field .zl-btn--on-dark-ghost { --btn-fg: var(--ink); --btn-bd: rgba(11,13,13,.45); }
-.zl-brand-field .zl-btn--on-dark-ghost:hover { color: #fff; }
-.zl-btn--on-brand:hover { color: #fff; }
+.zl-brand-field .zl-btn--on-dark-ghost { --btn-fg: var(--on-dark); --btn-bd: rgba(255,255,255,.45); }
+.zl-brand-field .zl-btn--on-dark-ghost:hover { color: var(--house); }
+.zl-btn--on-brand:hover { color: var(--house); }
 
 .zl-link {
   display: inline-flex; align-items: center; gap: .625rem;
@@ -384,7 +391,7 @@ input, textarea, select { font: inherit; color: inherit; }
 .zl-link:hover::after { opacity: 0; }
 .zl-link:hover { color: var(--tiffany-deep); }
 .zl-on-dark .zl-link:hover { color: #fff; }
-.zl-brand-field .zl-link:hover { color: var(--ink); }
+.zl-brand-field .zl-link:hover { color: var(--signal); }
 .zl-link__arrow { transition: transform 560ms var(--ease); }
 .zl-link:hover .zl-link__arrow { transform: translateX(5px); }
 
@@ -478,33 +485,70 @@ input, textarea, select { font: inherit; color: inherit; }
 
 /* ---------- 9. HERO (light, split) --------------------------------------- */
 
+/* Photo-led hero.
+   The portrait is full-bleed again — a boxed image beside text read like a
+   brochure. Legibility is solved by composition rather than a scrim: the crop is
+   anchored so the subject sits right and her plain bone backdrop falls under the
+   type, with a soft left-edge wash for insurance. Dark type throughout, so the
+   header never has to fight the picture. */
 .zl-hero {
   position: relative;
   min-height: calc(100svh - var(--header-h));
   display: flex; align-items: center;
-  padding-top: calc(var(--header-h) + clamp(2rem, 6vh, 4rem));
+  padding-top: calc(var(--header-h) + clamp(1.5rem, 4vh, 3rem));
   padding-bottom: clamp(3rem, 8vh, 6rem);
   overflow: hidden;
+  background: var(--bone);
 }
-.zl-hero__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; width: 100%; }
+.zl-hero__photo { position: absolute; inset: 0; z-index: 0; }
+.zl-hero__photo img {
+  width: 100%; height: 100%; object-fit: cover;
+  object-position: var(--hero-pos, 72% 28%);
+}
+/* Readability wash — bone fading to nothing across the left half. Not a grey
+   scrim over the face; the picture stays untouched where it matters. */
+.zl-hero__photo::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(100deg,
+    var(--bone) 0%, var(--bone) 26%,
+    rgba(250,247,242,.92) 38%, rgba(250,247,242,.55) 50%,
+    rgba(250,247,242,.12) 62%, rgba(250,247,242,0) 74%);
+}
+/* Second wash across the top band only. The nav runs the full width, so on the
+   right it can fall over dark hair — this keeps the header readable wherever the
+   crop happens to land, which is the exact failure the previous hero had. */
+.zl-hero__photo::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; z-index: 1;
+  height: calc(var(--header-h) + 28px);
+  background: linear-gradient(to bottom,
+    rgba(250,247,242,.94) 0%, rgba(250,247,242,.78) 55%, rgba(250,247,242,0) 100%);
+}
+.zl-hero__inner { position: relative; z-index: 1; width: 100%; }
 .zl-hero__title { max-width: 13ch; }
-.zl-hero__lead  { max-width: 44ch; margin-top: clamp(1.25rem, 2.4vh, 1.75rem); }
+.zl-hero__lead  { max-width: 40ch; margin-top: clamp(1.25rem, 2.4vh, 1.75rem); }
 .zl-hero__actions { margin-top: clamp(1.75rem, 3.4vh, 2.5rem); display: flex; flex-wrap: wrap; gap: 1rem; }
-.zl-hero__media { position: relative; }
-.zl-hero__media .zl-media { aspect-ratio: 4 / 5; }
-/* Turquoise field behind the portrait — brand colour as composition, not decoration */
-.zl-hero__media::before {
-  content: ""; position: absolute; z-index: 0;
-  inset: 14% -9% 8% 28%;
-  background: var(--tiffany-wash);
+
+/* Champagne hairline under the hero — the first metallic note on the page */
+.zl-hero::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+  background: linear-gradient(to right, var(--champagne), transparent 60%);
+  z-index: 2;
 }
-.zl-hero__media .zl-media { position: relative; z-index: 1; }
 
 @media (max-width: 900px) {
-  .zl-hero { min-height: 0; padding-bottom: clamp(2.5rem, 6vh, 4rem); }
-  .zl-hero__grid { grid-template-columns: 1fr; gap: clamp(2rem, 5vh, 3rem); }
-  .zl-hero__title { max-width: 12ch; }
-  .zl-hero__media::before { inset: auto -6% -5% 30%; height: 55%; }
+  /* Portrait crop on narrow screens, and the wash becomes vertical so the type
+     sits on clean bone above her rather than across her face. */
+  .zl-hero { min-height: 92svh; }
+  .zl-hero__photo img { object-position: var(--hero-pos-mobile, 62% 22%); }
+  .zl-hero__photo::after {
+    background: linear-gradient(178deg,
+      var(--bone) 0%, var(--bone) 30%,
+      rgba(250,247,242,.9) 42%, rgba(250,247,242,.45) 56%,
+      rgba(250,247,242,0) 72%);
+  }
+  .zl-hero__title { max-width: 11ch; }
+  .zl-hero__lead  { max-width: 34ch; }
+  .zl-hero__actions .zl-btn { width: 100%; }
 }
 
 /* ---------- 10. CARDS ---------------------------------------------------- */
@@ -550,18 +594,18 @@ input, textarea, select { font: inherit; color: inherit; }
 .zl-input::placeholder { color: var(--mist-2); }
 .zl-input:focus { outline: none; border-bottom-color: var(--tiffany); }
 .zl-on-dark .zl-input { color: #fff; border-bottom-color: rgba(255,255,255,.32); }
-.zl-brand-field .zl-input { color: var(--ink); border-bottom-color: rgba(11,13,13,.3); }
+.zl-brand-field .zl-input { color: #fff; border-bottom-color: rgba(255,255,255,.34); }
 .zl-on-dark .zl-input::placeholder { color: rgba(255,255,255,.55); }
-.zl-brand-field .zl-input::placeholder { color: rgba(11,13,13,.5); }
+.zl-brand-field .zl-input::placeholder { color: rgba(255,255,255,.55); }
 .zl-on-dark .zl-input:focus { border-bottom-color: #fff; }
-.zl-brand-field .zl-input:focus { border-bottom-color: var(--ink); }
+.zl-brand-field .zl-input:focus { border-bottom-color: var(--signal); }
 
 .zl-form__note { font-size: .75rem; color: var(--mist); line-height: 1.6; }
-.zl-brand-field .zl-form__note { color: rgba(11,13,13,0.72); }
+.zl-brand-field .zl-form__note { color: rgba(255,255,255,0.76); }
 .zl-form__status { font-size: var(--t-small); min-height: 1.5em; }
 .zl-form__status[data-state="ok"]  { color: var(--tiffany-deep); }
 .zl-form__status[data-state="err"] { color: #A4443A; }
-.zl-brand-field .zl-form__status[data-state="ok"] { color: var(--ink); }
+.zl-brand-field .zl-form__status[data-state="ok"] { color: var(--signal); }
 .zl-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
 /* ---------- 12. FOOTER --------------------------------------------------- */
