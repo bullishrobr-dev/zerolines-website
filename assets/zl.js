@@ -15,9 +15,20 @@
 
   var root = document.documentElement;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var canAnimate = !reduced && 'IntersectionObserver' in window;
 
-  if (canAnimate) root.classList.add('zl-js');
+  // Two tiers, not one. Reduce Motion used to zero out EVERY effect — a visitor
+  // with it enabled (it ships on with Low Power Mode on some phones) saw a
+  // completely static page and reasonably concluded the site had no animation
+  // at all. Vestibular safety is about MOVEMENT — transforms, parallax, scrub —
+  // not about opacity. So under reduced motion the reveals still run as gentle
+  // fades (the CSS strips their translate via html.zl-rm), and only the moving
+  // effects are withheld.
+  var canReveal = 'IntersectionObserver' in window;
+  var canMove = canReveal && !reduced;
+  var canAnimate = canMove;   // legacy name used by the moving effects below
+
+  if (canReveal) root.classList.add('zl-js');
+  if (reduced) root.classList.add('zl-rm');
 
   function ready(fn) {
     if (document.readyState !== 'loading') fn();
@@ -47,7 +58,9 @@
   /* ---------- 2. Reveal -------------------------------------------------- */
 
   function initReveal() {
-    if (!canAnimate) return;
+    // canReveal, not canMove: under Reduce Motion these still run as pure
+    // opacity fades — html.zl-rm strips the translate in CSS.
+    if (!canReveal) return;
     var targets = $('[data-reveal], [data-stagger], .zl-rise, .zl-draw');
     if (!targets.length) return;
 

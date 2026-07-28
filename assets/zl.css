@@ -492,16 +492,32 @@ input, textarea, select { font: inherit; color: inherit; }
 /* h. scroll progress bar */
 .zl-progress { position: fixed; top: 0; left: 0; height: 2px; z-index: 101; background: var(--tiffany); width: 0; }
 
+/* Reduce Motion respects MOVEMENT, not visibility change. This block used to
+   zero out every effect, so a visitor with it enabled — it rides along with
+   Low Power Mode on some phones — saw a completely static page. Vestibular
+   triggers are transforms: translate, scale, parallax, scrub. A plain opacity
+   fade is safe, so reveals survive as fades; everything that MOVES stops.
+   zl.js stamps html.zl-rm so the rules also hold if the media query and the
+   script ever disagree. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .zl-js [data-reveal], .zl-js [data-stagger] > *, .zl-js .zl-rise > *, .zl-js .zl-draw {
-    opacity: 1 !important; transform: none !important; clip-path: none !important; transition: none !important;
+  .zl-js [data-reveal], .zl-js [data-stagger] > *, .zl-js .zl-rise > * {
+    transform: none !important; clip-path: none !important;
+    transition: opacity 700ms ease !important;
   }
-  .zl-js [data-reveal="wipe"] img { transform: none !important; }
+  .zl-js .zl-draw { transform: scaleX(1) !important; transition: none !important; }
+  .zl-js [data-reveal="wipe"] img { transform: none !important; transition: none !important; }
   .zl-menu__link { animation: none; opacity: 1; transform: none; }
   .zl-media--zoom img, .zl-parallax { transition: none !important; transform: none !important; }
-  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+/* Same rules keyed off the script's own flag, so behaviour cannot split when a
+   browser reports the media query differently from matchMedia. */
+html.zl-rm [data-reveal], html.zl-rm [data-stagger] > *, html.zl-rm .zl-rise > * {
+  transform: none !important; clip-path: none !important;
+  transition: opacity 700ms ease !important;
+}
+html.zl-rm .zl-draw { transform: scaleX(1) !important; transition: none !important; }
+html.zl-rm [data-reveal="wipe"] img { transform: none !important; transition: none !important; }
 
 /* ---------- 9. HERO (light, split) --------------------------------------- */
 
