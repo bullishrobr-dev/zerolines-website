@@ -12,3 +12,74 @@
 === /science
    "Zero Lines" [/]  ->  /
    "Science" [/science]  ->  /science
+   "Protocol" [/protocol]  ->  /protocol
+   "Formulations" [/products]  ->  /products
+   "Story" [/story]  ->  /story
+   "Analyser" [/analyser/]  ->  /analyser/
+   "Journal" [/blog/]  ->  /blog/
+   "Contact" [/contact]  ->  /contact
+
+=== /story
+   "Zero Lines" [/]  ->  /
+   "Science" [/science]  ->  /science
+   "Protocol" [/protocol]  ->  /protocol
+   "Formulations" [/products]  ->  /products
+   "Story" [/story]  ->  /story
+   "Analyser" [/analyser/]  ->  /analyser/
+   "Journal" [/blog/]  ->  /blog/
+   "Contact" [/contact]  ->  /contact
+
+=== /protocol
+   "Zero Lines" [/]  ->  /
+   "Science" [/science]  ->  /science
+   "Protocol" [/protocol]  ->  /protocol
+   "Formulations" [/products]  ->  /products
+   "Story" [/story]  ->  /story
+   "Analyser" [/analyser/]  ->  /analyser/
+   "Journal" [/blog/]  ->  /blog/
+   "Contact" [/contact]  ->  /contact
+
+=== /testimonials
+   "Zero Lines" [/]  ->  /
+   "Science" [/science]  ->  /science
+   "Protocol" [/protocol]  ->  /protocol
+   "Formulations" [/products]  ->  /products
+   "Story" [/story]  ->  /story
+   "Analyser" [/analyser/]  ->  /analyser/
+   "Journal" [/blog/]  ->  /blog/
+   "Contact" [/contact]  ->  /contact
+
+=== /contact
+   "Zero Lines" [/]  ->  /
+   "Science" [/science]  ->  /science
+   "Protocol" [/protocol]  ->  /protocol
+   "Formulations" [/products]  ->  /products
+   "Story" [/story]  ->  /story
+   "Analyser" [/analyser/]  ->  /analyser/
+   "Journal" [/blog/]  ->  /blog/
+   "Contact" [/contact]  ->  /contact
+
+=== /products
+   "Zero Lines" [/]  ->  /
+   "Science" [/science]  ->  /science
+   "Protocol" [/protocol]  ->  /protocol
+   "Formulations" [/products]  ->  /products
+   "Story" [/story]  ->  /story
+   "Analyser" [/analyser/]  ->  /analyser/
+   "Journal" [/blog/]  ->  /blog/
+   "Contact" [/contact]  ->  /contact
+
+=== /products/day-cream
+   "Zero Lines" [/]  ->  /
+   "Science" [/science]  ->  /science
+   "Protocol" [/protocol]  ->  /protocol
+   "Formulations" [/products]  ->  /products
+   "Story" [/story]  ->  /story
+   "Analyser" [/analyser/]  ->  /analyser/
+   "Journal" [/blog/]  ->  /blog/
+   "Contact" [/contact]  ->  /contact
+
+=== /blog/
+   "Zero Lines" [/]  ->  /
+   "Science" [/science]  ->  /science
+   "Protocol" [/protocol]  ->  /protocol

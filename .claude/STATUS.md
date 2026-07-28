@@ -1,132 +1,96 @@
-# Zero Lines — overnight status
+# Zero Lines — status
 
-**Branch:** `redesign/luxury-rebuild` · **`main` is untouched.** The live site has not changed.
-Nothing here is deployed until you merge. Preview locally with:
+**Branch:** `redesign/luxury-rebuild` · **`main` is untouched.** Nothing is deployed until you merge.
 
 ```bash
-node .claude/devserver.js
+node .claude/devserver.js     # then open http://localhost:8420
 ```
 
-then open http://localhost:8420
+---
+
+## ⚠ Read this first: two of your product photos were another brand's
+
+`product-peeling-gel.webp` shows a tube printed **"AQUA PEL — DAILY EXFOLIATING GEL"**.
+`product-syringe-refill.webp` shows a carton printed **"RENEU Skincare"**.
+
+Both were on your homepage and product pages, presented as Zero Lines products. They're
+AI-generated stock that came out carrying other brands' packaging. The other four correctly
+show "zero lines".
+
+I've swapped both for genuinely Zero Lines branded shots and quarantined the originals in
+`assets/_do-not-use/`. **The refill still has no photograph of its own** — it currently borrows
+the syringe shot, which is defensible (it's a cartridge for that applicator) but not right.
 
 ---
 
-## The one decision that shaped everything
+## What changed since you last looked
 
-Your homepage was rendered by `assets/index-CdnbiGbM.js` — a **504 KB React + GSAP bundle
-whose source code is not in this repository**. It could not be edited, only replaced.
+| Your feedback | What I did |
+|---|---|
+| "our Tiffany turquoise… I see it nowhere" | Restored as the lead colour. You were right — `#0ABAB5` *is* Tiffany Blue. The mistake was using it as pill buttons everywhere, not the colour itself |
+| "you barely see the header" | Hero is light and split now — type left, portrait right. Header sits on bone and is opaque the moment you scroll |
+| "not the right photo" | Senior portrait — dignified, mature, and it *is* the skin-longevity promise |
+| "I don't want pricing" | Every `£` gone. Product pages close with "Not yet for sale" |
+| "I don't like the illusion and activation section" | Deleted. Replaced with the full-bleed turquoise "We restore the signal" field |
+| "animations are boring and blunt" | Real vocabulary now: clip-path wipes, masked line-rise, indexed stagger, parallax, counters, scroll progress, weighted inertial scroll |
+| "I'm stuck in there, cannot get out" | **Found it.** The legacy pages rewrote their URL to `/science#/science` and their nav pointed at hash routes, so clicking "Testimonials" from `/science` gave `/science#/testimonials` — you never left. All rebuilt as static HTML |
 
-It was also the direct cause of all three symptoms you described:
+## Pages rebuilt
 
-- **"lags and jumps between pages"** — the bundle mounted, then a hard-reload hack fired on
-  every product navigation.
-- **"animations don't flow properly"** — its scroll-reveal timeline threw
-  `GSAP target undefined not found`, leaving **163 of 645 homepage elements permanently at
-  `opacity: 0`**. A quarter of your homepage never became visible at all.
-- **"the hero on mobile looks odd"** — the H1 was white text on a cream background, its hero
-  image 404'd, and its per-word animation spans had eaten the spaces: it literally rendered
-  "AlreadyKnows" and "toRepair".
+Homepage · Science · Story · Protocol · Testimonials · Contact · Formulations + all 6 product
+pages · Analyser · Thank-you · 404 · all 31 blog pages restyled · all 6 legal pages restyled.
 
-So the redesign and the bug-fixing were the same job. I rebuilt the homepage as hand-authored
-static HTML and retired the bundle from it.
+**The React bundle is gone from every page on the site.**
 
----
+## Verified, measured — not assumed
 
-## Done and verified
+| Check | Result |
+|---|---|
+| Internal links | **2,817 references, all resolve** |
+| Invisible elements | **0** across 12 pages × desktop + mobile |
+| Broken images | **0** |
+| Nav dead-ends | **0** — every link goes where it points |
+| WCAG AA contrast | **0 failures** (was 54) |
+| Prices on site | **0** |
+| Fabricated testimonials | **0** |
+| Unsubstantiated clinical claims | **0** |
+| Hash routes / relative asset paths | **0** |
 
-| | Was | Now |
-|---|---|---|
-| **Homepage** | React bundle, 163 elements invisible, blank hero | Static HTML on a new design system. **0 invisible elements, 0 broken images** at 1440px and 390px |
-| **Product pages (×6)** | Every hero and editorial image broken | All 12 images render |
-| **Email forms (×27)** | Posted to a dead Formspree placeholder — **no signup has ever been captured** | Netlify Forms. Works with JS disabled |
-| **Content pages (×5)** | CSS and JS both 404'd; pages rendered unstyled | Assets load; invisible elements 53 → 8 |
-| **Internal links** | 65 broken across 13 files | **All 1,654 resolve** |
-| **Social sharing** | All 54 `og:image` URLs 404'd — blank previews on WhatsApp | 28 real 1200×630 cards |
-| **Service worker** | Cache-first, version never bumped — returning visitors pinned to an old copy **forever** | Network-first for HTML |
-| **404s** | Every dead URL returned the homepage at HTTP 200 | Real 404s |
+## Notable fixes from the audit
 
-### The new design language
-`assets/zl.css` — bone `#FAF8F4` and warm ink `#0E0F0E`, Cormorant Garamond display type,
-squared buttons, tracked-out uppercase labels, heavy expo-eased motion, fluid type and spacing.
-
-The old bright turquoise `#0ABAB5` is gone from the new work. It read as wellness-startup, not
-luxury. It is replaced by a muted verdigris `#3A5952` used on under 5% of any screen, with the
-existing gold `#9C8149` as a rare metallic hairline.
-
-**The key engineering rule:** content is now visible by default, and animation is opt-in via a
-class set synchronously before paint — plus a hard 2.5s failsafe timer. If the JavaScript fails,
-errors, or never runs, every word still appears. That inversion is what your old build got
-wrong, and it is why a quarter of the page was invisible.
+- **Contrast.** White on `#0ABAB5` measures 2.41:1 against a 4.5:1 requirement — every turquoise
+  section and every primary CTA including the waitlist submit was failing. Ink on the same
+  turquoise is 8.08:1, so turquoise is now a fill and text on it is ink. Your accessibility page
+  publicly claims AA conformance, so this mattered beyond aesthetics.
+- **Header ghosting.** Body text from dark sections was readable straight through the header —
+  it was 82% opaque with a blur, and blur is not occlusion. Now fully opaque when scrolled.
+- **Cookie notice.** On mobile it covered the Register button and made the privacy link
+  genuinely unclickable. It now reserves space at the foot of the page so anything covered can be
+  scrolled clear.
 
 ---
 
-## ⚠ Three things that need YOU — I did not "fix" these on purpose
+## Still needs you
 
-These are not style calls. They carry real legal exposure for a cosmetics brand selling into
-the UK and EU, and I was not willing to carry them into a redesign and make them look more
-credible. Full detail in `.claude/CONTENT_INVENTORY.md` §5.
+1. **GA4 and Meta Pixel IDs** — still `G-XXXXXXXXXX` and `000000000000000`. You have zero
+   analytics. One line each once you send them.
+2. **Product photography.** The six shots are inconsistent — one is a wide landscape, one a full
+   scene, and the refill has none of its own. `mix-blend-mode` normalises their backgrounds so
+   they read as a set, but consistent shots on one seamless background is the single biggest
+   remaining gap to the La Mer / Augustinus Bader tier.
+3. **The claims decision still stands.** I removed the eight fabricated testimonials and every
+   clinical percentage ("94% saw visible lifting", "34% collagen density", "dermatologist
+   approved"). If you have real substantiation, they can come back. If not, they must stay out —
+   they're unlawful in the UK/EU for a brand that hasn't launched.
+4. **Content contradictions** I did not silently rewrite: `faq.html` said "two years of
+   development" (four elsewhere) and "all four products" (six elsewhere) — those two I fixed.
+   Still open: springs at 1,800 m vs 2,000 m.
 
-**1. Clinical claims that cannot be substantiated.** The site states "94% saw visible lifting"
-(31 women, 10 weeks), "96% reported improved hydration" (42 women), "91% saw reduced fine
-lines", "89% saw brighter complexion", "100% reported smoother texture", "increases collagen
-density by up to 34% in 12 weeks", plus "Dermatologist approved" and "Clinically tested" — with
-an asterisk but **no substantiating footnote anywhere on the site**. The brand has not launched
-and has no products. Claims of completed trials on named panel sizes, for products that do not
-yet exist, breach the UK CAP Code and the EU Unfair Commercial Practices Directive.
-→ **Substantiate with real studies, or remove.** I left them off the new homepage.
-
-**2. Eight named testimonials for a product never sold.** Isabella M., Claire R., Sophie L.,
-Elena K., Margaux D., Anna S., Catherine W., Laura B. — attributed to "early testing" and shown
-on the homepage carousel, while `/testimonials` simultaneously says the space awaits stories
-"once the protocol is live". Fabricated consumer testimonials are prohibited outright.
-→ **Remove until you have real, attributable ones.** I left them off the new homepage.
-
-**3. "20,000+ analyses" and "2,000+ AI Skin Analyses"** — two different numbers for the same
-metric, on a site with no analytics installed. Neither can be verified.
-
-Also worth reconciling: "two years of development" (faq.html) vs "four years" everywhere else;
-"all four products" vs six formulations; springs at 1,800 m vs 2,000 m; © 2025 vs © 2026.
-
----
-
-## Not done — and I want to be straight with you about why
-
-I hit the **session usage limit** partway through, which killed several research agents. I chose
-to spend the remaining capacity on things that are verified working rather than start a large
-refactor I could not finish and would have left half-broken.
-
-**Still on the old design:**
-- `/science`, `/story`, `/protocol`, `/testimonials`, `/contact` — these now *work* (assets load,
-  content is visible) but still wear the old teal look and still run the React bundle. Their
-  real copy lives inside that bundle; I transcribed it into `CONTENT_INVENTORY.md` §3 so it can
-  be rebuilt without loss.
-- `/products/*` and the 31 blog pages — functional and unbroken, but not yet restyled.
-- `/analyser/` — the AI quiz works end to end (verified: "Question 1 of 10" renders, no errors),
-  but it is the old homepage file with React suppressed by CSS. It needs a proper port.
-
-**Two placeholders I could not fill** because they need values only you have:
-- GA4 is still `G-XXXXXXXXXX` and Meta Pixel `000000000000000`. You have **zero analytics**.
-  Send me the IDs and it is a one-line change each.
-
-**Product photography.** The six product images have inconsistent backgrounds — white, cream,
-pink, teal — so the collection grid reads as six unrelated objects rather than one line. No CSS
-fixes that; it needs consistent shots on one seamless background. This is the single biggest
-remaining gap between the site and the La Mer / Augustinus Bader tier.
-
----
-
-## Suggested order when you're back
-
-1. Look at the new homepage and tell me if the direction is right — everything else follows from it.
-2. Decide on the claims and testimonials above.
-3. Send GA4 + Meta Pixel IDs.
-4. I rebuild the 5 content pages, then restyle products and blog to match.
-5. Port the analyser onto the new system.
-
-## Tools I left you
+## Tools left for you
 
 ```bash
-node .claude/linkcheck.js                    # every internal link, one command
-node .claude/shoot.js / /products /blog/     # invisible-element + broken-image counts
-node .claude/shoot-vp.js / mobile 0          # viewport screenshots at any scroll offset
+node .claude/linkcheck.js     # every internal link
+node .claude/a11y.js /        # real composited contrast + occlusion checks
+node .claude/shoot.js /       # invisible-element and broken-image counts
+node .claude/navtest.js       # crawls nav, reports dead ends
 ```
