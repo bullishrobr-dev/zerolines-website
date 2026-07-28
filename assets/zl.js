@@ -444,9 +444,14 @@
       // smoothTouch stays OFF deliberately. Overriding a phone's own momentum
       // curve makes scrolling feel laggy and detached, not luxurious — the
       // weight on touch comes from the scrub and pin work below instead.
+      // lerp, not duration. duration:1.25 meant the page kept gliding for well
+      // over a second after the wheel stopped — which reads as lag, not luxury,
+      // and was described (fairly) as horrible. A lerp follows the wheel closely
+      // and just takes the edge off. The weight now comes from the scrub and pin
+      // work, which is where it belongs; the scroll itself should feel immediate.
       var lenis = new window.Lenis({
-        duration: 1.25,
-        easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+        lerp: 0.14,
+        wheelMultiplier: 1,
         smoothWheel: true,
         smoothTouch: false
       });
