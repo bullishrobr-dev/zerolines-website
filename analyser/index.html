@@ -30,6 +30,96 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/zl.css">
 <link rel="stylesheet" href="/assets/zl-analyser.css">
+
+<!-- The analyser was the only indexable page on the site carrying no structured
+     data, which mattered more here than anywhere else: it is the one thing the
+     brand offers that nobody else does, and without a machine-readable
+     description an assistant asked "is there a free skin analyser?" has nothing
+     to go on. Deliberately typed WebApplication rather than anything medical —
+     this reads appearance markers and returns a written assessment; it does not
+     diagnose. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://zerolines.life/#organization",
+  "name": "Zero Lines",
+  "url": "https://zerolines.life/",
+  "logo": { "@type": "ImageObject", "url": "https://zerolines.life/assets/logo.png" },
+  "description": "A clinical-luxury Skin Longevity House. Bioactive formulations powered by hydrolysed collagen, botanical extracts and Pyrenean mineral water.",
+  "sameAs": ["https://instagram.com/zerolines.life"],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "email": "info@zerolines.life",
+    "telephone": "+350-54005198",
+    "areaServed": ["GB", "GI", "ES", "AD"],
+    "availableLanguage": ["English", "Spanish"]
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "@id": "https://zerolines.life/analyser/#app",
+  "name": "Zero Lines Skin Analyser",
+  "url": "https://zerolines.life/analyser/",
+  "applicationCategory": "LifestyleApplication",
+  "operatingSystem": "Any modern web browser",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "en-GB",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+  "description": "A free written skin assessment. Ten questions and one optional photograph are read across eight appearance markers — texture, tone, hydration, pores, pigmentation, lines, elasticity and sun exposure — and returned as a written assessment with the Zero Lines protocol that follows from it.",
+  "featureList": [
+    "Ten questions about your skin and how you live",
+    "Optional photograph read for visible appearance markers",
+    "A written assessment across eight markers",
+    "A suggested order of use across the six formulations"
+  ],
+  "publisher": { "@id": "https://zerolines.life/#organization" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to use the Zero Lines Skin Analyser",
+  "description": "Three steps to a written assessment of your skin.",
+  "totalTime": "PT4M",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "You describe it",
+      "text": "Answer ten questions about how your skin behaves, what bothers you most, and how you live — sleep, sun, and routine."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "The skin shows it",
+      "text": "Add one clear photograph if you want to: daylight rather than lamplight, a bare face, the camera at eye level, and a resting expression."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "We write it out",
+      "text": "You receive a written assessment across eight appearance markers, and the order of use that follows from it."
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Zero Lines", "item": "https://zerolines.life/" },
+    { "@type": "ListItem", "position": 2, "name": "Skin Analyser", "item": "https://zerolines.life/analyser/" }
+  ]
+}
+</script>
 </head>
 
 <body>
