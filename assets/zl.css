@@ -546,7 +546,7 @@ html.zl-rm [data-reveal="wipe"] img { transform: none !important; transition: no
 .zl-hero__photo { position: absolute; inset: 0; z-index: 0; }
 .zl-hero__photo img {
   width: 100%; height: 100%; object-fit: cover;
-  object-position: var(--hero-pos, 72% 28%);
+  object-position: var(--hero-pos, 62% 30%);
 }
 /* Readability wash — bone fading to nothing across the left half. Not a grey
    scrim over the face; the picture stays untouched where it matters. */
@@ -605,7 +605,7 @@ html.zl-rm [data-reveal="wipe"] img { transform: none !important; transition: no
     padding-top: 0; padding-bottom: clamp(2.5rem, 7vh, 4rem);
   }
   .zl-hero__photo { position: relative; height: 46vh; min-height: 300px; }
-  .zl-hero__photo img { object-position: var(--hero-pos-mobile, 60% 22%); }
+  .zl-hero__photo img { object-position: var(--hero-pos-mobile, 68% 24%); }
   .zl-hero__photo::after { background: none; }
   .zl-hero__photo::before {
     height: calc(var(--header-h) + 24px);
