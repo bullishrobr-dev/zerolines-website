@@ -132,7 +132,16 @@
      long, since measure is capped per-element rather than by the container. */
   --container:    1760px;
   --container-mid: 1060px;
-  --measure:      68ch;
+  /* Named 68ch, and it delivered about 93 characters a line.
+     ch is the advance of "0", and in Inter the digit is markedly wider than the
+     average letter in running English, so a box sized in ch is always wider than
+     its name implies. Measured by laying each paragraph out on one line, taking
+     its true width and dividing by the box — .zl-prose p came out at 93 on
+     /story/, the homepage and /protocol/ alike. Past about 75 the reader starts
+     losing the return sweep, which is the only reason to set a measure at all.
+     54ch lands at 74, verified the same way. .zl-lead is untouched: its column
+     is already narrower than this, so the token was never binding on it. */
+  --measure:      54ch;
 
   /* Motion — long, heavy, expo. Nothing springs. */
   --ease:      cubic-bezier(0.16, 1, 0.30, 1);
