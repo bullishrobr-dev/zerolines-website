@@ -55,9 +55,15 @@
      out, the hero stacks: type on clean bone, photograph full-bleed beneath it,
      uncropped vertically and cropped to the figure horizontally. */
   @media (max-width: 900px) {
-    .zl-hero--shield {
+    .zl-hero.zl-hero--shield {
       display: flex; flex-direction: column-reverse; align-items: stretch;
       min-height: 0; padding-bottom: 0;
+      /* This hero reverses: type first, photograph beneath. The system rule
+         drops the hero's top padding on mobile because normally the photograph
+         sits at the top and carries the header — here it does not, so the
+         eyebrow rendered at y=42 under a 60px fixed header. Put the clearance
+         back for this variant only. */
+      padding-top: calc(var(--header-h) + clamp(1.5rem, 4vh, 3rem));
     }
     .zl-hero--shield .zl-hero__photo {
       position: relative; inset: auto;

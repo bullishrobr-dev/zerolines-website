@@ -642,8 +642,20 @@ html.zl-rm [data-reveal="wipe"] img { transform: none !important; transition: no
      version put the lead and the ghost CTA across her hands. */
   .zl-hero {
     min-height: 0; display: block;
-    padding-top: 0; padding-bottom: clamp(2.5rem, 7vh, 4rem);
+    padding-bottom: clamp(2.5rem, 7vh, 4rem);
   }
+  /* Dropping the top padding is right ONLY for the photo-led hero, where
+     .zl-hero__photo becomes a relative block at the top of the page and its
+     ::before gradient carries the header. Eight pages — /products/, /science/,
+     /story/, /protocol/, /faq.html, /testimonials/, /contact/ and two product
+     pages — use .zl-hero with no photo at all, and were having their eyebrow and
+     h1 render at y=0 underneath a 60px fixed header. Measured at 390px:
+     header ends at 60, first content at 0.
+     :has() scopes it to the heroes that actually have the photo. If a browser
+     does not support :has() the rule is simply skipped and the hero keeps its
+     padding — extra space above the photo, which is the harmless direction to
+     fail in. */
+  .zl-hero:has(.zl-hero__photo) { padding-top: 0; }
   .zl-hero__photo { position: relative; height: 46vh; min-height: 300px; }
   .zl-hero__photo img { object-position: var(--hero-pos-mobile, 68% 24%); }
   .zl-hero__photo::after { background: none; }

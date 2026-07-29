@@ -74,6 +74,16 @@
 .zl-js .zl-two__inner[data-reveal].is-in { opacity: 1; transform: none; }
 @media (max-width: 880px) {
   .zl-two { grid-template-columns: 1fr; }
+  /* The two panels slide in from opposite sides, which reads well side by side
+     and not at all once they are stacked. It also overflowed: the right-hand
+     panel starts 30px to the right of a full-width column, so before it
+     revealed, the document measured 396px against a 390px viewport. body has
+     overflow-x:hidden so nothing actually scrolled, but relying on that to hide
+     a layout that is genuinely too wide is not a fix.
+     --from is set inline per panel, and an inline custom property beats any
+     stylesheet rule, so the override has to be on the transform itself.
+     Vertical only here. */
+  .zl-js .zl-two__inner[data-reveal] { transform: translate3d(0, 16px, 0); }
   .zl-two__seam {
     top: 0; bottom: auto; left: 0; right: 0; width: auto; height: 1px;
     background: linear-gradient(to right, transparent, var(--champagne) 22%, var(--champagne) 78%, transparent);
