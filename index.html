@@ -87,15 +87,7 @@
 .zl-sum__k { display: block; margin-top: .625rem; font-size: .8125rem; line-height: 1.65; color: var(--ink-3); max-width: 24ch; }
 @media (max-width: 640px) { .zl-sum { grid-template-columns: 1fr; gap: 1.75rem; } }
 
-/* ---- 2. The immediate-effect hint on each collection card --------------- */
-.zl-now { display: grid; gap: .375rem; margin-top: .625rem; padding-top: .8125rem; border-top: 1px solid var(--rule-soft); }
-.zl-now__k {
-  display: flex; align-items: center; gap: .5rem;
-  font-size: .625rem; font-weight: 500; letter-spacing: .26em;
-  text-transform: uppercase; color: var(--house);
-}
-.zl-now__k::before { content: ""; width: 16px; height: 1px; background: var(--signal); flex: none; }
-.zl-now__t { font-size: .8125rem; line-height: 1.65; color: var(--ink-3); }
+/* The .zl-now chip moved into zl.css so the Formulations page can use it too. */
 
 /* ---- 3. Protocol step — a signal hairline that draws itself in ---------- */
 .zl-step { position: relative; border-top: 1px solid var(--rule); padding-top: 1.5rem; }
@@ -692,7 +684,8 @@
     </h2>
     <p class="zl-lead zl-center" data-reveal="far" style="--reveal-delay:300ms;margin-bottom:2.75rem">
       The protocol is not yet available to buy. Register and we will write to you
-      first — with early access and an invitation to a complimentary skin analysis.
+      first, with early access. The skin analysis is free and open now — it does
+      not wait for launch.
     </p>
 
     <form name="waitlist" method="POST" action="/thank-you/"

@@ -673,6 +673,23 @@ html.zl-rm [data-reveal="wipe"] img { transform: none !important; transition: no
   transition: transform 1500ms var(--ease);
   mix-blend-mode: multiply;   /* neutralises the differing baked-in backgrounds */
 }
+
+/* ---------- THE IMMEDIATE-EFFECT CHIP -----------------------------------
+   Every formulation does two things at once, and the first of them — the part
+   visible the day you use it — is the reason the Refill exists as a product.
+   This chip was defined inside the homepage's page-scoped <style>, so the
+   Formulations page, which is where the nav actually sends people, carried none
+   of it: the most differentiating claim in the range was on one page and absent
+   from the one built to sell it. Moved here so any product grid can use it. */
+.zl-now { display: grid; gap: .375rem; margin-top: .625rem; padding-top: .8125rem; border-top: 1px solid var(--rule-soft); }
+.zl-now__k {
+  display: flex; align-items: center; gap: .5rem;
+  font-size: .625rem; font-weight: 500; letter-spacing: .26em;
+  text-transform: uppercase; color: var(--house-mid);
+}
+.zl-now__k::before { content: ""; width: 16px; height: 2px; background: var(--signal); flex: none; }
+.zl-now__t { font-size: .8125rem; line-height: 1.65; color: var(--ink-3); }
+
 .zl-product:hover .zl-product__media img { transform: scale(1.055); }
 .zl-product__idx { position: absolute; top: 1.125rem; left: 1.125rem; z-index: 1; font-size: .6875rem; letter-spacing: .2em; color: var(--tiffany-deep); }
 .zl-product__body { padding-top: 1.375rem; display: flex; flex-direction: column; gap: .4375rem; }

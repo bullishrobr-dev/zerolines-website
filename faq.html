@@ -213,7 +213,7 @@
       "name": "Can I pre-order or join a waitlist?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The waitlist is open. Registering gives you early access when ordering opens, and an invitation to a complimentary skin analysis before it does. You can register from the homepage. We will never spam you. Waitlist members receive only what matters: the date ordering opens, the early access window, and the occasional note from inside the laboratory about formulation and manufacturing."
+        "text": "The waitlist is open. Registering gives you early access when ordering opens. The skin analysis is free and open now — it does not wait for launch, and needs no account. We will never spam you. Waitlist members receive only what matters: the date ordering opens, the early access window, and the occasional note from inside the laboratory about formulation and manufacturing."
       }
     },
     {
@@ -705,7 +705,7 @@
         <div class="zl-faq__a">
           <p>We are in the final stages of production and regulatory compliance. The full protocol — all six formulations — will be available to purchase in the coming months. Nothing on this site is for sale today.</p>
           <p>We are not rushing. The integrity of the formula, the stability of the packaging and the quality of the manufacturing process all take precedence over an arbitrary deadline. When we announce a date, it will be because everything is ready — not because of market pressure.</p>
-          <p><a href="/#waitlist">Register for early access</a> to be the first to know when ordering opens.</p>
+          <p>Register below to be the first to know when ordering opens.</p>
         </div>
       </details>
 
@@ -720,7 +720,22 @@
       <details class="zl-faq__item">
         <summary class="zl-faq__q">Can I pre-order or join a waitlist?</summary>
         <div class="zl-faq__a">
-          <p>The waitlist is open. Registering gives you early access when ordering opens, and an invitation to a complimentary skin analysis before it does. You can <a href="/#waitlist">register from the homepage</a>.</p>
+          <p>The waitlist is open. Registering gives you early access when ordering opens. The <a href="/analyser/">skin analysis</a> is free and open now — it does not wait for launch.</p>
+          <form name="waitlist" method="POST" action="/thank-you/"
+                data-netlify="true" netlify-honeypot="bot-field"
+                style="max-width:440px;margin-top:1.75rem;text-align:left">
+            <input type="hidden" name="form-name" value="waitlist">
+            <input type="hidden" name="source" value="faq">
+            <p class="zl-hp" aria-hidden="true"><label>Do not fill this in: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+            <label class="zl-sr" for="wl-email-faq">Email address</label>
+            <input class="zl-input" type="email" id="wl-email-faq" name="email" placeholder="your@email.com" required autocomplete="email">
+
+            <div style="margin-top:1.5rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+              <button class="zl-btn zl-btn--brand" type="submit">Register for early access</button>
+              <span class="zl-form__status" role="status" aria-live="polite"></span>
+            </div>
+          </form>
           <p>We will never spam you. Waitlist members receive only what matters: the date ordering opens, the early access window, and the occasional note from inside the laboratory about formulation and manufacturing.</p>
         </div>
       </details>
