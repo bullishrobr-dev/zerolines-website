@@ -47,10 +47,37 @@
   --mist:        #636764;
   --mist-2:      #676B68;   /* #8E918E measured 2.83:1 on the tint — used for real copy, so it must pass */
 
-  /* THE BRAND
-     House teal carries large areas; signal is the turquoise mark. */
-  --house:        #1F4F4A;   /* full-bleed brand sections, buttons, teal text */
+  /* THE BRAND — three teals, one hue family, each with a job.
+
+     Measured on the homepage at 1440px before this change: --signal painted
+     0.058% of the document at rest, entirely as 1px eyebrow ticks, while
+     --house painted 9.08%. A 150:1 ratio in favour of a colour that is not the
+     brand — #1F4F4A is HSL(174, 44%, 22%), a deep forest, where heritage
+     Tiffany is HSL(178, 90%, 38%). A stranger would have named this house's
+     colour as green.
+
+     The cause was one line: --tiffany-deep resolved to --house, so every accent
+     word, every numeral, every prose link, every hover and every product index
+     — the marks that recur on all 53 pages — was painted forest.
+
+     The fix is saturation, not brightness. Brightness was tried and rejected.
+     --house-mid sits on the heritage hue (178) at 66% saturation instead of
+     44%, dark enough to hold text: 5.50:1 on bone and 5.03:1 on the tint, both
+     comfortably past the 4.5 floor and both better than --mist, which the
+     system already trusts for body copy.
+
+     Worth stating plainly, because it constrains everything here: no colour
+     that actually reads as bright Tiffany can legally carry text on a light
+     ground. #0ABAB5 is 2.26:1 on bone and 2.07:1 on the tint. That is why
+     --signal stays a mark and never a letterform, and why the bright turquoise
+     has to earn its presence through size rather than through type.
+
+     Retinting --sage-wash toward turquoise was measured and rejected: every
+     candidate pushed --mist-2 under 4.5:1 on the surface it is set on, which is
+     the same trap documented against --mist above. */
+  --house:        #1F4F4A;   /* full-bleed brand sections, buttons */
   --house-deep:   #12332F;   /* deeper field where two teals meet */
+  --house-mid:    #17706D;   /* THE MARK THAT RECURS — accent type, numerals, links */
   --house-lift:   #2C6A63;   /* hover */
   --signal:       #4FB3AC;   /* RULES AND MARKS ONLY — 2.35:1, never set text in it */
   --sage-wash:    #E8EFEC;   /* tint surface */
@@ -58,7 +85,7 @@
   /* Back-compat aliases so existing rules keep resolving */
   --tiffany:      var(--signal);
   --tiffany-lift: #6FC7C0;
-  --tiffany-deep: var(--house);
+  --tiffany-deep: var(--house-mid);
   --tiffany-ink:  var(--house-deep);
   --tiffany-wash: var(--sage-wash);
 
@@ -191,8 +218,12 @@ input, textarea, select { font: inherit; color: inherit; }
   color: var(--mist); line-height: 1.4;
 }
 /* Turquoise tick before every eyebrow — a small, repeated brand signature */
+/* The most-repeated mark on the site — above nearly every section heading on
+   all 53 pages. At 28x1px it was most of the 0.058% of the homepage the brand
+   colour painted. 2px still reads as a hairline and doubles that presence
+   everywhere at once, without putting bright turquoise anywhere near type. */
 .zl-eyebrow::before {
-  content: ""; width: 28px; height: 1px; background: var(--tiffany); flex: none;
+  content: ""; width: 32px; height: 2px; background: var(--tiffany); flex: none;
 }
 .zl-eyebrow--bare::before { display: none; }
 .zl-eyebrow--center { justify-content: center; }
@@ -874,14 +905,14 @@ html.zl-rm [data-reveal="wipe"] img { transform: none !important; transition: no
 .zl-step:hover { border-top-color: var(--house); }
 .zl-step__n {
   font-family: var(--font-display); font-weight: 300; font-size: 1.75rem;
-  line-height: 1; color: var(--house);
+  line-height: 1; color: var(--house-mid);
 }
 .zl-step__name { font-family: var(--font-display); font-size: 1.125rem; line-height: 1.25; }
 .zl-step__role { font-size: 0.8125rem; color: var(--mist); line-height: 1.6; }
 .zl-step[aria-current="step"] { border-top-color: var(--house); border-top-width: 2px; }
-.zl-step[aria-current="step"] .zl-step__name { color: var(--house); }
+.zl-step[aria-current="step"] .zl-step__name { color: var(--house-mid); }
 .zl-step[aria-current="step"] .zl-step__n::after {
-  content: ""; display: inline-block; width: 18px; height: 1px;
+  content: ""; display: inline-block; width: 22px; height: 2px;
   background: var(--signal); margin-left: 0.5rem; vertical-align: middle;
 }
 /* thumb affordance — a hairline that shows there is more to the right */
