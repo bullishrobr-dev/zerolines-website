@@ -43,3 +43,11 @@ temp/
 # already committed remains recoverable from git history.
 assets/_do-not-use/
 blog/images/
+
+# iCloud Drive conflict copies. This project lives in ~/Desktop, which iCloud
+# syncs, and iCloud resolves a write-during-sync by duplicating the file with a
+# " 2" suffix. 114 of them reached a commit before this rule existed, and one
+# of them silently replaced blog/fine-lines-vs-wrinkles.html, breaking six
+# internal links. Never track them.
+* 2.*
+* 3.*
