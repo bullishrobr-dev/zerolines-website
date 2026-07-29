@@ -1,0 +1,991 @@
+/* ============================================================================
+   ZERO LINES — Design System v2
+   Clinical-luxury skincare. Hand-authored. No framework.
+
+   v2 corrects three things from v1:
+
+   1. TIFFANY TURQUOISE IS THE BRAND. #0ABAB5 is literally Tiffany Blue. v1
+      replaced it with a muted verdigris, which was wrong — the colour was never
+      the problem, the problem was that it appeared as pill buttons on every
+      surface, which reads mass-market. Here it leads: full-bleed turquoise
+      sections, hairlines, numerals, rules, active states, and the product's own
+      gel textures. Confident and controlled, never decorative.
+
+   2. LIGHT-FIRST HERO. v1 put white type over a dark photo and the header sank
+      into it. Heroes are now split — type on bone, portrait beside it — so the
+      header is always legible and the page opens like a house, not a campaign.
+
+   3. REAL MOTION. v1's reveals were a single fade-and-rise on everything, which
+      reads flat and cheap. v2 has a vocabulary: clip-path wipes, masked line
+      rise, parallax, staggered children, counters, scroll-linked progress.
+
+   Unchanged and non-negotiable: content is VISIBLE BY DEFAULT. Animation is
+   opt-in via .zl-js on <html>, set synchronously before paint, with a hard
+   failsafe timer. The previous build stranded 163 elements at opacity:0.
+   ========================================================================= */
+
+/* ---------- 1. TOKENS ---------------------------------------------------- */
+
+:root {
+  /* Surface */
+  --bone:        #FAF7F2;
+  --bone-2:      #F2EDE5;
+  --bone-3:      #E7E0D5;
+  --stone:       #DDD6CA;
+
+  /* Ink */
+  --ink:         #14181A;
+  --ink-2:       #262B2C;
+  --ink-3:       #3C4142;
+  /* #7E827F measured 3.74:1 on bone — below the 4.5:1 AA floor for body text.
+     #6B706D fixed that at 4.89:1 on bone, but --mist is also set on .zl-tint
+     and .zl-wash, where the same colour measures 4.33:1 and fails: 56 real
+     failures across the homepage and the collection page, every one of them an
+     eyebrow or a product role line sitting on the tint. #636764 measures
+     5.38:1 on bone and 4.93:1 on the tint, so the token passes on every light
+     surface the system actually uses. */
+  --mist:        #636764;
+  --mist-2:      #676B68;   /* #8E918E measured 2.83:1 on the tint — used for real copy, so it must pass */
+
+  /* THE BRAND — three teals, one hue family, each with a job.
+
+     Measured on the homepage at 1440px before this change: --signal painted
+     0.058% of the document at rest, entirely as 1px eyebrow ticks, while
+     --house painted 9.08%. A 150:1 ratio in favour of a colour that is not the
+     brand — #1F4F4A is HSL(174, 44%, 22%), a deep forest, where heritage
+     Tiffany is HSL(178, 90%, 38%). A stranger would have named this house's
+     colour as green.
+
+     The cause was one line: --tiffany-deep resolved to --house, so every accent
+     word, every numeral, every prose link, every hover and every product index
+     — the marks that recur on all 53 pages — was painted forest.
+
+     The fix is saturation, not brightness. Brightness was tried and rejected.
+     --house-mid sits on the heritage hue (178) at 66% saturation instead of
+     44%, dark enough to hold text: 5.50:1 on bone and 5.03:1 on the tint, both
+     comfortably past the 4.5 floor and both better than --mist, which the
+     system already trusts for body copy.
+
+     Worth stating plainly, because it constrains everything here: no colour
+     that actually reads as bright Tiffany can legally carry text on a light
+     ground. #0ABAB5 is 2.26:1 on bone and 2.07:1 on the tint. That is why
+     --signal stays a mark and never a letterform, and why the bright turquoise
+     has to earn its presence through size rather than through type.
+
+     Retinting --sage-wash toward turquoise was measured and rejected: every
+     candidate pushed --mist-2 under 4.5:1 on the surface it is set on, which is
+     the same trap documented against --mist above. */
+  --house:        #1F4F4A;   /* full-bleed brand sections, buttons */
+  --house-deep:   #12332F;   /* deeper field where two teals meet */
+  --house-mid:    #17706D;   /* THE MARK THAT RECURS — accent type, numerals, links */
+  --house-lift:   #2C6A63;   /* hover */
+  --signal:       #4FB3AC;   /* RULES AND MARKS ONLY — 2.35:1, never set text in it */
+  --sage-wash:    #E8EFEC;   /* tint surface */
+
+  /* Back-compat aliases so existing rules keep resolving */
+  --tiffany:      var(--signal);
+  --tiffany-lift: #6FC7C0;
+  --tiffany-deep: var(--house-mid);
+  --tiffany-ink:  var(--house-deep);
+  --tiffany-wash: var(--sage-wash);
+
+  /* Rare metallic */
+  --champagne:    #C2A878;
+  --gold:        #C2A878;
+  --gold-lift:   #D4BE94;
+
+  /* On dark / on turquoise */
+  --on-dark:     #F7F6F3;
+  --on-dark-2:   #B4B7B5;
+  /* #7C807E measured 4.46:1 on --ink — 0.04 under the AA floor, which failed
+     the footer headings and the legal row on every page. #858985 is 5.03:1. */
+  --on-dark-3:   #858985;
+
+  /* Lines */
+  --rule:           rgba(11, 13, 13, 0.11);
+  --rule-soft:      rgba(11, 13, 13, 0.06);
+  --rule-dark:      rgba(255, 255, 255, 0.16);
+  --rule-dark-soft: rgba(255, 255, 255, 0.08);
+
+  /* Type */
+  --font-display: "Cormorant Garamond", Didot, "Bodoni MT", Georgia, serif;
+  --font-body:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* Capped so a three-line hero headline plus lead and buttons still clears a
+     900px-tall viewport without the CTAs falling below the fold. */
+  --t-display-xl: clamp(2.75rem, 5.8vw, 6rem);
+  --t-display-l:  clamp(2.375rem, 5.2vw, 4.75rem);
+  --t-display-m:  clamp(1.875rem, 3.4vw, 3.125rem);
+  --t-display-s:  clamp(1.5rem, 2.2vw, 2.125rem);
+  --t-lead:       clamp(1.0625rem, 1.1vw, 1.25rem);
+  --t-body:       1rem;
+  --t-small:      0.875rem;
+  --t-eyebrow:    0.6875rem;
+
+  /* Rhythm */
+  --gutter:       clamp(1.5rem, 5vw, 5rem);
+  --section-y:    clamp(5.5rem, 13vh, 11rem);
+  --section-y-sm: clamp(3.5rem, 8vh, 6rem);
+  /* 1340 left ~325px of dead bone either side on a 1990px window while the hero
+     photograph bled to the right edge — the page read as shunted right with a
+     gap on the left. 1560 closes most of that without letting prose lines run
+     long, since measure is capped per-element rather than by the container. */
+  --container:    1760px;
+  --container-mid: 1060px;
+  /* Named 68ch, and it delivered about 93 characters a line.
+     ch is the advance of "0", and in Inter the digit is markedly wider than the
+     average letter in running English, so a box sized in ch is always wider than
+     its name implies. Measured by laying each paragraph out on one line, taking
+     its true width and dividing by the box — .zl-prose p came out at 93 on
+     /story/, the homepage and /protocol/ alike. Past about 75 the reader starts
+     losing the return sweep, which is the only reason to set a measure at all.
+     54ch lands at 74, verified the same way. .zl-lead is untouched: its column
+     is already narrower than this, so the token was never binding on it. */
+  --measure:      54ch;
+
+  /* Motion — long, heavy, expo. Nothing springs. */
+  --ease:      cubic-bezier(0.16, 1, 0.30, 1);
+  --ease-io:   cubic-bezier(0.65, 0.02, 0.18, 1);
+  --dur-rev:   1150ms;
+  --dur-wipe:  1300ms;
+  --dur-ui:    420ms;
+
+  --header-h:  76px;
+}
+
+@media (max-width: 768px) { :root { --header-h: 60px; } }
+
+/* ---------- 2. RESET ----------------------------------------------------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 1.5rem);
+}
+/* Native smooth scrolling owns anchors now — no library interpolates the
+   scroll position, so nothing needs to stand down. scroll-padding-top above
+   keeps a jumped-to heading clear of the fixed header. */
+
+body {
+  margin: 0;
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img, picture, video, svg { max-width: 100%; display: block; }
+img { height: auto; }
+h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd { margin: 0; }
+ul[class], ol[class] { list-style: none; margin: 0; padding: 0; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+input, textarea, select { font: inherit; color: inherit; }
+
+:focus-visible { outline: 2px solid var(--tiffany); outline-offset: 3px; border-radius: 2px; }
+::selection { background: var(--house); color: var(--on-dark); }
+
+/* ---------- 3. TYPOGRAPHY ------------------------------------------------ */
+
+.zl-display-xl, .zl-display-l, .zl-display-m, .zl-display-s {
+  font-family: var(--font-display);
+  font-weight: 300;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+}
+.zl-display-xl { font-size: var(--t-display-xl); line-height: 0.96; letter-spacing: -0.028em; }
+.zl-display-l  { font-size: var(--t-display-l);  line-height: 1.03; }
+.zl-display-m  { font-size: var(--t-display-m);  line-height: 1.14; }
+.zl-display-s  { font-size: var(--t-display-s);  line-height: 1.22; letter-spacing: -0.008em; }
+
+.zl-em { font-style: italic; font-weight: 300; }
+/* The one flourish that carries the brand colour into headline type */
+.zl-em--brand { color: var(--tiffany-deep); font-style: italic; }
+.zl-on-dark .zl-em--brand { color: var(--tiffany-lift); }
+/* on the turquoise field the accent word cannot be turquoise — go to full ink */
+.zl-brand-field .zl-em--brand { color: var(--signal); }
+/* Everything on the turquoise field resolves to ink. White on #0ABAB5 is
+   2.41:1; page authors reaching for white here is an easy mistake to make,
+   so the system answers it rather than relying on each page getting it right. */
+.zl-brand-field .zl-num,
+.zl-brand-field dt,
+.zl-brand-field p,
+.zl-brand-field li { color: var(--on-dark); }
+.zl-brand-field .zl-muted, .zl-brand-field dd { color: var(--on-dark-2); }
+
+.zl-eyebrow {
+  display: flex; align-items: center; gap: 0.75rem;
+  font-family: var(--font-body);
+  font-size: var(--t-eyebrow); font-weight: 500;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--mist); line-height: 1.4;
+}
+/* Turquoise tick before every eyebrow — a small, repeated brand signature */
+/* The most-repeated mark on the site — above nearly every section heading on
+   all 53 pages. At 28x1px it was most of the 0.058% of the homepage the brand
+   colour painted. 2px still reads as a hairline and doubles that presence
+   everywhere at once, without putting bright turquoise anywhere near type. */
+.zl-eyebrow::before {
+  content: ""; width: 32px; height: 2px; background: var(--tiffany); flex: none;
+}
+.zl-eyebrow--bare::before { display: none; }
+.zl-eyebrow--center { justify-content: center; }
+.zl-on-dark .zl-eyebrow { color: var(--on-dark-3); }
+.zl-brand-field .zl-eyebrow { color: rgba(255,255,255,0.78); }
+.zl-brand-field .zl-eyebrow::before { background: var(--signal); }
+
+.zl-lead {
+  font-size: var(--t-lead); line-height: 1.7;
+  color: var(--ink-3); font-weight: 300; max-width: var(--measure);
+}
+.zl-on-dark .zl-lead { color: var(--on-dark-2); }
+.zl-brand-field .zl-lead { color: rgba(255,255,255,0.9); }
+
+.zl-prose { max-width: var(--measure); }
+.zl-prose p { margin-bottom: 1.5em; color: var(--ink-3); }
+.zl-prose p:last-child { margin-bottom: 0; }
+.zl-prose strong { font-weight: 600; color: var(--ink); }
+.zl-prose a { color: var(--tiffany-deep); text-decoration: underline; text-underline-offset: .2em; }
+
+.zl-muted { color: var(--mist); }
+
+/* Big numerals — turquoise, the recurring structural accent */
+.zl-num {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(2.25rem, 3.6vw, 3.5rem); line-height: 1;
+  letter-spacing: -0.02em; color: var(--tiffany-deep);
+}
+/* House teal on the near-black field measures 1.94:1 — the step numerals on
+   every dark section were effectively invisible. On dark they lift. */
+.zl-dark .zl-num, .zl-on-dark .zl-num { color: var(--tiffany-lift); }
+.zl-brand-field .zl-num { color: var(--on-dark); }
+
+/* ---------- 4. LAYOUT ---------------------------------------------------- */
+
+/* width:min() rather than max-width + padding. With the old pair, the gutter
+   STACKED on top of the centring margin: on a 1990px window a 1560 container
+   left 215px of margin and then added another 80px of padding, so content began
+   295px in while the hero photograph bled to the very right edge — the page read
+   as shunted right with a dead band down the left. The gutter now only bites
+   when the viewport is actually narrower than the container. */
+.zl-container      { width: min(100% - (var(--gutter) * 2), var(--container)); margin-inline: auto; }
+.zl-container--mid { max-width: var(--container-mid); }
+.zl-container--narrow { max-width: 800px; }
+
+.zl-section     { padding-block: var(--section-y); position: relative; }
+.zl-section--sm { padding-block: var(--section-y-sm); }
+
+.zl-dark  { background: var(--ink); color: var(--on-dark); }
+.zl-dark h1, .zl-dark h2, .zl-dark h3 { color: var(--on-dark); }
+.zl-tint  { background: var(--bone-2); }
+.zl-wash  { background: var(--tiffany-wash); }
+
+/* Full-bleed brand field — the confident turquoise moment.
+   Type is INK, not white. #0ABAB5 is a light-mid colour: white on it measures
+   2.41:1, well under the 4.5:1 AA floor, and it visibly washes out. Ink on the
+   same turquoise measures 8.08:1 — and dark-on-turquoise is the more assured
+   look besides. */
+.zl-brand-field { background: var(--house); color: var(--on-dark); }
+.zl-brand-field h1, .zl-brand-field h2, .zl-brand-field h3 { color: var(--on-dark); }
+/* Deep variant for when a turquoise field genuinely needs light type */
+.zl-brand-field--deep { background: var(--tiffany-ink); color: var(--on-dark); }
+.zl-brand-field--deep h1, .zl-brand-field--deep h2, .zl-brand-field--deep h3 { color: var(--on-dark); }
+
+.zl-rule { height: 1px; background: var(--rule); border: 0; margin: 0; }
+.zl-dark .zl-rule, .zl-brand-field .zl-rule { background: var(--rule-dark); }
+
+.zl-grid { display: grid; gap: clamp(2rem, 4vw, 4rem); }
+.zl-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.zl-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.zl-grid--4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1024px) { .zl-grid--4, .zl-grid--3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 720px)  { .zl-grid--2, .zl-grid--3, .zl-grid--4 { grid-template-columns: 1fr; } }
+
+.zl-split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 6vw, 6.5rem); align-items: center; }
+.zl-split--wide-img { grid-template-columns: 5fr 7fr; }
+.zl-split--wide-txt { grid-template-columns: 7fr 5fr; }
+@media (max-width: 900px) {
+  .zl-split, .zl-split--wide-img, .zl-split--wide-txt { grid-template-columns: 1fr; gap: clamp(2rem, 6vw, 3rem); }
+  .zl-split__media--first { order: -1; }
+}
+
+/* ---------- 5. HEADER ---------------------------------------------------- */
+
+.zl-skip { position: absolute; left: -9999px; top: 0; z-index: 200; background: var(--ink); color: var(--on-dark); padding: .875rem 1.5rem; font-size: var(--t-small); }
+.zl-skip:focus { left: 0; }
+
+/* At the top the header sits over the hero, which is always bone — so it can be
+   transparent. The moment the page scrolls it becomes FULLY OPAQUE.
+   It previously stayed at rgba(...,0.82) with a blur, which does not occlude
+   white body text on a near-black section: copy from the page underneath was
+   readable straight through the header band. Blur is not occlusion. An opaque
+   panel cannot ghost, at any scroll position, over any section colour. */
+.zl-header {
+  position: fixed; inset: 0 0 auto 0; z-index: 100;
+  height: var(--header-h); display: flex; align-items: center;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background-color var(--dur-ui) var(--ease), border-color var(--dur-ui) var(--ease);
+}
+.zl-header[data-scrolled="true"] {
+  background: var(--bone);
+  border-bottom-color: var(--rule-soft);
+}
+
+/* Dark variant only where a page genuinely opens on a dark field */
+.zl-header--over-dark { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; color: var(--on-dark); }
+.zl-header--over-dark .zl-header__link { color: rgba(255,255,255,.82); }
+.zl-header--over-dark[data-scrolled="true"] {
+  background: rgba(11,13,13,.86); backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px); border-bottom-color: var(--rule-dark-soft);
+}
+
+.zl-header__inner { width: min(100% - (var(--gutter) * 2), var(--container)); margin-inline: auto; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+
+.zl-logo { font-size: .8125rem; font-weight: 500; letter-spacing: .42em; text-transform: uppercase; white-space: nowrap; transition: opacity var(--dur-ui) var(--ease); }
+.zl-logo:hover { opacity: .6; }
+
+.zl-header__nav { display: flex; align-items: center; gap: clamp(1.125rem, 2.2vw, 2.25rem); }
+.zl-header__link {
+  position: relative; font-size: .75rem; font-weight: 500;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: var(--ink-3); padding-block: .5rem;
+  transition: color var(--dur-ui) var(--ease);
+}
+.zl-header__link:hover, .zl-header__link[aria-current="page"] { color: var(--ink); }
+/* Turquoise underline — the brand mark on every hover */
+.zl-header__link::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: .125rem; height: 1px;
+  background: var(--tiffany); transform: scaleX(0); transform-origin: right;
+  transition: transform 560ms var(--ease);
+}
+.zl-header__link:hover::after, .zl-header__link[aria-current="page"]::after { transform: scaleX(1); transform-origin: left; }
+@media (max-width: 1100px) { .zl-header__nav { display: none; } }
+
+.zl-burger { display: none; width: 44px; height: 44px; align-items: center; justify-content: center; margin-right: -.5rem; }
+.zl-burger span { display: block; width: 22px; height: 1px; background: currentColor; position: relative; transition: background-color .2s var(--ease); }
+.zl-burger span::before, .zl-burger span::after { content: ""; position: absolute; left: 0; width: 22px; height: 1px; background: currentColor; transition: transform 460ms var(--ease), top 260ms var(--ease); }
+.zl-burger span::before { top: -6px; }
+.zl-burger span::after  { top: 6px; }
+[data-menu="open"] .zl-burger span { background: transparent; }
+[data-menu="open"] .zl-burger span::before { top: 0; transform: rotate(45deg); }
+[data-menu="open"] .zl-burger span::after  { top: 0; transform: rotate(-45deg); }
+@media (max-width: 1100px) { .zl-burger { display: flex; } }
+
+/* Menu — display:none when closed so it can never bleed into view */
+.zl-menu {
+  position: fixed; inset: 0; z-index: 99; background: var(--ink); color: var(--on-dark);
+  display: none; flex-direction: column; justify-content: center;
+  padding: var(--header-h) var(--gutter) 3rem;
+}
+.zl-menu[data-open="true"] { display: flex; }
+/* While the menu is open the header paints over a near-black field, so it must
+   invert. Without this the logo and the close control sit at 1.00:1 — invisible
+   — and there is no discoverable way to shut the menu. */
+[data-menu="open"] .zl-header,
+[data-menu="open"] .zl-header .zl-logo { color: var(--on-dark); }
+[data-menu="open"] .zl-header { background: transparent; border-bottom-color: transparent; }
+[data-menu="open"] .zl-burger { color: var(--on-dark); }
+.zl-menu__list { display: flex; flex-direction: column; gap: clamp(.375rem, 1.4vh, .875rem); }
+.zl-menu__link {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(1.875rem, 6.5vw, 3.25rem); line-height: 1.18; color: var(--on-dark);
+  opacity: 0; transform: translateY(18px);
+  animation: zl-menu-in 720ms var(--ease) forwards;
+  animation-delay: calc(var(--i, 0) * 55ms + 80ms);
+}
+.zl-menu__link:hover { color: var(--tiffany-lift); }
+@keyframes zl-menu-in { to { opacity: 1; transform: none; } }
+.zl-menu__meta { margin-top: clamp(2rem, 6vh, 3.5rem); display: flex; flex-wrap: wrap; gap: 1.25rem 2.5rem; }
+
+/* ---------- 6. BUTTONS --------------------------------------------------- */
+
+.zl-btn {
+  --btn-fg: #fff; --btn-bg: var(--ink); --btn-bd: var(--ink);
+  position: relative; display: inline-flex; align-items: center; justify-content: center; gap: .75rem;
+  padding: 1.0625rem 2.25rem;
+  font-size: .75rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--btn-fg); background: var(--btn-bg); border: 1px solid var(--btn-bd);
+  border-radius: 0; overflow: hidden; isolation: isolate;
+  transition: color 620ms var(--ease), border-color 620ms var(--ease);
+}
+.zl-btn::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--btn-hover-bg, var(--tiffany));
+  transform: scaleY(0); transform-origin: bottom;
+  transition: transform 620ms var(--ease);
+}
+.zl-btn:hover::before { transform: scaleY(1); }
+.zl-btn:hover { color: #fff; border-color: var(--btn-hover-bg, var(--tiffany)); }
+
+.zl-btn--ghost { --btn-fg: var(--ink); --btn-bg: transparent; --btn-bd: var(--ink); }
+.zl-btn--light { --btn-fg: var(--ink); --btn-bg: #fff; --btn-bd: #fff; }
+.zl-btn--on-dark-ghost { --btn-fg: var(--on-dark); --btn-bg: transparent; --btn-bd: rgba(255,255,255,.42); }
+/* The one place turquoise IS the button — primary conversion only */
+/* Ink on turquoise (8.08:1), not white (2.41:1). This is the hero CTA and the
+   waitlist submit — the two things that must never be hard to read. */
+.zl-btn--brand { --btn-fg: var(--on-dark); --btn-bg: var(--house); --btn-bd: var(--house); --btn-hover-bg: var(--ink); }
+.zl-btn--brand:hover { color: #fff; }
+.zl-btn--brand:hover { border-color: var(--ink); }
+/* On the house field: champagne fill, deep-teal label. House teal on champagne
+   measured 4.03:1 — under the floor for a 12px uppercase label. --house-deep
+   on the same champagne measures 5.95:1 and keeps the label unmistakably teal. */
+.zl-btn--on-brand { --btn-fg: var(--house-deep); --btn-bg: var(--champagne); --btn-bd: var(--champagne); --btn-hover-bg: #fff; }
+/* Outline pairing for the turquoise field. */
+.zl-btn--on-brand-ghost { --btn-fg: var(--on-dark); --btn-bg: transparent; --btn-bd: rgba(255,255,255,.45); --btn-hover-bg: #fff; }
+.zl-btn--on-brand-ghost:hover { color: var(--house); border-color: #fff; }
+/* Defensive: the dark-field ghost is easy to reach for by mistake on a
+   turquoise section, where its light label measures 2.23:1. Resolve it to
+   ink there rather than depending on every page choosing the right variant. */
+.zl-brand-field .zl-btn--on-dark-ghost { --btn-fg: var(--on-dark); --btn-bd: rgba(255,255,255,.45); }
+.zl-brand-field .zl-btn--on-dark-ghost:hover { color: var(--house); }
+.zl-btn--on-brand:hover { color: var(--house); }
+
+.zl-link {
+  display: inline-flex; align-items: center; gap: .625rem;
+  font-size: .75rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
+  padding-bottom: .4375rem; position: relative;
+}
+.zl-link::after { content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%; background: currentColor; opacity: .25; transition: opacity 480ms var(--ease); }
+.zl-link::before { content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%; background: var(--tiffany); transform: scaleX(0); transform-origin: right; transition: transform 560ms var(--ease); }
+.zl-link:hover::before { transform: scaleX(1); transform-origin: left; }
+.zl-link:hover::after { opacity: 0; }
+.zl-link:hover { color: var(--tiffany-deep); }
+.zl-on-dark .zl-link:hover { color: #fff; }
+.zl-brand-field .zl-link:hover { color: var(--signal); }
+.zl-link__arrow { transition: transform 560ms var(--ease); }
+.zl-link:hover .zl-link__arrow { transform: translateX(5px); }
+
+/* ---------- 7. MEDIA ----------------------------------------------------- */
+
+.zl-media { position: relative; overflow: hidden; background: var(--bone-3); }
+.zl-media img { width: 100%; height: 100%; object-fit: cover; }
+.zl-media--portrait  { aspect-ratio: 3 / 4; }
+.zl-media--square    { aspect-ratio: 1 / 1; }
+.zl-media--editorial { aspect-ratio: 4 / 5; }
+.zl-media--wide      { aspect-ratio: 16 / 10; }
+.zl-media--cinema    { aspect-ratio: 21 / 9; }
+.zl-media--tall      { aspect-ratio: 2 / 3; }
+
+.zl-media--zoom img { transition: transform 1500ms var(--ease); }
+.zl-media--zoom:hover img, a:hover .zl-media--zoom img { transform: scale(1.05); }
+
+/* ---------- 8. MOTION VOCABULARY ---------------------------------------- *
+   Everything below only engages when <html class="zl-js"> is present, which
+   zl.js sets synchronously before paint. Without JS every rule here is inert
+   and the content simply renders. That inversion is the whole safety model. */
+
+/* a. rise — the workhorse */
+.zl-js [data-reveal] {
+  opacity: 0; transform: translateY(var(--reveal-y, 26px));
+  transition: opacity var(--dur-rev) var(--ease), transform var(--dur-rev) var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.zl-js [data-reveal].is-in { opacity: 1; transform: none; }
+.zl-js [data-reveal="fade"] { --reveal-y: 0px; }
+.zl-js [data-reveal="far"]  { --reveal-y: 52px; }
+
+/* b. wipe — clip-path reveal for imagery. Far richer than a fade. */
+.zl-js [data-reveal="wipe"] {
+  opacity: 1; transform: none;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path var(--dur-wipe) var(--ease-io);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.zl-js [data-reveal="wipe"].is-in { clip-path: inset(0 0 0 0); }
+
+/* c. scale-in — media settles from slightly oversized as it wipes */
+.zl-js [data-reveal="wipe"] img { transform: scale(1.12); transition: transform 1800ms var(--ease); }
+.zl-js [data-reveal="wipe"].is-in img { transform: scale(1); }
+
+/* d. masked line rise for display type.
+      Spaces are preserved because each line is a whole element — the old build
+      split per-word and lost every gap ("AlreadyKnows"). */
+.zl-js .zl-rise { display: block; overflow: hidden; padding-bottom: 0.08em; }
+.zl-js .zl-rise > * {
+  display: block; transform: translateY(108%);
+  transition: transform 1250ms var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.zl-js .zl-rise.is-in > * { transform: none; }
+
+/* e. stagger — children animate in sequence off one trigger */
+.zl-js [data-stagger] > * {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 950ms var(--ease), transform 950ms var(--ease);
+}
+.zl-js [data-stagger].is-in > * { opacity: 1; transform: none; }
+.zl-js [data-stagger].is-in > *:nth-child(1) { transition-delay: 0ms; }
+.zl-js [data-stagger].is-in > *:nth-child(2) { transition-delay: 90ms; }
+.zl-js [data-stagger].is-in > *:nth-child(3) { transition-delay: 180ms; }
+.zl-js [data-stagger].is-in > *:nth-child(4) { transition-delay: 270ms; }
+.zl-js [data-stagger].is-in > *:nth-child(5) { transition-delay: 360ms; }
+.zl-js [data-stagger].is-in > *:nth-child(6) { transition-delay: 450ms; }
+.zl-js [data-stagger].is-in > *:nth-child(n+7) { transition-delay: 540ms; }
+
+/* f. parallax — driven by rAF in zl.js, never by scroll-jacking */
+.zl-parallax { will-change: transform; }
+
+/* g. rule draw — hairlines that draw themselves in brand colour */
+.zl-js .zl-draw { transform: scaleX(0); transform-origin: left; transition: transform 1100ms var(--ease); }
+.zl-js .zl-draw.is-in { transform: scaleX(1); }
+
+/* h. scroll progress bar */
+.zl-progress { position: fixed; top: 0; left: 0; height: 2px; z-index: 101; background: var(--tiffany); width: 0; }
+
+/* Reduce Motion respects MOVEMENT, not visibility change. This block used to
+   zero out every effect, so a visitor with it enabled — it rides along with
+   Low Power Mode on some phones — saw a completely static page. Vestibular
+   triggers are transforms: translate, scale, parallax, scrub. A plain opacity
+   fade is safe, so reveals survive as fades; everything that MOVES stops.
+   zl.js stamps html.zl-rm so the rules also hold if the media query and the
+   script ever disagree. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .zl-js [data-reveal], .zl-js [data-stagger] > *, .zl-js .zl-rise > * {
+    transform: none !important; clip-path: none !important;
+    transition: opacity 700ms ease !important;
+  }
+  .zl-js .zl-draw { transform: scaleX(1) !important; transition: none !important; }
+  .zl-js [data-reveal="wipe"] img { transform: none !important; transition: none !important; }
+  .zl-menu__link { animation: none; opacity: 1; transform: none; }
+  .zl-media--zoom img, .zl-parallax { transition: none !important; transform: none !important; }
+}
+/* Same rules keyed off the script's own flag, so behaviour cannot split when a
+   browser reports the media query differently from matchMedia. */
+html.zl-rm [data-reveal], html.zl-rm [data-stagger] > *, html.zl-rm .zl-rise > * {
+  transform: none !important; clip-path: none !important;
+  transition: opacity 700ms ease !important;
+}
+html.zl-rm .zl-draw { transform: scaleX(1) !important; transition: none !important; }
+html.zl-rm [data-reveal="wipe"] img { transform: none !important; transition: none !important; }
+
+/* ---------- 9. HERO (light, split) --------------------------------------- */
+
+/* Photo-led hero.
+   The portrait is full-bleed again — a boxed image beside text read like a
+   brochure. Legibility is solved by composition rather than a scrim: the crop is
+   anchored so the subject sits right and her plain bone backdrop falls under the
+   type, with a soft left-edge wash for insurance. Dark type throughout, so the
+   header never has to fight the picture. */
+.zl-hero {
+  position: relative;
+  min-height: calc(100svh - var(--header-h));
+  display: flex; align-items: center;
+  padding-top: calc(var(--header-h) + clamp(1.5rem, 4vh, 3rem));
+  padding-bottom: clamp(3rem, 8vh, 6rem);
+  overflow: hidden;
+  background: var(--bone);
+}
+.zl-hero__photo { position: absolute; inset: 0; z-index: 0; }
+.zl-hero__photo img {
+  width: 100%; height: 100%; object-fit: cover;
+  object-position: var(--hero-pos, 62% 30%);
+}
+/* Readability wash — bone fading to nothing across the left half. Not a grey
+   scrim over the face; the picture stays untouched where it matters. */
+.zl-hero__photo::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(100deg,
+    var(--bone) 0%, var(--bone) 26%,
+    rgba(250,247,242,.92) 38%, rgba(250,247,242,.55) 50%,
+    rgba(250,247,242,.12) 62%, rgba(250,247,242,0) 74%);
+}
+/* Second wash across the top band only. The nav runs the full width, so on the
+   right it can fall over dark hair — this keeps the header readable wherever the
+   crop happens to land, which is the exact failure the previous hero had. */
+.zl-hero__photo::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; z-index: 1;
+  height: calc(var(--header-h) + 28px);
+  background: linear-gradient(to bottom,
+    rgba(250,247,242,.94) 0%, rgba(250,247,242,.78) 55%, rgba(250,247,242,0) 100%);
+}
+.zl-hero__inner { position: relative; z-index: 1; width: 100%; }
+.zl-hero__title { max-width: 13ch; }
+.zl-hero__lead  { max-width: 40ch; margin-top: clamp(1.25rem, 2.4vh, 1.75rem); }
+.zl-hero__actions { margin-top: clamp(1.75rem, 3.4vh, 2.5rem); display: flex; flex-wrap: wrap; gap: 1rem; }
+
+/* Split hero — type beside a boxed portrait. Used by the content pages, where a
+   full-bleed photograph would overwhelm a page that is mostly reading. */
+.zl-hero__grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem); align-items: center; width: 100%;
+}
+.zl-hero__media { position: relative; }
+.zl-hero__media .zl-media { aspect-ratio: 4 / 5; position: relative; z-index: 1; }
+.zl-hero__media::before {
+  content: ""; position: absolute; z-index: 0;
+  inset: 14% -9% 8% 28%; background: var(--sage-wash);
+}
+@media (max-width: 900px) {
+  .zl-hero__grid { grid-template-columns: 1fr; gap: clamp(2rem, 5vh, 3rem); }
+  .zl-hero__media::before { inset: auto -6% -5% 30%; height: 55%; }
+}
+
+/* Champagne hairline under the hero — the first metallic note on the page */
+.zl-hero::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+  background: linear-gradient(to right, var(--champagne), transparent 60%);
+  z-index: 2;
+}
+
+@media (max-width: 900px) {
+  /* The picture owns the top of the frame and the type sits below it on solid
+     bone. No overlay, so nothing depends on a gradient happening to be dark
+     enough exactly where a line of text lands — which is how the previous
+     version put the lead and the ghost CTA across her hands. */
+  .zl-hero {
+    min-height: 0; display: block;
+    padding-bottom: clamp(2.5rem, 7vh, 4rem);
+  }
+  /* Dropping the top padding is right ONLY for the photo-led hero, where
+     .zl-hero__photo becomes a relative block at the top of the page and its
+     ::before gradient carries the header. Eight pages — /products/, /science/,
+     /story/, /protocol/, /faq.html, /testimonials/, /contact/ and two product
+     pages — use .zl-hero with no photo at all, and were having their eyebrow and
+     h1 render at y=0 underneath a 60px fixed header. Measured at 390px:
+     header ends at 60, first content at 0.
+     :has() scopes it to the heroes that actually have the photo. If a browser
+     does not support :has() the rule is simply skipped and the hero keeps its
+     padding — extra space above the photo, which is the harmless direction to
+     fail in. */
+  .zl-hero:has(.zl-hero__photo) { padding-top: 0; }
+  .zl-hero__photo { position: relative; height: 46vh; min-height: 300px; }
+  .zl-hero__photo img { object-position: var(--hero-pos-mobile, 68% 24%); }
+  .zl-hero__photo::after { background: none; }
+  .zl-hero__photo::before {
+    height: calc(var(--header-h) + 24px);
+    background: linear-gradient(to bottom, rgba(250,247,242,.92) 0%, rgba(250,247,242,0) 100%);
+  }
+  .zl-hero__inner { padding-top: clamp(2rem, 5vh, 3rem); }
+  .zl-hero__title { max-width: 12ch; }
+  .zl-hero__lead  { max-width: none; }
+  .zl-hero__actions .zl-btn { width: 100%; }
+}
+
+/* ---------- 10. CARDS ---------------------------------------------------- */
+
+.zl-card { display: block; position: relative; }
+.zl-card__body { padding-top: 1.5rem; }
+.zl-card__title { font-family: var(--font-display); font-weight: 300; font-size: 1.5rem; line-height: 1.25; }
+.zl-card__meta { margin-top: .5rem; font-size: var(--t-small); color: var(--mist); }
+.zl-card__desc { margin-top: .75rem; color: var(--ink-3); font-size: .9375rem; line-height: 1.7; }
+.zl-card:hover .zl-card__title { color: var(--tiffany-deep); }
+
+/* Product card — NO PRICING. Products are not for sale yet. */
+.zl-product { display: block; position: relative; }
+.zl-product__media {
+  aspect-ratio: 4 / 5; background: var(--bone-2); overflow: hidden; position: relative;
+  display: grid; place-items: center;
+}
+.zl-product__media img {
+  width: 100%; height: 100%; object-fit: contain;
+  /* Tight padding: the source shots vary a lot in framing — some are cutouts,
+     one is a wide landscape, one is a full scene — so generous padding made the
+     smaller-framed ones read as tiny. Consistent product photography on a
+     single seamless background is the real fix. */
+  padding: clamp(0.75rem, 2.5%, 1.5rem);
+  transition: transform 1500ms var(--ease);
+  mix-blend-mode: multiply;   /* neutralises the differing baked-in backgrounds */
+}
+
+/* ---------- THE IMMEDIATE-EFFECT CHIP -----------------------------------
+   Every formulation does two things at once, and the first of them — the part
+   visible the day you use it — is the reason the Refill exists as a product.
+   This chip was defined inside the homepage's page-scoped <style>, so the
+   Formulations page, which is where the nav actually sends people, carried none
+   of it: the most differentiating claim in the range was on one page and absent
+   from the one built to sell it. Moved here so any product grid can use it. */
+.zl-now { display: grid; gap: .375rem; margin-top: .625rem; padding-top: .8125rem; border-top: 1px solid var(--rule-soft); }
+.zl-now__k {
+  display: flex; align-items: center; gap: .5rem;
+  font-size: .625rem; font-weight: 500; letter-spacing: .26em;
+  text-transform: uppercase; color: var(--house-mid);
+}
+.zl-now__k::before { content: ""; width: 16px; height: 2px; background: var(--signal); flex: none; }
+.zl-now__t { font-size: .8125rem; line-height: 1.65; color: var(--ink-3); }
+
+.zl-product:hover .zl-product__media img { transform: scale(1.055); }
+.zl-product__idx { position: absolute; top: 1.125rem; left: 1.125rem; z-index: 1; font-size: .6875rem; letter-spacing: .2em; color: var(--tiffany-deep); }
+.zl-product__body { padding-top: 1.375rem; display: flex; flex-direction: column; gap: .4375rem; }
+.zl-product__name { font-family: var(--font-display); font-weight: 400; font-size: 1.3125rem; line-height: 1.25; transition: color var(--dur-ui) var(--ease); }
+.zl-product:hover .zl-product__name { color: var(--tiffany-deep); }
+.zl-product__role { font-size: var(--t-small); color: var(--mist); }
+
+/* ---------- 11. FORMS ---------------------------------------------------- */
+
+.zl-input {
+  width: 100%; padding: 1.0625rem 0 .9375rem;
+  background: transparent; border: 0; border-bottom: 1px solid var(--rule);
+  font-size: 1rem; color: var(--ink);
+  transition: border-color var(--dur-ui) var(--ease);
+}
+.zl-input::placeholder { color: var(--mist-2); }
+.zl-input:focus { outline: none; border-bottom-color: var(--tiffany); }
+.zl-on-dark .zl-input { color: #fff; border-bottom-color: rgba(255,255,255,.32); }
+.zl-brand-field .zl-input { color: #fff; border-bottom-color: rgba(255,255,255,.34); }
+.zl-on-dark .zl-input::placeholder { color: rgba(255,255,255,.55); }
+.zl-brand-field .zl-input::placeholder { color: rgba(255,255,255,.55); }
+.zl-on-dark .zl-input:focus { border-bottom-color: #fff; }
+.zl-brand-field .zl-input:focus { border-bottom-color: var(--signal); }
+
+.zl-form__note { font-size: .75rem; color: var(--mist); line-height: 1.6; }
+.zl-form__note a { color: inherit; text-decoration: underline; text-underline-offset: .18em; }
+.zl-brand-field .zl-form__note { color: rgba(255,255,255,0.82); }
+/* The privacy link inside the note used to carry an inline color:var(--ink),
+   left over from when the brand field was a light turquoise. On the v3 deep
+   teal that measured 1.94:1. Owned here so no page has to remember. */
+.zl-brand-field .zl-form__note a, .zl-on-dark .zl-form__note a { color: #fff; }
+.zl-form__status { font-size: var(--t-small); min-height: 1.5em; }
+.zl-form__status[data-state="ok"]  { color: var(--tiffany-deep); }
+.zl-form__status[data-state="err"] { color: #A4443A; }
+.zl-brand-field .zl-form__status[data-state="ok"] { color: var(--signal); }
+.zl-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* ---------- 12. FOOTER --------------------------------------------------- */
+
+.zl-footer { background: var(--ink); color: var(--on-dark-2); padding-block: clamp(4rem, 9vh, 7rem) 2.5rem; }
+.zl-footer__top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: clamp(2rem, 4vw, 4rem); }
+@media (max-width: 900px) { .zl-footer__top { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .zl-footer__top { grid-template-columns: 1fr; } }
+.zl-footer__brand .zl-logo { color: var(--on-dark); font-size: .875rem; }
+.zl-footer h3 { font-size: var(--t-eyebrow); font-weight: 500; letter-spacing: .28em; text-transform: uppercase; color: var(--on-dark-3); margin-bottom: 1.25rem; }
+.zl-footer__links { display: flex; flex-direction: column; gap: .75rem; }
+.zl-footer__links a { font-size: .875rem; color: var(--on-dark-2); transition: color var(--dur-ui) var(--ease); }
+.zl-footer__links a:hover { color: var(--tiffany-lift); }
+.zl-footer__bottom { margin-top: clamp(3rem, 6vh, 5rem); padding-top: 2rem; border-top: 1px solid var(--rule-dark-soft); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-size: .75rem; color: var(--on-dark-3); }
+.zl-footer__legal { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+
+/* ---------- 13. FLOATING / CHROME --------------------------------------- */
+
+.zl-wa {
+  position: fixed; z-index: 90; right: 1.5rem; bottom: 1.5rem;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--ink); color: #fff; display: grid; place-items: center;
+  box-shadow: 0 6px 28px rgba(0,0,0,.22);
+  transition: transform 520ms var(--ease), background-color 520ms var(--ease);
+}
+.zl-wa:hover { transform: translateY(-3px); background: var(--tiffany); }
+
+.zl-cookie {
+  /* zl-cookie--slim: one line, hugging the bottom edge. The previous card was
+     360x148 and sat over the content column at 72% of scroll positions. */
+  position: fixed; z-index: 95; left: 0; right: 0; bottom: 0;
+  background: var(--ink); color: var(--on-dark-2);
+  padding: 0.75rem clamp(1rem, 4vw, 2rem);
+  display: flex; align-items: center; justify-content: center;
+  gap: 0.75rem 1.5rem; flex-wrap: wrap;
+  font-size: 0.8125rem; line-height: 1.5;
+  box-shadow: 0 -6px 30px rgba(0, 0, 0, 0.16);
+  transform: translateY(101%);
+  transition: transform 620ms var(--ease);
+}
+.zl-cookie[data-open="true"] { transform: none; }
+/* The notice sits on the near-black panel, so its link is light. Owned here
+   rather than inline, so it stays correct wherever the component is used. */
+.zl-cookie a { color: #fff; text-decoration: underline; text-underline-offset: .18em; }
+.zl-cookie a:hover { color: var(--tiffany-lift); }
+.zl-cookie__actions { display: flex; gap: .625rem; }
+.zl-cookie .zl-btn { padding: .5625rem .9375rem; font-size: .625rem; }
+@media (max-width: 560px) {
+  .zl-cookie { gap: 0.625rem 1rem; padding: 0.75rem 1rem; }
+  .zl-cookie > span { flex: 1 1 100%; }
+}
+
+/* ---------- 14. UTILITIES ------------------------------------------------ */
+
+.zl-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.zl-center { text-align: center; margin-inline: auto; }
+
+.zl-index-rule { display: flex; align-items: baseline; gap: 1.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--rule); margin-bottom: clamp(2rem, 5vh, 3.5rem); }
+.zl-dark .zl-index-rule, .zl-brand-field .zl-index-rule { border-bottom-color: var(--rule-dark); }
+.zl-index-rule__num { font-size: var(--t-eyebrow); letter-spacing: .28em; color: var(--tiffany-deep); }
+.zl-dark .zl-index-rule__num, .zl-brand-field .zl-index-rule__num { color: inherit; opacity: .7; }
+
+/* ---------- 15. THE CONSULTATION BAND ------------------------------------ *
+   The skin analyser, offered the way a house offers a fitting: one quiet band
+   inside the page, never a pop-up, a floating badge or a banner. It carries its
+   own bone ground and its own champagne hairline so it reads correctly wherever
+   it is dropped — between a tint section and a dark one, or two bone ones. */
+
+.zl-concierge {
+  position: relative;
+  background: var(--bone);
+  border-bottom: 1px solid var(--rule);
+  padding-block: clamp(2.5rem, 6vh, 4rem);
+}
+.zl-concierge::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px;
+  background: linear-gradient(to right, var(--champagne), rgba(194,168,120,.28) 44%, transparent 74%);
+}
+.zl-concierge__inner {
+  display: grid; align-items: center;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: clamp(1.5rem, 3.4vw, 3.25rem);
+}
+.zl-concierge__mark { width: 56px; height: 56px; }
+.zl-concierge__label { color: var(--mist-2); margin-bottom: .9375rem; }
+.zl-concierge__title { max-width: 22ch; }
+.zl-concierge__copy {
+  margin-top: .875rem; max-width: 58ch;
+  font-size: .9375rem; line-height: 1.75; color: var(--ink-3);
+}
+.zl-concierge__action { display: grid; justify-items: start; gap: .9375rem; }
+.zl-concierge__note {
+  font-size: .6875rem; letter-spacing: .14em; text-transform: uppercase;
+  line-height: 1.7; color: var(--mist-2); max-width: 34ch;
+}
+@media (max-width: 1100px) {
+  .zl-concierge__inner { grid-template-columns: auto minmax(0, 1fr); }
+  .zl-concierge__action { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .zl-concierge__inner { grid-template-columns: 1fr; gap: 1.5rem; }
+  .zl-concierge__mark { width: 42px; height: 42px; }
+  .zl-concierge__action .zl-btn { width: 100%; }
+  .zl-concierge__note { max-width: none; }
+}
+/* the measuring ticks draw themselves in as the band arrives */
+.zl-js [data-reveal] .zl-concierge__tick {
+  stroke-dasharray: 22; stroke-dashoffset: 22;
+  transition: stroke-dashoffset 900ms var(--ease);
+  transition-delay: var(--tick-delay, 0ms);
+}
+.zl-js [data-reveal].is-in .zl-concierge__tick { stroke-dashoffset: 0; }
+
+/* ============================================================================
+   MOTION v3 — weight on touch
+   ----------------------------------------------------------------------------
+   Owner: mobile "feels dull and boring... doesn't feel heavy, doesn't feel
+   premium... like a chicken breast with no spices."
+
+   Diagnosis, not guesswork:
+     · lenis was disabled below 900px, so mobile had no weighted scroll at all.
+     · every effect was a one-shot reveal. Nothing responded to HOW you scroll,
+       only THAT you had scrolled. One-shot fades read flat however slow they are.
+
+   What premium sites actually do, and what is added here:
+     · pinned headings that hold while their content travels past
+     · media that scrubs — scale and position tied to scroll progress, not a
+       fire-once transition
+     · horizontal rails you can throw with a thumb
+     · reveals that travel further and longer on small screens, where there is
+       less on screen to carry the motion
+   ========================================================================= */
+
+/* ---- 1. Pinned heading -------------------------------------------------- */
+/* A section title holds at the top while its cards scroll past it. This is the
+   single biggest contributor to a page feeling heavy rather than scrolled. */
+.zl-pin { position: relative; }
+.zl-pin__hold {
+  position: sticky;
+  top: calc(var(--header-h) + clamp(1.5rem, 5vh, 3rem));
+  z-index: 1;
+}
+@media (max-width: 900px) {
+  .zl-pin__hold { top: calc(var(--header-h) + 1rem); }
+}
+/* the held title fades slightly as its section runs out, so it hands over */
+.zl-js .zl-pin__hold { transition: opacity 520ms var(--ease); }
+.zl-js .zl-pin[data-leaving="true"] .zl-pin__hold { opacity: .18; }
+
+/* ---- 2. Scroll-scrubbed media ------------------------------------------- */
+/* --scrub runs 0 -> 1 as the element crosses the viewport, written by zl.js.
+   Because it is a custom property the compositor does the work and nothing
+   reflows. */
+.zl-scrub { --scrub: 0; overflow: hidden; }
+.zl-scrub img {
+  transform: scale(calc(1.14 - (0.14 * var(--scrub))))
+             translate3d(0, calc((var(--scrub) - 0.5) * -3%), 0);
+  transform-origin: center 40%;
+  will-change: transform;
+}
+
+/* A slow tonal lift as the image settles — subtle, but it is what stops a
+   photograph feeling like a static block. */
+.zl-scrub::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: var(--ink);
+  opacity: calc(0.20 - (0.20 * var(--scrub)));
+}
+
+/* ---- 3. Horizontal rail -------------------------------------------------- */
+/* The protocol stepper, and any gallery that wants a thumb-throw. */
+.zl-rail {
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(210px, 250px);
+  gap: clamp(0.875rem, 2vw, 1.25rem);
+  overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  padding-block: 0.5rem 1.5rem;
+  padding-inline: var(--gutter);
+  margin-inline: calc(var(--gutter) * -1);
+  scrollbar-width: none;
+}
+.zl-rail::-webkit-scrollbar { display: none; }
+.zl-rail > * { scroll-snap-align: start; }
+@media (min-width: 1100px) {
+  .zl-rail { grid-auto-columns: minmax(0, 1fr); overflow-x: visible; margin-inline: 0; padding-inline: 0; }
+}
+
+/* the step card itself */
+.zl-step {
+  display: flex; flex-direction: column; gap: 0.75rem;
+  padding-top: 1.125rem; border-top: 1px solid var(--rule);
+  color: inherit;
+  transition: border-color 520ms var(--ease);
+}
+.zl-step:hover { border-top-color: var(--house); }
+.zl-step__n {
+  font-family: var(--font-display); font-weight: 300; font-size: 1.75rem;
+  line-height: 1; color: var(--house-mid);
+}
+.zl-step__name { font-family: var(--font-display); font-size: 1.125rem; line-height: 1.25; }
+.zl-step__role { font-size: 0.8125rem; color: var(--mist); line-height: 1.6; }
+.zl-step[aria-current="step"] { border-top-color: var(--house); border-top-width: 2px; }
+.zl-step[aria-current="step"] .zl-step__name { color: var(--house-mid); }
+.zl-step[aria-current="step"] .zl-step__n::after {
+  content: ""; display: inline-block; width: 22px; height: 2px;
+  background: var(--signal); margin-left: 0.5rem; vertical-align: middle;
+}
+/* thumb affordance — a hairline that shows there is more to the right */
+.zl-rail-hint {
+  display: flex; align-items: center; gap: 0.75rem;
+  font-size: var(--t-eyebrow); letter-spacing: .24em; text-transform: uppercase;
+  color: var(--mist-2); margin-top: 0.25rem;
+}
+.zl-rail-hint::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+@media (min-width: 1100px) { .zl-rail-hint { display: none; } }
+
+/* ---- 4. Reveals travel further on small screens -------------------------- */
+/* There is less on a phone screen to carry a movement, so the same 26px rise
+   that reads considered on a desktop reads like nothing at all. */
+@media (max-width: 900px) {
+  .zl-js [data-reveal]        { --reveal-y: 40px; transition-duration: 1250ms; }
+  .zl-js [data-reveal="far"]  { --reveal-y: 64px; }
+  .zl-js [data-stagger] > *   { transition-duration: 1050ms; }
+}
+
+/* ---- 5. Section seam ----------------------------------------------------- */
+/* A champagne hairline that draws itself as each major section arrives. Small,
+   but it punctuates the scroll instead of sections simply abutting. */
+.zl-seam { position: relative; height: 1px; background: var(--rule); overflow: hidden; }
+.zl-seam::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to right, var(--champagne), transparent 70%);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 1400ms var(--ease);
+}
+.zl-js .zl-seam.is-in::after { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .zl-scrub img { transform: none !important; }
+  .zl-scrub::after { opacity: 0 !important; }
+  .zl-js .zl-pin[data-leaving="true"] .zl-pin__hold { opacity: 1; }
+  .zl-seam::after { transform: scaleX(1) !important; transition: none !important; }
+}

@@ -579,23 +579,6 @@
       } catch (e) { dateEl.textContent = ''; }
     }
 
-    /* Show the reader their own photograph beside the assessment it produced.
-       state.photo is the resized data URL already held in memory — the same one
-       that was read — so this displays what was actually analysed and uploads
-       nothing further. The photo step is optional, so the figure stays hidden
-       when there isn't one. */
-    var shot = $('zl-a-rshot');
-    var shotImg = $('zl-a-rshot-img');
-    if (shot && shotImg) {
-      if (state.photo) {
-        shotImg.src = state.photo;
-        shot.hidden = false;
-      } else {
-        shotImg.removeAttribute('src');
-        shot.hidden = true;
-      }
-    }
-
     var order = 0;   // sequences the entrance animation
     var secNo = 0;   // numbers the written sections, 01, 02, 03 …
     function add(node) { node.style.setProperty('--i', String(order)); host.appendChild(node); order++; }

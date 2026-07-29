@@ -1,0 +1,69 @@
+# Netlify response headers — Zero Lines
+#
+# The site had none. Netlify's default is to revalidate every asset on every
+# navigation, so a visitor moving from the homepage to a product page paid a
+# round trip for zl.css, zl.js and every shared image, even though all of them
+# were already in cache and unchanged.
+#
+# Caching here is deliberately short-with-stale rather than immutable. Nothing on
+# this site is content-hashed — assets/zl.css keeps its name across edits, and
+# images are replaced under their existing filename on purpose so that swapping a
+# photograph updates every page that uses it at once. A year-long immutable cache
+# would turn that into a year-long stale image. stale-while-revalidate gives the
+# repeat visit its speed without that risk: the browser serves the cached copy
+# instantly and refreshes it in the background.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  # The analyser reads one photograph from the camera on the visitor's own
+  # device, so camera stays enabled for this origin. Nothing here needs a
+  # microphone, a location, or the payment or USB APIs.
+  Permissions-Policy: camera=(self), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
+
+# HTML always revalidates. Copy and prices change; a cached page is a wrong page.
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Stylesheet and behaviour: fresh for an hour, then served from cache while a
+# fresh copy is fetched in the background for the next visit.
+/assets/zl.css
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/assets/zl.js
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/assets/zl-analyser.css
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/assets/zl-analyser.js
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+# Photography: a day fresh, a week stale-while-revalidate. Replacing an image
+# under its own filename still reaches everyone within a day, and returning
+# visitors inside that day pay nothing for it.
+/assets/*.webp
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/assets/*.png
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+# Share cards are fetched by crawlers, not browsers, and change only when the
+# image they mirror changes.
+/assets/og/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=2592000
+
+# Machine-readable files that assistants and crawlers poll.
+/llms.txt
+  Cache-Control: public, max-age=3600
+  Content-Type: text/plain; charset=utf-8
+
+/sitemap.xml
+  Cache-Control: public, max-age=3600
+
+/robots.txt
+  Cache-Control: public, max-age=3600

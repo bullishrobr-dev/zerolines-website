@@ -1,4 +1,76 @@
-<!doctype html>
+/* Generate /analyser/index.html.
+ *
+ * The ten questions and their options are inlined from .claude/quiz-questions.json
+ * so the page is self-contained and the wording cannot drift from the original.
+ * Do not hand-edit analyser/index.html — edit this file and re-run:
+ *
+ *     node .claude/build-analyser.js
+ *
+ * The engine is /assets/zl-analyser.js and the styles are /assets/zl-analyser.css.
+ * The Cloudflare Worker contract is unchanged: POST { answers, photoBase64 }.
+ */
+const fs = require('fs');
+const path = require('path');
+const ROOT = path.resolve(__dirname, '..');
+
+const questions = JSON.parse(fs.readFileSync(path.join(ROOT, '.claude', 'quiz-questions.json'), 'utf8'));
+
+/* Short titles for the consultation rail. These label the step in the sidebar;
+ * the question text and every option are left exactly as authored. */
+const RAIL = {
+  age: 'Age', gender: 'You', skinType: 'Skin type', climate: 'Climate',
+  concerns: 'Concerns', sleep: 'Sleep', routine: 'Routine',
+  treatments: 'History', duration: 'Duration', lifestyle: 'Lifestyle',
+};
+
+questions.forEach((q) => {
+  // "Select up to 3" is stated in the question text; enforce it in data too.
+  if (q.id === 'concerns') q.max = 3;
+  q.short = RAIL[q.id] || q.id;
+});
+
+const NAV = [
+  ['/science', 'Science'], ['/protocol', 'Protocol'], ['/products', 'Formulations'],
+  ['/story', 'Story'], ['/analyser/', 'Analyser'], ['/blog/', 'Journal'], ['/contact', 'Contact'],
+];
+
+const headerNav = NAV.map(([h, t]) => `      <a class="zl-header__link" href="${h}">${t}</a>`).join('\n');
+const menuNav = NAV.map(([h, t], i) => `    <a class="zl-menu__link" href="${h}" style="--i:${i}">${t}</a>`).join('\n');
+
+/* 1x1 transparent GIF. Preview and scan images are never src-less <img>, which
+ * browsers report as broken before a photograph has been chosen. */
+const BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
+const GUIDE = [
+  {
+    icon: '<rect x="4" y="3" width="16" height="18"/><path d="M12 3v18M4 12h16"/>',
+    title: 'Daylight, not lamplight',
+    text: 'Stand facing a window in the middle of the day. Overhead bulbs carve shadow into every line and read as texture that is not there.',
+  },
+  {
+    icon: '<path d="M12 3c4.4 0 7 3.4 7 8s-2.9 10-7 10-7-5.4-7-10 2.6-8 7-8Z"/><path d="M9 20.4c1.8.8 4.2.8 6 0"/>',
+    title: 'A bare face',
+    text: 'No make-up, no filter, no smoothing. Foundation is designed to hide precisely what the assessment is trying to see.',
+  },
+  {
+    icon: '<rect x="3" y="6" width="18" height="13" rx="1"/><circle cx="12" cy="12.5" r="3.5"/><path d="M9 6l1.4-2h3.2L15 6"/>',
+    title: 'Camera at eye level',
+    text: 'Straight to the lens, whole face in frame, hair back. Held high or low, the jaw and brow both distort.',
+  },
+  {
+    icon: '<circle cx="12" cy="12" r="9"/><path d="M8.5 14.6h7"/><circle cx="9.2" cy="10" r=".7" fill="currentColor" stroke="none"/><circle cx="14.8" cy="10" r=".7" fill="currentColor" stroke="none"/>',
+    title: 'A resting face',
+    text: 'Relaxed, not smiling. Expression lines are the point of the exercise, and a smile hides half of them.',
+  },
+];
+
+const guideHtml = GUIDE.map((g, i) => `        <div class="zl-a-guide__item">
+          <svg class="zl-a-guide__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" aria-hidden="true">${g.icon}</svg>
+          <h3 class="zl-a-guide__t">${g.title}</h3>
+          <p class="zl-a-guide__d">${g.text}</p>
+        </div>`).join('\n');
+
+const html = `<!doctype html>
 <html lang="en-GB">
 <head>
 <meta charset="UTF-8">
@@ -22,7 +94,7 @@
 <meta name="twitter:image" content="https://zerolines.life/assets/og/hero-editorial-1.jpg">
 
 <link rel="icon" href="/assets/logo-mark.png">
-<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="/assets/logo-mark.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,109 +102,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/zl.css">
 <link rel="stylesheet" href="/assets/zl-analyser.css">
-
-<!-- The analyser was the only indexable page on the site carrying no structured
-     data, which mattered more here than anywhere else: it is the one thing the
-     brand offers that nobody else does, and without a machine-readable
-     description an assistant asked "is there a free skin analyser?" has nothing
-     to go on. Deliberately typed WebApplication rather than anything medical —
-     this reads appearance markers and returns a written assessment; it does not
-     diagnose. -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "@id": "https://zerolines.life/#organization",
-  "name": "Zero Lines",
-  "url": "https://zerolines.life/",
-  "logo": {
-    "@type": "ImageObject",
-    "url": "https://zerolines.life/assets/logo.png"
-  },
-  "description": "A clinical-luxury Skin Longevity House. Bioactive formulations powered by hydrolysed collagen, botanical extracts and Pyrenean mineral water.",
-  "sameAs": [
-    "https://instagram.com/zerolines.life"
-  ],
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "contactType": "customer service",
-    "email": "info@zerolines.life",
-    "telephone": "+350-54005198",
-    "areaServed": [
-      "GB",
-      "GI",
-      "ES",
-      "AD"
-    ],
-    "availableLanguage": [
-      "English",
-      "Spanish"
-    ]
-  }
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "@id": "https://zerolines.life/analyser/#app",
-  "name": "Zero Lines Skin Analyser",
-  "url": "https://zerolines.life/analyser/",
-  "applicationCategory": "LifestyleApplication",
-  "operatingSystem": "Any modern web browser",
-  "browserRequirements": "Requires JavaScript",
-  "inLanguage": "en-GB",
-  "isAccessibleForFree": true,
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
-  "description": "A free written skin assessment. Ten questions and one optional photograph are read across eight appearance markers — texture, tone, hydration, pores, pigmentation, lines, elasticity and sun exposure — and returned as a written assessment with the Zero Lines protocol that follows from it.",
-  "featureList": [
-    "Ten questions about your skin and how you live",
-    "Optional photograph read for visible appearance markers",
-    "A written assessment across eight markers",
-    "A suggested order of use across the six formulations"
-  ],
-  "publisher": { "@id": "https://zerolines.life/#organization" }
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "HowTo",
-  "name": "How to use the Zero Lines Skin Analyser",
-  "description": "Three steps to a written assessment of your skin.",
-  "totalTime": "PT4M",
-  "step": [
-    {
-      "@type": "HowToStep",
-      "position": 1,
-      "name": "You describe it",
-      "text": "Answer ten questions about how your skin behaves, what bothers you most, and how you live — sleep, sun, and routine."
-    },
-    {
-      "@type": "HowToStep",
-      "position": 2,
-      "name": "The skin shows it",
-      "text": "Add one clear photograph if you want to: daylight rather than lamplight, a bare face, the camera at eye level, and a resting expression."
-    },
-    {
-      "@type": "HowToStep",
-      "position": 3,
-      "name": "We write it out",
-      "text": "You receive a written assessment across eight appearance markers, and the order of use that follows from it."
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Zero Lines", "item": "https://zerolines.life/" },
-    { "@type": "ListItem", "position": 2, "name": "Skin Analyser", "item": "https://zerolines.life/analyser/" }
-  ]
-}
-</script>
 </head>
 
 <body>
@@ -143,13 +112,7 @@
   <div class="zl-header__inner">
     <a class="zl-logo" href="/">Zero Lines</a>
     <nav class="zl-header__nav" aria-label="Primary">
-      <a class="zl-header__link" href="/science">Science</a>
-      <a class="zl-header__link" href="/protocol">Protocol</a>
-      <a class="zl-header__link" href="/products">Formulations</a>
-      <a class="zl-header__link" href="/story">Story</a>
-      <a class="zl-header__link" href="/analyser/">Analyser</a>
-      <a class="zl-header__link" href="/blog/">Journal</a>
-      <a class="zl-header__link" href="/contact">Contact</a>
+${headerNav}
     </nav>
     <button class="zl-burger" aria-label="Open menu" aria-expanded="false" aria-controls="zl-menu"><span></span></button>
   </div>
@@ -157,13 +120,7 @@
 
 <div class="zl-menu" id="zl-menu" data-open="false">
   <nav class="zl-menu__list" aria-label="Mobile">
-    <a class="zl-menu__link" href="/science" style="--i:0">Science</a>
-    <a class="zl-menu__link" href="/protocol" style="--i:1">Protocol</a>
-    <a class="zl-menu__link" href="/products" style="--i:2">Formulations</a>
-    <a class="zl-menu__link" href="/story" style="--i:3">Story</a>
-    <a class="zl-menu__link" href="/analyser/" style="--i:4">Analyser</a>
-    <a class="zl-menu__link" href="/blog/" style="--i:5">Journal</a>
-    <a class="zl-menu__link" href="/contact" style="--i:6">Contact</a>
+${menuNav}
   </nav>
   <div class="zl-menu__meta">
     <a class="zl-link" href="https://wa.me/35054005198">WhatsApp</a>
@@ -197,7 +154,7 @@
 
           <div data-reveal style="--reveal-delay:680ms;margin-top:2.25rem;display:flex;gap:1.25rem;flex-wrap:wrap;align-items:center">
             <button class="zl-btn zl-btn--brand" type="button" id="zl-a-start">Begin the analysis</button>
-            <span class="zl-a-meta">About two minutes<br>No account, nothing to pay</span>
+            <span class="zl-a-meta">About two minutes<br>No account, no email address</span>
           </div>
         </div>
 
@@ -261,7 +218,7 @@
           <ul class="zl-a-pledge">
             <li>It is sent over an encrypted connection to the service that reads it.</li>
             <li>It is read once, for this assessment, and is not stored afterwards.</li>
-            <li>It is not attached to a name. The analyser asks for no account and no payment. You are offered your email address at the end, only if you want the assessment sent to you.</li>
+            <li>It is not attached to a name. The analyser asks for no account, no email address and no payment.</li>
             <li>It is never published, never shared with anyone else, and never used for advertising.</li>
           </ul>
 
@@ -294,7 +251,7 @@
 
         <div class="zl-a-main">
           <div class="zl-a-meter" id="zl-a-meter">
-            <span class="zl-a-meter__count" id="zl-a-count" role="status" aria-live="polite">Question 1 of 10</span>
+            <span class="zl-a-meter__count" id="zl-a-count" role="status" aria-live="polite">Question 1 of ${questions.length}</span>
             <span class="zl-a-meter__name" id="zl-a-stepname"></span>
           </div>
 
@@ -327,26 +284,7 @@
         </p>
 
         <div class="zl-a-guide">
-        <div class="zl-a-guide__item">
-          <svg class="zl-a-guide__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" aria-hidden="true"><rect x="4" y="3" width="16" height="18"/><path d="M12 3v18M4 12h16"/></svg>
-          <h3 class="zl-a-guide__t">Daylight, not lamplight</h3>
-          <p class="zl-a-guide__d">Stand facing a window in the middle of the day. Overhead bulbs carve shadow into every line and read as texture that is not there.</p>
-        </div>
-        <div class="zl-a-guide__item">
-          <svg class="zl-a-guide__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" aria-hidden="true"><path d="M12 3c4.4 0 7 3.4 7 8s-2.9 10-7 10-7-5.4-7-10 2.6-8 7-8Z"/><path d="M9 20.4c1.8.8 4.2.8 6 0"/></svg>
-          <h3 class="zl-a-guide__t">A bare face</h3>
-          <p class="zl-a-guide__d">No make-up, no filter, no smoothing. Foundation is designed to hide precisely what the assessment is trying to see.</p>
-        </div>
-        <div class="zl-a-guide__item">
-          <svg class="zl-a-guide__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="1"/><circle cx="12" cy="12.5" r="3.5"/><path d="M9 6l1.4-2h3.2L15 6"/></svg>
-          <h3 class="zl-a-guide__t">Camera at eye level</h3>
-          <p class="zl-a-guide__d">Straight to the lens, whole face in frame, hair back. Held high or low, the jaw and brow both distort.</p>
-        </div>
-        <div class="zl-a-guide__item">
-          <svg class="zl-a-guide__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.6h7"/><circle cx="9.2" cy="10" r=".7" fill="currentColor" stroke="none"/><circle cx="14.8" cy="10" r=".7" fill="currentColor" stroke="none"/></svg>
-          <h3 class="zl-a-guide__t">A resting face</h3>
-          <p class="zl-a-guide__d">Relaxed, not smiling. Expression lines are the point of the exercise, and a smile hides half of them.</p>
-        </div>
+${guideHtml}
         </div>
 
         <p class="zl-a-avoid">
@@ -368,7 +306,7 @@
 
         <div class="zl-a-preview" id="zl-a-preview" hidden>
           <div class="zl-a-frame">
-            <img id="zl-a-preview-img" alt="The photograph you have chosen" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+            <img id="zl-a-preview-img" alt="The photograph you have chosen" src="${BLANK}">
           </div>
           <div>
             <p class="zl-a-preview__t">Is this the photograph?</p>
@@ -401,7 +339,7 @@
     <div class="zl-container">
       <div class="zl-a-work">
         <div class="zl-a-scan">
-          <img id="zl-a-scan-img" alt="" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+          <img id="zl-a-scan-img" alt="" src="${BLANK}">
           <span class="zl-a-scan__grid" aria-hidden="true"></span>
           <span class="zl-a-scan__sweep" aria-hidden="true"></span>
           <span class="zl-a-scan__frame" aria-hidden="true"></span>
@@ -432,23 +370,11 @@
     <div class="zl-container">
       <article class="zl-a-report">
         <header class="zl-a-rhead">
-          <div class="zl-a-rhead__row">
-            <div class="zl-a-rhead__text">
-              <span class="zl-eyebrow">Skin Longevity Assessment</span>
-              <h2 class="zl-display-l" id="zl-a-results-h" tabindex="-1" style="margin-top:1.25rem;max-width:14ch">
-                Your written <em class="zl-em--brand">assessment</em>.
-              </h2>
-              <p class="zl-a-rmeta"><span id="zl-a-date"></span> · Prepared by the Zero Lines analyser</p>
-            </div>
-            <!-- The photograph the reader just supplied, shown back to them beside
-                 their own assessment. It is the same in-browser resized copy the
-                 analyser read; nothing extra is uploaded or stored to display it,
-                 and the block stays hidden when someone chose not to add one. -->
-            <figure class="zl-a-rshot" id="zl-a-rshot" hidden>
-              <img id="zl-a-rshot-img" alt="The photograph you supplied for this assessment">
-              <figcaption>The photograph read for this assessment</figcaption>
-            </figure>
-          </div>
+          <span class="zl-eyebrow">Skin Longevity Assessment</span>
+          <h2 class="zl-display-l" id="zl-a-results-h" tabindex="-1" style="margin-top:1.25rem;max-width:14ch">
+            Your written <em class="zl-em--brand">assessment</em>.
+          </h2>
+          <p class="zl-a-rmeta"><span id="zl-a-date"></span> · Prepared by the Zero Lines analyser</p>
         </header>
 
         <div class="zl-a-report__body" id="zl-a-report"></div>
@@ -467,49 +393,15 @@
           </p>
         </div>
 
-        <!-- This is the highest-intent moment on the site: someone has just
-             answered ten questions and, often, photographed their own face. It
-             used to end with three buttons pointing away and a small text link
-             to /#waitlist — a full navigation that discarded the report, because
-             nothing here persists it. So the best lead-capture asset the brand
-             owns captured nothing. The ask now comes first, and it asks for the
-             one thing the visitor actually wants at this moment: a copy. -->
         <div class="zl-a-close">
-          <div class="zl-a-keep">
-            <form class="zl-a-keep__form" name="waitlist" method="POST" action="/thank-you/"
-                  data-netlify="true" netlify-honeypot="bot-field">
-              <input type="hidden" name="form-name" value="waitlist">
-              <input type="hidden" name="source" value="analyser">
-              <p class="zl-hp" aria-hidden="true"><label>Do not fill this in: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
-
-              <h3 class="zl-a-keep__t">Keep this assessment.</h3>
-              <p class="zl-a-keep__d">
-                We will send it to you, and tell you once when the protocol is
-                available. Nothing else.
-              </p>
-
-              <label class="zl-sr" for="zl-a-email">Email address</label>
-              <div class="zl-a-keep__row">
-                <input class="zl-input" type="email" id="zl-a-email" name="email"
-                       placeholder="your@email.com" required autocomplete="email">
-                <button class="zl-btn zl-btn--brand" type="submit">Send it to me</button>
-              </div>
-              <span class="zl-form__status" role="status" aria-live="polite"></span>
-
-              <p class="zl-form__note zl-a-keep__note">
-                Your photograph is not attached and is not stored. Unsubscribe at
-                any time — see our <a href="/privacy.html">privacy policy</a>.
-              </p>
-            </form>
-          </div>
-
           <div class="zl-a-close__actions">
-            <a class="zl-btn zl-btn--ghost" href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%20have%20just%20completed%20the%20skin%20analysis%20and%20would%20like%20to%20talk%20it%20through.">Talk it through with a specialist</a>
+            <a class="zl-btn zl-btn--brand" href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%20have%20just%20completed%20the%20skin%20analysis%20and%20would%20like%20to%20talk%20it%20through.">Talk it through with a specialist</a>
             <a class="zl-btn zl-btn--ghost" href="/protocol">See the full protocol</a>
           </div>
           <div class="zl-a-close__row">
             <button class="zl-link" type="button" id="zl-a-print">Print or save as PDF <span class="zl-link__arrow" aria-hidden="true">→</span></button>
             <button class="zl-link" type="button" id="zl-a-restart">Start a new analysis <span class="zl-link__arrow" aria-hidden="true">→</span></button>
+            <a class="zl-link" href="/#waitlist">Register for early access <span class="zl-link__arrow" aria-hidden="true">→</span></a>
           </div>
         </div>
       </article>
@@ -614,7 +506,7 @@
   </div>
 </div>
 
-<script type="application/json" id="zl-quiz-data">[{"id":"age","question":"Which decade are you in?","multi":false,"options":[{"value":"under25","label":"Under 25"},{"value":"25-34","label":"25 to 34"},{"value":"35-44","label":"35 to 44"},{"value":"45-54","label":"45 to 54"},{"value":"55+","label":"55 or older"}],"short":"Age"},{"id":"skinType","question":"How does your skin usually behave?","multi":false,"options":[{"value":"dry","label":"Dry — tight, sometimes flaky, drinks up moisture"},{"value":"oily","label":"Oily — shine returns by midday, pores show"},{"value":"combination","label":"Combination — oily through the T-zone, drier on the cheeks"},{"value":"sensitive","label":"Sensitive — flushes easily, stings with new products"},{"value":"normal","label":"Balanced — rarely gives me trouble"}],"short":"Skin type"},{"id":"concerns","question":"What would you change if you could?","multi":true,"max":3,"options":[{"value":"lines","label":"Fine lines and wrinkles"},{"value":"firmness","label":"Loss of firmness"},{"value":"dullness","label":"Dullness and uneven tone"},{"value":"dryness","label":"Dryness and dehydration"},{"value":"redness","label":"Redness and sensitivity"},{"value":"pigmentation","label":"Dark spots and pigmentation"},{"value":"pores","label":"Enlarged or congested pores"},{"value":"eyes","label":"Under-eye circles and puffiness"}],"short":"Concerns"},{"id":"priority","question":"And if you could only fix one of those?","multi":false,"options":[{"value":"lines","label":"Fine lines and wrinkles"},{"value":"firmness","label":"Loss of firmness"},{"value":"dullness","label":"Dullness and uneven tone"},{"value":"dryness","label":"Dryness and dehydration"},{"value":"redness","label":"Redness and sensitivity"},{"value":"pigmentation","label":"Dark spots and pigmentation"},{"value":"pores","label":"Enlarged or congested pores"},{"value":"eyes","label":"Under-eye circles and puffiness"}],"short":"priority"},{"id":"sun","question":"How much sun does your face see?","multi":false,"options":[{"value":"daily-spf","label":"Plenty — but I wear SPF every day"},{"value":"daily-no-spf","label":"Plenty, and I rarely wear SPF"},{"value":"moderate","label":"Some — mostly getting from A to B"},{"value":"little","label":"Very little, I am indoors most days"},{"value":"history","label":"A great deal in the past, less now"}],"short":"sun"},{"id":"climate","question":"What is the weather like where you live?","multi":false,"options":[{"value":"humid","label":"Warm and humid"},{"value":"dry","label":"Dry — low humidity most of the year"},{"value":"temperate","label":"Temperate, four distinct seasons"},{"value":"urban","label":"City air, noticeable pollution"},{"value":"coastal","label":"Coastal — salt air and wind"}],"short":"Climate"},{"id":"routine","question":"What does your routine look like at the moment?","multi":false,"options":[{"value":"none","label":"Barely anything — soap and water"},{"value":"minimal","label":"Cleanser and a moisturiser"},{"value":"moderate","label":"A few steps, including a serum"},{"value":"advanced","label":"A full routine, and I read the labels"}],"short":"Routine"},{"id":"treatments","question":"Anything you have tried before?","multi":true,"optional":true,"options":[{"value":"retinol","label":"Retinol or retinoids"},{"value":"acids","label":"AHAs or BHAs"},{"value":"vitaminc","label":"Vitamin C"},{"value":"peptides","label":"Peptides or collagen creams"},{"value":"laser","label":"Laser or IPL"},{"value":"facials","label":"Professional facials"},{"value":"injectables","label":"Injectables"},{"value":"none","label":"None of these"}],"short":"History"},{"id":"sleep","question":"How well do you sleep?","multi":false,"options":[{"value":"excellent","label":"Well — seven to nine hours, most nights"},{"value":"good","label":"Reasonably — six or seven hours"},{"value":"poor","label":"Badly — usually under six"},{"value":"very-poor","label":"Very badly — broken or very little"}],"short":"Sleep"},{"id":"lifestyle","question":"Anything else we should know?","multi":true,"optional":true,"options":[{"value":"stress","label":"I am under a lot of stress"},{"value":"smoke","label":"I smoke"},{"value":"alcohol","label":"I drink regularly"},{"value":"water","label":"I drink less than a litre of water a day"},{"value":"travel","label":"I fly often"},{"value":"hormonal","label":"Recent hormonal changes"},{"value":"none","label":"None of these"}],"short":"Lifestyle"}]</script>
+<script type="application/json" id="zl-quiz-data">${JSON.stringify(questions)}</script>
 <script src="/assets/lenis.min.js" defer></script>
 <script src="/assets/zl.js" defer></script>
 <script src="/assets/zl-analyser.js" defer></script>
@@ -627,3 +519,8 @@
 </script>
 </body>
 </html>
+`;
+
+fs.mkdirSync(path.join(ROOT, 'analyser'), { recursive: true });
+fs.writeFileSync(path.join(ROOT, 'analyser', 'index.html'), html);
+console.log(`wrote analyser/index.html with ${questions.length} questions inlined`);

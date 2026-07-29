@@ -1,5 +1,4 @@
 plugins = []
-headers = []
 
 [functions]
 
@@ -22,6 +21,88 @@ publishOrigin = "default"
 [build.processing.js]
 
 [build.services]
+
+[[headers]]
+for = "/*"
+
+[headers.values]
+X-Content-Type-Options = "nosniff"
+Referrer-Policy = "strict-origin-when-cross-origin"
+X-Frame-Options = "SAMEORIGIN"
+Permissions-Policy = "camera=(self), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+
+[[headers]]
+for = "/*.html"
+
+[headers.values]
+Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+for = "/"
+
+[headers.values]
+Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+for = "/assets/zl.css"
+
+[headers.values]
+Cache-Control = "public, max-age=3600, stale-while-revalidate=86400"
+
+[[headers]]
+for = "/assets/zl.js"
+
+[headers.values]
+Cache-Control = "public, max-age=3600, stale-while-revalidate=86400"
+
+[[headers]]
+for = "/assets/zl-analyser.css"
+
+[headers.values]
+Cache-Control = "public, max-age=3600, stale-while-revalidate=86400"
+
+[[headers]]
+for = "/assets/zl-analyser.js"
+
+[headers.values]
+Cache-Control = "public, max-age=3600, stale-while-revalidate=86400"
+
+[[headers]]
+for = "/assets/*.webp"
+
+[headers.values]
+Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
+[[headers]]
+for = "/assets/*.png"
+
+[headers.values]
+Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
+[[headers]]
+for = "/assets/og/*"
+
+[headers.values]
+Cache-Control = "public, max-age=604800, stale-while-revalidate=2592000"
+
+[[headers]]
+for = "/llms.txt"
+
+[headers.values]
+Cache-Control = "public, max-age=3600"
+Content-Type = "text/plain; charset=utf-8"
+
+[[headers]]
+for = "/sitemap.xml"
+
+[headers.values]
+Cache-Control = "public, max-age=3600"
+
+[[headers]]
+for = "/robots.txt"
+
+[headers.values]
+Cache-Control = "public, max-age=3600"
 
 [[redirects]]
 from = "/journal"

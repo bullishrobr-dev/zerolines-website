@@ -284,30 +284,6 @@
 
 .zl-a-report { max-width: 1040px; }
 .zl-a-rhead { padding-bottom: clamp(2rem, 5vh, 3rem); }
-
-/* The reader's own photograph, set beside their assessment. Portrait crop, a
-   champagne hairline above it so it reads as part of the report rather than a
-   thumbnail bolted on, and it simply is not there when no photo was given. */
-.zl-a-rhead__row {
-  display: flex; align-items: flex-start; justify-content: space-between;
-  gap: clamp(1.5rem, 4vw, 3.5rem);
-}
-.zl-a-rhead__text { min-width: 0; }
-.zl-a-rshot { flex: 0 0 auto; width: clamp(120px, 15vw, 184px); margin: 0; }
-.zl-a-rshot img {
-  width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block;
-  border-top: 2px solid var(--champagne);
-  background: var(--bone-2);
-}
-.zl-a-rshot figcaption {
-  margin-top: .75rem;
-  font-size: .6875rem; letter-spacing: .16em; text-transform: uppercase;
-  line-height: 1.5; color: var(--mist);
-}
-@media (max-width: 620px) {
-  .zl-a-rhead__row { flex-direction: column-reverse; align-items: stretch; }
-  .zl-a-rshot { width: 132px; }
-}
 .zl-a-rmeta {
   margin-top: 1.25rem; font-size: .6875rem; letter-spacing: .18em;
   text-transform: uppercase; color: var(--mist-2);
@@ -432,11 +408,4 @@
   body { background: #fff; }
   .zl-a-report__body > * { animation: none; }
   .zl-a-sec { break-inside: avoid; }
-  /* Keep the photograph in the printed and saved-as-PDF copy — it is the
-     reader's own record, and the assessment reads better against the face it
-     was written about. Browsers drop background images when printing, but this
-     is an <img>, so it survives. */
-  .zl-a-rhead__row { break-inside: avoid; }
-  .zl-a-rshot { width: 140px; }
-  .zl-a-rshot img { border-top: 2px solid #C2A878; }
 }
