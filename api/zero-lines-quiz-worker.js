@@ -4,9 +4,29 @@
  * Receives the questionnaire plus one facial photograph, returns a structured
  * written assessment.
  *
- * DEPLOY: dash.cloudflare.com -> Workers & Pages -> your worker -> replace all
- * code with this file -> Deploy. Secret required: OPENROUTER_KEY.
- * Optional vars: ZL_MODEL (defaults below), ZL_MAX_TOKENS.
+ * DEPLOY: dash.cloudflare.com -> Workers & Pages -> lively-surf-87db -> Edit
+ * code -> replace all -> Deploy.
+ *   Secrets required: OPENROUTER_KEY, RESEND_KEY
+ *   Optional vars:    ZL_MODEL, ZL_MAX_TOKENS, ZL_FROM, ZL_SIGNING_KEY
+ *
+ * ---------------------------------------------------------------------------
+ * SENDING THE ASSESSMENT BY EMAIL, WITHOUT BUILDING AN OPEN RELAY
+ *
+ * The obvious implementation — accept {email, report} from the browser and send
+ * it — is a spam cannon. Anyone could post arbitrary HTML to any address and it
+ * would leave hello@zerolines.life with correct SPF and DKIM. That is worse
+ * than not having the feature.
+ *
+ * So the Worker signs every report it produces (HMAC-SHA256 over the exact JSON
+ * it returned, plus a timestamp) and will only send a report that still carries
+ * a valid signature. The client cannot forge one and cannot alter a word of a
+ * report it was given. Signatures expire after fifteen minutes, which is longer
+ * than anyone spends reading their result and short enough to be useless later.
+ *
+ * This is stateless on purpose: no KV, no database, no binding to configure,
+ * and nothing about the reader is retained after the response is sent. The
+ * photograph in particular is never stored and never attached to the email —
+ * the page promises exactly that, and the promise stays true.
  *
  * ---------------------------------------------------------------------------
  * WHY THIS WAS REWRITTEN
@@ -121,6 +141,146 @@ function json(body, status, headers) {
   return new Response(JSON.stringify(body), { status, headers });
 }
 
+/* ---------------------------------------------------------------------------
+   Report signing.
+
+   The signature covers the exact JSON string the Worker returned, so any edit
+   to any field invalidates it. ZL_SIGNING_KEY is preferred; if it is not set,
+   the key is derived from OPENROUTER_KEY so the feature works with one fewer
+   secret to configure. Deriving is not as good as a dedicated key — rotating
+   OpenRouter would silently invalidate in-flight reports — but it is far better
+   than a hardcoded fallback, and it keeps the setup to a single paste.
+   --------------------------------------------------------------------------- */
+const SIG_TTL_MS = 15 * 60 * 1000;
+let signingKeyPromise = null;
+
+function getSigningKey(env) {
+  if (!signingKeyPromise) {
+    const raw = env.ZL_SIGNING_KEY || ('derived:' + (env.OPENROUTER_KEY || ''));
+    signingKeyPromise = crypto.subtle.digest('SHA-256', new TextEncoder().encode(raw))
+      .then((bits) => crypto.subtle.importKey('raw', bits, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign', 'verify']));
+  }
+  return signingKeyPromise;
+}
+
+async function signReport(env, reportJson, issuedAt) {
+  const key = await getSigningKey(env);
+  const mac = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(issuedAt + '.' + reportJson));
+  return [...new Uint8Array(mac)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function verifyReport(env, reportJson, issuedAt, signature) {
+  if (!signature || !issuedAt) return false;
+  if (!Number.isFinite(issuedAt) || Math.abs(Date.now() - issuedAt) > SIG_TTL_MS) return false;
+  const expected = await signReport(env, reportJson, issuedAt);
+  // constant-time-ish compare; lengths are fixed so this is adequate here
+  if (expected.length !== signature.length) return false;
+  let diff = 0;
+  for (let i = 0; i < expected.length; i++) diff |= expected.charCodeAt(i) ^ signature.charCodeAt(i);
+  return diff === 0;
+}
+
+/* ---------------------------------------------------------------------------
+   The email.
+
+   Plain HTML with inline styles and a table spine, because that is what mail
+   clients render reliably — no webfonts, no external CSS, no images. Georgia
+   stands in for Cormorant; every client has it.
+   --------------------------------------------------------------------------- */
+const esc = (s) => String(s == null ? '' : s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
+const MARKERS = [
+  ['texture', 'Texture'], ['tone', 'Tone'], ['hydration', 'Hydration'],
+  ['poreQuality', 'Pores'], ['pigmentation', 'Pigmentation'],
+  ['wrinkles', 'Lines'], ['elasticity', 'Elasticity'], ['sunDamage', 'Sun exposure'],
+];
+
+function buildEmail(report) {
+  const BONE = '#FAF7F2', INK = '#14181A', INK3 = '#3C4142';
+  const HOUSE = '#1F4F4A', MID = '#17706D', CHAMP = '#C2A878';
+  const p = (t, extra) => `<p style="margin:0 0 14px;font:400 15px/1.75 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:${INK3};${extra || ''}">${t}</p>`;
+
+  let body = '';
+  body += `<h1 style="margin:0 0 6px;font:300 30px/1.2 Georgia,'Times New Roman',serif;color:${INK};letter-spacing:-.4px">Your written assessment</h1>`;
+  body += `<p style="margin:0 0 26px;font:500 11px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">Prepared by the Zero Lines analyser</p>`;
+
+  if (report.scoreLabel || typeof report.overallScore === 'number') {
+    const outOf = report.overallScore > 10 ? 100 : 10;
+    body += `<table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-top:2px solid ${CHAMP};margin:0 0 26px"><tr>`
+      + `<td style="padding:16px 0 0"><span style="font:300 40px/1 Georgia,serif;color:${MID}">${esc(report.overallScore)}</span>`
+      + `<span style="font:400 14px/1 -apple-system,sans-serif;color:${INK3}"> / ${outOf}</span>`
+      + (report.scoreLabel ? `<div style="margin-top:6px;font:400 15px/1.6 Georgia,serif;color:${INK}">${esc(report.scoreLabel)}</div>` : '')
+      + `</td></tr></table>`;
+  }
+
+  if (report.summary) body += p(esc(report.summary), `font-size:16px;color:${INK};`);
+
+  const pa = report.photoAnalysis || {};
+  const present = MARKERS.filter(([k]) => pa[k]);
+  if (present.length) {
+    body += `<h2 style="margin:30px 0 14px;font:300 21px/1.3 Georgia,serif;color:${INK}">What the photograph showed</h2>`;
+    for (const [k, label] of present) {
+      body += `<div style="border-top:1px solid #E2DCD2;padding:14px 0 2px">`
+        + `<div style="font:500 11px/1.6 -apple-system,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">${esc(label)}</div>`
+        + p(esc(pa[k]), 'margin-top:6px;')
+        + `</div>`;
+    }
+  }
+
+  const recs = Array.isArray(report.productRecommendations) ? report.productRecommendations : [];
+  if (recs.length) {
+    body += `<h2 style="margin:30px 0 14px;font:300 21px/1.3 Georgia,serif;color:${INK}">What we would suggest</h2>`;
+    for (const r of recs) {
+      body += `<div style="border-top:1px solid #E2DCD2;padding:16px 0 4px">`
+        + `<div style="font:400 17px/1.4 Georgia,serif;color:${INK}">${esc(r.product)}</div>`
+        + (r.why ? p(esc(r.why), 'margin-top:8px;') : '')
+        + (r.immediately ? p(`<strong style="color:${HOUSE}">Immediately</strong> — ${esc(r.immediately)}`, 'margin-top:2px;font-size:14px;') : '')
+        + (r.overTime ? p(`<strong style="color:${HOUSE}">Over time</strong> — ${esc(r.overTime)}`, 'margin-top:2px;font-size:14px;') : '')
+        + `</div>`;
+    }
+  }
+
+  const life = Array.isArray(report.lifestyleRecommendations) ? report.lifestyleRecommendations : [];
+  if (life.length) {
+    body += `<h2 style="margin:30px 0 12px;font:300 21px/1.3 Georgia,serif;color:${INK}">Alongside the protocol</h2><ul style="margin:0 0 14px;padding-left:20px">`;
+    for (const l of life) body += `<li style="font:400 15px/1.75 -apple-system,sans-serif;color:${INK3};margin-bottom:8px">${esc(l)}</li>`;
+    body += `</ul>`;
+  }
+
+  if (report.expectedResults) {
+    body += `<h2 style="margin:30px 0 12px;font:300 21px/1.3 Georgia,serif;color:${INK}">What to expect</h2>` + p(esc(report.expectedResults));
+  }
+
+  if (report.needsProfessionalReview) {
+    body += `<div style="background:#E8EFEC;border-left:2px solid ${MID};padding:16px 18px;margin:24px 0">`
+      + p('One thing in your photograph is worth showing to a dermatologist. That is not a diagnosis and not a cause for alarm — it is simply outside what a skincare assessment should judge.', 'margin:0;')
+      + `</div>`;
+  }
+
+  body += `<div style="border-top:1px solid #E2DCD2;margin-top:32px;padding-top:20px">`
+    + p('This is a cosmetic assessment of appearance. It is not a medical diagnosis and does not replace advice from a healthcare professional. The Zero Lines collection is in pre-launch and not yet available to purchase.', 'font-size:12px;color:#636764;')
+    + p('Your photograph was read once and was not stored. It is not attached to this email.', 'font-size:12px;color:#636764;')
+    + `</div>`;
+
+  const html = `<!doctype html><html><body style="margin:0;padding:0;background:${BONE}">`
+    + `<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:${BONE}"><tr><td align="center" style="padding:32px 16px">`
+    + `<table role="presentation" cellpadding="0" cellspacing="0" width="600" style="max-width:600px;background:#fff;padding:36px 34px">`
+    + `<tr><td><div style="font:500 15px/1 -apple-system,sans-serif;letter-spacing:5px;text-transform:uppercase;color:${INK};padding-bottom:28px">Zero Lines</div>${body}</td></tr>`
+    + `</table>`
+    + `<div style="font:400 12px/1.7 -apple-system,sans-serif;color:#636764;padding-top:18px;max-width:600px">Zero Lines · Gibraltar &amp; Barcelona · <a href="https://zerolines.life" style="color:${MID}">zerolines.life</a></div>`
+    + `</td></tr></table></body></html>`;
+
+  const lines = ['YOUR WRITTEN ASSESSMENT', '', report.summary || ''];
+  for (const [k, label] of present) lines.push('', label.toUpperCase(), pa[k]);
+  if (recs.length) { lines.push('', 'WHAT WE WOULD SUGGEST'); for (const r of recs) lines.push('', r.product, r.why || ''); }
+  lines.push('', 'This is a cosmetic assessment of appearance, not a medical diagnosis.',
+    'Your photograph was read once and was not stored.', '', 'zerolines.life');
+
+  return { html, text: lines.filter((l) => l !== undefined).join('\n') };
+}
+
 export default {
   async fetch(request, env) {
     const cors = {
@@ -143,12 +303,61 @@ export default {
       return json({ error: 'That photograph is too large. Please use one under about 8MB.' }, 413, cors);
     }
 
-    let answers, photoBase64;
+    let payload;
     try {
-      ({ answers, photoBase64 } = await request.json());
+      payload = await request.json();
     } catch (e) {
       return json({ error: 'Could not read the request.' }, 400, cors);
     }
+
+    /* ---- send an assessment the Worker itself produced --------------------
+       Only reached with a valid, unexpired signature over the exact report
+       JSON that was returned earlier, so this cannot be used to mail arbitrary
+       content to arbitrary addresses. */
+    if (payload && payload.mode === 'email') {
+      const email = String(payload.email || '').trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) || email.length > 254) {
+        return json({ error: 'That email address does not look right.' }, 400, cors);
+      }
+      if (!env.RESEND_KEY) return json({ error: 'Email is not configured yet.' }, 503, cors);
+
+      const reportJson = typeof payload.report === 'string' ? payload.report : null;
+      const ok = reportJson && await verifyReport(env, reportJson, Number(payload.issuedAt), String(payload.signature || ''));
+      if (!ok) {
+        return json({ error: 'That assessment could not be verified. Please run the analysis again.' }, 403, cors);
+      }
+
+      let report;
+      try { report = JSON.parse(reportJson); } catch (e) {
+        return json({ error: 'That assessment could not be read.' }, 400, cors);
+      }
+
+      const { html, text } = buildEmail(report);
+      let sent;
+      try {
+        sent = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${env.RESEND_KEY}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            from: env.ZL_FROM || 'Zero Lines <hello@zerolines.life>',
+            to: [email],
+            reply_to: 'info@zerolines.life',
+            subject: 'Your Zero Lines skin assessment',
+            html,
+            text,
+          }),
+        });
+      } catch (e) {
+        return json({ error: 'Could not reach the mail service.' }, 502, cors);
+      }
+      if (!sent.ok) {
+        const detail = await sent.text();
+        return json({ error: 'The mail service refused the message.', status: sent.status, details: detail.slice(0, 300) }, 502, cors);
+      }
+      return json({ ok: true }, 200, cors);
+    }
+
+    const { answers, photoBase64 } = payload || {};
 
     if (!answers || !photoBase64) return json({ error: 'Missing answers or photograph.' }, 400, cors);
     if (typeof photoBase64 !== 'string' || !photoBase64.startsWith('data:image/')) {
@@ -255,7 +464,22 @@ The attached photograph is your primary evidence. Read it zone by zone before yo
     // Never let an invented statistic through, whatever the prompt said.
     scrubClaims(report);
 
-    return json(report, 200, cors);
+    /* Sign what we are about to return, so that if the reader later asks for it
+       by email we can prove it is ours and unaltered. The signature covers the
+       serialised report exactly as sent, so the client must echo that same
+       string back — see the email branch above. */
+    const issuedAt = Date.now();
+    const reportJson = JSON.stringify(report);
+    let signature = '';
+    try { signature = await signReport(env, reportJson, issuedAt); } catch (e) { /* email simply stays unavailable */ }
+
+    /* _payload is the exact string the signature covers, echoed back verbatim
+       when the reader asks for the email. Reconstructing it on the client by
+       stripping the underscore fields would also work — JSON.stringify
+       preserves insertion order for string keys — but it would make the whole
+       feature depend on that holding for every future field the model emits.
+       A few duplicated kilobytes on one request is the cheaper trade. */
+    return json({ ...report, _issuedAt: issuedAt, _signature: signature, _payload: reportJson }, 200, cors);
   },
 };
 

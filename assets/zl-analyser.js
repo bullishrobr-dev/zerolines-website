@@ -64,7 +64,7 @@
     results: 'zl-a-results-h', error: 'zl-a-error-h'
   };
 
-  var state = { step: 0, reached: 0, answers: {}, photo: null, photoMeta: '' };
+  var state = { step: 0, reached: 0, answers: {}, photo: null, photoMeta: '', receipt: null };
 
   function $(id) { return document.getElementById(id); }
   var el = {};
@@ -521,6 +521,13 @@
         if (!usable(report)) throw new Error('the analysis service returned an assessment with nothing in it.');
         window.clearTimeout(timer);
         work.stop();
+        /* Hold the Worker's signature over this exact report. Asking for it by
+           email later replays these three values; the Worker will not send an
+           assessment it cannot prove it wrote, which is what stops the endpoint
+           being a way to mail anything to anyone from our domain. */
+        state.receipt = (report._signature && report._payload)
+          ? { payload: report._payload, signature: report._signature, issuedAt: report._issuedAt }
+          : null;
         renderReport(report);
         show('results');
       })
@@ -777,11 +784,60 @@
 
   var restart = $('zl-a-restart');
   if (restart) restart.addEventListener('click', function () {
-    state = { step: 0, reached: 0, answers: {}, photo: null, photoMeta: '' };
+    state = { step: 0, reached: 0, answers: {}, photo: null, photoMeta: '', receipt: null };
     resetPhoto();
     updateRail();
     show('intro');
   });
+
+  /* ---- "Send it to me" -------------------------------------------------
+     zl.js already handles this form's Netlify submission and its success
+     message; this listener runs alongside it and does the one extra thing —
+     asks the Worker to post the assessment out. Both listeners fire on the
+     same submit event: neither calls stopImmediatePropagation, and zl.js's
+     preventDefault only stops the browser navigating.
+
+     The email is best-effort by design. If it fails, the address is still on
+     the waitlist and the reader still has the report on screen and a Print or
+     save as PDF button, so the worst case is a missing convenience, not a lost
+     lead. It says so rather than pretending. */
+  var keepForm = $('zl-a-keep-form');
+  if (keepForm) {
+    keepForm.addEventListener('submit', function () {
+      var field = keepForm.querySelector('input[type="email"]');
+      var email = field && field.value && field.value.trim();
+      var note = $('zl-a-keep-note');
+      if (!email) return;
+
+      if (!state.receipt) {
+        if (note) note.textContent = 'You are on the list. This assessment could not be sent by email — print or save it from the link below.';
+        return;
+      }
+      if (note) note.textContent = 'Sending your assessment to ' + email + '…';
+
+      fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          mode: 'email',
+          email: email,
+          report: state.receipt.payload,
+          signature: state.receipt.signature,
+          issuedAt: state.receipt.issuedAt
+        })
+      }).then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (b) {
+          if (!r.ok || b.error) throw new Error(b.error || ('status ' + r.status));
+          if (note) note.textContent = 'Sent. Your assessment is on its way to ' + email + '.';
+        });
+      }).catch(function () {
+        if (note) {
+          note.textContent = 'You are on the list, but the assessment could not be emailed just now. '
+            + 'Use “Print or save as PDF” below to keep a copy.';
+        }
+      });
+    });
+  }
 
   buildRail();
   show('intro');

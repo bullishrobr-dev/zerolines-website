@@ -404,6 +404,12 @@
 .zl-a-keep__row .zl-input { flex: 1 1 16rem; min-width: 0; }
 .zl-a-keep__row .zl-btn { flex: 0 0 auto; }
 .zl-a-keep__note { margin-top: 1rem; }
+/* Progress and outcome of the email send, kept separate from zl.js's own
+   waitlist status so the two never overwrite each other. */
+.zl-a-keep__sent:empty { display: none; }
+.zl-a-keep__sent {
+  margin: .875rem 0 0; font-size: .875rem; line-height: 1.7; color: var(--house-mid);
+}
 @media (max-width: 520px) {
   .zl-a-keep__row .zl-btn { width: 100%; }
 }

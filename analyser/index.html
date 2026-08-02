@@ -476,7 +476,7 @@
              one thing the visitor actually wants at this moment: a copy. -->
         <div class="zl-a-close">
           <div class="zl-a-keep">
-            <form class="zl-a-keep__form" name="waitlist" method="POST" action="/thank-you/"
+            <form class="zl-a-keep__form" id="zl-a-keep-form" name="waitlist" method="POST" action="/thank-you/"
                   data-netlify="true" netlify-honeypot="bot-field">
               <input type="hidden" name="form-name" value="waitlist">
               <input type="hidden" name="source" value="analyser">
@@ -495,6 +495,7 @@
                 <button class="zl-btn zl-btn--brand" type="submit">Send it to me</button>
               </div>
               <span class="zl-form__status" role="status" aria-live="polite"></span>
+              <p class="zl-a-keep__sent" id="zl-a-keep-note" role="status" aria-live="polite"></p>
 
               <p class="zl-form__note zl-a-keep__note">
                 Your photograph is not attached and is not stored. Unsubscribe at
