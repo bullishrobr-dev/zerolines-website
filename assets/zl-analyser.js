@@ -58,13 +58,15 @@
       name: 'BioSignal Facial Serum',               role: 'Signal · Morning and night' }
   ];
 
-  var PANELS = ['intro', 'quiz', 'photo', 'working', 'results', 'error'];
+  var PANELS = ['intro', 'quiz', 'photo', 'working', 'sent', 'results', 'error'];
   var HEADS = {
-    photo: 'zl-a-photo-h', working: 'zl-a-working-h',
+    photo: 'zl-a-photo-h', working: 'zl-a-working-h', sent: 'zl-a-sent-h',
     results: 'zl-a-results-h', error: 'zl-a-error-h'
   };
 
-  var state = { step: 0, reached: 0, answers: {}, photo: null, photoMeta: '', receipt: null };
+  var state = { step: 0, reached: 0, answers: {}, photo: null, photoMeta: '', email: '' };
+
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   function $(id) { return document.getElementById(id); }
   var el = {};
@@ -375,7 +377,7 @@
       }
       if (preview) preview.hidden = false;
       if (dropZone) { dropZone.hidden = true; dropZone.removeAttribute('data-drag'); }
-      if (analyseBtn) analyseBtn.disabled = false;
+      if (window.zlSyncAnalyse) window.zlSyncAnalyse();
     }).catch(function (err) {
       if (dropZone) dropZone.removeAttribute('data-drag');
       if (photoErr) photoErr.textContent = err.message || 'That photograph could not be prepared.';
@@ -389,6 +391,7 @@
     if (preview) preview.hidden = true;
     if (dropZone) dropZone.hidden = false;
     if (analyseBtn) analyseBtn.disabled = true;
+    if (window.zlSyncAnalyse) window.zlSyncAnalyse();
     if (photoErr) photoErr.textContent = '';
   }
 
@@ -500,7 +503,7 @@
     var opts = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ answers: state.answers, photoBase64: state.photo })
+      body: JSON.stringify({ answers: state.answers, photoBase64: state.photo, email: state.email })
     };
     if (ctrl) opts.signal = ctrl.signal;
 
@@ -517,18 +520,32 @@
           return body;
         });
       })
-      .then(function (report) {
-        if (!usable(report)) throw new Error('the analysis service returned an assessment with nothing in it.');
+      .then(function (body) {
         window.clearTimeout(timer);
         work.stop();
-        /* Hold the Worker's signature over this exact report. Asking for it by
-           email later replays these three values; the Worker will not send an
-           assessment it cannot prove it wrote, which is what stops the endpoint
-           being a way to mail anything to anyone from our domain. */
-        state.receipt = (report._signature && report._payload)
-          ? { payload: report._payload, signature: report._signature, issuedAt: report._issuedAt }
-          : null;
-        renderReport(report);
+
+        /* The ordinary path: the reading was written and sent, and this page
+           never sees it. The address is only recorded once the mail service has
+           accepted the message, so obviously-dead addresses do not enter the
+           list. */
+        if (body && body.emailed === true) {
+          var to = $('zl-a-sent-to');
+          if (to) to.textContent = body.to || state.email;
+          recordLead(state.email);
+          show('sent');
+          return;
+        }
+
+        /* The send failed. Rather than leave someone with nothing after the
+           whole questionnaire, show the reading and say why it is here. */
+        if (!usable(body)) throw new Error('the analysis service returned an assessment with nothing in it.');
+        renderReport(body);
+        var warn = $('zl-a-sendfail');
+        if (warn) {
+          warn.hidden = false;
+          warn.textContent = 'We could not email this to ' + state.email
+            + ' just now, so it is on screen instead. Save it as a PDF before you leave the page.';
+        }
         show('results');
       })
       .catch(function (err) {
@@ -784,61 +801,102 @@
 
   var restart = $('zl-a-restart');
   if (restart) restart.addEventListener('click', function () {
-    state = { step: 0, reached: 0, answers: {}, photo: null, photoMeta: '', receipt: null };
+    state = { step: 0, reached: 0, answers: {}, photo: null, photoMeta: '', email: '' };
     resetPhoto();
     updateRail();
     show('intro');
   });
 
-  /* ---- "Send it to me" -------------------------------------------------
-     zl.js already handles this form's Netlify submission and its success
-     message; this listener runs alongside it and does the one extra thing —
-     asks the Worker to post the assessment out. Both listeners fire on the
-     same submit event: neither calls stopImmediatePropagation, and zl.js's
-     preventDefault only stops the browser navigating.
+  /* ---- gate the reading on an address we can reach ----------------------
+     "Read my skin" stays disabled until there is a photograph AND something
+     that looks like an email, because the reading is only ever delivered by
+     email — there is no version of this flow that produces a result without
+     one. Validation here is deliberately loose (shape only); the real test is
+     whether the message arrives, which is the entire point of the design. */
+  var emailField = $('zl-a-email');
+  var emailErr = $('zl-a-email-err');
 
-     The email is best-effort by design. If it fails, the address is still on
-     the waitlist and the reader still has the report on screen and a Print or
-     save as PDF button, so the worst case is a missing convenience, not a lost
-     lead. It says so rather than pretending. */
-  var keepForm = $('zl-a-keep-form');
-  if (keepForm) {
-    keepForm.addEventListener('submit', function () {
-      var field = keepForm.querySelector('input[type="email"]');
-      var email = field && field.value && field.value.trim();
-      var note = $('zl-a-keep-note');
-      if (!email) return;
+  function emailOk() { return EMAIL_RE.test(String(state.email || '')); }
 
-      if (!state.receipt) {
-        if (note) note.textContent = 'You are on the list. This assessment could not be sent by email — print or save it from the link below.';
-        return;
-      }
-      if (note) note.textContent = 'Sending your assessment to ' + email + '…';
-
-      fetch(API, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          mode: 'email',
-          email: email,
-          report: state.receipt.payload,
-          signature: state.receipt.signature,
-          issuedAt: state.receipt.issuedAt
-        })
-      }).then(function (r) {
-        return r.json().catch(function () { return {}; }).then(function (b) {
-          if (!r.ok || b.error) throw new Error(b.error || ('status ' + r.status));
-          if (note) note.textContent = 'Sent. Your assessment is on its way to ' + email + '.';
-        });
-      }).catch(function () {
-        if (note) {
-          note.textContent = 'You are on the list, but the assessment could not be emailed just now. '
-            + 'Use “Print or save as PDF” below to keep a copy.';
-        }
-      });
-    });
+  function syncAnalyseBtn() {
+    var btn = $('zl-a-analyse');
+    if (btn) btn.disabled = !(state.photo && emailOk());
   }
 
+  if (emailField) {
+    emailField.addEventListener('input', function () {
+      state.email = emailField.value.trim();
+      if (emailErr) emailErr.textContent = '';
+      syncAnalyseBtn();
+    });
+    emailField.addEventListener('blur', function () {
+      if (emailErr) {
+        emailErr.textContent = (state.email && !emailOk())
+          ? 'That address does not look complete — check for a typo.' : '';
+      }
+    });
+  }
+  window.zlSyncAnalyse = syncAnalyseBtn;
+
+  /* Record the address on the waitlist, but only once the mail service has
+     accepted the message. A submission that never left is not a lead. */
+  function recordLead(address) {
+    try {
+      var data = new URLSearchParams();
+      data.set('form-name', 'waitlist');
+      data.set('source', 'analyser');
+      data.set('email', address);
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: data.toString(),
+        keepalive: true
+      }).catch(function () {});
+    } catch (e) { /* the reading has already been sent; this is bookkeeping */ }
+  }
+
+  /* ---- opening an assessment from the link in the email ------------------ */
+  function openFromLink() {
+    var id;
+    try { id = new URLSearchParams(window.location.search).get('r'); } catch (e) { return false; }
+    if (!id) return false;
+
+    show('working');
+    var w = $('zl-a-working-status');
+    if (w) w.textContent = 'Opening your assessment.';
+
+    fetch(API + '?r=' + encodeURIComponent(id))
+      .then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (b) {
+          if (!r.ok || b.error) throw new Error(b.error || ('status ' + r.status));
+          return b;
+        });
+      })
+      .then(function (report) {
+        if (!usable(report)) throw new Error('that assessment could not be read.');
+        renderReport(report);
+        show('results');
+      })
+      .catch(function (err) {
+        var msg = $('zl-a-error-msg');
+        if (msg) { msg.textContent = String(err && err.message ? err.message : err); msg.hidden = false; }
+        show('error');
+      });
+    return true;
+  }
+
+  var savePdf = $('zl-a-save-pdf');
+  if (savePdf) savePdf.addEventListener('click', function () { window.print(); });
+
+  var sentRetry = $('zl-a-sent-retry');
+  if (sentRetry) sentRetry.addEventListener('click', function () {
+    state = { step: 0, reached: 0, answers: {}, photo: null, photoMeta: '', email: '' };
+    resetPhoto();
+    if (emailField) emailField.value = '';
+    updateRail();
+    show('intro');
+  });
+
   buildRail();
-  show('intro');
+  if (!openFromLink()) show('intro');
 })();

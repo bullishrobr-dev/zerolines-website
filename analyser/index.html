@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Skin Analyser — Zero Lines | A Written Assessment of Your Skin</title>
-<meta name="description" content="Ten questions and one photograph. The Zero Lines analyser reads texture, tone, hydration, pores, pigmentation, lines, elasticity and sun exposure, then returns a written assessment and the protocol that follows from it.">
+<meta name="description" content="Ten questions and one photograph. The Zero Lines analyser reads texture, tone, hydration, pores, pigmentation, lines, elasticity and sun exposure, then writes your assessment out in full and sends it to you.">
 <link rel="canonical" href="https://zerolines.life/analyser/">
 
 <meta property="og:type" content="website">
@@ -84,11 +84,12 @@
   "inLanguage": "en-GB",
   "isAccessibleForFree": true,
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
-  "description": "A free written skin assessment. Ten questions and one optional photograph are read across eight appearance markers — texture, tone, hydration, pores, pigmentation, lines, elasticity and sun exposure — and returned as a written assessment with the Zero Lines protocol that follows from it.",
+  "description": "A free written skin assessment. Ten questions and one photograph are read across eight appearance markers — texture, tone, hydration, pores, pigmentation, lines, elasticity and sun exposure. The assessment is written out in full and sent to your email address, with a private link to open it again and save it as a PDF.",
   "featureList": [
     "Ten questions about your skin and how you live",
-    "Optional photograph read for visible appearance markers",
-    "A written assessment across eight markers",
+    "One photograph, read once for visible appearance markers and not stored",
+    "A written assessment across eight markers, delivered by email",
+    "A private link to reopen the assessment and save it as a PDF",
     "A suggested order of use across the six formulations"
   ],
   "publisher": { "@id": "https://zerolines.life/#organization" }
@@ -112,13 +113,13 @@
       "@type": "HowToStep",
       "position": 2,
       "name": "The skin shows it",
-      "text": "Add one clear photograph if you want to: daylight rather than lamplight, a bare face, the camera at eye level, and a resting expression."
+      "text": "Add one clear photograph — daylight rather than lamplight, a bare face, the camera at eye level, a resting expression — and the email address to send the reading to."
     },
     {
       "@type": "HowToStep",
       "position": 3,
       "name": "We write it out",
-      "text": "You receive a written assessment across eight appearance markers, and the order of use that follows from it."
+      "text": "The assessment is written out across eight appearance markers and sent to your inbox, with a private link to reopen it and save it as a PDF."
     }
   ]
 }
@@ -261,7 +262,7 @@
           <ul class="zl-a-pledge">
             <li>It is sent over an encrypted connection to the service that reads it.</li>
             <li>It is read once, for this assessment, and is not stored afterwards.</li>
-            <li>It is not attached to a name. The analyser asks for no account and no payment. You are offered your email address at the end, only if you want the assessment sent to you.</li>
+            <li>It is never attached to your email address. The analyser asks for no account and no payment — only somewhere to send the reading, so that you keep it.</li>
             <li>It is never published, never shared with anyone else, and never used for advertising.</li>
           </ul>
 
@@ -381,14 +382,34 @@
 
         <p class="zl-form__status" id="zl-a-photo-error" data-state="err" role="alert"></p>
 
+        <!-- The assessment is delivered by email rather than shown here. That is
+             deliberate: it is the only way an address can be shown to be real,
+             and it means the reader leaves with a copy rather than a page they
+             will close. Asked for at the last moment, after the effort is
+             already spent, which is where a request like this costs least. -->
+        <div class="zl-a-deliver">
+          <label class="zl-a-deliver__label" for="zl-a-email">Where shall we send it?</label>
+          <p class="zl-a-deliver__d">
+            Your assessment is written out in full and sent to you — it does not
+            appear on this page. The email carries a private link to open it
+            again and save it as a PDF.
+          </p>
+          <input class="zl-input" type="email" id="zl-a-email" name="email"
+                 placeholder="your@email.com" autocomplete="email" required
+                 aria-describedby="zl-a-email-err">
+          <p class="zl-form__status" id="zl-a-email-err" data-state="err" role="alert"></p>
+        </div>
+
         <div class="zl-a-nav">
           <button class="zl-btn zl-btn--ghost" type="button" id="zl-a-photo-back">Back to the questions</button>
           <button class="zl-btn zl-btn--brand" type="button" id="zl-a-analyse" disabled>Read my skin</button>
         </div>
 
         <p class="zl-a-fine" style="margin-top:2rem">
-          Your photograph is read once for this assessment and is not stored.
-          It is not attached to a name, and nothing here asks you to create an account.
+          Your photograph is read once for this assessment and is not stored. It is
+          never attached to your email address, and it is not sent to you or to
+          anyone else. We write rarely, and only about the protocol —
+          <a href="/privacy.html">privacy policy</a>.
         </p>
       </div>
     </div>
@@ -426,7 +447,48 @@
   </section>
 </div>
 
-<!-- ════ 5. THE ASSESSMENT ════════════════════════════════════════════════ -->
+<!-- ════ 5. SENT — where the reading ends for most visitors ════════════════
+     The assessment is not rendered here. It is written, stored against an
+     unguessable id, and sent. Only someone who can open the inbox they gave can
+     read it, which is the whole point: an address that cannot receive it never
+     enters the list as a real one. ═══════════════════════════════════════════ -->
+<div class="zl-a-panel" id="zl-a-sent" hidden>
+  <section class="zl-a-section">
+    <div class="zl-container zl-container--narrow zl-center">
+      <span class="zl-eyebrow zl-eyebrow--center">Written and sent</span>
+      <h2 class="zl-display-l" id="zl-a-sent-h" tabindex="-1" style="margin:1.5rem 0 1.5rem;max-width:16ch;margin-inline:auto">
+        It is on its <em class="zl-em--brand">way</em>.
+      </h2>
+      <p class="zl-lead zl-center" style="margin-bottom:2.5rem">
+        Your assessment has been written and sent to
+        <strong id="zl-a-sent-to">your inbox</strong>. It usually arrives within
+        a minute. The email carries a private link that opens the full reading
+        and lets you save it as a PDF.
+      </p>
+
+      <div class="zl-a-sent__note">
+        <p>
+          <strong>Not there?</strong> Check the spam folder, and give it two or
+          three minutes. If it still has not arrived, the address may have a typo
+          in it — you are welcome to
+          <button class="zl-link" type="button" id="zl-a-sent-retry">run the reading again <span class="zl-link__arrow" aria-hidden="true">→</span></button>
+        </p>
+      </div>
+
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:clamp(2.5rem,6vh,3.5rem)">
+        <a class="zl-btn zl-btn--ghost" href="/protocol/">See the full protocol</a>
+        <a class="zl-btn zl-btn--ghost" href="https://wa.me/35054005198?text=Hello%20Zero%20Lines%2C%20I%20have%20just%20had%20my%20skin%20read%20and%20would%20like%20to%20talk%20it%20through.">Talk it through with a specialist</a>
+      </div>
+
+      <p class="zl-a-fine" style="margin-top:2.5rem">
+        Your photograph was read once and was not stored. It is not attached to
+        the email, and it is not held against your address.
+      </p>
+    </div>
+  </section>
+</div>
+
+<!-- ════ 6. THE ASSESSMENT — reached from the link in the email ════════════ -->
 <div class="zl-a-panel" id="zl-a-results" hidden>
   <section class="zl-a-section">
     <div class="zl-container">
@@ -450,6 +512,8 @@
             </figure>
           </div>
         </header>
+
+        <p class="zl-a-sendfail" id="zl-a-sendfail" role="alert" hidden></p>
 
         <div class="zl-a-report__body" id="zl-a-report"></div>
 
@@ -475,33 +539,16 @@
              owns captured nothing. The ask now comes first, and it asks for the
              one thing the visitor actually wants at this moment: a copy. -->
         <div class="zl-a-close">
-          <div class="zl-a-keep">
-            <form class="zl-a-keep__form" id="zl-a-keep-form" name="waitlist" method="POST" action="/thank-you/"
-                  data-netlify="true" netlify-honeypot="bot-field">
-              <input type="hidden" name="form-name" value="waitlist">
-              <input type="hidden" name="source" value="analyser">
-              <p class="zl-hp" aria-hidden="true"><label>Do not fill this in: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
-
-              <h3 class="zl-a-keep__t">Keep this assessment.</h3>
-              <p class="zl-a-keep__d">
-                We will send it to you, and tell you once when the protocol is
-                available. Nothing else.
-              </p>
-
-              <label class="zl-sr" for="zl-a-email">Email address</label>
-              <div class="zl-a-keep__row">
-                <input class="zl-input" type="email" id="zl-a-email" name="email"
-                       placeholder="your@email.com" required autocomplete="email">
-                <button class="zl-btn zl-btn--brand" type="submit">Send it to me</button>
-              </div>
-              <span class="zl-form__status" role="status" aria-live="polite"></span>
-              <p class="zl-a-keep__sent" id="zl-a-keep-note" role="status" aria-live="polite"></p>
-
-              <p class="zl-form__note zl-a-keep__note">
-                Your photograph is not attached and is not stored. Unsubscribe at
-                any time — see our <a href="/privacy.html">privacy policy</a>.
-              </p>
-            </form>
+          <!-- The waitlist capture that used to sit here is gone: the address is
+               taken before the reading now, so by the time anyone sees this page
+               they are already on the list. -->
+          <div class="zl-a-keep zl-a-keep--pdf">
+            <h3 class="zl-a-keep__t">Keep a copy.</h3>
+            <p class="zl-a-keep__d">
+              This page is yours to return to from the link in your email. To keep
+              it offline, save it as a PDF.
+            </p>
+            <button class="zl-btn zl-btn--brand" type="button" id="zl-a-save-pdf" style="margin-top:1.25rem">Save as PDF</button>
           </div>
 
           <div class="zl-a-close__actions">

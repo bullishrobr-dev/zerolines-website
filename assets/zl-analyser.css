@@ -404,6 +404,41 @@
 .zl-a-keep__row .zl-input { flex: 1 1 16rem; min-width: 0; }
 .zl-a-keep__row .zl-btn { flex: 0 0 auto; }
 .zl-a-keep__note { margin-top: 1rem; }
+.zl-a-keep--pdf { text-align: left; }
+
+/* The address, asked for on the photograph step. Set on the tint with the
+   champagne hairline so it reads as part of the reading rather than a form
+   bolted to the bottom of one. */
+.zl-a-deliver {
+  background: var(--sage-wash);
+  border-top: 2px solid var(--champagne);
+  padding: clamp(1.5rem, 3.5vw, 2rem);
+  margin-top: clamp(1.75rem, 4vh, 2.5rem);
+  max-width: 46ch;
+}
+.zl-a-deliver__label {
+  display: block;
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(1.25rem, 2vw, 1.625rem); line-height: 1.2; color: var(--ink);
+}
+.zl-a-deliver__d { margin: .625rem 0 1.125rem; font-size: .9375rem; line-height: 1.7; color: var(--ink-3); }
+.zl-a-deliver .zl-input { width: 100%; }
+.zl-a-deliver .zl-form__status:empty { display: none; }
+
+/* Shown only when the reading could not be mailed and is on screen instead. */
+.zl-a-sendfail[hidden] { display: none; }
+.zl-a-sendfail {
+  background: var(--bone-2);
+  border-left: 2px solid var(--champagne);
+  padding: 1rem 1.25rem; margin: 0 0 1.75rem;
+  font-size: .9375rem; line-height: 1.7; color: var(--ink-3);
+}
+
+.zl-a-sent__note {
+  max-width: 46ch; margin-inline: auto; text-align: left;
+  background: var(--sage-wash); padding: 1.125rem 1.375rem;
+}
+.zl-a-sent__note p { margin: 0; font-size: .9375rem; line-height: 1.75; color: var(--ink-3); }
 /* Progress and outcome of the email send, kept separate from zl.js's own
    waitlist status so the two never overwrite each other. */
 .zl-a-keep__sent:empty { display: none; }

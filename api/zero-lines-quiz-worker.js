@@ -6,27 +6,30 @@
  *
  * DEPLOY: dash.cloudflare.com -> Workers & Pages -> lively-surf-87db -> Edit
  * code -> replace all -> Deploy.
- *   Secrets required: OPENROUTER_KEY, RESEND_KEY
- *   Optional vars:    ZL_MODEL, ZL_MAX_TOKENS, ZL_FROM, ZL_SIGNING_KEY
+ *   Secrets:  OPENROUTER_KEY, RESEND_KEY
+ *   Binding:  KV namespace "zl-assessments" bound as ZL_ASSESSMENTS
+ *   Optional: ZL_MODEL, ZL_MAX_TOKENS, ZL_FROM, ZL_SITE
  *
  * ---------------------------------------------------------------------------
- * SENDING THE ASSESSMENT BY EMAIL, WITHOUT BUILDING AN OPEN RELAY
+ * WHY THE ASSESSMENT IS NOT RETURNED TO THE BROWSER
  *
- * The obvious implementation — accept {email, report} from the browser and send
- * it — is a spam cannon. Anyone could post arbitrary HTML to any address and it
- * would leave hello@zerolines.life with correct SPF and DKIM. That is worse
- * than not having the feature.
+ * An email address is only worth having if it is real, and the only way to show
+ * that is to make the thing of value arrive in it. So the reading is written,
+ * stored against an unguessable id, and sent — the page that requested it never
+ * receives the report at all. Someone who types a fake address gets nothing,
+ * and never enters the list as a genuine contact.
  *
- * So the Worker signs every report it produces (HMAC-SHA256 over the exact JSON
- * it returned, plus a timestamp) and will only send a report that still carries
- * a valid signature. The client cannot forge one and cannot alter a word of a
- * report it was given. Signatures expire after fifteen minutes, which is longer
- * than anyone spends reading their result and short enough to be useless later.
+ * The email carries a private link back to /analyser/?r=<id>, which is the only
+ * way to read the assessment on screen and save it as a PDF. Ids are 128 bits
+ * of randomness; they expire from KV after 30 days.
  *
- * This is stateless on purpose: no KV, no database, no binding to configure,
- * and nothing about the reader is retained after the response is sent. The
- * photograph in particular is never stored and never attached to the email —
- * the page promises exactly that, and the promise stays true.
+ * If the send fails — a refused address, a mail outage — the report is returned
+ * inline instead, because having someone wait through a reading and then handing
+ * them nothing is a worse failure than showing it early.
+ *
+ * The photograph is still never stored, never attached to the email, and never
+ * held against the address. That pledge is on the page and it stays literally
+ * true: only the finished text is kept.
  *
  * ---------------------------------------------------------------------------
  * WHY THIS WAS REWRITTEN
@@ -141,44 +144,14 @@ function json(body, status, headers) {
   return new Response(JSON.stringify(body), { status, headers });
 }
 
-/* ---------------------------------------------------------------------------
-   Report signing.
-
-   The signature covers the exact JSON string the Worker returned, so any edit
-   to any field invalidates it. ZL_SIGNING_KEY is preferred; if it is not set,
-   the key is derived from OPENROUTER_KEY so the feature works with one fewer
-   secret to configure. Deriving is not as good as a dedicated key — rotating
-   OpenRouter would silently invalidate in-flight reports — but it is far better
-   than a hardcoded fallback, and it keeps the setup to a single paste.
-   --------------------------------------------------------------------------- */
-const SIG_TTL_MS = 15 * 60 * 1000;
-let signingKeyPromise = null;
-
-function getSigningKey(env) {
-  if (!signingKeyPromise) {
-    const raw = env.ZL_SIGNING_KEY || ('derived:' + (env.OPENROUTER_KEY || ''));
-    signingKeyPromise = crypto.subtle.digest('SHA-256', new TextEncoder().encode(raw))
-      .then((bits) => crypto.subtle.importKey('raw', bits, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign', 'verify']));
-  }
-  return signingKeyPromise;
+/* Ids for stored assessments: 128 bits, base64url. Long enough that the link
+   in someone's inbox is the only practical way to reach their reading. */
+function newId() {
+  const b = crypto.getRandomValues(new Uint8Array(16));
+  return btoa(String.fromCharCode(...b)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
-async function signReport(env, reportJson, issuedAt) {
-  const key = await getSigningKey(env);
-  const mac = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(issuedAt + '.' + reportJson));
-  return [...new Uint8Array(mac)].map((b) => b.toString(16).padStart(2, '0')).join('');
-}
-
-async function verifyReport(env, reportJson, issuedAt, signature) {
-  if (!signature || !issuedAt) return false;
-  if (!Number.isFinite(issuedAt) || Math.abs(Date.now() - issuedAt) > SIG_TTL_MS) return false;
-  const expected = await signReport(env, reportJson, issuedAt);
-  // constant-time-ish compare; lengths are fixed so this is adequate here
-  if (expected.length !== signature.length) return false;
-  let diff = 0;
-  for (let i = 0; i < expected.length; i++) diff |= expected.charCodeAt(i) ^ signature.charCodeAt(i);
-  return diff === 0;
-}
+const ASSESSMENT_TTL_S = 60 * 60 * 24 * 30;   // 30 days
 
 /* ---------------------------------------------------------------------------
    The email.
@@ -197,7 +170,7 @@ const MARKERS = [
   ['wrinkles', 'Lines'], ['elasticity', 'Elasticity'], ['sunDamage', 'Sun exposure'],
 ];
 
-function buildEmail(report) {
+function buildEmail(report, link) {
   const BONE = '#FAF7F2', INK = '#14181A', INK3 = '#3C4142';
   const HOUSE = '#1F4F4A', MID = '#17706D', CHAMP = '#C2A878';
   const p = (t, extra) => `<p style="margin:0 0 14px;font:400 15px/1.75 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:${INK3};${extra || ''}">${t}</p>`;
@@ -216,6 +189,16 @@ function buildEmail(report) {
   }
 
   if (report.summary) body += p(esc(report.summary), `font-size:16px;color:${INK};`);
+
+  /* The private link. It is the only way back to this reading, and the only way
+     to save it as a PDF, so it sits high rather than buried in a footer. */
+  if (link) {
+    body += `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:26px 0 6px"><tr>`
+      + `<td style="background:${HOUSE};padding:14px 26px">`
+      + `<a href="${esc(link)}" style="color:#fff;text-decoration:none;font:500 12px/1 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2.4px;text-transform:uppercase">Open it and save as PDF</a>`
+      + `</td></tr></table>`
+      + p('This link is private to you and works for thirty days.', 'font-size:12px;color:#636764;margin-top:10px;');
+  }
 
   const pa = report.photoAnalysis || {};
   const present = MARKERS.filter(([k]) => pa[k]);
@@ -275,6 +258,7 @@ function buildEmail(report) {
   const lines = ['YOUR WRITTEN ASSESSMENT', '', report.summary || ''];
   for (const [k, label] of present) lines.push('', label.toUpperCase(), pa[k]);
   if (recs.length) { lines.push('', 'WHAT WE WOULD SUGGEST'); for (const r of recs) lines.push('', r.product, r.why || ''); }
+  if (link) lines.push('', 'Open it and save as PDF: ' + link, 'This link is private to you and works for thirty days.');
   lines.push('', 'This is a cosmetic assessment of appearance, not a medical diagnosis.',
     'Your photograph was read once and was not stored.', '', 'zerolines.life');
 
@@ -291,6 +275,22 @@ export default {
     };
 
     if (request.method === 'OPTIONS') return new Response(null, { headers: cors });
+
+    /* Reading an assessment back, from the private link in the email. The id is
+       the only credential — which is what makes the inbox the key. */
+    if (request.method === 'GET') {
+      const id = new URL(request.url).searchParams.get('r');
+      if (!id || !/^[A-Za-z0-9_-]{16,64}$/.test(id)) {
+        return json({ error: 'Not found.' }, 404, cors);
+      }
+      if (!env.ZL_ASSESSMENTS) return json({ error: 'Storage is not configured.' }, 503, cors);
+      const stored = await env.ZL_ASSESSMENTS.get(id);
+      if (!stored) {
+        return json({ error: 'That assessment has expired, or the link is incomplete. Assessments are kept for thirty days.' }, 404, cors);
+      }
+      return new Response(stored, { status: 200, headers: { ...cors, 'Cache-Control': 'private, max-age=300' } });
+    }
+
     if (request.method !== 'POST') return json({ error: 'Method not allowed' }, 405, cors);
 
     const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
@@ -310,54 +310,18 @@ export default {
       return json({ error: 'Could not read the request.' }, 400, cors);
     }
 
-    /* ---- send an assessment the Worker itself produced --------------------
-       Only reached with a valid, unexpired signature over the exact report
-       JSON that was returned earlier, so this cannot be used to mail arbitrary
-       content to arbitrary addresses. */
-    if (payload && payload.mode === 'email') {
-      const email = String(payload.email || '').trim();
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) || email.length > 254) {
-        return json({ error: 'That email address does not look right.' }, 400, cors);
-      }
-      if (!env.RESEND_KEY) return json({ error: 'Email is not configured yet.' }, 503, cors);
+    const { answers, photoBase64, email: rawEmail } = payload || {};
 
-      const reportJson = typeof payload.report === 'string' ? payload.report : null;
-      const ok = reportJson && await verifyReport(env, reportJson, Number(payload.issuedAt), String(payload.signature || ''));
-      if (!ok) {
-        return json({ error: 'That assessment could not be verified. Please run the analysis again.' }, 403, cors);
-      }
-
-      let report;
-      try { report = JSON.parse(reportJson); } catch (e) {
-        return json({ error: 'That assessment could not be read.' }, 400, cors);
-      }
-
-      const { html, text } = buildEmail(report);
-      let sent;
-      try {
-        sent = await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${env.RESEND_KEY}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            from: env.ZL_FROM || 'Zero Lines <hello@zerolines.life>',
-            to: [email],
-            reply_to: 'info@zerolines.life',
-            subject: 'Your Zero Lines skin assessment',
-            html,
-            text,
-          }),
-        });
-      } catch (e) {
-        return json({ error: 'Could not reach the mail service.' }, 502, cors);
-      }
-      if (!sent.ok) {
-        const detail = await sent.text();
-        return json({ error: 'The mail service refused the message.', status: sent.status, details: detail.slice(0, 300) }, 502, cors);
-      }
-      return json({ ok: true }, 200, cors);
+    /* An address is required before anything is written. This is the whole
+       mechanism: the reading only ever arrives by email, so an address that
+       cannot receive it never becomes a contact. */
+    const email = String(rawEmail || '').trim().toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) || email.length > 254) {
+      return json({ error: 'Please give an email address we can send your assessment to.' }, 400, cors);
     }
-
-    const { answers, photoBase64 } = payload || {};
+    if (!env.RESEND_KEY) {
+      return json({ error: 'The assessment service is not configured to send email yet.' }, 503, cors);
+    }
 
     if (!answers || !photoBase64) return json({ error: 'Missing answers or photograph.' }, 400, cors);
     if (typeof photoBase64 !== 'string' || !photoBase64.startsWith('data:image/')) {
@@ -464,22 +428,49 @@ The attached photograph is your primary evidence. Read it zone by zone before yo
     // Never let an invented statistic through, whatever the prompt said.
     scrubClaims(report);
 
-    /* Sign what we are about to return, so that if the reader later asks for it
-       by email we can prove it is ours and unaltered. The signature covers the
-       serialised report exactly as sent, so the client must echo that same
-       string back — see the email branch above. */
-    const issuedAt = Date.now();
-    const reportJson = JSON.stringify(report);
-    let signature = '';
-    try { signature = await signReport(env, reportJson, issuedAt); } catch (e) { /* email simply stays unavailable */ }
+    /* Store it, then send it. Storage first: if the mail service is having a
+       bad minute we would still rather the link work than lose the reading. */
+    const site = (env.ZL_SITE || 'https://zerolines.life').replace(/\/+$/, '');
+    const id = newId();
+    const link = `${site}/analyser/?r=${id}`;
 
-    /* _payload is the exact string the signature covers, echoed back verbatim
-       when the reader asks for the email. Reconstructing it on the client by
-       stripping the underscore fields would also work — JSON.stringify
-       preserves insertion order for string keys — but it would make the whole
-       feature depend on that holding for every future field the model emits.
-       A few duplicated kilobytes on one request is the cheaper trade. */
-    return json({ ...report, _issuedAt: issuedAt, _signature: signature, _payload: reportJson }, 200, cors);
+    if (env.ZL_ASSESSMENTS) {
+      try {
+        await env.ZL_ASSESSMENTS.put(id, JSON.stringify(report), { expirationTtl: ASSESSMENT_TTL_S });
+      } catch (e) { /* fall through — the email still carries the full text */ }
+    }
+
+    const { html, text } = buildEmail(report, link);
+    let sentOk = false;
+    let sendError = '';
+    try {
+      const sent = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${env.RESEND_KEY}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          from: env.ZL_FROM || 'Zero Lines <scan@zerolines.life>',
+          to: [email],
+          reply_to: 'info@zerolines.life',
+          subject: 'Your Zero Lines skin assessment',
+          html,
+          text,
+        }),
+      });
+      sentOk = sent.ok;
+      if (!sent.ok) sendError = (await sent.text()).slice(0, 200);
+    } catch (e) {
+      sendError = 'unreachable';
+    }
+
+    if (sentOk) {
+      // The reading itself is deliberately NOT in this response.
+      return json({ ok: true, emailed: true, to: email }, 200, cors);
+    }
+
+    /* The send failed. Handing back nothing after a two-minute questionnaire and
+       a fifteen-second wait would be the worse outcome, so the reading is
+       returned inline and the page explains why it is on screen. */
+    return json({ ...report, emailed: false, sendError, link: env.ZL_ASSESSMENTS ? link : '' }, 200, cors);
   },
 };
 
