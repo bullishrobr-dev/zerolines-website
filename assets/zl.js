@@ -336,10 +336,97 @@
 
   /* ---------- 8. Cookie notice ------------------------------------------- */
 
+  /* ---------- Consent, and the analytics that depend on it ----------------
+     The banner used to record a choice and then gate nothing at all — there was
+     no analytics on the site, so "Essential only" and "Accept all" did exactly
+     the same thing. That is fine while nothing is loading, and becomes a real
+     problem the moment something does: a notice that implies a choice it does
+     not honour is worse than no notice, and this is a Gibraltar and Barcelona
+     business under UK and EU rules.
+
+     So consent is now a gate with something behind it. Nothing here loads until
+     an ID is filled in below AND the visitor has accepted. Leave an ID empty and
+     that tool is simply never loaded.
+
+     Worth knowing before you fill these in: GA4 and the Meta pixel both set
+     cookies and both send visitor data to a third party, so they can only run
+     for people who click Accept — which in practice is well under half. A
+     cookieless tool (Cloudflare Web Analytics is free, and you already have the
+     account) needs no consent at all, so it measures everybody. If you only want
+     to know what pages people read and where they drop out of the analyser, it
+     will tell you more than GA4 will. */
+  var ANALYTICS = {
+    ga4: '',            // 'G-XXXXXXXXXX'  — needs consent
+    metaPixel: '',      // '123456789012'  — needs consent
+    cloudflareToken: '' // from Cloudflare > Web Analytics — no consent needed
+  };
+
+  var CONSENT_KEY = 'zl_cookie_choice';
+
+  function consentGiven() {
+    try { return localStorage.getItem(CONSENT_KEY) === 'all'; } catch (e) { return false; }
+  }
+
+  function loadScript(src, attrs) {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = src;
+    if (attrs) Object.keys(attrs).forEach(function (k) { s.setAttribute(k, attrs[k]); });
+    document.head.appendChild(s);
+    return s;
+  }
+
+  var analyticsLoaded = false;
+
+  /* Cookieless measurement. No personal data, no cookies, so it is lawful
+     without consent and runs for every visitor. */
+  function initCookielessAnalytics() {
+    if (!ANALYTICS.cloudflareToken) return;
+    loadScript('https://static.cloudflareinsights.com/beacon.min.js',
+      { 'data-cf-beacon': JSON.stringify({ token: ANALYTICS.cloudflareToken }) });
+  }
+
+  /* Everything that needs a yes. Called on load if consent was already given,
+     and again the moment someone accepts, so they are measured from that page
+     rather than the next one. */
+  function initConsentedAnalytics() {
+    if (analyticsLoaded || !consentGiven()) return;
+    analyticsLoaded = true;
+
+    if (ANALYTICS.ga4) {
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      // IP anonymisation is on by default in GA4; ad personalisation is not.
+      window.gtag('config', ANALYTICS.ga4, { anonymize_ip: true, allow_ad_personalization_signals: false });
+      loadScript('https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(ANALYTICS.ga4));
+    }
+
+    if (ANALYTICS.metaPixel) {
+      /* eslint-disable */
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+      (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      /* eslint-enable */
+      window.fbq('init', ANALYTICS.metaPixel);
+      window.fbq('track', 'PageView');
+    }
+  }
+
+  function initAnalytics() {
+    initCookielessAnalytics();
+    initConsentedAnalytics();
+  }
+
   function initCookies() {
     var banner = document.getElementById('zl-cookie');
+    var KEY = CONSENT_KEY;
+
+    /* Withdrawing consent is handled on cookies.html, which owns the control
+       and its wording. Nothing to duplicate here. */
     if (!banner) return;
-    var KEY = 'zl_cookie_choice';
     try { if (localStorage.getItem(KEY)) return; } catch (e) { return; }
 
     var shown = false;
@@ -383,6 +470,8 @@
       if (!btn) return;
       try { localStorage.setItem(KEY, btn.getAttribute('data-cookie')); } catch (err) {}
       close();
+      // Start measuring from this page rather than the next one.
+      try { initConsentedAnalytics(); } catch (err) {}
     });
   }
 
@@ -471,6 +560,7 @@
     try { initCounters(); } catch (e) {}
     try { initProgress(); } catch (e) {}
     try { initCookies(); } catch (e) {}
+    try { initAnalytics(); } catch (e) {}
     try { initForms(); } catch (e) {}
     try { initCurrentNav(); } catch (e) {}
     try { initSmoothScroll(); } catch (e) {}

@@ -394,9 +394,13 @@
       try { localStorage.removeItem('zl_cookie_choice'); ok = true; } catch (e) {}
       if (out) {
         out.textContent = ok
-          ? 'Cleared. The cookie notice will ask you again the next time you scroll.'
+          ? 'Cleared. Reloading, so that anything already running stops.'
           : 'Your browser is blocking local storage, so nothing was stored in the first place.';
       }
+      /* A reload, not just a cleared key. Analytics that consent had already
+         started stays in memory until the page goes away — telling someone they
+         had withdrawn consent while a tag was still running would not be true. */
+      if (ok) setTimeout(function () { window.location.reload(); }, 900);
     });
   })();
 </script>
