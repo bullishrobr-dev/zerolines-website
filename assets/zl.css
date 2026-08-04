@@ -935,6 +935,26 @@ html.zl-rm [data-reveal="wipe"] img { transform: none !important; transition: no
 }
 .zl-wa:hover { transform: translateY(-3px); background: var(--tiffany); }
 
+/* The notice is fixed to the bottom edge at z-index 95, and two things live
+   under it. The WhatsApp button sits at z-index 90 and was measured at 390x844
+   as 0 of its 144 pixels reachable — elementFromPoint at its centre returned
+   the cookie bar, on every page, with no scroll position that frees it since
+   both are fixed. Keyboard users could focus a control they could not see,
+   which is a WCAG 2.2 SC 2.4.11 failure. And on /analyser/ the bar covered 72%
+   of the Continue button, on all ten steps, on the only conversion tool the
+   brand has — a first-time mobile visitor met a button they could not press.
+
+   zl.js already set data-cookie-open on <body> and nothing consumed it. Now
+   two things do: the WhatsApp button lifts above the bar, and the document
+   gains bottom padding so no fixed-position content is trapped underneath.
+   Both inherit the bar's own easing so they move with it rather than jump. */
+body[data-cookie-open] .zl-wa { bottom: calc(1.5rem + 116px); }
+body[data-cookie-open] { scroll-padding-bottom: 8rem; }
+@media (min-width: 768px) {
+  body[data-cookie-open] .zl-wa { bottom: calc(1.5rem + 68px); }
+}
+.zl-wa { transition: bottom 620ms var(--ease), transform var(--dur-ui) var(--ease); }
+
 .zl-cookie {
   /* zl-cookie--slim: one line, hugging the bottom edge. The previous card was
      360x148 and sat over the content column at 72% of scroll positions. */
@@ -954,10 +974,22 @@ html.zl-rm [data-reveal="wipe"] img { transform: none !important; transition: no
 .zl-cookie a { color: #fff; text-decoration: underline; text-underline-offset: .18em; }
 .zl-cookie a:hover { color: var(--tiffany-lift); }
 .zl-cookie__actions { display: flex; gap: .625rem; }
-.zl-cookie .zl-btn { padding: .5625rem .9375rem; font-size: .625rem; }
+/* Measured at 10px type in a 35px box — below the 44px minimum for a touch
+   target, and the only type on the site smaller than the 11px eyebrow. These
+   are the two most consequential buttons a first-time visitor presses; they
+   should not be the hardest to hit. */
+.zl-cookie .zl-btn {
+  padding: .75rem 1.125rem; font-size: .6875rem;
+  min-height: 44px; display: inline-flex; align-items: center;
+}
 @media (max-width: 560px) {
-  .zl-cookie { gap: 0.625rem 1rem; padding: 0.75rem 1rem; }
-  .zl-cookie > span { flex: 1 1 100%; }
+  /* Shorter bar, because every pixel of it sits on top of something. The two
+     choices stay identical in weight and size — refusing has to be exactly as
+     easy as accepting, which is the whole point of asking. */
+  .zl-cookie { gap: 0.5rem 1rem; padding: 0.5rem 1rem; }
+  .zl-cookie > span { flex: 1 1 100%; font-size: .75rem; line-height: 1.4; }
+  .zl-cookie__actions { flex: 1 1 100%; }
+  .zl-cookie__actions .zl-btn { flex: 1 1 0; justify-content: center; }
 }
 
 /* ---------- 14. UTILITIES ------------------------------------------------ */

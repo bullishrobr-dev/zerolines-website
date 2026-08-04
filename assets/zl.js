@@ -460,9 +460,22 @@
 
     // Held back until the visitor scrolls — shown on first paint it competes with
     // the hero, and on narrow viewports it lands on the hero's own buttons.
-    function onScroll() { if (window.scrollY > 280) open(); }
+    /* Never while someone is mid-reading. The analyser's quiz and photo steps
+       put their controls near the bottom of the viewport, and a fixed bar there
+       covered 71% of Continue on a 375px screen — the only conversion tool the
+       brand has, blocked on the first thing a stranger does. The notice waits
+       for the intro, the result or the sent panel, which costs nothing: no
+       non-consented tag can load in the meantime, because the gate holds them
+       regardless of whether the bar has been answered yet. */
+    function midFlow() {
+      var q = document.getElementById('zl-a-quiz');
+      var ph = document.getElementById('zl-a-photo');
+      return !!((q && !q.hidden) || (ph && !ph.hidden));
+    }
+
+    function onScroll() { if (window.scrollY > 280 && !midFlow()) open(); }
     window.addEventListener('scroll', onScroll, { passive: true });
-    setTimeout(open, 14000);              // backstop for visitors who never scroll
+    setTimeout(function () { if (!midFlow()) open(); }, 14000);   // backstop for visitors who never scroll
     window.addEventListener('resize', reserveSpace, { passive: true });
 
     banner.addEventListener('click', function (e) {
@@ -502,6 +515,22 @@
           ok.setAttribute('role', 'status');
           ok.textContent = 'Thank you — you are on the list. We will be in touch.';
           wrap.appendChild(ok);
+
+          /* Every waitlist form carries action="/thank-you/", and that page is
+             the only place a fresh subscriber is offered the analyser. Because
+             this handler preventDefaults unconditionally, no visitor with
+             JavaScript had ever reached it — the highest-intent moment in the
+             funnel ended in a full stop. Rather than navigate away from a page
+             they may still be reading, offer the next step where they are. */
+          if (!wrap.querySelector('[data-next-step]')) {
+            var next = document.createElement('p');
+            next.setAttribute('data-next-step', '');
+            next.style.cssText = 'margin-top:1rem;font-size:.9375rem;line-height:1.7';
+            next.innerHTML = 'Your complimentary skin analysis does not wait for launch — '
+              + '<a href="/analyser/">take it now</a>. It asks for no account, and the '
+              + 'reading is written out and sent to you.';
+            wrap.appendChild(next);
+          }
         }).catch(function () {
           if (btn) { btn.disabled = false; btn.textContent = original; }
           if (status) {

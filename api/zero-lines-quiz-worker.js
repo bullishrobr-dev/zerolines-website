@@ -372,6 +372,11 @@ The attached photograph is your primary evidence. Read it zone by zone before yo
         },
         body: JSON.stringify({
           model: env.ZL_MODEL || DEFAULT_MODEL,
+          /* The page promises the photograph is not retained and not used for
+             training. That promise is only ours to make if we actually ask for
+             it — this restricts routing to providers that agree, rather than
+             trusting the default. Without it the claim was a hope. */
+          provider: { data_collection: 'deny' },
           // 0.35, not 0.9. This is a reading, not a creative brief — the same
           // photograph should produce broadly the same assessment twice.
           temperature: 0.35,
