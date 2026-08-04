@@ -27,6 +27,25 @@
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/cormorant-garamond-latin.woff2" crossorigin>
 <link rel="stylesheet" href="/assets/zl.css">
+<style>
+  /* The house figure. A champagne hairline above it, the same mark the report
+     and the immediate-effect chip use, so the photograph reads as evidence
+     rather than decoration. */
+  .zl-house__figure { margin: 0; }
+  .zl-house__figure img {
+    width: 100%; height: auto; display: block;
+    border-top: 2px solid var(--champagne);
+  }
+  .zl-house__figure figcaption {
+    margin-top: .875rem;
+    font-size: .6875rem; font-weight: 500; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--mist);
+  }
+  @media (max-width: 900px) {
+    .zl-house__figure { margin-top: clamp(2rem, 5vh, 2.75rem); }
+  }
+</style>
+
 
 <script type="application/ld+json">
 {
@@ -551,7 +570,64 @@
   </div>
 </section>
 
-<!-- ── 8. The position ──────────────────────────────────────────────────── -->
+<!-- ── 8. The house — who is actually behind this ───────────────────────────
+     The page told the story of a conviction for seven sections and never showed
+     that anyone holds it. Every house this brand is measured against — La Mer,
+     La Prairie, Augustinus Bader, Aesop — puts people on the page somewhere, and
+     the absence reads as a drop-shipper with good taste.
+
+     Deliberately not a founder portrait and not a fabricated biography. Nothing
+     below is invented: the laboratory in Poblenou, the Andorran source and the
+     two contact routes are all stated elsewhere on this site and all true. The
+     photograph is of the work, not of a person being presented as its author.
+     ────────────────────────────────────────────────────────────────────────── -->
+<section class="zl-section" id="the-house">
+  <div class="zl-container">
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">07</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">The House</span>
+    </div>
+
+    <div class="zl-split zl-split--wide-txt" style="align-items:center;margin-top:clamp(2rem,5vh,3rem)">
+      <div>
+        <h2 class="zl-display-l" style="max-width:14ch">
+          <span class="zl-rise"><span>Small hands,</span></span>
+          <span class="zl-rise" style="--reveal-delay:130ms"><span><em class="zl-em--brand">on purpose</em>.</span></span>
+        </h2>
+
+        <div class="zl-prose" data-reveal style="--reveal-delay:240ms;margin-top:clamp(1.75rem,4vh,2.5rem)">
+          <p>
+            Zero Lines is made in a converted textile warehouse in Poblenou,
+            Barcelona, in a laboratory we run ourselves rather than a facility we
+            rent time in. The water comes from a protected valley in the Andorran
+            Pyrenees, at just over 1,800 metres, and it is carried down cold.
+          </p>
+          <p>
+            It is a small operation, and that is a decision rather than a stage we
+            are passing through. Every formulation in the protocol was written,
+            argued over and reworked by the same few people, which is why the
+            range is six things and not sixty.
+          </p>
+          <p>
+            If you write to us, one of us reads it. There is no queue and no
+            ticket number — <a href="https://wa.me/35054005198">WhatsApp</a> and
+            <a href="mailto:info@zerolines.life">info@zerolines.life</a> both reach
+            a person, between nine and seven, Monday to Saturday.
+          </p>
+        </div>
+      </div>
+
+      <figure class="zl-house__figure" data-reveal="wipe" style="--reveal-delay:180ms">
+        <img src="/assets/science-researcher-lab.webp"
+             alt="A formulator at the bench in the Poblenou laboratory, pale cream resting in plain glass"
+             loading="lazy" width="2752" height="1536">
+        <figcaption>The formulation bench, Poblenou</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ── 9. The position ──────────────────────────────────────────────────── -->
 <section class="zl-section zl-dark zl-on-dark">
   <div class="zl-container zl-container--narrow zl-center">
     <span class="zl-eyebrow zl-eyebrow--center" data-reveal>The Position</span>
