@@ -8,6 +8,42 @@ Ordered by what it unlocks. Do 1 and 2 and the rest can wait.
 
 ---
 
+## 0. URGENT — nobody can email you
+
+**`zerolines.life` has no MX record.** Mail sent to `info@zerolines.life`
+cannot be delivered. It is published on **52 pages**, in the footer of every one,
+in your Organization schema, and in the reply-to of every skin assessment the
+analyser sends. Anyone who has written to you has had it bounce, or vanish.
+
+Verified: `dig MX zerolines.life` returns nothing at all.
+
+Sending works — that is a separate record, and Resend's DKIM is in place, which
+is why the assessment emails arrive. Only *receiving* is broken.
+
+**Fastest fix, free, about two minutes.** Your DNS is at Namecheap
+(`dns1.registrar-servers.com`), and Namecheap includes free email forwarding:
+
+1. Namecheap → Domain List → zerolines.life → **Manage**
+2. **Advanced DNS** → **Mail Settings** → choose **Email Forwarding**
+3. Add: `info` → `bullishrobr@gmail.com`
+
+That publishes the MX records for you and mail starts arriving. Later, if you
+want a real mailbox at the domain rather than forwarding, Zoho Mail is free for
+one domain and Google Workspace is about £5 a month — either replaces this.
+
+**While you are in there, add SPF at the apex.** There is a DKIM record for
+Resend but no SPF on the root domain, so your assessment emails are only half
+authenticated and more likely to land in spam. Add a TXT record on `@`:
+
+```
+v=spf1 include:amazonses.com ~all
+```
+
+*(Resend sends via Amazon SES from eu-west-1 — that include is what their setup
+page specifies. If their dashboard shows a different value, use theirs.)*
+
+---
+
 ## 1. Analytics — 5 minutes, and do this one first
 
 Right now the site measures **nothing**. Not how many people find the analyser,
