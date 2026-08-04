@@ -1140,13 +1140,16 @@ a.zl-blog-category-btn { text-decoration: none; }
   height: 15px;
   color: var(--mist-2);
 }
+/* 16px is a floor, not a preference: iOS Safari zooms the viewport when a text
+   input smaller than that is focused, and it does not zoom back out afterwards.
+   The reader is left on a page they now have to pinch their way around. */
 .zl-blog-search-input {
   width: 100%;
   padding: 0.9375rem 0 0.875rem 1.75rem;
   background: transparent;
   border: 0;
   border-bottom: 1px solid var(--rule);
-  font-size: 0.9375rem;
+  font-size: 1rem;
   color: var(--ink);
   transition: border-color var(--dur-ui) var(--ease);
 }

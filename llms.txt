@@ -24,12 +24,13 @@ Six steps, one fixed order. Full sequence: https://zerolines.life/protocol/
 3. [Signal — BioSignal Facial Serum](https://zerolines.life/products/serum/): the daily treatment step, carrying the collagen–peptide–mineral complex.
 4. [Shield — Environmental Shield Day Cream](https://zerolines.life/products/day-cream/): morning protection against environmental stress.
 5. [Restore — Renewal and Repair Night Cream](https://zerolines.life/products/night-cream/): evening repair while the skin does its overnight work.
-6. [Sustain — Precision Collagen Activation Refill](https://zerolines.life/products/syringe-refill/): keeps the Syringe step going day after day.
+6. [Sustain — Precision Collagen Activation Refill](https://zerolines.life/products/syringe-refill/): the same formulation as the Syringe, in a cartridge that replaces the spent one in the applicator you already have. At weekly use, roughly one a year.
 
 ## Skin Analyser
 
 - [Skin Analyser](https://zerolines.life/analyser/): ten questions and one photograph; reads texture, tone, hydration, pores, pigmentation, lines, elasticity and sun exposure, then returns a written assessment and the protocol that follows from it.
-- It is free, needs no account and no payment, and is available now rather than at launch. The photograph is read once, is not stored, and is never attached to a name. You are offered your email address only at the end, if you want the assessment sent to you.
+- It is free, needs no account and no payment, and is available now rather than at launch. An email address is required: the assessment is written out and sent there, and does not appear on the page. The email carries a private link to reopen it and save it as a PDF, valid for thirty days.
+- The photograph is read once by the analysis service the house contracts, is not stored, is never attached to a name, and is not sent in the email.
 - It does not diagnose, does not remember you between visits, and does not track change over time.
 
 ## The Journal

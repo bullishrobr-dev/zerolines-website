@@ -312,11 +312,36 @@
     if (!burger || !menu) return;
     var lastFocus = null;
 
+    var heldScroll = 0;
+
     function setOpen(open) {
       menu.setAttribute('data-open', open ? 'true' : 'false');
       root.setAttribute('data-menu', open ? 'open' : 'closed');
       burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-      document.body.style.overflow = open ? 'hidden' : '';
+
+      /* overflow:hidden alone does not hold position on iOS — the page silently
+         scrolls under the overlay, and closing the menu leaves the reader
+         somewhere they never navigated to. Pinning the body and restoring the
+         offset keeps them exactly where they opened it. */
+      if (open) {
+        heldScroll = window.scrollY || window.pageYOffset || 0;
+        document.body.style.position = 'fixed';
+        document.body.style.top = -heldScroll + 'px';
+        document.body.style.left = '0';
+        document.body.style.right = '0';
+        document.body.style.overflow = 'hidden';
+      } else if (document.body.style.position === 'fixed') {
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.left = '';
+        document.body.style.right = '';
+        document.body.style.overflow = '';
+        // html has scroll-behavior:smooth, so a plain scrollTo animates and
+        // lands late — measured 137px adrift. This one has to be instant.
+        try { window.scrollTo({ top: heldScroll, behavior: 'instant' }); }
+        catch (e) { window.scrollTo(0, heldScroll); }
+      }
+
       if (open) {
         lastFocus = document.activeElement;
         var first = menu.querySelector('a, button');
@@ -329,7 +354,22 @@
     burger.addEventListener('click', function () { setOpen(menu.getAttribute('data-open') !== 'true'); });
     menu.addEventListener('click', function (e) { if (e.target.closest('a')) setOpen(false); });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && menu.getAttribute('data-open') === 'true') setOpen(false);
+      var open = menu.getAttribute('data-open') === 'true';
+      if (!open) return;
+      if (e.key === 'Escape') { setOpen(false); return; }
+      if (e.key !== 'Tab') return;
+
+      /* Keep focus inside the overlay. Without this, Tab from the last link
+         walks into the page behind it and the visitor is operating controls
+         they cannot see. The burger is included because it is the close
+         control and has to stay reachable. */
+      var items = [burger].concat(
+        [].slice.call(menu.querySelectorAll('a[href], button:not([disabled])'))
+      ).filter(function (el) { return el.offsetParent !== null || el === burger; });
+      if (!items.length) return;
+      var first = items[0], last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     });
     setOpen(false);
   }
@@ -513,7 +553,14 @@
           ok.className = 'zl-form__status';
           ok.setAttribute('data-state', 'ok');
           ok.setAttribute('role', 'status');
-          ok.textContent = 'Thank you — you are on the list. We will be in touch.';
+          /* The contact form posts through this same handler, so a press or
+             wholesale enquiry was being told it had joined a mailing list —
+             directly contradicting the promise fourteen lines below it that the
+             message is used only to answer them. */
+          var isContact = (form.getAttribute('name') || '') === 'contact';
+          ok.textContent = isContact
+            ? 'Thank you — your message is with us. We reply within one working day.'
+            : 'Thank you — you are on the list. We will be in touch.';
           wrap.appendChild(ok);
 
           /* Every waitlist form carries action="/thank-you/", and that page is
@@ -522,7 +569,7 @@
              JavaScript had ever reached it — the highest-intent moment in the
              funnel ended in a full stop. Rather than navigate away from a page
              they may still be reading, offer the next step where they are. */
-          if (!wrap.querySelector('[data-next-step]')) {
+          if (!isContact && !wrap.querySelector('[data-next-step]')) {
             var next = document.createElement('p');
             next.setAttribute('data-next-step', '');
             next.style.cssText = 'margin-top:1rem;font-size:.9375rem;line-height:1.7';

@@ -677,6 +677,27 @@ input, textarea, select { font: inherit; color: inherit; }
 }
 .zl-js .zl-rise.is-in > * { transform: none; }
 
+/* THE RISE IS FOR THE H1, AND NOTHING ELSE.
+   It was on 194 spans site-wide — 16 on the homepage alone, across all eight of
+   its display headings — so it fired roughly every 1.5 screens of a 10,651px
+   scroll. An effect that happens on every heading is not an effect, it is the
+   default, and a three-line heading took 1.57s to finish arriving.
+
+   Reserved now for the one heading per page that should feel like an entrance.
+   Section headings still arrive, but as a quiet 650ms fade with the same
+   stagger — present, not performing. No HTML changed: the markup stays
+   identical, so any heading can be promoted back by moving it into an h1. */
+.zl-js :is(h2, h3, h4, p, div) .zl-rise > *,
+.zl-js .zl-rise:not(h1 .zl-rise) > * {
+  transform: none;
+  opacity: 0;
+  transition: opacity 650ms var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.zl-js :is(h2, h3, h4, p, div) .zl-rise.is-in > *,
+.zl-js .zl-rise:not(h1 .zl-rise).is-in > * { opacity: 1; }
+.zl-js h1 .zl-rise > * { opacity: 1; }
+
 /* e. stagger — children animate in sequence off one trigger */
 .zl-js [data-stagger] > * {
   opacity: 0; transform: translateY(24px);
@@ -890,6 +911,16 @@ html.zl-rm [data-reveal="wipe"] img { transform: none !important; transition: no
 }
 .zl-input::placeholder { color: var(--mist-2); }
 .zl-input:focus { outline: none; border-bottom-color: var(--tiffany); }
+/* outline:none above removes the only cue a keyboard user has, leaving a 1px
+   underline at 1.85:1. :focus-visible restores a real ring for keyboard
+   navigation without putting one around every field a mouse touches. */
+.zl-input:focus-visible {
+  outline: 2px solid var(--house-mid);
+  outline-offset: 3px;
+  border-bottom-color: var(--house-mid);
+}
+.zl-on-dark .zl-input:focus-visible,
+.zl-brand-field .zl-input:focus-visible { outline-color: #fff; }
 .zl-on-dark .zl-input { color: #fff; border-bottom-color: rgba(255,255,255,.32); }
 .zl-brand-field .zl-input { color: #fff; border-bottom-color: rgba(255,255,255,.34); }
 .zl-on-dark .zl-input::placeholder { color: rgba(255,255,255,.55); }
@@ -919,7 +950,14 @@ html.zl-rm [data-reveal="wipe"] img { transform: none !important; transition: no
 .zl-footer__brand .zl-logo { color: var(--on-dark); font-size: .875rem; }
 .zl-footer h3 { font-size: var(--t-eyebrow); font-weight: 500; letter-spacing: .28em; text-transform: uppercase; color: var(--on-dark-3); margin-bottom: 1.25rem; }
 .zl-footer__links { display: flex; flex-direction: column; gap: .75rem; }
-.zl-footer__links a { font-size: .875rem; color: var(--on-dark-2); transition: color var(--dur-ui) var(--ease); }
+/* 25px tall on a 36.5px pitch — under the 44px touch minimum, and these are the
+   legal and support links, which is where a frustrated visitor goes. Padding
+   rather than font-size, so the footer's proportions do not change. */
+.zl-footer__links a {
+  font-size: .875rem; color: var(--on-dark-2);
+  display: inline-flex; align-items: center; min-height: 44px;
+  transition: color var(--dur-ui) var(--ease);
+}
 .zl-footer__links a:hover { color: var(--tiffany-lift); }
 .zl-footer__bottom { margin-top: clamp(3rem, 6vh, 5rem); padding-top: 2rem; border-top: 1px solid var(--rule-dark-soft); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-size: .75rem; color: var(--on-dark-3); }
 .zl-footer__legal { display: flex; flex-wrap: wrap; gap: 1.5rem; }

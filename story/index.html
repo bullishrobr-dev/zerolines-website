@@ -31,7 +31,10 @@
   /* The house figure. A champagne hairline above it, the same mark the report
      and the immediate-effect chip use, so the photograph reads as evidence
      rather than decoration. */
-  .zl-house__figure { margin: 0; }
+  /* The wipe reveal scales the image slightly before settling, and without a
+     clip that overflow reaches the document — measured 771px against a 768px
+     viewport. .zl-media hides its own; this figure has to hide its own too. */
+  .zl-house__figure { margin: 0; overflow: hidden; }
   .zl-house__figure img {
     width: 100%; height: auto; display: block;
     border-top: 2px solid var(--champagne);

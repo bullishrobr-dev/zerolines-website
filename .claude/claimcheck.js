@@ -42,6 +42,10 @@ const HARD = [
 // Acceptable when the site is explaining the category; not acceptable in the
 // brand's own promotional voice.
 const SOFT = [
+  // Requires the "of" that turns a number into a share of an outcome. Without
+  // it this fired on "The 1% Line", which is the INCI ordering rule and exactly
+  // the kind of false positive that gets a linter switched off.
+  [/\b\d{1,3}\s?%\s+of\s+(visible\s+)?(ageing|aging|damage|wrinkles|fine lines)/i, 'efficacy percentage in a headline'],
   [/\btransformative\b/i, 'unsupportable efficacy adjective'],
   [/\bproven\b/i, 'substantiation claim'],
   [/\bguarantee[sd]?\b/i, 'guarantee'],
@@ -73,6 +77,10 @@ function excused(body, start, end) {
 // Where the brand speaks in its own promotional voice. A SOFT hit here fails.
 const BRAND_VOICE = [
   /<h[12]\b[^>]*>[\s\S]*?<\/h[12]>/gi,
+  // Journal headlines are brand voice too. "SPF Every Day: The Habit That
+  // Prevents 80% of Visible Ageing" ran as an H1 and across six other pages,
+  // and this linter passed it because it was only reading product copy.
+  /<h[1-3]\b[^>]*class="[^"]*(?:blog|article)[^"]*"[^>]*>[\s\S]*?<\/h[1-3]>/gi,
   /<meta\s+[^>]*(?:name|property)=["'](?:description|og:description|og:title|twitter:description|twitter:title)["'][^>]*>/gi,
   /<title\b[^>]*>[\s\S]*?<\/title>/gi,
   /<[^>]*class=["'][^"']*zl-(?:hero|eyebrow|display|lede)[^"']*["'][^>]*>[\s\S]{0,400}?<\//gi,

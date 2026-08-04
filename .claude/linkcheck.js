@@ -8,7 +8,9 @@ const ROOT = path.resolve(__dirname, '..');
 
 function walk(dir, out = []) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-    if (['node_modules', '.git', '.claude', '.venv', '.netlify'].includes(e.name)) continue;
+    // _do-not-use holds retired assets and iCloud conflict copies. It is
+    // gitignored and never deployed, so its stale links are not the site's.
+    if (['node_modules', '.git', '.claude', '.venv', '.netlify', '_do-not-use'].includes(e.name)) continue;
     const p = path.join(dir, e.name);
     if (e.isDirectory()) walk(p, out);
     else if (e.name.endsWith('.html') && !e.name.includes('backup')) out.push(p);

@@ -43,6 +43,11 @@
 /assets/zl-analyser.js
   Cache-Control: public, max-age=3600, stale-while-revalidate=86400
 
+# Typefaces. These genuinely never change — a new weight means a new filename —
+# so they get the long immutable cache the images cannot have.
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
 # Photography: a day fresh, a week stale-while-revalidate. Replacing an image
 # under its own filename still reaches everyone within a day, and returning
 # visitors inside that day pay nothing for it.
