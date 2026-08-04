@@ -954,7 +954,7 @@
   z-index: 2;
   padding: 0.5rem 0.75rem;
   background: rgba(251, 250, 248, 0.94);
-  font-size: 0.5625rem;
+  font-size: 0.6875rem;
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -969,7 +969,7 @@
   z-index: 2;
   padding: 0.5rem 0.75rem;
   background: rgba(251, 250, 248, 0.94);
-  font-size: 0.5625rem;
+  font-size: 0.6875rem;
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -1020,7 +1020,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem 1.125rem;
-  font-size: 0.5625rem;
+  font-size: 0.6875rem;
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
