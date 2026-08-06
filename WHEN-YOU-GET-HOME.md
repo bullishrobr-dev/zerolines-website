@@ -28,18 +28,32 @@ empty and unreachable. This is a five-minute fix, and it costs nothing.
 
 Namecheap → Domain List → zerolines.life → **Manage** → **Advanced DNS**.
 
-Under **Mail Settings**, change the dropdown to **Private Email** — that
-publishes both MX records for you. Then add the TXT by hand under Host Records.
-Or add all three manually:
+**Leave Mail Settings on Custom MX.** It is already set there, and the two MX
+rows beneath it — `send` and `send.receipts` — belong to Resend. Switching that
+dropdown to "Private Email" hands the MX table to Namecheap to manage, which
+rewrites it and deletes them. That breaks bounce handling on the assessment
+emails and can un-verify the sending domain. Adding rows by hand achieves the
+same thing with no risk.
 
-| Type | Host | Value | Priority |
-|---|---|---|---|
-| MX Record | `@` | `mx1.privateemail.com` | `10` |
-| MX Record | `@` | `mx2.privateemail.com` | `10` |
-| TXT Record | `@` | `v=spf1 include:spf.privateemail.com ~all` | — |
+Click **ADD NEW RECORD** three times:
 
-TTL: Automatic. Allow up to four hours, though it is usually under thirty
-minutes.
+| Type | Host | Value | Priority | TTL |
+|---|---|---|---|---|
+| MX Record | `@` | `mx1.privateemail.com` | `10` | Automatic |
+| MX Record | `@` | `mx2.privateemail.com` | `10` | Automatic |
+| TXT Record | `@` | `v=spf1 include:spf.privateemail.com ~all` | — | Automatic |
+
+Host is `@`, not `zerolines.life` — Namecheap expands it. Do not wrap the TXT
+value in quotes; Namecheap adds its own, and doubling them breaks the record
+silently. Afterwards the table shows four MX rows, which is correct — they sit
+on different hosts and do not compete.
+
+Allow up to four hours, though it is usually under thirty minutes.
+
+**All three mailboxes come back together.** MX is per domain, not per address:
+the record routes everything `@zerolines.life` to Private Email, which then sorts
+it by the part before the `@`. `info@`, `roberto@` and `dimitri@` are already
+provisioned and switched on, so there is nothing to configure per mailbox.
 
 **Do not touch the A records (`75.2.60.5`, `99.83.231.61`) or the `www` CNAME.**
 Those are the website. Mail and web are separate lanes on the same domain and
