@@ -267,6 +267,31 @@
     // The option that was just activated has been removed from the document, so
     // focus would otherwise fall back to <body>. Move it to the new question.
     try { h.focus({ preventScroll: true }); } catch (e) { /* focus is a nicety */ }
+    bringQuestionIntoView();
+  }
+
+  /* preventScroll above is deliberate — an unrequested jump the instant you tap
+     an option is worse than none. But it left the viewport wherever the old
+     options were, so on a phone, answering a question near the bottom of a long
+     list rendered the next one with its heading above the fold: you were
+     looking at answers to a question you could not read. Ten questions, and it
+     compounds every time.
+
+     Only move when the panel is actually out of position, so someone answering
+     from the top of the screen is never jolted. */
+  function bringQuestionIntoView() {
+    var panel = $('zl-a-meter') || qHost;
+    if (!panel || !panel.getBoundingClientRect) return;
+    var header = document.querySelector('.zl-header');
+    var pad = (header ? header.getBoundingClientRect().height : 0) + 14;
+    var top = panel.getBoundingClientRect().top;
+    if (top >= pad - 2 && top <= window.innerHeight * 0.45) return;   // already readable
+    var jump = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    try {
+      window.scrollTo({ top: window.scrollY + top - pad, behavior: jump ? 'instant' : 'smooth' });
+    } catch (e) {
+      window.scrollTo(0, window.scrollY + top - pad);
+    }
   }
 
   function repaintOptions(q, list) {
