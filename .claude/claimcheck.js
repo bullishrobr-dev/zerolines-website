@@ -37,6 +37,26 @@ const HARD = [
   [/\banti[-\s]?wrinkle\b/i, 'wrinkle-treatment claim'],
   [/\bbotox[-\s]?(like|alternative|in\s+a)\b/i, 'comparison to a prescription medicine'],
   [/\bfiller[-\s]?(like|alternative)\b/i, 'comparison to a medical device'],
+  /* Everything below was found live, in structured data this linter could not
+     see, on the day the JSON-LD scan was added. Each is here so that the exact
+     sentence cannot come back. */
+  // "suitable for rosacea, acne and sensitive skin" — a cosmetic may not be
+  // offered as appropriate treatment for a named condition.
+  [/\b(suitable|recommended|indicated|effective)\s+(for|against)\s+[^.;]{0,40}\b(acne|eczema|rosacea|psoriasis|dermatitis|melasma)\b/i, 'offered as suitable for a named condition'],
+  // "without the thinning that corticosteroids cause" — a FAVOURABLE COMPARISON
+  // to a prescription medicine. Naming one while explaining the category is
+  // ordinary science writing: "prescription retinoids (tretinoin) increase
+  // collagen synthesis" is a fact about a class this house does not sell. A
+  // bare name-match flagged that, so the comparison has to be in the pattern.
+  [/\b(unlike|without the|better than|as effective as|instead of|rivals?|outperforms?|compared (?:to|with))\s+[^.;]{0,50}\b(corticosteroid|hydrocortisone|tretinoin|isotretinoin)s?\b/i, 'favourable comparison to a prescription medicine'],
+  // "Most users notice improved hydration within 7-14 days" — a consumer-panel
+  // result for a range that has never been sold to a consumer.
+  [/\b(most|many|\d{1,3}\s?%\s+of)\s+(users|customers|clients|women|men)\s+(notice|report|see|experience|say)/i, 'consumer-panel result'],
+  // "Structural changes in collagen density become measurable after 8-12 weeks"
+  [/\bbecomes?\s+measurable\b|\bmeasurable\s+(changes?|improvements?|results?|increase)/i, 'promise of a measurable physiological change'],
+  // A HowTo step told search engines the day cream "adds mineral UV protection".
+  // It carries no SPF, and its own page says so four times.
+  [/\b(adds?|provides?|offers?|delivers?|gives?)\s+(\w+\s+){0,2}(UV|sun)\s+protection\b/i, 'sun-protection claim'],
 ];
 
 // Acceptable when the site is explaining the category; not acceptable in the
@@ -52,6 +72,13 @@ const SOFT = [
   [/\bmiracle\b/i, 'miracle claim'],
   [/\bdramatic(ally)?\b/i, 'overstated magnitude'],
   [/\bmedical[-\s]?grade\b/i, 'implies regulated status'],
+  /* SOFT rather than HARD, deliberately. "Oestrogen levels directly stimulate
+     collagen synthesis" and "growth hormone released during deep sleep
+     stimulates collagen synthesis" are statements about human biology inside
+     educational articles, and as a hard rule this flagged four of them. In the
+     brand's own voice — a heading, a meta description, a product page — the
+     same words stop describing biology and start claiming what Zero Lines does. */
+  [/\bstimulates?\s+collagen\s+(synthesis|production)\b/i, 'physiological-action claim in brand voice'],
 ];
 
 /* The site under-claims on purpose — "No single morning is dramatic", "We do not
@@ -71,6 +98,19 @@ function excused(body, start, end) {
   // "myth or miracle" / "miracle or myth" is the title of a debunking article.
   const around = body.slice(Math.max(0, start - 24), end + 24).toLowerCase();
   if (/\bmyth\b[\s\S]{0,12}\bmiracle\b|\bmiracle\b[\s\S]{0,12}\bmyth\b/.test(around)) return 'debunking headline';
+  // "Guaranteed results" is a claim about what a product does. A satisfaction or
+  // money-back guarantee is a term of sale, and a linter that forbids the brand
+  // from offering one has wandered out of claims and into the returns policy.
+  if (/\b(satisfaction|money[- ]back|refund|returns?)\s*$/i.test(before)) return 'commercial guarantee, not efficacy';
+  /* A physiological verb is only a claim when the thing doing it is ours.
+     "Oestrogen levels directly stimulate collagen synthesis" and "growth
+     hormone released during deep sleep stimulates collagen synthesis" describe
+     the reader's own body, in articles about ageing and about sleep. Flagging
+     them asks the house to stop explaining how skin works, which is the one
+     thing the journal exists to do. */
+  if (/\b(oestrogen|estrogen|hormones?|growth hormone|menopause|sleep|exercise|fibroblasts?|retinoids?|retinol|tretinoin|vitamin\s*c|microneedling|the\s+body|your\s+body)\b[^.;]{0,60}$/i.test(before)) {
+    return 'subject is the body or a third-party category, not a Zero Lines formulation';
+  }
   return null;
 }
 
@@ -104,10 +144,57 @@ const strip = (s) => s.replace(/<(script|style)\b[\s\S]*?<\/\1>/gi, '');
 const text = (s) => s.replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/gi, ' ').replace(/\s+/g, ' ');
 const lineOf = (s, i) => s.slice(0, i).split('\n').length;
 
+/* ---------------------------------------------------------------------------
+   Structured data.
+
+   strip() above deletes every <script> block before anything is scanned, which
+   meant no JSON-LD on any of the 52 pages had ever been read by this linter.
+   That is precisely where the claims removed from the visible copy were still
+   living: "80% of visible ageing" and the retinoid "only proven" line survived
+   in the markup of the page they had been deleted from; a HowTo step told
+   Google the day cream adds "mineral UV protection" when its own product page
+   says four times that it carries no SPF.
+
+   JSON-LD is not an implementation detail. It is the brand asserting things in
+   public, under its own name, in the form search engines quote. It is brand
+   voice, so SOFT claims fail here exactly as they do in an H1.
+   --------------------------------------------------------------------------- */
+const LD_BLOCK = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
+
+function ldStrings(source) {
+  const out = [];
+  LD_BLOCK.lastIndex = 0;
+  let m;
+  while ((m = LD_BLOCK.exec(source)) !== null) {
+    const line = lineOf(source, m.index);
+    let parsed;
+    try {
+      parsed = JSON.parse(m[1]);
+    } catch (e) {
+      // Unparseable is its own problem, but scan the raw text rather than
+      // silently skipping the block — a broken block still ships to crawlers.
+      out.push({ line, s: m[1] });
+      continue;
+    }
+    const walk = (n) => {
+      if (typeof n === 'string') {
+        // URLs and enum-ish @type values carry no claims and produce noise.
+        if (!/^(https?:|\/|#)/.test(n) && n.length > 12) out.push({ line, s: n });
+        return;
+      }
+      if (Array.isArray(n)) return n.forEach(walk);
+      if (n && typeof n === 'object') return Object.values(n).forEach(walk);
+    };
+    walk(parsed);
+  }
+  return out;
+}
+
 const hits = [];
 
 for (const file of walk(ROOT)) {
-  const raw = strip(fs.readFileSync(file, 'utf8'));
+  const source = fs.readFileSync(file, 'utf8');
+  const raw = strip(source);
   const rel = path.relative(ROOT, file);
   const isProduct = rel.startsWith('products/') || rel === 'index.html';
 
@@ -152,6 +239,26 @@ for (const file of walk(ROOT)) {
         hits.push({ file: rel, severity: 'soft', why, match: m[0].trim(), where: 'product page copy' });
         break;
       }
+    }
+  }
+
+  // Structured data — every string the page publishes to machines. Both tiers
+  // apply: there is no editorial register here, only assertion.
+  for (const { line, s } of ldStrings(source)) {
+    for (const [re, why] of HARD) {
+      const g = new RegExp(re.source, 'gi');
+      let m;
+      while ((m = g.exec(s)) !== null) {
+        if (excused(s, m.index, m.index + m[0].length)) continue;
+        hits.push({ file: rel, severity: 'hard', why, match: m[0].trim(), where: 'structured data', line });
+        break;
+      }
+    }
+    for (const [re, why] of SOFT) {
+      const g = new RegExp(re.source, 'gi');
+      const m = g.exec(s);
+      if (!m || excused(s, m.index, m.index + m[0].length)) continue;
+      hits.push({ file: rel, severity: 'soft', why, match: m[0].trim(), where: 'structured data', line });
     }
   }
 }
