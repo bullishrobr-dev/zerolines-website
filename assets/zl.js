@@ -398,7 +398,7 @@
   var ANALYTICS = {
     ga4: '',            // 'G-XXXXXXXXXX'  — needs consent
     metaPixel: '',      // '123456789012'  — needs consent
-    cloudflareToken: '' // from Cloudflare > Web Analytics — no consent needed
+    cloudflareToken: '66cbb3e739024eb194d16b8e2f364089' // Cloudflare Web Analytics — cookieless, so no consent needed
   };
 
   var CONSENT_KEY = 'zl_cookie_choice';
