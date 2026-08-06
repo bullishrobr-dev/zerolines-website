@@ -264,6 +264,68 @@ async function handleExport(url, env) {
   });
 }
 
+/* Static routing, done here rather than by the assets binding.
+ *
+ * The site is two shapes at once: /products/ and /story/ are directory indexes,
+ * while /faq.html and all twenty-five journal articles are real .html files.
+ * Cloudflare's "auto-trailing-slash" mode serves the first shape and answers
+ * the second with a 307 to an extensionless twin — measured at nine of the
+ * twenty-seven routes tested, all of them already indexed by Google at the
+ * address it was redirecting away from.
+ *
+ * So: ask for exactly what the visitor asked for, and only if that misses, try
+ * the directory index. No redirect, no URL change, nothing for a crawler to
+ * re-learn.
+ */
+async function serveAsset(request, env, url) {
+  /* The clean request matters as much as the path.
+   *
+   * A browser sends `sec-fetch-mode: navigate` on every page load, and under
+   * that header the assets binding answers any path without an exact file
+   * match with the 404 page — so /index.html and /faq.html were fine while /
+   * and /products/ were not. Every curl test passed because curl sends no such
+   * header; the entire site 404'd in a real browser. Copying the incoming
+   * request into the fallback carried the header along and hit the same rule.
+   *
+   * So the binding is only ever asked for an exact file, by a plain GET. */
+  const ask = (pathname) =>
+    env.ASSETS.fetch(new Request(new URL(pathname + url.search, url), { method: 'GET' }));
+
+  const p = url.pathname;
+
+  /* Exact path first. This is also what applies _redirects — the ten legacy
+     short URLs (/faq, /journal, /analyzer) live there, and with the Worker now
+     running ahead of the assets binding, skipping straight to an index file
+     would step over every one of them. */
+  const direct = await ask(p);
+  if (direct.status !== 404) return direct;
+
+  // Directory-style URL: resolve its index. /faq.html and /assets/zl.css have
+  // extensions and are genuinely missing if the exact ask failed.
+  if (!/\.[a-z0-9]{2,5}$/i.test(p)) {
+    const viaIndex = await ask(p.endsWith('/') ? p + 'index.html' : p + '/index.html');
+    if (viaIndex.status !== 404) return viaIndex;
+  }
+
+  // Genuinely missing. Serve the house's own 404 page, with a 404 status.
+  const notFound = await ask('/404.html');
+  return new Response(notFound.body, {
+    status: 404,
+    headers: { 'Content-Type': 'text/html; charset=utf-8' },
+  });
+}
+
+/* Eight of the ten rules in _redirects point at a file and the assets binding
+   resolves them itself. Two point at a directory — /journal -> /blog/ and
+   /analyzer -> /analyser/ — and there the binding follows the rule, looks for
+   a file at the directory path, finds none, and answers 404. Both are old
+   addresses that may be in somebody's bookmarks, so they get a real redirect
+   here, before the binding is consulted at all. */
+const LEGACY_DIR = {
+  '/journal': '/blog/',
+  '/analyzer': '/analyser/',
+};
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -271,7 +333,9 @@ export default {
     if (url.pathname === '/__forms') return handleForm(request, env, ctx);
     if (url.pathname === '/__forms/export') return handleExport(url, env);
 
-    // Everything else is the site itself.
-    return env.ASSETS.fetch(request);
+    const legacy = LEGACY_DIR[url.pathname.replace(/\/+$/, '') || '/'];
+    if (legacy) return Response.redirect(new URL(legacy, url).toString(), 301);
+
+    return serveAsset(request, env, url);
   },
 };

@@ -21,10 +21,22 @@ workers_dev = true
 [assets]
 directory = "./public"
 binding = "ASSETS"
-# The site is directory-style — /products/ is products/index.html — and every
-# route is a real file, so there is no SPA fallback to configure.
-html_handling = "auto-trailing-slash"
+# "none", not "auto-trailing-slash". This site is a mix: /products/ is a
+# directory index, while /faq.html and all 25 journal articles live at real
+# .html URLs — a third of the site, every one of them indexed by Google at that
+# exact address. auto-trailing-slash answers those with a 307 to an
+# extensionless twin, which is a redirect on a third of the pages and a URL
+# change Google has to re-learn in exchange for nothing. The Worker resolves
+# directory indexes itself instead; see serveAsset in src/index.js.
+html_handling = "none"
 not_found_handling = "404-page"
+# Without this the assets binding answers before the Worker ever runs, and with
+# html_handling = "none" that means any directory-style URL — /, /products/,
+# every product page — gets the 404 page while /index.html and /faq.html are
+# served fine. It only shows up in a real browser: the binding takes that
+# shortcut on requests carrying `sec-fetch-mode: navigate`, which curl does not
+# send, so every command-line check passed while the whole site was broken.
+run_worker_first = true
 
 [[d1_databases]]
 binding = "ZL_LEADS"
