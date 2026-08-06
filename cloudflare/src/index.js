@@ -136,7 +136,20 @@ function buildNotice(row) {
     ['Message', row.message], ['Source', row.source], ['Referrer', row.referrer],
     ['Country', row.country], ['When', row.created_at],
   ].filter(([, v]) => v);
+  /* The preheader — the grey line a phone shows under the subject. Without one,
+     mail clients build it by flattening whatever HTML comes first, and a table
+     flattens into "FormcontactEmailbullishrobr@gmail." That is the line Roberto
+     reads once per lead, forever, so it carries the thing worth knowing at a
+     glance: what a contact actually wrote, or where a signup came from. */
+  const preheader = row.form === 'contact'
+    ? (row.message || 'No message text.').replace(/\s+/g, ' ').slice(0, 110)
+    : ['from ' + (row.source || 'an unknown page'), row.country, row.referrer && row.referrer.replace(/^https?:\/\/[^/]+/, '') || null]
+        .filter(Boolean).join(' · ').slice(0, 110);
+
   const html = `<div style="font:400 15px/1.7 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#14181A">`
+    // Hidden, then padded so the real content cannot leak into the snippet.
+    + `<div style="display:none;max-height:0;overflow:hidden;opacity:0;mso-hide:all">${esc(preheader)}`
+    + '&#8199;&#65279;'.repeat(60) + `</div>`
     + `<p style="font-size:17px;margin:0 0 16px"><strong>${esc(row.form)}</strong> — ${esc(row.email)}</p>`
     + `<table cellpadding="0" cellspacing="0" style="border-collapse:collapse">`
     + rows.map(([k, v]) => `<tr><td style="padding:5px 18px 5px 0;color:#636764;vertical-align:top;white-space:nowrap">${esc(k)}</td><td style="padding:5px 0">${esc(v)}</td></tr>`).join('')
@@ -144,7 +157,7 @@ function buildNotice(row) {
   return {
     subject: `${row.form === 'contact' ? 'Message' : 'Waitlist'}: ${row.email}`,
     html,
-    text: rows.map(([k, v]) => `${k}: ${v}`).join('\n'),
+    text: preheader + '\n\n' + rows.map(([k, v]) => `${k}: ${v}`).join('\n'),
   };
 }
 
