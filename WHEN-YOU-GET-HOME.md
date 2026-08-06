@@ -20,27 +20,41 @@ Verified: `dig MX zerolines.life` returns nothing at all.
 Sending works — that is a separate record, and Resend's DKIM is in place, which
 is why the assessment emails arrive. Only *receiving* is broken.
 
-**Fastest fix, free, about two minutes.** Your DNS is at Namecheap
-(`dns1.registrar-servers.com`), and Namecheap includes free email forwarding:
+**You already own the mailbox.** Namecheap Private Email, Pro plan, active until
+22 May 2027, with `dimitri@`, `info@` and `roberto@` all provisioned and your
+DKIM key already published. Nothing lapsed. The DNS records that point mail *at*
+that mailbox were simply never added, so the mailbox has been sitting there
+empty and unreachable. This is a five-minute fix, and it costs nothing.
 
-1. Namecheap → Domain List → zerolines.life → **Manage**
-2. **Advanced DNS** → **Mail Settings** → choose **Email Forwarding**
-3. Add: `info` → `bullishrobr@gmail.com`
+Namecheap → Domain List → zerolines.life → **Manage** → **Advanced DNS**.
 
-That publishes the MX records for you and mail starts arriving. Later, if you
-want a real mailbox at the domain rather than forwarding, Zoho Mail is free for
-one domain and Google Workspace is about £5 a month — either replaces this.
+Under **Mail Settings**, change the dropdown to **Private Email** — that
+publishes both MX records for you. Then add the TXT by hand under Host Records.
+Or add all three manually:
 
-**While you are in there, add SPF at the apex.** There is a DKIM record for
-Resend but no SPF on the root domain, so your assessment emails are only half
-authenticated and more likely to land in spam. Add a TXT record on `@`:
+| Type | Host | Value | Priority |
+|---|---|---|---|
+| MX Record | `@` | `mx1.privateemail.com` | `10` |
+| MX Record | `@` | `mx2.privateemail.com` | `10` |
+| TXT Record | `@` | `v=spf1 include:spf.privateemail.com ~all` | — |
 
-```
-v=spf1 include:amazonses.com ~all
-```
+TTL: Automatic. Allow up to four hours, though it is usually under thirty
+minutes.
 
-*(Resend sends via Amazon SES from eu-west-1 — that include is what their setup
-page specifies. If their dashboard shows a different value, use theirs.)*
+**Do not touch the A records (`75.2.60.5`, `99.83.231.61`) or the `www` CNAME.**
+Those are the website. Mail and web are separate lanes on the same domain and
+adding MX does not disturb them — but if anything offers to clear the existing
+records first, decline.
+
+**One SPF record only.** An earlier version of this file told you to add
+`v=spf1 include:amazonses.com ~all` at the apex for Resend. Ignore that. Resend
+lives entirely on `send.zerolines.life`, with its own SPF and its own bounce MX
+already in place — verified. A domain may have exactly one SPF record, and a
+second one is a permanent error that breaks *both* mail streams at once. The
+`spf.privateemail.com` line above is the only one that belongs at the apex.
+
+DMARC is already published at `p=none`, which is the right setting until both
+streams have been observed passing for a few weeks.
 
 ---
 
