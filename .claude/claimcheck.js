@@ -57,6 +57,17 @@ const HARD = [
   // A HowTo step told search engines the day cream "adds mineral UV protection".
   // It carries no SPF, and its own page says so four times.
   [/\b(adds?|provides?|offers?|delivers?|gives?)\s+(\w+\s+){0,2}(UV|sun)\s+protection\b/i, 'sun-protection claim'],
+  /* Three more found in the journal on 6 August, each a different way of
+     borrowing authority the house has not earned yet. */
+  // "we see this data every day through our skin analysis" — a body of
+  // proprietary evidence, on a site where the analyser had been completed once.
+  [/\b(we see|we have seen|our own|when we correlate|our analyser shows|our data (?:shows|suggests))\b[^.;]{0,40}\bdata\b|\bwe see this data\b/i, 'claims a proprietary dataset'],
+  // "now validated by modern research" — substantiation by assertion.
+  [/\bvalidated by (?:modern |current |recent )?(?:research|science|studies|evidence)\b/i, 'substantiation by assertion'],
+  // A named outside expert with a title, quoted in a <cite>. Twenty-two of the
+  // journal's quotes are the Formulation Team; the twenty-third was a named
+  // academic at a real university who appears nowhere else in the repository.
+  [/—\s*(?:Dr\.?|Prof\.?|Professor)\s+[A-Z][a-z]+\s+[A-Z][a-z]+/, 'named outside expert — verify permission and affiliation'],
 ];
 
 // Acceptable when the site is explaining the category; not acceptable in the
@@ -111,6 +122,14 @@ function excused(body, start, end) {
   if (/\b(oestrogen|estrogen|hormones?|growth hormone|menopause|sleep|exercise|fibroblasts?|retinoids?|retinol|tretinoin|vitamin\s*c|microneedling|the\s+body|your\s+body)\b[^.;]{0,60}$/i.test(before)) {
     return 'subject is the body or a third-party category, not a Zero Lines formulation';
   }
+  /* Not all internal data is a claim about efficacy. Stability, batch and
+     safety records are routine formulation artefacts that exist long before
+     any trial does — "our own stability data" on the Story page is a
+     manufacturing fact, not evidence that anything works. The rule is aimed at
+     the other kind: a dataset offered as proof of an outcome. */
+  if (/\b(stability|batch|safety|microbiolog\w*|tolerance|shelf[- ]life|QC|quality[- ]control)\b/i.test(body.slice(Math.max(0, start - 40), end + 40))) {
+    return 'process or QC record, not an efficacy dataset';
+  }
   return null;
 }
 
@@ -126,7 +145,10 @@ const BRAND_VOICE = [
   /<[^>]*class=["'][^"']*zl-(?:hero|eyebrow|display|lede)[^"']*["'][^>]*>[\s\S]{0,400}?<\//gi,
 ];
 
-const SKIP_DIRS = ['.git', 'node_modules', '.venv', '.netlify', '.claude', '_do-not-use'];
+// cloudflare/public is a build artefact, rebuilt from git HEAD. Scanning it
+// reports every finding twice and, worse, reports a stale copy of a file
+// that has already been fixed in the source.
+const SKIP_DIRS = ['.git', 'node_modules', '.venv', '.netlify', '.claude', '_do-not-use', 'public'];
 // terms.html and privacy.html must be able to say "not intended to cure".
 const SKIP_FILES = ['terms.html', 'privacy.html', 'cookies.html'];
 
