@@ -51,3 +51,6 @@ blog/images/
 # internal links. Never track them.
 * 2.*
 * 3.*
+
+# Built asset directory for the Cloudflare Worker — produced from git HEAD
+cloudflare/public/

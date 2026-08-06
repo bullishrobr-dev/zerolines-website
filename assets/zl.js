@@ -575,7 +575,10 @@
         if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
         if (status) { status.removeAttribute('data-state'); status.textContent = ''; }
 
-        fetch('/', {
+        /* Netlify Forms accepted a post to '/' with a form-name field. That
+           service is being left behind, so submissions now go to the site's
+           own Worker endpoint, which writes to a database on this account. */
+        fetch('/__forms', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: new URLSearchParams(new FormData(form)).toString()

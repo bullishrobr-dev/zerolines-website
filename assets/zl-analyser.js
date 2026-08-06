@@ -856,7 +856,7 @@
       data.set('form-name', 'waitlist');
       data.set('source', 'analyser');
       data.set('email', address);
-      fetch('/', {
+      fetch('/__forms', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: data.toString(),

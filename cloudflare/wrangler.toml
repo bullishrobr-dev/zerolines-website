@@ -1,0 +1,44 @@
+# Zero Lines — site + forms on one Worker.
+#
+# Build the asset directory first (it is git-ignored, produced from HEAD):
+#   node cloudflare/build.js
+# Then, from this directory:
+#   npx wrangler deploy
+#
+# Secrets, set once:
+#   npx wrangler secret put RESEND_KEY
+#   npx wrangler secret put HOOK_SECRET
+#
+# The analyser stays in its own Worker (lively-surf-87db). It is live and
+# working, and merging it here would put a tested thing at risk to save a
+# deployment.
+
+name = "zerolines"
+main = "src/index.js"
+compatibility_date = "2026-08-01"
+workers_dev = true
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+# The site is directory-style — /products/ is products/index.html — and every
+# route is a real file, so there is no SPA fallback to configure.
+html_handling = "auto-trailing-slash"
+not_found_handling = "404-page"
+
+[[d1_databases]]
+binding = "ZL_LEADS"
+database_name = "zl-leads"
+database_id = "16bb56f9-fbab-470c-a0d3-e6b94c10d8a4"
+
+[vars]
+ZL_NOTIFY = "info@zerolines.life"
+
+# Added at cutover, once the DNS points here. Until then the site is reachable
+# at zerolines.<subdomain>.workers.dev and nothing in production is touched.
+# [[routes]]
+# pattern = "zerolines.life/*"
+# zone_name = "zerolines.life"
+# [[routes]]
+# pattern = "www.zerolines.life/*"
+# zone_name = "zerolines.life"

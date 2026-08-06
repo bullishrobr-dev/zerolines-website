@@ -1,0 +1,277 @@
+/**
+ * Zero Lines — the whole site, on one Worker.
+ *
+ * Serves the 52 static pages from the ASSETS binding and owns the two things
+ * Netlify Forms used to do: storing a submission and telling somebody about it.
+ *
+ * WHY THIS EXISTS
+ *
+ * The site was on Netlify's free plan with production deploys suspended, and
+ * every deploy since was an upload-a-draft-then-promote-it manoeuvre that
+ * stepped around a limit Netlify had deliberately set. That is not a thing to
+ * keep doing quietly. Cloudflare's free tier permits commercial use outright —
+ * which Vercel's Hobby plan does not — and the analyser Worker, the KV store
+ * and the analytics were already here.
+ *
+ * The part that actually matters is smaller and duller: the waitlist stops
+ * being a row in someone else's dashboard. Leads land in a D1 database in
+ * Western Europe, on this account, exportable as CSV at any hour without
+ * asking a vendor's permission.
+ *
+ * BINDINGS
+ *   ASSETS      static site  (wrangler [assets] directory)
+ *   ZL_LEADS    D1  — zl-leads, 16bb56f9-fbab-470c-a0d3-e6b94c10d8a4, WEUR
+ *   RESEND_KEY  secret
+ *   HOOK_SECRET secret — guards the CSV export
+ *   ZL_NOTIFY   var — where submission alerts go (info@zerolines.life)
+ */
+
+const FROM = 'Zero Lines <scan@zerolines.life>';
+const REPLY_TO = 'info@zerolines.life';
+const SITE = 'https://zerolines.life';
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+const esc = (s) => String(s == null ? '' : s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
+/* A plain === on a shared secret leaks its prefix through timing. */
+function safeEqual(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string' || a.length !== b.length) return false;
+  let d = 0;
+  for (let i = 0; i < a.length; i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return d === 0;
+}
+
+/* The raw IP is never written down. It is useful for spotting one address
+   submitting forty times and useless afterwards, so it is salted with the
+   hook secret and truncated — enough to compare two submissions, not enough
+   to recover the address or to be personal data worth breaching. */
+async function hashIp(ip, salt) {
+  if (!ip) return null;
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(salt + ':' + ip));
+  return [...new Uint8Array(buf)].slice(0, 8).map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+/* ---------------------------------------------------------------------------
+   The confirmation email. Same visual grammar as the assessment: table spine,
+   inline styles, Georgia standing in for Cormorant, no webfonts and no images,
+   because that is what mail clients render the same way twice.
+   --------------------------------------------------------------------------- */
+function buildWelcome(kind) {
+  const BONE = '#FAF7F2', INK = '#14181A', INK3 = '#3C4142';
+  const HOUSE = '#1F4F4A', MID = '#17706D', CHAMP = '#C2A878';
+  const p = (t, x) => `<p style="margin:0 0 14px;font:400 15px/1.75 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:${INK3};${x || ''}">${t}</p>`;
+  const h2 = (t) => `<h2 style="margin:30px 0 12px;font:300 21px/1.3 Georgia,serif;color:${INK}">${t}</h2>`;
+
+  let subject, body = '', lines = [];
+
+  if (kind === 'contact') {
+    subject = 'We have your message';
+    body += `<h1 style="margin:0 0 6px;font:300 30px/1.2 Georgia,'Times New Roman',serif;color:${INK};letter-spacing:-.4px">We have your message</h1>`
+      + `<p style="margin:0 0 26px;font:500 11px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">Zero Lines &middot; Gibraltar &amp; Barcelona</p>`
+      + p('Thank you for writing. Your message has reached us and someone will read it and answer personally.', `font-size:16px;color:${INK};`)
+      + p('We use what you sent only to reply to you. It does not join a mailing list, and this is the last automatic message you will get about it — the next one will be from a person.');
+    lines = ['WE HAVE YOUR MESSAGE', '',
+      'Thank you for writing. Your message has reached us and someone will read it and answer personally.', '',
+      'We use what you sent only to reply to you. It does not join a mailing list.'];
+  } else {
+    subject = 'You are on the list';
+    body += `<h1 style="margin:0 0 6px;font:300 30px/1.2 Georgia,'Times New Roman',serif;color:${INK};letter-spacing:-.4px">You are on the list</h1>`
+      + `<p style="margin:0 0 26px;font:500 11px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">Zero Lines &middot; Gibraltar &amp; Barcelona</p>`
+      + p('Thank you for registering. When ordering opens you will hear from us before anyone else — that is the entire purpose of the list, and it is the only list we keep.', `font-size:16px;color:${INK};`)
+      + p('We have not set a date, and we would rather say that plainly than guess at one.')
+      + h2('You do not have to wait for us')
+      + p('The skin analysis is free, open now, and does not depend on the launch. One photograph and ten questions; a written assessment comes back to this address — read zone by zone, with a note on what a single photograph honestly cannot show.')
+      + `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px 0 6px"><tr><td style="background:${HOUSE};padding:14px 26px">`
+      + `<a href="${SITE}/analyser/" style="color:#fff;text-decoration:none;font:500 12px/1 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2.4px;text-transform:uppercase">Begin the free analysis</a>`
+      + `</td></tr></table>`
+      + p('It takes about three minutes and needs no account.', 'font-size:12px;color:#636764;margin-top:10px;')
+      + `<table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-top:2px solid ${CHAMP};margin:30px 0 0"><tr><td style="padding:18px 0 0">`
+      + `<div style="font:500 11px/1.6 -apple-system,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">What we are building</div>`
+      + p('Every Zero Lines formulation is made to do two things at once. There is an immediate effect, visible the same day. And there is a lasting one, which builds quietly over weeks of consistent use. Most of the industry sells the first and implies the second. We would rather tell you which is which.', 'margin-top:10px;')
+      + `</td></tr></table>`;
+    lines = ['YOU ARE ON THE LIST', '',
+      'Thank you for registering. When ordering opens you will hear from us before anyone else — that is the entire purpose of the list, and it is the only list we keep.', '',
+      'We have not set a date, and we would rather say that plainly than guess at one.', '',
+      'The skin analysis is free and open now: ' + SITE + '/analyser/', '',
+      'Every Zero Lines formulation is made to do two things at once — an immediate effect, visible the same day, and a lasting one that builds over weeks.'];
+  }
+
+  body += `<div style="border-top:1px solid #E2DCD2;margin-top:32px;padding-top:20px">`
+    + p('The Zero Lines collection is in pre-launch and not yet available to purchase.', 'font-size:12px;color:#636764;')
+    + (kind === 'contact' ? '' : p('If you would rather not hear from us again, reply to this message and we will take you off the list. No form, no link, no questions.', 'font-size:12px;color:#636764;'))
+    + `</div>`;
+
+  lines.push('', 'The Zero Lines collection is in pre-launch and not yet available to purchase.');
+  if (kind !== 'contact') lines.push('If you would rather not hear from us again, reply and we will take you off the list.');
+  lines.push('', 'zerolines.life');
+
+  const html = `<!doctype html><html><body style="margin:0;padding:0;background:${BONE}">`
+    + `<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:${BONE}"><tr><td align="center" style="padding:32px 16px">`
+    + `<table role="presentation" cellpadding="0" cellspacing="0" width="600" style="max-width:600px;background:#fff;padding:36px 34px">`
+    + `<tr><td><div style="font:500 15px/1 -apple-system,sans-serif;letter-spacing:5px;text-transform:uppercase;color:${INK};padding-bottom:28px">Zero Lines</div>${body}</td></tr>`
+    + `</table>`
+    + `<div style="font:400 12px/1.7 -apple-system,sans-serif;color:#636764;padding-top:18px;max-width:600px">Zero Lines &middot; Gibraltar &amp; Barcelona &middot; <a href="${SITE}" style="color:${MID}">zerolines.life</a></div>`
+    + `</td></tr></table></body></html>`;
+
+  return { subject, html, text: lines.join('\n') };
+}
+
+async function sendMail(env, to, subject, html, text, replyTo) {
+  const r = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${env.RESEND_KEY}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ from: FROM, to: [to], reply_to: replyTo || REPLY_TO, subject, html, text }),
+  });
+  return r.ok;
+}
+
+/* The alert to the house. Netlify sent one of these and it is the only reason
+   anyone knew a submission had happened at all — for two days in August it was
+   switched off, and a real person joined the list unnoticed. */
+function buildNotice(row) {
+  const rows = [
+    ['Form', row.form], ['Email', row.email], ['Name', row.name],
+    ['Message', row.message], ['Source', row.source], ['Referrer', row.referrer],
+    ['Country', row.country], ['When', row.created_at],
+  ].filter(([, v]) => v);
+  const html = `<div style="font:400 15px/1.7 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#14181A">`
+    + `<p style="font-size:17px;margin:0 0 16px"><strong>${esc(row.form)}</strong> — ${esc(row.email)}</p>`
+    + `<table cellpadding="0" cellspacing="0" style="border-collapse:collapse">`
+    + rows.map(([k, v]) => `<tr><td style="padding:5px 18px 5px 0;color:#636764;vertical-align:top;white-space:nowrap">${esc(k)}</td><td style="padding:5px 0">${esc(v)}</td></tr>`).join('')
+    + `</table></div>`;
+  return {
+    subject: `${row.form === 'contact' ? 'Message' : 'Waitlist'}: ${row.email}`,
+    html,
+    text: rows.map(([k, v]) => `${k}: ${v}`).join('\n'),
+  };
+}
+
+async function handleForm(request, env, ctx) {
+  const cors = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Content-Type': 'application/json',
+  };
+  if (request.method === 'OPTIONS') return new Response(null, { headers: cors });
+  if (request.method !== 'POST') return new Response('{"error":"Method not allowed"}', { status: 405, headers: cors });
+
+  const ct = request.headers.get('content-type') || '';
+  let f;
+  try {
+    f = ct.includes('application/json')
+      ? new Map(Object.entries(await request.json()))
+      : new URLSearchParams(await request.text());
+  } catch (e) {
+    return new Response('{"error":"Could not read the submission."}', { status: 400, headers: cors });
+  }
+  const get = (k) => String((f.get ? f.get(k) : '') || '').trim();
+
+  /* The honeypot. A field no human sees and every naive bot fills in. Answer
+     200 rather than an error — a bot told it failed simply tries again. */
+  if (get('bot-field')) return new Response('{"ok":true}', { status: 200, headers: cors });
+
+  const form = (get('form-name') || get('form') || 'waitlist').toLowerCase();
+  if (!['waitlist', 'contact', 'newsletter'].includes(form)) {
+    return new Response('{"error":"Unknown form."}', { status: 400, headers: cors });
+  }
+  const email = get('email').toLowerCase();
+  if (!EMAIL_RE.test(email) || email.length > 254) {
+    return new Response('{"error":"That email address does not look complete."}', { status: 400, headers: cors });
+  }
+
+  const row = {
+    created_at: new Date().toISOString(),
+    form,
+    email,
+    name: get('name').slice(0, 200) || null,
+    message: get('message').slice(0, 5000) || null,
+    source: get('source').slice(0, 60) || null,
+    referrer: (request.headers.get('referer') || '').slice(0, 300) || null,
+    country: request.headers.get('CF-IPCountry') || null,
+    ua: (request.headers.get('user-agent') || '').slice(0, 300) || null,
+    ip_hash: await hashIp(request.headers.get('CF-Connecting-IP'), env.HOOK_SECRET || 'zl'),
+  };
+
+  /* Every submission is kept. An earlier draft deduped on (form, email, day)
+     and immediately swallowed a real event: one visitor joined from the
+     homepage at 11:32 and finished the analyser at 11:39, and the second row
+     vanished. Those are two different things a person did, and the record of
+     which pages convert is the whole reason to hold this data at all.
+     Duplicate *emails* are prevented separately, below, where the problem
+     actually is. */
+  let firstTime;
+  try {
+    firstTime = await env.ZL_LEADS.prepare(
+      `SELECT COUNT(*) AS n FROM leads WHERE email = ? AND form = ? AND emailed = 1`
+    ).bind(email, form).first();
+    await env.ZL_LEADS.prepare(
+      `INSERT INTO leads (created_at, form, email, name, message, source, referrer, country, ua, ip_hash, emailed)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)`
+    ).bind(row.created_at, row.form, row.email, row.name, row.message, row.source,
+           row.referrer, row.country, row.ua, row.ip_hash).run();
+  } catch (e) {
+    return new Response('{"error":"Could not record that. Please try again."}', { status: 500, headers: cors });
+  }
+  const alreadyWelcomed = !!(firstTime && firstTime.n > 0);
+
+  if (env.RESEND_KEY) {
+    // The alert always fires. Roberto wants to know about the second visit too.
+    const notice = buildNotice(row);
+    ctx.waitUntil(sendMail(env, env.ZL_NOTIFY || REPLY_TO, notice.subject, notice.html, notice.text, email));
+
+    /* Two reasons to stay quiet. Someone who has written to us before does not
+       need welcoming twice; and the analyser records its own leads here, having
+       just sent that person a full written assessment — inviting them to go and
+       take the analysis would be the house not paying attention. */
+    if (!alreadyWelcomed && row.source !== 'analyser') {
+      const w = buildWelcome(form === 'contact' ? 'contact' : 'waitlist');
+      ctx.waitUntil(sendMail(env, email, w.subject, w.html, w.text));
+    }
+  }
+  const inserted = true;
+
+  /* Without JavaScript the browser posted a real form and is waiting for a
+     page. With it, zl.js reads the JSON and never navigates. */
+  if ((request.headers.get('accept') || '').includes('text/html')) {
+    return Response.redirect(SITE + '/thank-you/', 303);
+  }
+  return new Response(JSON.stringify({ ok: true, recorded: inserted }), { status: 200, headers: cors });
+}
+
+/* The list, as a file, on demand. Netlify owned this view; now it is a URL the
+   house holds the key to. */
+async function handleExport(url, env) {
+  if (!env.HOOK_SECRET || !safeEqual(url.searchParams.get('k') || '', env.HOOK_SECRET)) {
+    return new Response('Not found.', { status: 404 });
+  }
+  const { results } = await env.ZL_LEADS.prepare(
+    `SELECT created_at, form, email, name, message, source, referrer, country
+       FROM leads WHERE unsubscribed = 0 ORDER BY created_at DESC`
+  ).all();
+  const cell = (v) => `"${String(v == null ? '' : v).replace(/"/g, '""')}"`;
+  const csv = ['created_at,form,email,name,message,source,referrer,country']
+    .concat((results || []).map((r) => [r.created_at, r.form, r.email, r.name, r.message, r.source, r.referrer, r.country].map(cell).join(',')))
+    .join('\n');
+  return new Response(csv, {
+    headers: {
+      'Content-Type': 'text/csv; charset=utf-8',
+      'Content-Disposition': 'attachment; filename="zero-lines-leads.csv"',
+      'Cache-Control': 'no-store',
+    },
+  });
+}
+
+export default {
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url);
+
+    if (url.pathname === '/__forms') return handleForm(request, env, ctx);
+    if (url.pathname === '/__forms/export') return handleExport(url, env);
+
+    // Everything else is the site itself.
+    return env.ASSETS.fetch(request);
+  },
+};
