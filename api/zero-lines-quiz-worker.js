@@ -265,6 +265,170 @@ function buildEmail(report, link) {
   return { html, text: lines.filter((l) => l !== undefined).join('\n') };
 }
 
+/* ---------------------------------------------------------------------------
+   The confirmation email.
+
+   Someone joined the waitlist on 4 August and heard nothing back, because
+   nothing existed to answer them. This is that.
+
+   Its job is not to say thank you. Registering is a passive act — the person is
+   now waiting for a launch with no committed date, which means the next thing
+   they hear from us could be months away, by which time they have forgotten who
+   we are. The analyser is free, finished, and open today. So the email's real
+   work is to move someone from the list into the one experience that already
+   exists, and its centre of gravity is that link.
+
+   Same visual grammar as the assessment email: table spine, inline styles,
+   Georgia standing in for Cormorant, no webfonts and no images, because that is
+   what mail clients render the same way twice.
+   --------------------------------------------------------------------------- */
+function buildWelcome(kind) {
+  const BONE = '#FAF7F2', INK = '#14181A', INK3 = '#3C4142';
+  const HOUSE = '#1F4F4A', MID = '#17706D', CHAMP = '#C2A878';
+  const SITE = 'https://zerolines.life';
+  const p = (t, extra) => `<p style="margin:0 0 14px;font:400 15px/1.75 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:${INK3};${extra || ''}">${t}</p>`;
+  const h2 = (t) => `<h2 style="margin:30px 0 12px;font:300 21px/1.3 Georgia,serif;color:${INK}">${t}</h2>`;
+  const rule = `<div style="border-top:1px solid #E2DCD2;margin-top:32px;padding-top:20px">`;
+
+  let subject, body = '', lines = [];
+
+  if (kind === 'contact') {
+    subject = 'We have your message';
+    body += `<h1 style="margin:0 0 6px;font:300 30px/1.2 Georgia,'Times New Roman',serif;color:${INK};letter-spacing:-.4px">We have your message</h1>`
+      + `<p style="margin:0 0 26px;font:500 11px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">Zero Lines · Gibraltar &amp; Barcelona</p>`
+      + p('Thank you for writing. Your message has reached us and someone will read it and answer personally.', `font-size:16px;color:${INK};`)
+      + p('We use what you sent only to reply to you. It does not join a mailing list, and this is the last automatic message you will get about it — the next one will be from a person.');
+    lines = ['WE HAVE YOUR MESSAGE', '',
+      'Thank you for writing. Your message has reached us and someone will read it and answer personally.', '',
+      'We use what you sent only to reply to you. It does not join a mailing list, and this is the last automatic message you will get about it — the next one will be from a person.'];
+  } else {
+    subject = 'You are on the list';
+    body += `<h1 style="margin:0 0 6px;font:300 30px/1.2 Georgia,'Times New Roman',serif;color:${INK};letter-spacing:-.4px">You are on the list</h1>`
+      + `<p style="margin:0 0 26px;font:500 11px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">Zero Lines · Gibraltar &amp; Barcelona</p>`
+      + p('Thank you for registering. When ordering opens you will hear from us before anyone else — that is the entire purpose of the list, and it is the only list we keep.', `font-size:16px;color:${INK};`)
+      /* No date. The site commits to none anywhere, and a launch date invented
+         in an email is the one promise a pre-launch brand cannot quietly walk
+         back — it arrives in writing, in someone's inbox, and it stays there. */
+      + p('We have not set a date, and we would rather say that plainly than guess at one.');
+
+    body += h2('You do not have to wait for us')
+      + p('The skin analysis is free, open now, and does not depend on the launch. One photograph and ten questions; a written assessment comes back to this address — read zone by zone, with a note on what a single photograph honestly cannot show.')
+      + `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px 0 6px"><tr>`
+      + `<td style="background:${HOUSE};padding:14px 26px">`
+      + `<a href="${SITE}/analyser/" style="color:#fff;text-decoration:none;font:500 12px/1 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2.4px;text-transform:uppercase">Begin the analysis</a>`
+      + `</td></tr></table>`
+      + p('It takes about three minutes and needs no account.', 'font-size:12px;color:#636764;margin-top:10px;');
+
+    body += `<table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-top:2px solid ${CHAMP};margin:30px 0 0"><tr><td style="padding:18px 0 0">`
+      + `<div style="font:500 11px/1.6 -apple-system,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">What we are building</div>`
+      + p('Every Zero Lines formulation is made to do two things at once. There is an immediate effect, visible the same day. And there is a lasting one, which builds quietly over weeks of consistent use. Most of the industry sells the first and implies the second. We would rather tell you which is which.', 'margin-top:10px;')
+      + `</td></tr></table>`;
+
+    lines = ['YOU ARE ON THE LIST', '',
+      'Thank you for registering. When ordering opens you will hear from us before anyone else — that is the entire purpose of the list, and it is the only list we keep.', '',
+      'We have not set a date, and we would rather say that plainly than guess at one.', '',
+      'YOU DO NOT HAVE TO WAIT FOR US', '',
+      'The skin analysis is free, open now, and does not depend on the launch. One photograph and ten questions; a written assessment comes back to this address.', '',
+      'Begin the analysis: ' + SITE + '/analyser/', 'It takes about three minutes and needs no account.', '',
+      'WHAT WE ARE BUILDING', '',
+      'Every Zero Lines formulation is made to do two things at once. There is an immediate effect, visible the same day. And there is a lasting one, which builds quietly over weeks of consistent use. Most of the industry sells the first and implies the second. We would rather tell you which is which.'];
+  }
+
+  body += rule
+    + p('The Zero Lines collection is in pre-launch and not yet available to purchase.', 'font-size:12px;color:#636764;')
+    + (kind === 'contact' ? '' : p('If you would rather not hear from us again, reply to this message and we will take you off the list. No form, no link, no questions.', 'font-size:12px;color:#636764;'))
+    + `</div>`;
+
+  lines.push('', 'The Zero Lines collection is in pre-launch and not yet available to purchase.');
+  if (kind !== 'contact') lines.push('If you would rather not hear from us again, reply to this message and we will take you off the list.');
+  lines.push('', 'zerolines.life');
+
+  const html = `<!doctype html><html><body style="margin:0;padding:0;background:${BONE}">`
+    + `<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:${BONE}"><tr><td align="center" style="padding:32px 16px">`
+    + `<table role="presentation" cellpadding="0" cellspacing="0" width="600" style="max-width:600px;background:#fff;padding:36px 34px">`
+    + `<tr><td><div style="font:500 15px/1 -apple-system,sans-serif;letter-spacing:5px;text-transform:uppercase;color:${INK};padding-bottom:28px">Zero Lines</div>${body}</td></tr>`
+    + `</table>`
+    + `<div style="font:400 12px/1.7 -apple-system,sans-serif;color:#636764;padding-top:18px;max-width:600px">Zero Lines · Gibraltar &amp; Barcelona · <a href="${SITE}" style="color:${MID}">zerolines.life</a></div>`
+    + `</td></tr></table></body></html>`;
+
+  return { subject, html, text: lines.join('\n') };
+}
+
+/* Constant-time string compare. A plain === on a shared secret leaks its prefix
+   through timing; the cost of doing it properly here is nil. */
+function safeEqual(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string' || a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Netlify calls this on every form submission. Without the shared secret it is
+   an open relay that will send Zero Lines-branded mail to any address a
+   stranger posts, which is how a sending domain gets blocklisted.
+   --------------------------------------------------------------------------- */
+async function handleWelcome(request, env, url, cors) {
+  if (!env.HOOK_SECRET || !safeEqual(url.searchParams.get('k') || '', env.HOOK_SECRET)) {
+    return json({ error: 'Not found.' }, 404, cors);
+  }
+  if (!env.RESEND_KEY) return json({ error: 'Mail is not configured.' }, 503, cors);
+
+  let sub;
+  try { sub = await request.json(); } catch (e) { return json({ error: 'Unreadable.' }, 400, cors); }
+
+  const data = (sub && sub.data) || {};
+  const form = String(sub.form_name || data['form-name'] || '').toLowerCase();
+  const email = String(sub.email || data.email || '').trim().toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) || email.length > 254) {
+    return json({ ok: true, skipped: 'no usable address' }, 200, cors);
+  }
+
+  /* The analyser records its leads into the waitlist form, so without this the
+     person who has just read their own assessment gets a second email inviting
+     them to go and do the analysis. They already did. That is the difference
+     between a brand that is paying attention and one that is not. */
+  if (String(data.source || '').toLowerCase() === 'analyser') {
+    return json({ ok: true, skipped: 'analyser lead — assessment already sent' }, 200, cors);
+  }
+
+  /* Netlify retries a webhook that does not answer quickly enough, and a
+     duplicate welcome is worse than a late one. The submission id is stable
+     across retries, so it is the natural key. */
+  const key = 'welcomed:' + (sub.id || email);
+  if (env.ZL_ASSESSMENTS) {
+    if (await env.ZL_ASSESSMENTS.get(key)) return json({ ok: true, skipped: 'already sent' }, 200, cors);
+  }
+
+  const { subject, html, text } = buildWelcome(form === 'contact' ? 'contact' : 'waitlist');
+
+  let sent;
+  try {
+    sent = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${env.RESEND_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: env.ZL_FROM || 'Zero Lines <scan@zerolines.life>',
+        to: [email],
+        reply_to: 'info@zerolines.life',
+        subject, html, text,
+      }),
+    });
+  } catch (e) {
+    return json({ error: 'Mail service unreachable.' }, 502, cors);
+  }
+
+  if (!sent.ok) {
+    const detail = (await sent.text()).slice(0, 200);
+    return json({ error: 'Send failed.', detail }, 502, cors);
+  }
+
+  if (env.ZL_ASSESSMENTS) {
+    try { await env.ZL_ASSESSMENTS.put(key, '1', { expirationTtl: 60 * 60 * 24 * 90 }); } catch (e) { /* a duplicate is survivable */ }
+  }
+  return json({ ok: true, sent: email, form }, 200, cors);
+}
+
 export default {
   async fetch(request, env) {
     const cors = {
@@ -276,10 +440,19 @@ export default {
 
     if (request.method === 'OPTIONS') return new Response(null, { headers: cors });
 
+    const url = new URL(request.url);
+
+    /* Netlify's form webhook. Checked before anything else so the analyser path
+       below is untouched — that endpoint is live and working, and this is an
+       addition to it, not a change to it. */
+    if (request.method === 'POST' && url.pathname === '/welcome') {
+      return handleWelcome(request, env, url, cors);
+    }
+
     /* Reading an assessment back, from the private link in the email. The id is
        the only credential — which is what makes the inbox the key. */
     if (request.method === 'GET') {
-      const id = new URL(request.url).searchParams.get('r');
+      const id = url.searchParams.get('r');
       if (!id || !/^[A-Za-z0-9_-]{16,64}$/.test(id)) {
         return json({ error: 'Not found.' }, 404, cors);
       }
