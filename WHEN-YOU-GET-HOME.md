@@ -8,64 +8,62 @@ Ordered by what it unlocks. Do 1 and 2 and the rest can wait.
 
 ---
 
-## 0. URGENT — nobody can email you
+## 0. Mail — receiving is FIXED, one record still outstanding
 
-**`zerolines.life` has no MX record.** Mail sent to `info@zerolines.life`
-cannot be delivered. It is published on **52 pages**, in the footer of every one,
-in your Organization schema, and in the reply-to of every skin assessment the
-analyser sends. Anyone who has written to you has had it bounce, or vanish.
+**Done, 6 August.** `zerolines.life` had no MX record, so mail to
+`info@zerolines.life` — published on 52 pages, in the Organization schema, and
+in the reply-to of every skin assessment — had nowhere to be delivered. The
+Private Email subscription was never the problem: Pro plan, paid to 22 May 2027,
+all three mailboxes provisioned, DKIM already published. Only the routing was
+missing. Two MX records at the apex fixed it:
 
-Verified: `dig MX zerolines.life` returns nothing at all.
+```
+@   MX   10   mx1.privateemail.com
+@   MX   10   mx2.privateemail.com
+```
 
-Sending works — that is a separate record, and Resend's DKIM is in place, which
-is why the assessment emails arrive. Only *receiving* is broken.
+Verified live at the authoritative nameserver and at 1.1.1.1, 8.8.8.8 and
+9.9.9.9. Then verified end to end over SMTP — `info@`, `roberto@` and `dimitri@`
+each answer `250 Ok` to RCPT, and a deliberately invented address on the same
+domain is rejected, which proves the server is checking the recipient list
+rather than accepting everything and dropping it later.
 
-**You already own the mailbox.** Namecheap Private Email, Pro plan, active until
-22 May 2027, with `dimitri@`, `info@` and `roberto@` all provisioned and your
-DKIM key already published. Nothing lapsed. The DNS records that point mail *at*
-that mailbox were simply never added, so the mailbox has been sitting there
-empty and unreachable. This is a five-minute fix, and it costs nothing.
+### Still to do: the SPF record
 
-Namecheap → Domain List → zerolines.life → **Manage** → **Advanced DNS**.
+Not published yet — absent at the nameserver, so it never saved rather than
+being slow to propagate. This does **not** affect receiving, which works. SPF
+governs whether mail *you send* from those mailboxes reaches the inbox or the
+spam folder.
 
-**Leave Mail Settings on Custom MX.** It is already set there, and the two MX
-rows beneath it — `send` and `send.receipts` — belong to Resend. Switching that
-dropdown to "Private Email" hands the MX table to Namecheap to manage, which
-rewrites it and deletes them. That breaks bounce handling on the assessment
-emails and can un-verify the sending domain. Adding rows by hand achieves the
-same thing with no risk.
+**Advanced DNS → HOST RECORDS** — the top section, where `_dmarc` already sits,
+*not* the Mail Settings section, which only accepts MX:
 
-Click **ADD NEW RECORD** three times:
+| Type | Host | Value | TTL |
+|---|---|---|---|
+| TXT Record | `@` | `v=spf1 include:spf.privateemail.com ~all` | Automatic |
 
-| Type | Host | Value | Priority | TTL |
-|---|---|---|---|---|
-| MX Record | `@` | `mx1.privateemail.com` | `10` | Automatic |
-| MX Record | `@` | `mx2.privateemail.com` | `10` | Automatic |
-| TXT Record | `@` | `v=spf1 include:spf.privateemail.com ~all` | — | Automatic |
+Then **SAVE ALL CHANGES**. The record does not exist until that is clicked.
+Host is `@`, not `zerolines.life`. Do not wrap the value in quotes — Namecheap
+adds its own, and doubling them breaks the record silently.
 
-Host is `@`, not `zerolines.life` — Namecheap expands it. Do not wrap the TXT
-value in quotes; Namecheap adds its own, and doubling them breaks the record
-silently. Afterwards the table shows four MX rows, which is correct — they sit
-on different hosts and do not compete.
-
-Allow up to four hours, though it is usually under thirty minutes.
-
-**All three mailboxes come back together.** MX is per domain, not per address:
-the record routes everything `@zerolines.life` to Private Email, which then sorts
-it by the part before the `@`. `info@`, `roberto@` and `dimitri@` are already
-provisioned and switched on, so there is nothing to configure per mailbox.
-
-**Do not touch the A records (`75.2.60.5`, `99.83.231.61`) or the `www` CNAME.**
-Those are the website. Mail and web are separate lanes on the same domain and
-adding MX does not disturb them — but if anything offers to clear the existing
-records first, decline.
-
-**One SPF record only.** An earlier version of this file told you to add
+**One SPF record only.** An earlier version of this file said to publish
 `v=spf1 include:amazonses.com ~all` at the apex for Resend. Ignore that. Resend
-lives entirely on `send.zerolines.life`, with its own SPF and its own bounce MX
-already in place — verified. A domain may have exactly one SPF record, and a
-second one is a permanent error that breaks *both* mail streams at once. The
-`spf.privateemail.com` line above is the only one that belongs at the apex.
+lives entirely on `send.zerolines.life` with its own SPF and bounce MX already
+in place. A domain may have exactly one SPF record, and a second is a permanent
+error that breaks both mail streams at once.
+
+### Two things not to break
+
+**Leave Mail Settings on Custom MX.** The `send` row beneath it is Resend's
+bounce handler for the verified sending domain. Switching that dropdown to
+"Private Email" hands the MX table to Namecheap, which rewrites it and deletes
+that row — costing bounce handling and possibly the domain verification every
+assessment email depends on. (`send.receipts` alongside it is an inert leftover.)
+
+**Leave the ALIAS `@` → `apex-loadbalancer.netlify.com` and the `www` CNAME
+alone.** Those are the website. The two `gv-…googlehosted.com` CNAMEs are
+Google Workspace verification leftovers — inert, and probably the fingerprint of
+whatever originally held the MX records before they were replaced.
 
 DMARC is already published at `p=none`, which is the right setting until both
 streams have been observed passing for a few weeks.
