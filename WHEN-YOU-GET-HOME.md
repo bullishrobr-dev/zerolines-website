@@ -8,9 +8,9 @@ Ordered by what it unlocks. Do 1 and 2 and the rest can wait.
 
 ---
 
-## 0. Mail — receiving is FIXED, one record still outstanding
+## 0. Mail — DONE, 6 August
 
-**Done, 6 August.** `zerolines.life` had no MX record, so mail to
+**`zerolines.life` had no MX record**, so mail to
 `info@zerolines.life` — published on 52 pages, in the Organization schema, and
 in the reply-to of every skin assessment — had nowhere to be delivered. The
 Private Email subscription was never the problem: Pro plan, paid to 22 May 2027,
@@ -28,29 +28,35 @@ each answer `250 Ok` to RCPT, and a deliberately invented address on the same
 domain is rejected, which proves the server is checking the recipient list
 rather than accepting everything and dropping it later.
 
-### Still to do: the SPF record
+SPF was added at the apex in the same pass:
 
-Not published yet — absent at the nameserver, so it never saved rather than
-being slow to propagate. This does **not** affect receiving, which works. SPF
-governs whether mail *you send* from those mailboxes reaches the inbox or the
-spam folder.
+```
+@   TXT   v=spf1 include:spf.privateemail.com ~all
+```
 
-**Advanced DNS → HOST RECORDS** — the top section, where `_dmarc` already sits,
-*not* the Mail Settings section, which only accepts MX:
+That one belongs in **HOST RECORDS**, not Mail Settings — Namecheap's Mail
+Settings panel accepts MX records only, which is why a TXT typed there demands
+a priority it has no field for.
 
-| Type | Host | Value | TTL |
-|---|---|---|---|
-| TXT Record | `@` | `v=spf1 include:spf.privateemail.com ~all` | Automatic |
+**One SPF record only, ever.** An earlier draft of this file said to publish
+`v=spf1 include:amazonses.com ~all` at the apex for Resend. It is already on
+`send.zerolines.life` where it belongs. A domain may have exactly one SPF
+record, and a second is a permerror that breaks both mail streams at once.
 
-Then **SAVE ALL CHANGES**. The record does not exist until that is clicked.
-Host is `@`, not `zerolines.life`. Do not wrap the value in quotes — Namecheap
-adds its own, and doubling them breaks the record silently.
+### Where authentication now stands
 
-**One SPF record only.** An earlier version of this file said to publish
-`v=spf1 include:amazonses.com ~all` at the apex for Resend. Ignore that. Resend
-lives entirely on `send.zerolines.life` with its own SPF and bounce MX already
-in place. A domain may have exactly one SPF record, and a second is a permanent
-error that breaks both mail streams at once.
+| Stream | SPF | DKIM | DMARC | Alignment |
+|---|---|---|---|---|
+| Private Email — the three mailboxes | apex | `default._domainkey` | `p=none` | strict |
+| Resend — assessment emails | `send.` | `resend._domainkey` | `p=none` | relaxed SPF, strict DKIM |
+
+Both streams pass all three checks. The apex SPF resolves in 4 DNS lookups
+against RFC 7208's limit of 10, so there is headroom before a future sender
+tips it into the permerror that silently disables SPF altogether.
+
+DMARC sits at `p=none` — observe, do not reject. Once both streams have been
+seen passing for a few weeks, tightening to `quarantine` is worth doing. There
+is no hurry, and doing it early is how legitimate mail gets thrown away.
 
 ### Two things not to break
 
@@ -177,7 +183,10 @@ These are gaps I can build the space for but cannot fill:
 
 ## What is already done and needs nothing
 
-Analyser gated on a real email · assessment delivered by mail with a private
+Mail receiving restored and verified over SMTP · SPF, DKIM and DMARC passing on
+both sending streams · the Worker now asking OpenRouter not to retain or train
+on the photograph, so the pledge on the page is enforced rather than hoped for ·
+analyser gated on a real email · assessment delivered by mail with a private
 30-day link · KV storage · consent gate that actually gates · original product
 mockups restored · six competitor-branded images replaced · favicon rebuilt ·
 53% off the image payload · 69% off the deploy · brand turquoise restored ·
