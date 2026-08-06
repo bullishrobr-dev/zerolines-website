@@ -991,7 +991,13 @@ body[data-cookie-open] { scroll-padding-bottom: 8rem; }
 @media (min-width: 768px) {
   body[data-cookie-open] .zl-wa { bottom: calc(1.5rem + 68px); }
 }
-.zl-wa { transition: bottom 620ms var(--ease), transform var(--dur-ui) var(--ease); }
+.zl-wa { transition: bottom 620ms var(--ease), transform var(--dur-ui) var(--ease), opacity 240ms var(--ease); }
+
+/* Set by zl.js while a primary button is passing underneath. It withdraws
+   rather than disappearing, and pointer-events go with it so a tap in that
+   area reaches the button the reader was aiming at, not the bubble. */
+.zl-wa--yield { opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .zl-wa { transition: none; } }
 
 .zl-cookie {
   /* zl-cookie--slim: one line, hugging the bottom edge. The previous card was

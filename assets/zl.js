@@ -460,6 +460,40 @@
     initConsentedAnalytics();
   }
 
+  /* The WhatsApp button is fixed to the bottom-right, so every full-width
+     primary button on the site passes underneath it at some scroll position.
+     Measured at 390px on /blog/category-science.html: it covered the right-hand
+     end of "Begin the free analysis". A permanent convenience must not sit on
+     top of the thing the page is asking the reader to do, and nudging one
+     button would only move the collision to the next one — so the bubble yields
+     to whichever primary action is under it, everywhere, and comes back after. */
+  function initWhatsAppYield() {
+    var wa = document.querySelector('.zl-wa');
+    if (!wa) return;
+    var SEL = '.zl-btn--brand, .zl-blog-ai-analyst-btn, .zl-cta__btn, button[type="submit"]';
+    var PAD = 12;
+    var queued = false;
+
+    function check() {
+      queued = false;
+      var b = wa.getBoundingClientRect();
+      var els = document.querySelectorAll(SEL);
+      var hit = false;
+      for (var i = 0; i < els.length; i++) {
+        var r = els[i].getBoundingClientRect();
+        if (r.width === 0 || r.bottom < 0 || r.top > window.innerHeight) continue;
+        if (r.right > b.left - PAD && r.left < b.right + PAD &&
+            r.bottom > b.top - PAD && r.top < b.bottom + PAD) { hit = true; break; }
+      }
+      wa.classList.toggle('zl-wa--yield', hit);
+    }
+    function queue() { if (!queued) { queued = true; requestAnimationFrame(check); } }
+
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue, { passive: true });
+    queue();
+  }
+
   function initCookies() {
     var banner = document.getElementById('zl-cookie');
     var KEY = CONSENT_KEY;
@@ -637,6 +671,7 @@
     try { initProgress(); } catch (e) {}
     try { initCookies(); } catch (e) {}
     try { initAnalytics(); } catch (e) {}
+    try { initWhatsAppYield(); } catch (e) {}
     try { initForms(); } catch (e) {}
     try { initCurrentNav(); } catch (e) {}
     try { initSmoothScroll(); } catch (e) {}
