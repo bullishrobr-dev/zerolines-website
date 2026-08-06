@@ -405,6 +405,12 @@
           <button class="zl-btn zl-btn--brand" type="button" id="zl-a-analyse" disabled>Read my skin</button>
         </div>
 
+        <!-- The button sits at 30% opacity until both a photograph and a valid
+             address exist, and said nothing about which was missing. This is the
+             last click of the funnel; a visitor who cannot tell why it will not
+             respond simply leaves, and we never learn that they tried. -->
+        <p class="zl-a-fine" id="zl-a-analyse-hint" aria-live="polite" style="margin-top:.75rem;min-height:1.4em"></p>
+
         <p class="zl-a-fine" style="margin-top:2rem">
           Your photograph is read once for this assessment and is not stored. It is
           never attached to your email address, and it is not sent to you or to

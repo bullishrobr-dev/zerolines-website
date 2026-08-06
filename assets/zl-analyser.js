@@ -820,7 +820,17 @@
 
   function syncAnalyseBtn() {
     var btn = $('zl-a-analyse');
-    if (btn) btn.disabled = !(state.photo && emailOk());
+    var ready = !!(state.photo && emailOk());
+    if (btn) btn.disabled = !ready;
+
+    /* Name the missing thing. A greyed-out button with no explanation is the
+       commonest way a finished funnel loses the people who got furthest. */
+    var hint = $('zl-a-analyse-hint');
+    if (!hint) return;
+    if (ready) hint.textContent = '';
+    else if (!state.photo && !state.email) hint.textContent = 'Add a photograph and an email address, and this will open.';
+    else if (!state.photo) hint.textContent = 'A photograph is still needed.';
+    else hint.textContent = 'An email address is still needed — the assessment is sent, not shown here.';
   }
 
   if (emailField) {
