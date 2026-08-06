@@ -105,17 +105,17 @@
 .zl-ing__name { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.25rem, 2vw, 1.5rem); line-height: 1.3; margin: 1.375rem 0 .625rem; }
 .zl-ing__why { color: var(--ink-3); font-size: .9375rem; line-height: 1.8; }
 
-/* ---- protocol neighbours ---------------------------------------------- */
-.zl-step { display: block; border-top: 1px solid var(--rule); padding-top: 1.5rem; }
-.zl-step--here { border-top: 2px solid var(--signal); }
-.zl-step__k { font-size: var(--t-eyebrow); font-weight: 500; letter-spacing: .28em; text-transform: uppercase; color: var(--mist); }
-.zl-step__name { font-family: var(--font-display); font-weight: 400; font-size: 1.3125rem; line-height: 1.3; margin: .875rem 0 .5rem; transition: color var(--dur-ui) var(--ease); }
-a.zl-step:hover .zl-step__name { color: var(--house); }
-.zl-step__note { color: var(--ink-3); font-size: .9375rem; line-height: 1.75; }
-
-/* ---- rail of plain facts ---------------------------------------------- */
-.zl-rail { display: flex; flex-wrap: wrap; gap: .875rem 3rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
-.zl-rail span { font-size: .75rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--mist); }
+/* ---- protocol neighbours -----------------------------------------------
+   Scoped. These were named .zl-step / .zl-step__name, which are the shared
+   six-step protocol rail defined in zl.css and used by all six product pages.
+   A page <style> loads after the stylesheet, so this page — and only this page
+   — was rendering that shared rail as blocks instead of flex columns. */
+.serum-neighbour { display: block; border-top: 1px solid var(--rule); padding-top: 1.5rem; }
+.serum-neighbour--here { border-top: 2px solid var(--signal); }
+.serum-neighbour__k { font-size: var(--t-eyebrow); font-weight: 500; letter-spacing: .28em; text-transform: uppercase; color: var(--mist); }
+.serum-neighbour__name { font-family: var(--font-display); font-weight: 400; font-size: 1.3125rem; line-height: 1.3; margin: .875rem 0 .5rem; transition: color var(--dur-ui) var(--ease); }
+a.serum-neighbour:hover .serum-neighbour__name { color: var(--house); }
+.serum-neighbour__note { color: var(--ink-3); font-size: .9375rem; line-height: 1.75; }
 
 /* ---- specification list ------------------------------------------------ */
 .zl-spec { margin: 0; }
@@ -660,22 +660,22 @@ a.zl-step:hover .zl-step__name { color: var(--house); }
     </div>
 
     <div class="zl-grid zl-grid--3" data-stagger>
-      <a class="zl-step" href="/products/syringe/">
-        <span class="zl-step__k">Before · Step 02</span>
-        <h3 class="zl-step__name">Precision Collagen Activation Syringe</h3>
-        <p class="zl-step__note">Weekly, and targeted. Applied to specific expression lines rather than across the face.</p>
+      <a class="serum-neighbour" href="/products/syringe/">
+        <span class="serum-neighbour__k">Before · Step 02</span>
+        <h3 class="serum-neighbour__name">Precision Collagen Activation Syringe</h3>
+        <p class="serum-neighbour__note">Weekly, and targeted. Applied to specific expression lines rather than across the face.</p>
       </a>
 
-      <div class="zl-step zl-step--here">
-        <span class="zl-step__k" style="color:var(--house)">You are here · Step 03</span>
-        <h3 class="zl-step__name">BioSignal Facial Serum</h3>
-        <p class="zl-step__note">Daily, morning and evening. The habit that carries the signal between the weekly steps.</p>
+      <div class="serum-neighbour serum-neighbour--here">
+        <span class="serum-neighbour__k" style="color:var(--house)">You are here · Step 03</span>
+        <h3 class="serum-neighbour__name">BioSignal Facial Serum</h3>
+        <p class="serum-neighbour__note">Daily, morning and evening. The habit that carries the signal between the weekly steps.</p>
       </div>
 
-      <a class="zl-step" href="/products/day-cream/">
-        <span class="zl-step__k">After · Step 04</span>
-        <h3 class="zl-step__name">Environmental Shield Day Cream</h3>
-        <p class="zl-step__note">Goes on top, a minute later. It seals the serum in and takes the environmental load.</p>
+      <a class="serum-neighbour" href="/products/day-cream/">
+        <span class="serum-neighbour__k">After · Step 04</span>
+        <h3 class="serum-neighbour__name">Environmental Shield Day Cream</h3>
+        <p class="serum-neighbour__note">Goes on top, a minute later. It seals the serum in and takes the environmental load.</p>
       </a>
     </div>
 
