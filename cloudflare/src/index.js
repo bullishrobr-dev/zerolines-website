@@ -370,6 +370,15 @@ export default {
     if (url.pathname === '/__forms') return handleForm(request, env, ctx);
     if (url.pathname === '/__forms/export') return handleExport(url, env);
 
+    /* www and the apex are both attached to this Worker, so without this the
+       whole site answers on two hostnames — Netlify used to 301 one to the
+       other. Every canonical tag points at the apex, so this only makes the
+       redirect explicit rather than leaving it to a crawler's judgement. */
+    if (url.hostname === 'www.zerolines.life') {
+      url.hostname = 'zerolines.life';
+      return Response.redirect(url.toString(), 301);
+    }
+
     const legacy = LEGACY_DIR[url.pathname.replace(/\/+$/, '') || '/'];
     if (legacy) return Response.redirect(new URL(legacy, url).toString(), 301);
 

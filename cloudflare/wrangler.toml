@@ -54,9 +54,9 @@ ZL_NOTIFY = "info@zerolines.life"
 # that the wrangler OAuth token does not carry — it can read the zone and not
 # its records. So the three Netlify records have to go by hand first.
 #
-# [[routes]]
-# pattern = "zerolines.life"
-# custom_domain = true
-# [[routes]]
-# pattern = "www.zerolines.life"
-# custom_domain = true
+[[routes]]
+pattern = "zerolines.life"
+custom_domain = true
+[[routes]]
+pattern = "www.zerolines.life"
+custom_domain = true
