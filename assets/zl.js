@@ -217,14 +217,25 @@
     $('.zl-rail').forEach(function (rail) {
       var current = rail.querySelector('[aria-current="step"]');
       if (!current) return;
+      var pad = parseFloat(getComputedStyle(rail).paddingLeft) || 16;
       var r = current.getBoundingClientRect();
       var rr = rail.getBoundingClientRect();
-      if (r.left >= rr.left && r.right <= rr.right) return;   // already visible
+      // Already sitting inside the gutter on both sides: leave it alone.
+      if (r.left >= rr.left + pad && r.right <= rr.right - pad) return;
 
-      // Land it inside the rail's own gutter rather than flush to the edge —
-      // a card jammed against the viewport edge reads as clipped, not aligned.
-      var pad = parseFloat(getComputedStyle(rail).paddingLeft) || 16;
-      rail.scrollLeft = Math.max(0, current.offsetLeft - rail.offsetLeft - pad);
+      /* Measured, not derived. The previous line was
+           scrollLeft = current.offsetLeft - rail.offsetLeft - pad
+         which reads correct and lands 24px out: on /products/night-cream/ at
+         390px it put step 05 at visual left 0, flush against the rail's edge,
+         where a card at rest sits at the 24px gutter. offsetLeft is measured
+         from the offsetParent's padding edge, and the rail carries a negative
+         inline margin on phones so it can bleed to the viewport — enough
+         moving parts that the arithmetic is not worth trusting.
+
+         Adjusting by the rendered gap instead is self-correcting: whatever the
+         current offset happens to be, this moves it until the card sits one
+         gutter in. */
+      rail.scrollLeft = Math.max(0, rail.scrollLeft + (r.left - rr.left) - pad);
     });
   }
 
