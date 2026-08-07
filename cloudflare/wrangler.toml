@@ -46,11 +46,17 @@ database_id = "16bb56f9-fbab-470c-a0d3-e6b94c10d8a4"
 [vars]
 ZL_NOTIFY = "info@zerolines.life"
 
-# Added at cutover, once the DNS points here. Until then the site is reachable
-# at zerolines.<subdomain>.workers.dev and nothing in production is touched.
+# CUTOVER — blocked on one manual step, then uncomment both.
+#
+# Cloudflare refuses to attach a custom domain while the hostname still has
+# "externally managed DNS records": error 100117. The apex A records and the
+# www CNAME still point at Netlify, and deleting them needs DNS write access
+# that the wrangler OAuth token does not carry — it can read the zone and not
+# its records. So the three Netlify records have to go by hand first.
+#
 # [[routes]]
-# pattern = "zerolines.life/*"
-# zone_name = "zerolines.life"
+# pattern = "zerolines.life"
+# custom_domain = true
 # [[routes]]
-# pattern = "www.zerolines.life/*"
-# zone_name = "zerolines.life"
+# pattern = "www.zerolines.life"
+# custom_domain = true
