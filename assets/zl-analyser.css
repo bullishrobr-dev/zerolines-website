@@ -116,6 +116,14 @@
     transition: background-color 520ms var(--ease);
   }
   .zl-a-rail__item::before { display: none; }
+  /* Each segment is a real button that jumps back to that question. Drawn 2px
+     tall and sharing the width ten ways, it was a 29.7 x 2 pixel tap target —
+     on the only conversion tool the house has. This gives it the 44px WCAG
+     wants without altering a pixel of what is drawn: the hit area is
+     transparent and extends above and below the line. */
+  .zl-a-rail__item::after {
+    content: ""; position: absolute; inset: -21px 0;
+  }
   .zl-a-rail__n, .zl-a-rail__t { display: none; }
   .zl-a-rail__item[data-state="done"] { background: var(--signal); }
   .zl-a-rail__item[data-state="current"] { background: var(--house); }

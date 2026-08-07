@@ -675,14 +675,51 @@ function parseReport(content) {
 /* A last line of defence. The prompt forbids statistics and diagnoses, but the
    brand's legal exposure should not rest on the model having complied. */
 function scrubClaims(report) {
-  const BANNED = /\b\d{1,3}\s?%|\bclinically (proven|tested)\b|\bdermatologist[- ]approved\b|\bpermanently\b|\bcures?\b|\beliminates?\b|\berases?\b/gi;
+  /* Two different failures, needing two different repairs.
+
+     A stray statistic can be cut out and the sentence still reads: "visibly
+     smoother" survives losing "by 40%". A diagnosis cannot. Deleting the word
+     "rosacea" from "this presentation is consistent with rosacea across the
+     cheeks" leaves a sentence that is now merely broken, and still gestures at
+     the thing it must not say. The comment on this function has always named
+     diagnosis as the risk; only statistics were ever filtered.
+
+     So: statistics are excised, and any field naming a medical condition is
+     replaced wholesale with an honest sentence about what a photograph can and
+     cannot establish. */
+  const STAT = /\b\d{1,3}\s?%|\bclinically (proven|tested)\b|\bdermatologist[- ]approved\b|\bpermanently\b|\bcures?\b|\beliminates?\b|\berases?\b/gi;
+  const CONDITION = /\b(acne(?:\s+vulgaris)?|rosacea|eczema|psoriasis|dermatitis|melasma|keratosis|vitiligo|impetigo|folliculitis|melanoma|carcinoma|cellulitis|shingles|urticaria)\b/i;
+  const REPLACEMENT = 'This describes how the skin looks in the photograph. Anything that might have a medical explanation is outside what an assessment of appearance can judge, and is worth showing to a dermatologist.';
+
+  let flagged = false;
   const walk = (node, key, parent) => {
     if (typeof node === 'string') {
-      if (BANNED.test(node)) parent[key] = node.replace(BANNED, '').replace(/\s{2,}/g, ' ').replace(/\s+([.,])/g, '$1').trim();
+      if (CONDITION.test(node)) {
+        flagged = true;
+        parent[key] = REPLACEMENT;
+        return;
+      }
+      if (STAT.test(node)) {
+        /* Excising the phrase leaves rubble — "Smoothness improved by 40% in
+           the T-zone" became "Smoothness improved by in the T-zone", which is
+           worse than the claim it removed, because it is visibly broken and
+           still in someone's inbox. Drop the whole sentence instead and keep
+           the rest of the field; only if nothing survives do we say so. */
+        const kept = node
+          .split(/(?<=[.!?])\s+/)
+          .filter((sentence) => { STAT.lastIndex = 0; return !STAT.test(sentence); })
+          .join(' ')
+          .trim();
+        parent[key] = kept.length > 24 ? kept : 'Nothing here that a photograph can be specific about.';
+      }
       return;
     }
     if (Array.isArray(node)) return node.forEach((v, i) => walk(v, i, node));
     if (node && typeof node === 'object') return Object.keys(node).forEach((k) => walk(node[k], k, node));
   };
   walk(report, null, null);
+
+  // If the model named a condition anywhere, the reader should be told to have
+  // it looked at — that is the whole point of catching it.
+  if (flagged) report.needsProfessionalReview = true;
 }
