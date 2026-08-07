@@ -88,7 +88,7 @@ const PRODUCTS = `THE RANGE — recommend only from these six, and respect the o
 06 Sustain · Precision Collagen Activation Refill — the cartridge that keeps
    step 02 going. Requires the applicator from 02.`;
 
-const SYSTEM_PROMPT = `You are a senior skin consultant writing for Zero Lines, a clinical-luxury skincare house in Gibraltar and Barcelona. A client has sent one photograph and answered ten questions. Write their assessment.
+const SYSTEM_PROMPT = `You are a senior skin consultant writing for Zero Lines, a clinical-luxury skincare house in Gibraltar, Andorra and Marbella. A client has sent one photograph and answered ten questions. Write their assessment.
 
 HOW TO READ THE PHOTOGRAPH
 The photograph is your primary evidence; the questionnaire is context that explains what you see. Where they disagree, describe what is visible and note the discrepancy plainly — for example, "you describe your skin as dry, though the T-zone here reads oily" — without lecturing.
@@ -252,7 +252,7 @@ function buildEmail(report, link) {
     + `<table role="presentation" cellpadding="0" cellspacing="0" width="600" style="max-width:600px;background:#fff;padding:36px 34px">`
     + `<tr><td><div style="font:500 15px/1 -apple-system,sans-serif;letter-spacing:5px;text-transform:uppercase;color:${INK};padding-bottom:28px">Zero Lines</div>${body}</td></tr>`
     + `</table>`
-    + `<div style="font:400 12px/1.7 -apple-system,sans-serif;color:#636764;padding-top:18px;max-width:600px">Zero Lines · Gibraltar &amp; Barcelona · <a href="https://zerolines.life" style="color:${MID}">zerolines.life</a></div>`
+    + `<div style="font:400 12px/1.7 -apple-system,sans-serif;color:#636764;padding-top:18px;max-width:600px">Zero Lines · Gibraltar &middot; Andorra &middot; Marbella · <a href="https://zerolines.life" style="color:${MID}">zerolines.life</a></div>`
     + `</td></tr></table></body></html>`;
 
   const lines = ['YOUR WRITTEN ASSESSMENT', '', report.summary || ''];
@@ -295,7 +295,7 @@ function buildWelcome(kind) {
   if (kind === 'contact') {
     subject = 'We have your message';
     body += `<h1 style="margin:0 0 6px;font:300 30px/1.2 Georgia,'Times New Roman',serif;color:${INK};letter-spacing:-.4px">We have your message</h1>`
-      + `<p style="margin:0 0 26px;font:500 11px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">Zero Lines · Gibraltar &amp; Barcelona</p>`
+      + `<p style="margin:0 0 26px;font:500 11px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">Zero Lines · Gibraltar &middot; Andorra &middot; Marbella</p>`
       + p('Thank you for writing. Your message has reached us and someone will read it and answer personally.', `font-size:16px;color:${INK};`)
       + p('We use what you sent only to reply to you. It does not join a mailing list, and this is the last automatic message you will get about it — the next one will be from a person.');
     lines = ['WE HAVE YOUR MESSAGE', '',
@@ -304,7 +304,7 @@ function buildWelcome(kind) {
   } else {
     subject = 'You are on the list';
     body += `<h1 style="margin:0 0 6px;font:300 30px/1.2 Georgia,'Times New Roman',serif;color:${INK};letter-spacing:-.4px">You are on the list</h1>`
-      + `<p style="margin:0 0 26px;font:500 11px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">Zero Lines · Gibraltar &amp; Barcelona</p>`
+      + `<p style="margin:0 0 26px;font:500 11px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">Zero Lines · Gibraltar &middot; Andorra &middot; Marbella</p>`
       + p('Thank you for registering. When ordering opens you will hear from us before anyone else — that is the entire purpose of the list, and it is the only list we keep.', `font-size:16px;color:${INK};`)
       /* No date. The site commits to none anywhere, and a launch date invented
          in an email is the one promise a pre-launch brand cannot quietly walk
@@ -348,7 +348,7 @@ function buildWelcome(kind) {
     + `<table role="presentation" cellpadding="0" cellspacing="0" width="600" style="max-width:600px;background:#fff;padding:36px 34px">`
     + `<tr><td><div style="font:500 15px/1 -apple-system,sans-serif;letter-spacing:5px;text-transform:uppercase;color:${INK};padding-bottom:28px">Zero Lines</div>${body}</td></tr>`
     + `</table>`
-    + `<div style="font:400 12px/1.7 -apple-system,sans-serif;color:#636764;padding-top:18px;max-width:600px">Zero Lines · Gibraltar &amp; Barcelona · <a href="${SITE}" style="color:${MID}">zerolines.life</a></div>`
+    + `<div style="font:400 12px/1.7 -apple-system,sans-serif;color:#636764;padding-top:18px;max-width:600px">Zero Lines · Gibraltar &middot; Andorra &middot; Marbella · <a href="${SITE}" style="color:${MID}">zerolines.life</a></div>`
     + `</td></tr></table></body></html>`;
 
   return { subject, html, text: lines.join('\n') };

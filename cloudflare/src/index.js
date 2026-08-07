@@ -69,7 +69,7 @@ function buildWelcome(kind) {
   if (kind === 'contact') {
     subject = 'We have your message';
     body += `<h1 style="margin:0 0 6px;font:300 30px/1.2 Georgia,'Times New Roman',serif;color:${INK};letter-spacing:-.4px">We have your message</h1>`
-      + `<p style="margin:0 0 26px;font:500 11px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">Zero Lines &middot; Gibraltar &amp; Barcelona</p>`
+      + `<p style="margin:0 0 26px;font:500 11px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">Zero Lines &middot; Gibraltar &middot; Andorra &middot; Marbella</p>`
       + p('Thank you for writing. Your message has reached us and someone will read it and answer personally.', `font-size:16px;color:${INK};`)
       + p('We use what you sent only to reply to you. It does not join a mailing list, and this is the last automatic message you will get about it — the next one will be from a person.');
     lines = ['WE HAVE YOUR MESSAGE', '',
@@ -78,7 +78,7 @@ function buildWelcome(kind) {
   } else {
     subject = 'You are on the list';
     body += `<h1 style="margin:0 0 6px;font:300 30px/1.2 Georgia,'Times New Roman',serif;color:${INK};letter-spacing:-.4px">You are on the list</h1>`
-      + `<p style="margin:0 0 26px;font:500 11px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">Zero Lines &middot; Gibraltar &amp; Barcelona</p>`
+      + `<p style="margin:0 0 26px;font:500 11px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">Zero Lines &middot; Gibraltar &middot; Andorra &middot; Marbella</p>`
       + p('Thank you for registering. When ordering opens you will hear from us before anyone else — that is the entire purpose of the list, and it is the only list we keep.', `font-size:16px;color:${INK};`)
       + p('We have not set a date, and we would rather say that plainly than guess at one.')
       + h2('You do not have to wait for us')
@@ -112,7 +112,7 @@ function buildWelcome(kind) {
     + `<table role="presentation" cellpadding="0" cellspacing="0" width="600" style="max-width:600px;background:#fff;padding:36px 34px">`
     + `<tr><td><div style="font:500 15px/1 -apple-system,sans-serif;letter-spacing:5px;text-transform:uppercase;color:${INK};padding-bottom:28px">Zero Lines</div>${body}</td></tr>`
     + `</table>`
-    + `<div style="font:400 12px/1.7 -apple-system,sans-serif;color:#636764;padding-top:18px;max-width:600px">Zero Lines &middot; Gibraltar &amp; Barcelona &middot; <a href="${SITE}" style="color:${MID}">zerolines.life</a></div>`
+    + `<div style="font:400 12px/1.7 -apple-system,sans-serif;color:#636764;padding-top:18px;max-width:600px">Zero Lines &middot; Gibraltar &middot; Andorra &middot; Marbella &middot; <a href="${SITE}" style="color:${MID}">zerolines.life</a></div>`
     + `</td></tr></table></body></html>`;
 
   return { subject, html, text: lines.join('\n') };
