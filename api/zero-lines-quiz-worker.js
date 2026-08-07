@@ -430,7 +430,7 @@ async function handleWelcome(request, env, url, cors) {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const cors = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -494,6 +494,40 @@ export default {
     }
     if (!env.RESEND_KEY) {
       return json({ error: 'The assessment service is not configured to send email yet.' }, 503, cors);
+    }
+
+    /* Record the address NOW, before the model is asked for anything.
+       Until this line, a lead existed only if the model answered AND the mail
+       sent AND the reader kept the tab in the foreground for the fifteen to
+       sixty seconds the reading takes — because the only recorder was a
+       fetch() fired from the browser after success. Every other path lost the
+       person completely: a model timeout, an out-of-credit key, a locked
+       phone. They had given us a real address and a photograph of their face
+       and we kept neither.
+
+       Fire-and-forget, and deliberately not awaited: this must never be able
+       to delay or fail an assessment. The second record, tagged `analyser`,
+       still lands on success — so the gap between the two counts is the
+       abandonment rate, which is the number that decides whether the
+       photograph requirement is costing more than it is worth. */
+    if (ctx && typeof ctx.waitUntil === 'function') {
+      const started = new URLSearchParams();
+      started.set('form-name', 'waitlist');
+      started.set('email', email);
+      started.set('source', 'analyser-started');
+      ctx.waitUntil(
+        /* The site Worker's own hostname, not zerolines.life. Until the DNS
+           switch the apex is still Netlify, which has no /__forms — so
+           defaulting to the live domain would quietly record nothing during
+           exactly the window this was written to protect. The workers.dev
+           hostname is the same Worker and answers on both sides of the
+           cutover. ZL_FORMS overrides it if that ever changes. */
+        fetch((env.ZL_FORMS || 'https://zerolines.bullishrobr.workers.dev').replace(/\/+$/, '') + '/__forms', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: started.toString(),
+        }).catch(() => {})
+      );
     }
 
     if (!answers || !photoBase64) return json({ error: 'Missing answers or photograph.' }, 400, cors);

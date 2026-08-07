@@ -161,6 +161,16 @@ function buildNotice(row) {
   };
 }
 
+/* Record what a send actually did. Fire-and-forget by design: if this UPDATE
+   fails the lead is still safely stored, and a wrong flag is worth less than a
+   500 to someone who just handed over their address. */
+async function mark(env, rowId, column, ok) {
+  if (!rowId || !ok) return;
+  try {
+    await env.ZL_LEADS.prepare(`UPDATE leads SET ${column} = 1 WHERE id = ?`).bind(rowId).run();
+  } catch (e) { /* the row matters; the flag is bookkeeping */ }
+}
+
 async function handleForm(request, env, ctx) {
   const cors = {
     'Access-Control-Allow-Origin': '*',
@@ -215,33 +225,47 @@ async function handleForm(request, env, ctx) {
      which pages convert is the whole reason to hold this data at all.
      Duplicate *emails* are prevented separately, below, where the problem
      actually is. */
-  let firstTime;
+  let firstTime, ins;
   try {
     firstTime = await env.ZL_LEADS.prepare(
       `SELECT COUNT(*) AS n FROM leads WHERE email = ? AND form = ? AND emailed = 1`
     ).bind(email, form).first();
-    await env.ZL_LEADS.prepare(
+    /* emailed starts at 0. It used to be written as 1 in the same statement
+       that creates the row, while the SELECT above reads that column to decide
+       whether this person has already been welcomed — and sendMail's success
+       boolean was thrown away by waitUntil. So a Resend outage marked someone
+       as welcomed forever: they had heard nothing, and nothing would ever try
+       again. The flag now records what actually happened. */
+    ins = await env.ZL_LEADS.prepare(
       `INSERT INTO leads (created_at, form, email, name, message, source, referrer, country, ua, ip_hash, emailed)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)`
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)`
     ).bind(row.created_at, row.form, row.email, row.name, row.message, row.source,
            row.referrer, row.country, row.ua, row.ip_hash).run();
   } catch (e) {
     return new Response('{"error":"Could not record that. Please try again."}', { status: 500, headers: cors });
   }
+  const rowId = ins && ins.meta && ins.meta.last_row_id;
   const alreadyWelcomed = !!(firstTime && firstTime.n > 0);
 
   if (env.RESEND_KEY) {
     // The alert always fires. Roberto wants to know about the second visit too.
     const notice = buildNotice(row);
-    ctx.waitUntil(sendMail(env, env.ZL_NOTIFY || REPLY_TO, notice.subject, notice.html, notice.text, email));
+    ctx.waitUntil(
+      sendMail(env, env.ZL_NOTIFY || REPLY_TO, notice.subject, notice.html, notice.text, email)
+        .then((ok) => mark(env, rowId, 'notified', ok))
+    );
 
     /* Two reasons to stay quiet. Someone who has written to us before does not
        need welcoming twice; and the analyser records its own leads here, having
        just sent that person a full written assessment — inviting them to go and
        take the analysis would be the house not paying attention. */
-    if (!alreadyWelcomed && row.source !== 'analyser') {
+    if (!alreadyWelcomed && row.source !== 'analyser' && row.source !== 'analyser-started') {
       const w = buildWelcome(form === 'contact' ? 'contact' : 'waitlist');
-      ctx.waitUntil(sendMail(env, email, w.subject, w.html, w.text));
+      ctx.waitUntil(sendMail(env, email, w.subject, w.html, w.text).then((ok) => mark(env, rowId, 'emailed', ok)));
+    } else {
+      // Nothing to send, so nothing is owed. Recording it as handled keeps the
+      // "have they been welcomed" question answerable from one column.
+      ctx.waitUntil(mark(env, rowId, 'emailed', true));
     }
   }
   const inserted = true;
