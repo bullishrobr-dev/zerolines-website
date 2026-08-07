@@ -479,7 +479,10 @@
   function initWhatsAppYield() {
     var wa = document.querySelector('.zl-wa');
     if (!wa) return;
-    var SEL = '.zl-btn--brand, .zl-blog-ai-analyst-btn, .zl-cta__btn, button[type="submit"]';
+    /* .zl-concierge__action was missing here until the band landed on eight
+       pages and a screenshot caught the bubble sitting across its note. Any
+       primary action counts, whatever button variant it wears. */
+    var SEL = '.zl-btn--brand, .zl-blog-ai-analyst-btn, .zl-cta__btn, .zl-concierge__action, button[type="submit"]';
     var PAD = 12;
     var queued = false;
 
