@@ -390,8 +390,8 @@
      no analytics on the site, so "Essential only" and "Accept all" did exactly
      the same thing. That is fine while nothing is loading, and becomes a real
      problem the moment something does: a notice that implies a choice it does
-     not honour is worse than no notice, and this is a Gibraltar, Andorra and Marbella
-     business under UK and EU rules.
+     not honour is worse than no notice, and this house trades in Gibraltar,
+     Andorra and Spain, under UK and EU rules.
 
      So consent is now a gate with something behind it. Nothing here loads until
      an ID is filled in below AND the visitor has accepted. Leave an ID empty and
