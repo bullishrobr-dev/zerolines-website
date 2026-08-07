@@ -168,6 +168,19 @@
 .zl-blog-hero-meta > span { display: inline-flex; align-items: center; gap: 0.5rem; }
 .zl-blog-hero-meta svg { width: 13px; height: 13px; flex: none; color: var(--tiffany); }
 
+/* The analyser, in the byline. These 25 articles are the pages most likely to
+   receive a stranger from search, and the analyser CTA sits two thirds down —
+   after the sources and the related reading — so a reader who leaves early
+   never learns it exists. As metadata beside the date and the reading time it
+   is present without interrupting anything. 44px tall, like every other target
+   on the site. */
+.zl-blog-hero-meta > a {
+  display: inline-flex; align-items: center; gap: .5rem; min-height: 44px;
+  color: var(--house-mid); text-decoration: none;
+  transition: color var(--dur-ui) var(--ease);
+}
+.zl-blog-hero-meta > a:hover { color: var(--ink); }
+
 .zl-blog-hero-rule {
   height: 1px;
   border: 0;
