@@ -489,3 +489,21 @@
   .zl-a-rshot { width: 140px; }
   .zl-a-rshot img { border-top: 2px solid #C2A878; }
 }
+
+/* Measured at 390px: 1,128 pixels — 1.34 screens — of guidance sat between the
+   heading and the upload control, because the four-point guide is a single
+   column below 520px and runs to 669px on its own. The guide earns its place;
+   it just should not stand between someone and the thing they came to do.
+   Below 620px the drop zone rises to sit directly under the lead, with the
+   guide immediately beneath it. Flex is scoped to this panel at this width, so
+   the block layout every other viewport gets is untouched. */
+@media (max-width: 620px) {
+  #zl-a-photo .zl-a-stage { display: flex; flex-direction: column; }
+  #zl-a-photo .zl-a-stage > * { order: 3; }
+  #zl-a-photo .zl-a-stage > .zl-eyebrow,
+  #zl-a-photo .zl-a-stage > .zl-display-l,
+  #zl-a-photo .zl-a-stage > .zl-lead { order: 0; }
+  #zl-a-photo .zl-a-stage > .zl-a-drop { order: 1; margin-top: 1.75rem; }
+  #zl-a-photo .zl-a-stage > .zl-a-guide,
+  #zl-a-photo .zl-a-stage > .zl-a-avoid { order: 2; }
+}
