@@ -1160,6 +1160,12 @@ body[data-cookie-open] { scroll-padding-bottom: 8rem; }
   gap: clamp(0.875rem, 2vw, 1.25rem);
   overflow-x: auto; overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
+  /* Without this, snapping aligns a card's start edge to the scrollport edge
+     and discards the gutter — so a product page whose step is not the first
+     opened with that card flush against the screen, measured at visual left 0
+     on /products/night-cream/ at 390px. scroll-padding moves the snap line one
+     gutter in, so a snapped card sits exactly where a resting card does. */
+  scroll-padding-inline: var(--gutter);
   padding-block: 0.5rem 1.5rem;
   padding-inline: var(--gutter);
   margin-inline: calc(var(--gutter) * -1);

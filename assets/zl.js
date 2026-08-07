@@ -223,18 +223,16 @@
       // Already sitting inside the gutter on both sides: leave it alone.
       if (r.left >= rr.left + pad && r.right <= rr.right - pad) return;
 
-      /* Measured, not derived. The previous line was
-           scrollLeft = current.offsetLeft - rail.offsetLeft - pad
-         which reads correct and lands 24px out: on /products/night-cream/ at
-         390px it put step 05 at visual left 0, flush against the rail's edge,
-         where a card at rest sits at the 24px gutter. offsetLeft is measured
-         from the offsetParent's padding edge, and the rail carries a negative
-         inline margin on phones so it can bleed to the viewport — enough
-         moving parts that the arithmetic is not worth trusting.
+      /* Adjust by the rendered gap rather than deriving a position from
+         offsetLeft. The rail carries a negative inline margin on phones so it
+         can bleed to the viewport, and offsetLeft is measured from the
+         offsetParent's padding edge — the arithmetic is answerable but there is
+         no reason to do it when the browser will tell you where the card
+         actually is.
 
-         Adjusting by the rendered gap instead is self-correcting: whatever the
-         current offset happens to be, this moves it until the card sits one
-         gutter in. */
+         The flush-to-the-edge bug this used to show was not here: it was the
+         missing scroll-padding-inline in zl.css, without which scroll snapping
+         pulled the card back to the scrollport edge whatever this line set. */
       rail.scrollLeft = Math.max(0, rail.scrollLeft + (r.left - rr.left) - pad);
     });
   }

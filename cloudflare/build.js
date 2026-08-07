@@ -22,6 +22,20 @@ const DROP = [
   'netlify.toml',
 ];
 
+/* Source is HEAD, not the working tree — deliberately, so an experiment left
+   open in an editor cannot reach production. The cost is a trap I fell into
+   three times in one session: edit a file, build, deploy, then verify against a
+   site that still has the old version and conclude the fix did not work. Say so
+   loudly instead of failing silently. */
+const dirty = execSync('git status --porcelain -- . ":(exclude)cloudflare/public"', { cwd: ROOT })
+  .toString().trim().split('\n').filter(Boolean);
+if (dirty.length) {
+  console.warn(`\n  ⚠  ${dirty.length} uncommitted change(s) — these will NOT be in this build:`);
+  for (const line of dirty.slice(0, 12)) console.warn(`       ${line}`);
+  if (dirty.length > 12) console.warn(`       … and ${dirty.length - 12} more`);
+  console.warn('     Commit first, or you will verify against a stale deploy.\n');
+}
+
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(OUT, { recursive: true });
 execSync(`git archive HEAD | tar -x -C "${OUT}"`, { cwd: ROOT, stdio: 'inherit' });
