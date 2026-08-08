@@ -73,7 +73,14 @@ function hideUnpublished(res) {
   return new HTMLRewriter()
     .on('[data-publish]', {
       element(el) {
-        const when = el.getAttribute('data-publish');
+        /* One calendar, not two. The element may carry a date, but schedule.json
+           is the authority — a date copied into markup and a date in the
+           manifest can drift, and a test proved they do: moving one article
+           forward in the manifest opened its URL and its sitemap entry while
+           its card stayed hidden, because the card was still trusting its own
+           copy. data-slug lets the same lookup answer everywhere. */
+        const slug = el.getAttribute('data-slug');
+        const when = (slug && SCHEDULE[slug]) || el.getAttribute('data-publish');
         if (when && when > today) el.remove();
       },
     })
