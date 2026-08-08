@@ -1,0 +1,6 @@
+{
+  "_comment": "slug -> ISO publish date. An article whose date has not arrived is 404 at its own URL, stripped from /blog/ and the category hubs, and absent from sitemap.xml. Anything not listed here is published \u2014 the 25 original articles are deliberately absent. Dates are compared in UTC against the Worker's clock; a date of today or earlier is live.",
+  "schedule": {
+    "sleep-repairs-skin": "2026-09-08"
+  }
+}
