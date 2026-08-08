@@ -26,40 +26,6 @@
  *   ZL_NOTIFY   var — where submission alerts go (info@zerolines.life)
  */
 
-import SCHEDULE_FILE from './schedule.json';
-
-/* ---------------------------------------------------------------------------
-   The publishing calendar.
-
-   This site is static files. There is no CMS, no database of posts and no cron
-   job — so "one article a week" is enforced by the only thing that moves on its
-   own: the date. Every scheduled article ships in the bundle from day one and
-   simply refuses to exist until its turn.
-
-   Three things have to agree, or the effect leaks:
-     · the article's own URL 404s while it is future-dated
-     · /blog/ and the category hubs do not list it
-     · sitemap.xml does not offer it to a crawler
-
-   Miss the third and Google indexes a 404. Miss the second and a reader clicks
-   a card into nothing. All three are handled below, from one manifest.
-   --------------------------------------------------------------------------- */
-const SCHEDULE = (SCHEDULE_FILE && SCHEDULE_FILE.schedule) || {};
-
-/* Compared in UTC against whole days, so an article dated today is live from
-   midnight rather than from whatever hour the deploy happened. */
-function isPublished(slug, now) {
-  const when = SCHEDULE[slug];
-  if (!when) return true;                       // unlisted means published
-  const today = (now || new Date()).toISOString().slice(0, 10);
-  return when <= today;
-}
-
-function slugFromPath(pathname) {
-  const m = pathname.match(/^\/blog\/([a-z0-9-]+)\.html$/);
-  return m ? m[1] : null;
-}
-
 const FROM = 'Zero Lines <scan@zerolines.life>';
 const REPLY_TO = 'info@zerolines.life';
 const SITE = 'https://zerolines.life';
@@ -386,46 +352,6 @@ async function serveAsset(request, env, url) {
   });
 }
 
-/* Strip cards for articles whose date has not arrived.
-
-   HTMLRewriter streams, so it cannot read a child element and then decide to
-   remove the parent — by the time the <a href> is seen, the opening <article>
-   has already gone out. So the cards carry the date themselves, on
-   data-publish, and the decision is made on the element that has to disappear.
-   Cards without the attribute are the original twenty-five and always show. */
-function hideUnpublishedCards(res) {
-  if (!res || res.status !== 200) return res;
-  const today = new Date().toISOString().slice(0, 10);
-  return new HTMLRewriter()
-    .on('article[data-publish]', {
-      element(el) {
-        const when = el.getAttribute('data-publish');
-        if (when && when > today) el.remove();
-      },
-    })
-    .transform(res);
-}
-
-/* And the sitemap. Offering a crawler a URL that answers 404 is the one way
-   this scheme could actively cost rankings rather than just delay them. */
-async function filterSitemap(res) {
-  if (!res || res.status !== 200) return res;
-  const xml = await res.text();
-  const today = new Date().toISOString().slice(0, 10);
-  const kept = xml.replace(/[ \t]*<url>[\s\S]*?<\/url>\n?/g, (block) => {
-    const loc = block.match(/<loc>([^<]+)<\/loc>/);
-    if (!loc) return block;
-    const m = loc[1].match(/\/blog\/([a-z0-9-]+)\.html$/);
-    if (!m) return block;
-    const when = SCHEDULE[m[1]];
-    return (when && when > today) ? '' : block;
-  });
-  return new Response(kept, {
-    status: 200,
-    headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=3600' },
-  });
-}
-
 /* Eight of the ten rules in _redirects point at a file and the assets binding
    resolves them itself. Two point at a directory — /journal -> /blog/ and
    /analyzer -> /analyser/ — and there the binding follows the rule, looks for
@@ -455,22 +381,6 @@ export default {
 
     const legacy = LEGACY_DIR[url.pathname.replace(/\/+$/, '') || '/'];
     if (legacy) return Response.redirect(new URL(legacy, url).toString(), 301);
-
-    // A scheduled article does not exist until its date. Served as a real 404
-    // with the house's own page, so a crawler that guesses a slug is told no.
-    const slug = slugFromPath(url.pathname);
-    if (slug && !isPublished(slug)) {
-      const nf = await env.ASSETS.fetch(new Request(new URL('/404.html', url), { method: 'GET' }));
-      return new Response(nf.body, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8' } });
-    }
-
-    // The listings and the sitemap must agree with the above.
-    if (url.pathname === '/blog/' || /^\/blog\/category-[a-z-]+\.html$/.test(url.pathname)) {
-      return hideUnpublishedCards(await serveAsset(request, env, url));
-    }
-    if (url.pathname === '/sitemap.xml') {
-      return filterSitemap(await serveAsset(request, env, url));
-    }
 
     return serveAsset(request, env, url);
   },
