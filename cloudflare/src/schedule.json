@@ -1,4 +1,30 @@
 {
-  "_comment": "slug -> ISO publish date. An article whose date has not arrived is 404 at its own URL, stripped from /blog/ and the category hubs, and absent from sitemap.xml. Anything not listed here is published \u2014 the 25 original articles are deliberately absent. Dates are compared in UTC against the Worker's clock; a date of today or earlier is live.",
-  "schedule": {}
+  "_comment": "slug -> ISO publish date. An article whose date has not arrived is 404 at its own URL, stripped from /blog/ and the category hubs, and absent from sitemap.xml. Anything not listed here is published — the 25 original articles are deliberately absent. Dates are compared in UTC against the Worker's clock; a date of today or earlier is live.",
+  "schedule": {
+    "washing-your-face-morning-and-night": "2026-08-10",
+    "dry-vs-dehydrated-skin": "2026-08-17",
+    "where-the-money-goes-in-a-jar": "2026-08-24",
+    "face-feels-tight-after-washing": "2026-08-31",
+    "starting-retinol-without-irritation": "2026-09-07",
+    "pores-open-and-close-myth": "2026-09-14",
+    "hard-water-and-skin": "2026-09-21",
+    "when-everything-stings": "2026-09-28",
+    "niacinamide-and-vitamin-c": "2026-10-05",
+    "dermatologically-tested-meaning": "2026-10-12",
+    "sleep-lines-and-pillowcases": "2026-10-19",
+    "blue-light-and-screens": "2026-10-26",
+    "do-you-need-an-eye-cream": "2026-11-02",
+    "does-skincare-expire": "2026-11-09",
+    "gua-sha-depuffing": "2026-11-16",
+    "pilling-skincare": "2026-11-23",
+    "hyaluronic-acid-dry-air": "2026-11-30",
+    "air-conditioning-and-heating": "2026-12-07",
+    "does-skin-get-used-to-products": "2026-12-14",
+    "hands-and-neck": "2026-12-21",
+    "vitamin-c-turned-orange": "2026-12-28",
+    "alcohol-and-your-face": "2027-01-04",
+    "skin-in-perimenopause": "2027-01-11",
+    "shaving-and-skin-barrier": "2027-01-18",
+    "sweat-friction-and-the-gym": "2027-01-25"
+  }
 }

@@ -1,0 +1,427 @@
+[
+ {
+  "week": 1,
+  "title": "Washing Your Face: The Step This Journal Has Been Assuming",
+  "slug": "washing-your-face-morning-and-night",
+  "category": "Routine",
+  "target_query": "do you need to wash your face in the morning",
+  "brief": "Ten articles in this journal open with 'start with a gentle cleanser' and not one of them defines what that means; the six-step protocol contains no cleanser at all. Write the assumption out honestly. Cover what cleansing is actually for — removing sunscreen, sebum and the day's deposits, not deep-cleaning anything, because nothing applied to the surface reaches below it — and then separate the two washes: the evening one is close to non-negotiable for anyone wearing SPF, while the morning one is genuinely optional for a great many people and necessary for others. Give the reader a way to decide rather than a rule to obey: what your face does by mid-morning tells you whether washing on waking helped or created the oil it was meant to remove. Handle double cleansing in the same spirit — where a first oil step earns its place (long-wear SPF, makeup) and where it is simply a second product sold as a second step. State plainly that Zero Lines makes no cleanser, which is exactly why the piece can afford to be indifferent about which one you buy. Nearest existing: how-to-layer-skincare, which disposes of the whole question in a single parenthesis, and morning-vs-night-routine, which prescribes an oil cleanse followed by a water cleanse without ever explaining why or for whom. Appearance and comfort only; no conditions named, no efficacy language.",
+  "links_to_existing": [
+   "how-to-layer-skincare",
+   "morning-vs-night-routine",
+   "zero-lines-protocol"
+  ],
+  "links_to_new": [
+   "face-feels-tight-after-washing",
+   "hard-water-and-skin"
+  ]
+ },
+ {
+  "week": 2,
+  "title": "Dry Skin or Dehydrated Skin? How to Tell Which You Have",
+  "slug": "dry-vs-dehydrated-skin",
+  "category": "Science",
+  "target_query": "dry vs dehydrated skin how to tell the difference",
+  "brief": "The existing skin-type piece reports that the analyser's single most common finding is 'I thought I had oily skin, but I'm actually dehydrated' — and then never teaches the reader to see it for themselves. This is that lesson, written so it works without uploading a photograph of anything. Explain the distinction at the level of what is missing: a lipid shortage is a matter of what the skin produces and tends to be a settled trait, while a water shortage is a state the same face moves in and out of within a week. Then give the tells that actually separate them, including the counter-intuitive one — dehydrated skin often reads as oilier, not drier, because a surface short of water can still be producing plenty of oil, and the reader has usually been treating the oil. Say clearly that the pinch test is close to useless on the face and why. The single practical consequence is the payoff: whether the next thing you reach for should be a humectant or a lipid, and how to tell within a fortnight whether you chose right. Nearest existing: understanding-skin-type, which defines dry as genetic and dehydration as a state in two sentences and moves on; also drinking-water-better-skin, which covers only the internal half of hydration. Descriptive throughout — this is a way of looking, not a diagnosis.",
+  "links_to_existing": [
+   "understanding-skin-type",
+   "drinking-water-better-skin",
+   "complete-guide-skin-aging"
+  ],
+  "links_to_new": [
+   "pores-open-and-close-myth",
+   "hyaluronic-acid-dry-air"
+  ]
+ },
+ {
+  "week": 3,
+  "title": "Where the Money Goes in a Jar of Cream",
+  "slug": "where-the-money-goes-in-a-jar",
+  "category": "Brand Story",
+  "target_query": "why is skincare so expensive",
+  "brief": "A luxury house itemising the cost stack while it still has nothing on sale — which is the only moment this can be written without special pleading, because our own price is not yet set. Walk the reader through where the money in any jar actually goes: glass and secondary packaging, the per-unit penalty of small filling runs, stability and safety assessment, regulatory work repeated market by market, distribution, and retail margin. Be straight that the active materials are rarely the expensive part, and that this is true at every price point rather than a scandal peculiar to expensive brands. The conclusion must refuse both easy positions: price predicts formulation quality badly in both directions, and a cheap product is not automatically a compromise any more than a costly one is automatically considered. Leave the reader with the better question — not 'is this worth it' but 'what specifically am I paying for here', and how to tell from the object in their hand. Nearest existing: inside-the-lab, which is the house describing its own four years of formulation; this is the industry's cost structure described from inside it, and says nothing at all about our own formulations or their eventual price.",
+  "links_to_existing": [
+   "inside-the-lab",
+   "read-skincare-label",
+   "pyrenees-to-barcelona"
+  ],
+  "links_to_new": [
+   "dermatologically-tested-meaning",
+   "does-skincare-expire"
+  ]
+ },
+ {
+  "week": 4,
+  "title": "Why Your Face Feels Tight After Washing",
+  "slug": "face-feels-tight-after-washing",
+  "category": "Routine",
+  "target_query": "why does my face feel tight after washing",
+  "brief": "Take the squeak apart. Tightness after washing is a sensation produced by surfactants and by the pH the skin is left sitting at — it is not evidence that anything is clean, and the moisturiser reached for immediately afterwards is frequently treating a problem the cleanser created two minutes earlier. Explain why the feeling is so persuasive: it is immediate, it is physical, and it arrives at the exact moment the reader is looking for confirmation that the product worked. Then give a test anyone can run in a week without buying anything: wash as usual, wait ten minutes, apply nothing, and notice. A cleanser that leaves the face comfortable at ten minutes has done its job; one that leaves it tight is being compensated for by everything that follows. Close with what to look at on the label if the cleanser fails that test — surfactant type, whether it is soap-based, and where in the list the cleansing agents sit. Nearest existing: how-to-layer-skincare is the closest routine piece, but the journal currently begins at step one and skips step zero entirely, which is what this and washing-your-face-morning-and-night are jointly correcting. Nothing is diagnosed and no condition is named; the subject is how skin feels and what that tells you about a product.",
+  "links_to_existing": [
+   "understanding-skin-type",
+   "how-to-layer-skincare",
+   "weekly-exfoliation-vs-daily"
+  ],
+  "links_to_new": [
+   "washing-your-face-morning-and-night",
+   "shaving-and-skin-barrier"
+  ]
+ },
+ {
+  "week": 5,
+  "title": "Starting Retinol Without the Peeling Weeks",
+  "slug": "starting-retinol-without-irritation",
+  "category": "Ingredients",
+  "target_query": "how to start retinol without peeling",
+  "brief": "The journal names retinoids as one of the few things with genuine evidence behind them — collagen-decline lists them third — and then never writes about them, which is conspicuous given that no Zero Lines formulation contains any. Close that loop. Cover what retinoids are understood to do, why the adjustment period happens at all, and how to introduce one at a pace that makes the first month unremarkable: low frequency before low strength, applied to dry skin, buffered under or over a moisturiser, and held at each step until nothing is happening. Name what not to stack in the same evening and why, and be specific about the difference between an adjustment and a signal to stop. Then state the house position without disparagement: Zero Lines went a different route for reasons of tolerance and layering, not because retinol is a lesser choice, and refusing to run down the ingredient we do not sell is the most credible thing this journal can do. Nearest existing: collagen-decline-biological-clock, which gives retinoids one short section; also how-to-layer-skincare on the vitamin C interaction and morning-vs-night-routine, which files retinoids under 'night' and says no more. Describe mechanisms in general terms, cite no percentages, and route anything prescription-strength to a clinician.",
+  "links_to_existing": [
+   "collagen-decline-biological-clock",
+   "how-to-layer-skincare",
+   "morning-vs-night-routine"
+  ],
+  "links_to_new": [
+   "damaged-skin-barrier-repair",
+   "skin-tolerance-myth"
+  ]
+ },
+ {
+  "week": 6,
+  "title": "Pores Don't Open and Close: What Actually Changes How They Look",
+  "slug": "pores-open-and-close-myth",
+  "category": "Science",
+  "target_query": "how to make pores smaller",
+  "brief": "A pore has no muscle and no mechanism for opening or shutting, so steam does not open it and cold water does not close it. Explain why the illusion is so durable anyway — both change how sebum flows and how the surrounding skin sits, so something visibly happens, just not the thing people have been told. Replace the false mechanism with the three variables that genuinely govern pore appearance: how much sebum is being produced, how much debris is sitting in the opening and how it looks once oxidised, and how well the skin immediately around the opening still holds its shape. Say plainly that shrinking is not on that list, that nothing applied topically changes the diameter of a pore, and that the honest goal is a change in how visible they are rather than how large they are. The house connection is one line — the analyser already reads pores as one of its eight markers — and no formulation claim appears anywhere in the piece. Nearest existing: understanding-skin-type, which sorts a reader into a category; this takes the single feature everyone asks about and dismantles the mechanism behind the advice they have been given. Deliberately distinct from weekly-exfoliation-vs-daily, which is about frequency and method rather than anatomy.",
+  "links_to_existing": [
+   "understanding-skin-type",
+   "weekly-exfoliation-vs-daily",
+   "complete-guide-skin-aging"
+  ],
+  "links_to_new": [
+   "dry-vs-dehydrated-skin",
+   "face-feels-tight-after-washing"
+  ]
+ },
+ {
+  "week": 7,
+  "title": "Hard Water and Your Skin: What the Tap Is Actually Doing",
+  "slug": "hard-water-and-skin",
+  "category": "Lifestyle",
+  "target_query": "does hard water affect your skin",
+  "brief": "Four articles here treat water as an ingredient and one treats it as a drink, and nothing addresses the several litres a week that actually touch the reader's face. The obvious version of this piece says hard water is bad and sells a shower filter; the honest version separates two things people conflate. Dissolved calcium and magnesium do not damage skin on contact — but they do react with the surfactants in cleansers to leave an insoluble residue on the surface, which is why the same cleanser feels squeaky in London and slippery in Barcelona. That residue, plus the extra scrubbing and extra product used to compensate for it, is where the tightness actually comes from. Practical outcomes, all cheap: move from soap-based to syndet or oil-based cleansing in a hard-water area, stop judging a cleanser by how well it foams, rinse less aggressively, and apply leave-on products to still-damp skin. Honest limits: nobody can read your water hardness off your face, and a filter is optional rather than essential. Include the self-correcting note this house is well placed to make — mineral content dissolved in a formulation and mineral content arriving from a tap are not the same proposition, and it would be convenient for us to blur them. Nearest existing: why-pyrenean-mineral-water, which argues for mineral content as a formulation input and reaches the opposite conclusion; also climate-skincare-needs, which gives water hardness a single clause.",
+  "links_to_existing": [
+   "why-pyrenean-mineral-water",
+   "climate-skincare-needs",
+   "drinking-water-better-skin"
+  ],
+  "links_to_new": [
+   "washing-your-face-morning-and-night",
+   "face-feels-tight-after-washing"
+  ]
+ },
+ {
+  "week": 8,
+  "title": "When Everything Suddenly Stings",
+  "slug": "damaged-skin-barrier-repair",
+  "category": "Routine",
+  "target_query": "how to repair a damaged skin barrier",
+  "brief": "The exfoliation piece prescribes 'two to four weeks of gentle, minimal skincare — cleanser, moisturiser, sunscreen, and nothing else' in one sentence and moves on. This is that sentence written out at length. Describe what to stop (every acid, every retinoid, every scrub, every fragranced leave-on, and the urge to add something soothing), what to keep, and what the weeks actually feel like week by week, including the plateau in the middle where nothing appears to be improving and most people abandon the attempt. The mechanism is the reassuring part and should be stated clearly: you are not repairing anything, you are getting out of the way while the skin does it, and this is why the correct action is subtraction rather than purchase. Give the reintroduction sequence at the end — one thing, at low frequency, with a fortnight of nothing else changing. Then the boundary, stated plainly: if it has not settled within about a month, or if skin is weeping, cracking, spreading or painful, that is a doctor's question and not a skincare one, and this journal will not pretend otherwise. Nearest existing: weekly-exfoliation-vs-daily, which diagnoses over-exfoliation thoroughly and treats it in a line; also understanding-skin-type, which calls sensitivity barrier damage without saying what to do, and complete-guide-skin-aging, which names barrier dysfunction as one of four mechanisms. Name no condition as treatable and promise no timeline.",
+  "links_to_existing": [
+   "weekly-exfoliation-vs-daily",
+   "understanding-skin-type",
+   "complete-guide-skin-aging"
+  ],
+  "links_to_new": [
+   "face-feels-tight-after-washing",
+   "starting-retinol-without-irritation"
+  ]
+ },
+ {
+  "week": 9,
+  "title": "Niacinamide and Vitamin C Together: Where the Warning Came From",
+  "slug": "niacinamide-and-vitamin-c-together",
+  "category": "Ingredients",
+  "target_query": "can you use niacinamide and vitamin c together",
+  "brief": "Trace the warning to its origin. It descends from an observation about raw compounds under heat and conditions a finished formulation does not reproduce, and it has been repeated for decades with the conditions stripped out. Separate that cleanly from the thing people actually experience, which is a flush or a brief sting on reactive skin — a real sensation with a different cause, and one that is information rather than damage. The practical answer for most readers is that this is a non-event; for the minority whose face goes pink, splitting the two across morning and evening settles it entirely and costs nothing. Be explicit about the honest limit: the house has run no tests of its own, has no interest in either outcome, and is describing the state of an argument rather than ending it. Then use the case to make a broader point the journal can own — that a warning repeated widely enough starts to feel like evidence, and that the useful question is always what the original observation was actually measuring. Nearest existing: niacinamide-ingredient-over-30, which introduces the ingredient on its own; this answers the single most-typed follow-up about it and turns a standalone article into a cluster. No percentages, no claims of proof in either direction.",
+  "links_to_existing": [
+   "niacinamide-ingredient-over-30",
+   "how-to-layer-skincare",
+   "read-skincare-label"
+  ],
+  "links_to_new": [
+   "starting-retinol-without-irritation",
+   "vitamin-c-serum-oxidation"
+  ]
+ },
+ {
+  "week": 10,
+  "title": "\"Dermatologically Tested\" and Other Phrases That Mean Less Than They Sound",
+  "slug": "dermatologically-tested-meaning",
+  "category": "Brand Story",
+  "target_query": "what does dermatologically tested actually mean",
+  "brief": "A cosmetics house explaining the front of the box the way it has already explained the back. Take the phrases one at a time. 'Dermatologically tested' confirms that a test happened and says nothing about what it found or how many people were in it. 'Hypoallergenic' has no fixed legal definition and no threshold a product must clear. 'Non-comedogenic' rests on a test method with well-known limits and does not transfer reliably to a finished formula on a human face. 'Clinically proven' is the hardest phrase in the EU to justify under Regulation 655/2013 and among the most freely used. Explain that the regulation requires claims to be supported and not misleading, and that the gap the reader is sensing is between what is technically defensible and what the sentence implies. Close on the house's own position: Zero Lines has no completed studies, and therefore uses none of these words — the abstention is the point, and it should be stated once, plainly, without being turned into a virtue lap. Nearest existing: read-skincare-label, which reads the INCI block on the back; this reads the front, where the marketing sits, and is about regulation rather than chemistry. Also sits alongside hydrolyzed-collagen-myth-miracle as the second piece here about an industry overclaim.",
+  "links_to_existing": [
+   "read-skincare-label",
+   "hydrolyzed-collagen-myth-miracle",
+   "inside-the-lab"
+  ],
+  "links_to_new": [
+   "where-the-money-goes-in-a-jar",
+   "blue-light-screens-skin"
+  ]
+ },
+ {
+  "week": 11,
+  "title": "Sleep Lines and Silk Pillowcases: What Friction Does Overnight",
+  "slug": "sleep-lines-pillowcases",
+  "category": "Lifestyle",
+  "target_query": "do silk pillowcases prevent wrinkles",
+  "brief": "A high-demand purchase question the house can answer with unusual credibility because it has nothing to sell in the category. The honest answer has three parts and should be given in that order. Sleep lines are real and mechanically distinct from expression lines — they come from a face pressed and held against a surface for hours, not from muscle movement. Silk genuinely reduces drag and friction against that surface, which is a modest, plausible and non-trivial claim. And almost every other claim attached to silk pillowcases — hydration, anti-ageing, general skin health — is unsupported and some of it is quietly absurd. The more useful finding is that sleeping position outweighs fabric by a wide margin, which is free; the honest limit is that changing your sleeping position is very difficult and most people will not manage it, so say so rather than prescribing it. Finish with the practical point nobody writes: a pillowcase is a surface your face rests against for a third of your life, so how often it is washed is a more consequential variable than what it is woven from. Nearest existing: fine-lines-vs-wrinkles, which defines lines as dynamic or structural and does not cover mechanical creasing during sleep at all; adjacent to sleep-repairs-skin, which is about repair biology rather than what your face is pressed against.",
+  "links_to_existing": [
+   "fine-lines-vs-wrinkles",
+   "sleep-repairs-skin",
+   "lifestyle-factors-aging"
+  ],
+  "links_to_new": [
+   "facial-massage-what-it-does",
+   "indoor-air-humidity-skin"
+  ]
+ },
+ {
+  "week": 12,
+  "title": "Blue Light from Screens: What the Evidence Will and Will Not Support",
+  "slug": "blue-light-screens-skin",
+  "category": "Science",
+  "target_query": "does blue light from screens damage skin",
+  "brief": "This is the journal's debunking move applied to one of the industry's most profitable current claims. Give the honest reading: work on visible light and skin has largely been done at intensities far above what a laptop emits, the sun delivers vastly more high-energy visible light in an hour outdoors than a screen does in a day, and the step from those findings to a screen-defence serum is a marketing leap rather than a scientific one. Then hand the reader the part that is real, because screens do affect how a face looks — just not photochemically. Late-night light delays sleep onset and the cost shows up the next morning; hours of a sustained expression and a hand propped against one cheek leave mechanical creasing; and a day at a desk is a day in dry conditioned air. So the correct response to screen time is behavioural rather than a purchase, and the piece should say so in as many words. The house declining to sell a blue-light claim is more persuasive than any product page, and that is the whole reason to publish it. Nearest existing: spf-every-day-habit, which establishes UV as the dominant photo-exposure; this handles the adjacent claim across the visible spectrum and reaches the opposite conclusion, which strengthens rather than repeats it — taking the sun seriously is precisely what makes the scepticism about screens credible.",
+  "links_to_existing": [
+   "spf-every-day-habit",
+   "complete-guide-skin-aging",
+   "sleep-repairs-skin"
+  ],
+  "links_to_new": [
+   "dermatologically-tested-meaning",
+   "indoor-air-humidity-skin"
+  ]
+ },
+ {
+  "week": 13,
+  "title": "Do You Need an Eye Cream?",
+  "slug": "do-you-need-an-eye-cream",
+  "category": "Routine",
+  "target_query": "is eye cream actually necessary",
+  "brief": "Six formulations and not one of them is an eye product, so the house can answer this with nothing at stake — and should say that in the first paragraph rather than the last. Start with what is genuinely different about the skin around the eye: thinner, with very few sebaceous glands, and subjected to more daily movement than anywhere else on the body. Then follow that honestly to a conclusion that is smaller than the category implies — the differences are real, but they justify a gentler texture and a careful hand far more than they justify a separate purchase, and much of what is sold as eye cream is a smaller quantity of a similar formula in a more expensive jar. Handle 'dark circles' properly, because it is three unrelated things wearing one name: shadow cast by bone structure and the hollow beneath the eye, pigment in the skin itself, and visible vasculature showing through a thin surface. Only one of those is a skincare question at all, and the piece should say which and let the other two go. Nearest existing: fine-lines-vs-wrinkles, which classifies lines without ever addressing the site where readers notice them first; also how-to-layer-skincare, which lists eye cream in its sequence and nowhere in its text. Appearance only, and no promises about any of the three.",
+  "links_to_existing": [
+   "fine-lines-vs-wrinkles",
+   "how-to-layer-skincare",
+   "sleep-repairs-skin"
+  ],
+  "links_to_new": [
+   "sleep-lines-pillowcases",
+   "hands-and-neck-ageing"
+  ]
+ },
+ {
+  "week": 14,
+  "title": "Does Skincare Expire? What the Open-Jar Symbol Is Telling You",
+  "slug": "does-skincare-expire",
+  "category": "Ingredients",
+  "target_query": "how long does skincare last after opening",
+  "brief": "The label article tells readers to check dates and replace annually in a single bullet, and the brand story explains airless packaging without ever saying what the packaging is protecting against. Join them up. Explain that the 12M or 6M inside the little open jar is a manufacturer's statement about how long the preservative system is expected to hold up under normal use after opening — not a measurement taken on your shelf, and not a countdown to the product becoming dangerous on the appointed day. Cover why a jar behaves differently from a pump and a pump differently from a sealed airless container, what oxidation looks like in the products where you can actually see it, and whether the fridge helps or hurts depending on the formula. Then the useful inversion: the signals people watch for — slight separation, a small colour shift — are often nothing, while the ones they ignore genuinely shorten a product's life, namely fingers in a jar, a dropper touched to skin, and a warm, damp bathroom shelf. Note that unopened is not immortal either. Finish with the counter-intuitive point that a formula with fewer preservatives is not automatically the safer purchase. Nearest existing: read-skincare-label, which decodes the ingredient list; this decodes the symbols beside it. Also pyrenees-to-barcelona on airless packaging and inside-the-lab on stability testing. Entirely actionable, no purchase implied.",
+  "links_to_existing": [
+   "read-skincare-label",
+   "pyrenees-to-barcelona",
+   "inside-the-lab"
+  ],
+  "links_to_new": [
+   "where-the-money-goes-in-a-jar",
+   "vitamin-c-serum-oxidation"
+  ]
+ },
+ {
+  "week": 15,
+  "title": "Gua Sha, Face Yoga, and What Depuffing Actually Is",
+  "slug": "facial-massage-what-it-does",
+  "category": "Lifestyle",
+  "target_query": "does gua sha actually work",
+  "brief": "Begin by conceding what is true, because something real does happen: fluid pools overnight, moving it changes how a face looks within minutes, and anyone who has done this has seen it work. The oversell is the leap from 'less puffy by nine o'clock' to lifting, contouring or sculpting — asking a stroke on the surface to do something lasting to tissue it does not reach, and then to hold it there. Make the distinction concrete: a change that reverses by the time you have had lunch is a fluid change, and a fluid change is worth having on its own terms without being renamed. The second point is rarely raised by the people demonstrating the technique: repeated dragging across skin is a friction question, so slip and pressure matter far more than the tool or the stone it happens to be cut from, and a heavy hand on a dry face is the one way to make this counterproductive. The reader should leave with a defensible reason to keep doing it, a clear boundary on what to expect, and no criticism of anyone selling the tools. Nearest existing: cortisol-stress-aging and lifestyle-factors-aging both cover what daily life does to a face, but nothing in the journal addresses anything the reader does with their hands.",
+  "links_to_existing": [
+   "cortisol-stress-aging",
+   "lifestyle-factors-aging",
+   "sleep-repairs-skin"
+  ],
+  "links_to_new": [
+   "why-skincare-pills",
+   "alcohol-morning-after-skin"
+  ]
+ },
+ {
+  "week": 16,
+  "title": "Pilling: Why Your Skincare Rolls Off in Little Grey Balls",
+  "slug": "why-skincare-pills",
+  "category": "Routine",
+  "target_query": "why does my moisturiser ball up on my face",
+  "brief": "Treat pilling as a mechanical fault with a findable cause rather than a mystery or a verdict on the products involved. Say early and clearly that the little balls are not dead skin coming off — they are film-formers and thickeners (silicones, carbomer and its relatives, some sunscreen polymers) being rolled up by friction, or one layer applied over another that has not yet set. Then give the reader a test sequence to run on their own shelf, in order, changing one thing at a time: halve the dose, thin the layer, wait longer between steps, press rather than rub, and only then start separating the two products that are fighting. The honest limit is the credibility of the piece — we cannot tell you which of your products is the culprit without seeing the labels, and no formulator can — but we can show you how to work it out in under a week and without replacing anything. Note that pilling is common under sunscreen and under makeup precisely because those are the layers applied with the most drag. Nearest existing: how-to-layer-skincare, which answers what order to apply things in; this answers what happens between the layers, and should deliberately never restate the order.",
+  "links_to_existing": [
+   "how-to-layer-skincare",
+   "read-skincare-label",
+   "zero-lines-protocol"
+  ],
+  "links_to_new": [
+   "facial-massage-what-it-does",
+   "hyaluronic-acid-dry-air"
+  ]
+ },
+ {
+  "week": 17,
+  "title": "Hyaluronic Acid in Dry Air: The Condition Nobody Mentions",
+  "slug": "hyaluronic-acid-dry-air",
+  "category": "Ingredients",
+  "target_query": "does hyaluronic acid dry out your skin",
+  "brief": "A humectant draws water from wherever the water is. In a humid room that is the air; in dry air, on a plane, or at altitude, it is the deeper layers of the reader's own skin — and with nothing sealing it in, that water carries on leaving. Frame this correctly: it is not a defect, not a scandal and not a reason to distrust the ingredient. It is the ingredient behaving exactly as described, under a condition the marketing never bothers to state. The reader should come away understanding that a humectant is half of an arrangement and the other half is whatever goes on top. Actionable and free: apply to damp skin rather than dry, put something occlusive over it, and treat the humidity of the room as part of the routine rather than as background. The house connection stays small and honest — the Andorra shop sits at altitude and the Marbella one does not, and the same serum behaves differently in each — with no claim made about our own formulations. Nearest existing: sits between climate-skincare-needs, which covers regional skin behaviour without an ingredient mechanism, and drinking-water-better-skin, which is internal hydration only. Neither takes a single ingredient and explains the physical condition under which its reputation reverses.",
+  "links_to_existing": [
+   "climate-skincare-needs",
+   "drinking-water-better-skin",
+   "how-altitude-changes-water"
+  ],
+  "links_to_new": [
+   "dry-vs-dehydrated-skin",
+   "indoor-air-humidity-skin"
+  ]
+ },
+ {
+  "week": 18,
+  "title": "Air Conditioning, Central Heating, and the Air Your Skin Actually Lives In",
+  "slug": "indoor-air-humidity-skin",
+  "category": "Lifestyle",
+  "target_query": "does air conditioning dry out your skin",
+  "brief": "Most people spend the overwhelming majority of the day indoors, so the climate that matters is the one in the office and the bedroom, not the one on the forecast. The idea the obvious version of this article misses is that heating and cooling do the same thing by opposite routes: one warms air without adding moisture to it, the other condenses moisture out at the coil, and both end at low relative humidity. That is why a heated flat and an air-conditioned office produce the identical tight, flat-looking skin, and why the response is the same in both cases. Keep it actionable: a cheap hygrometer tells you more about your skin's environment than any product claim on any box; a bedroom held somewhere in the 40 to 60 percent band is the single highest-leverage change available; position matters more than people expect, since a desk under a vent or a bed beside a radiator is its own local microclimate; and applying leave-on product within a minute of washing matters more in dry indoor air than anywhere else. Write it so it is equally true in February and August, with no seasonal peg anywhere in the text. Nearest existing: climate-skincare-needs, which is entirely outdoor and geographic; this is indoor and applies whichever of those zones you live in, which is the point — your building overrides your climate for most of the day.",
+  "links_to_existing": [
+   "climate-skincare-needs",
+   "lifestyle-factors-aging",
+   "sleep-repairs-skin"
+  ],
+  "links_to_new": [
+   "hyaluronic-acid-dry-air",
+   "blue-light-screens-skin"
+  ]
+ },
+ {
+  "week": 19,
+  "title": "Does Skin Get Used to a Product? The Tolerance Question",
+  "slug": "skin-tolerance-myth",
+  "category": "Science",
+  "target_query": "does skin get used to skincare",
+  "brief": "The received wisdom is that you must rotate products because skin adapts and stops responding. For most cosmetic ingredients there is no established mechanism by which that happens — what changes is usually the observer. Explain the shape of it: the first weeks deliver the fastest visible change, because surface hydration and texture move quickly and from a low base; then the curve flattens, and a flat curve at a better level is very easily misread as a product that has stopped working. Give the reader a way to check — a photograph taken at the start in the same light, which almost nobody thinks to take and which settles the question in ten seconds. Be explicit about the honest limit in both directions: the idea of tachyphylaxis was largely imported into cosmetics from other fields, the evidence for it here is thin, and 'thin evidence' is not the same as 'disproved'. The conclusion argues against buying anything new, which is exactly why this house should publish it. Nearest existing: first-30-days-protocol, which sets expectations at the beginning; this is the other end of the same timeline — month four, when nothing new appears to be happening and the reader is deciding whether to abandon a routine that is in fact working.",
+  "links_to_existing": [
+   "first-30-days-protocol",
+   "zero-lines-protocol",
+   "complete-guide-skin-aging"
+  ],
+  "links_to_new": [
+   "starting-retinol-without-irritation",
+   "perimenopause-skin-changes"
+  ]
+ },
+ {
+  "week": 20,
+  "title": "Hands and Neck: The Two Places That Show Age First",
+  "slug": "hands-and-neck-ageing",
+  "category": "Routine",
+  "target_query": "how to stop your hands looking old",
+  "brief": "Both areas receive a fraction of the attention the face gets while being structurally worse equipped for it — thinner skin, far fewer oil glands on the neck, and hands that take UV through car and office windows while being washed a dozen times a day. The debunk is the spine of the piece: neck creams are overwhelmingly a packaging and pricing category rather than a formulation one, and a house that formulates can say plainly that there is rarely anything in the smaller jar that is not already in the larger one. The genuinely actionable part is unglamorous and costs nothing: extend what you already own downward and outward, put sunscreen on the backs of your hands as a matter of course, and reapply after washing them, which is the step everyone skips and the one that would make the most difference. Note in passing that the neck is also where shaving irritation lives for a large share of readers. Then the honest limit: sun exposure already accumulated on the hands is among the least responsive to topical work of anywhere on the body, and anyone telling you otherwise is selling something. Nearest existing: how-to-layer-skincare, which governs the order of application on the face; this is about the territory the routine stops at, which no existing article addresses — the twenty-five are face-only throughout.",
+  "links_to_existing": [
+   "spf-every-day-habit",
+   "how-to-layer-skincare",
+   "complete-guide-skin-aging"
+  ],
+  "links_to_new": [
+   "where-the-money-goes-in-a-jar",
+   "shaving-and-skin-barrier"
+  ]
+ },
+ {
+  "week": 21,
+  "title": "Why Your Vitamin C Serum Turned Orange",
+  "slug": "vitamin-c-serum-oxidation",
+  "category": "Ingredients",
+  "target_query": "why did my vitamin c serum turn orange",
+  "brief": "The most-recommended active in skincare is also among the least stable. L-ascorbic acid oxidises on contact with air, light and warmth, and the colour shift from clear to straw to orange is that reaction becoming visible on your shelf. Say clearly that this happens at every price point and that paying more buys better packaging rather than a fundamentally more stable molecule — which is a useful thing to know before spending again. Then the second, less-discussed half: a great deal of what is sold as vitamin C is a derivative, a different molecule with different behaviour and different stability, and the label rarely makes that distinction legible to anyone who is not looking for it. Show the reader what to look for — opaque or airless packaging, small volumes, where the ingredient sits in the list — how to store a bottle once opened, and how to judge when one is finished regardless of how much is left in it. Zero Lines uses no vitamin C in any of the six, which the piece should state plainly: it means every sentence in it can be written without self-interest. Nearest existing: read-skincare-label, which teaches a method for decoding an ingredient list; this is one ingredient's specific failure mode. Nothing in the existing set covers vitamin C at all.",
+  "links_to_existing": [
+   "read-skincare-label",
+   "niacinamide-ingredient-over-30",
+   "inside-the-lab"
+  ],
+  "links_to_new": [
+   "does-skincare-expire",
+   "niacinamide-and-vitamin-c-together"
+  ]
+ },
+ {
+  "week": 22,
+  "title": "The Morning After: Why Alcohol Shows on Your Face",
+  "slug": "alcohol-morning-after-skin",
+  "category": "Lifestyle",
+  "target_query": "why does my face look puffy after drinking",
+  "brief": "The specific, slightly embarrassed question people actually type, answered mechanically rather than moralistically. Four separate things happen and they resolve on different timescales, and naming them separately is the whole utility of the piece: fluid redistribution and the puffiness that comes with it, vasodilation and the flush that follows, badly fragmented sleep even when the hours on the clock look adequate, and whatever salt-heavy food came with the evening. That structure explains the thing everyone notices but nobody accounts for — why the puffiness has gone by early afternoon while the dull, flat quality has not. The honest limit is the payoff: nothing you apply reverses any of it, cold does something modest and temporary by moving fluid rather than removing it, and the only real variable is time. Write it for someone who is going to drink anyway and simply wants to understand what they are looking at in the mirror; do not lecture, and do not smuggle in a product. Nearest existing: lifestyle-factors-aging, where alcohol is factor five and gets one paragraph on long-term cumulative ageing. This is the acute overnight appearance — a different timescale and a completely different search intent — so it should link back rather than restate.",
+  "links_to_existing": [
+   "lifestyle-factors-aging",
+   "sleep-repairs-skin",
+   "cortisol-stress-aging"
+  ],
+  "links_to_new": [
+   "facial-massage-what-it-does",
+   "exercise-sweat-skin"
+  ]
+ },
+ {
+  "week": 23,
+  "title": "Skin in Perimenopause: What Changes, and What Skincare Can Honestly Do",
+  "slug": "perimenopause-skin-changes",
+  "category": "Science",
+  "target_query": "menopause skin changes on face",
+  "brief": "Written strictly about appearance and biology, never about treatment. Open with what people describe noticing, in their words: a flatter and drier surface, less spring, a face that reads differently in photographs than it did two years ago, and a routine that stopped fitting without anything obvious having changed. Then the reason, stated carefully — skin is a hormone-responsive tissue, and a meaningful share of the change in dermal collagen density is associated with this transition rather than distributed evenly across birthdays, which is why the experience is of a step rather than a slope. The obvious article either catastrophises or sells a hormone-free miracle; the honest one separates three tiers plainly. What a good routine can address at the level of appearance and comfort. What only time and consistency will do. And what belongs in a conversation with a doctor rather than with a cosmetics house. That third boundary, stated in the house's own voice, is the entire value of the piece. Nearest existing: collagen-decline-biological-clock, which treats collagen loss as a gradual age curve; this addresses the population for whom it is not gradual. Compliance note for the writer: appearance-only throughout, never describe menopause as something a cream treats, name no condition as treatable, cite no figures the house cannot source, and route every hormonal question to a clinician.",
+  "links_to_existing": [
+   "collagen-decline-biological-clock",
+   "complete-guide-skin-aging",
+   "fine-lines-vs-wrinkles"
+  ],
+  "links_to_new": [
+   "dry-vs-dehydrated-skin",
+   "hands-and-neck-ageing"
+  ]
+ },
+ {
+  "week": 24,
+  "title": "Shaving and the Skin Barrier: A Formulator's View",
+  "slug": "shaving-and-skin-barrier",
+  "category": "Routine",
+  "target_query": "is shaving bad for your skin",
+  "brief": "Shaving is the most aggressive exfoliation most men perform, carried out daily, usually without anyone acknowledging that it is exfoliation at all. That single reframe generates everything useful in the piece. If a blade is already removing surface cells every morning, then scrubs and acids are not additions to a routine but additions to an existing load, and they need rethinking rather than stacking. A blunt blade drags and demands pressure, and pressure is where irritation comes from — the problem is rarely that a blade is too sharp. And the order of the routine changes, because whatever goes on immediately after a shave lands on a surface that is temporarily far more permeable than it was ten minutes earlier, which is an argument for simplicity and against anything highly fragranced or highly active at that moment. Write it for anyone who shaves, faces and elsewhere, and keep it strictly to technique, comfort and appearance: name no razor-related condition as treatable, and route anything persistent, painful or infected to a clinician. Nearest existing: weekly-exfoliation-vs-daily, which argues against daily mechanical exfoliation for the face; this points out that a large group of readers has been doing exactly that every morning without counting it, extending the existing argument to a reader the journal does not currently address at all.",
+  "links_to_existing": [
+   "weekly-exfoliation-vs-daily",
+   "how-to-layer-skincare",
+   "understanding-skin-type"
+  ],
+  "links_to_new": [
+   "damaged-skin-barrier-repair",
+   "face-feels-tight-after-washing"
+  ]
+ },
+ {
+  "week": 25,
+  "title": "Sweat, Friction and the Gym: What Exercise Does to Skin",
+  "slug": "exercise-sweat-skin",
+  "category": "Lifestyle",
+  "target_query": "does sweating clear your skin",
+  "brief": "The premise in the query is wrong and correcting it is the article. Sweat is a thermoregulatory mechanism, not a cleaning one; it does not empty anything out of the skin, and the idea that it does is imported wholesale from detox marketing. What genuinely happens at the gym is mechanical and environmental: friction from kit, straps and equipment, prolonged occlusion under damp fabric, shared surfaces, hard water in a communal shower, and a face that has been flushed for an hour. Say clearly that exercise remains one of the better things anyone does for how their skin looks — through circulation, sleep quality and a lower baseline of stress — but for reasons unrelated to sweating, and that the distinction matters because it changes what you do about it. Keep the advice concrete and slightly counter to habit: what to take off before training rather than after, why the temperature of the post-session shower matters more than the products used in it, and the honest headline finding that the single biggest gym-skin variable is how long you stay in damp clothing afterwards. Nearest existing: lifestyle-factors-aging, where exercise appears only in an FAQ answer about whether it reverses ageing; nothing in the existing twenty-five addresses sweat, kit, friction or the practical hour around a session. Stays on appearance and habit, and names no condition it promises to treat.",
+  "links_to_existing": [
+   "lifestyle-factors-aging",
+   "sleep-repairs-skin",
+   "spf-every-day-habit"
+  ],
+  "links_to_new": [
+   "hard-water-and-skin",
+   "washing-your-face-morning-and-night"
+  ]
+ }
+]

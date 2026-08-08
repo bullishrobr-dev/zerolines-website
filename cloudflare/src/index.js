@@ -26,6 +26,80 @@
  *   ZL_NOTIFY   var — where submission alerts go (info@zerolines.life)
  */
 
+import SCHEDULE_FILE from './schedule.json';
+
+/* ---------------------------------------------------------------------------
+   The publishing calendar.
+
+   This site is static files. There is no CMS, no post database and no cron job,
+   so "one article a week" is enforced by the only thing that moves on its own:
+   the date. Every scheduled article ships in the bundle from day one and simply
+   refuses to exist until its turn.
+
+   Three things have to agree, or the effect leaks:
+     · the article's own URL 404s while it is future-dated
+     · /blog/ and the category hubs do not list it
+     · sitemap.xml does not offer it to a crawler
+
+   Miss the third and Google indexes a 404. Miss the second and a reader clicks
+   a card into nothing.
+   --------------------------------------------------------------------------- */
+const SCHEDULE = (SCHEDULE_FILE && SCHEDULE_FILE.schedule) || {};
+
+/* Whole days in UTC, so an article dated today is live from midnight rather
+   than from whatever hour the deploy happened. */
+function isPublished(slug, now) {
+  const when = SCHEDULE[slug];
+  if (!when) return true;                       // unlisted means published
+  return when <= (now || new Date()).toISOString().slice(0, 10);
+}
+
+function slugFromPath(pathname) {
+  const m = pathname.match(/^\/blog\/([a-z0-9-]+)\.html$/);
+  return m ? m[1] : null;
+}
+
+/* Hide anything the calendar has not reached yet.
+
+   HTMLRewriter streams, so it cannot read a child and then remove the parent —
+   by the time an <a href> is seen the opening tag has already gone out. So the
+   date rides on the element that must disappear. [data-publish] rather than
+   article[data-publish] because the same gate hides the backlinks the original
+   twenty-five carry into articles that have not published: without it, adding
+   old-to-new links would point a reader at a 404 for up to six months. */
+function hideUnpublished(res) {
+  if (!res || res.status !== 200) return res;
+  const today = new Date().toISOString().slice(0, 10);
+  return new HTMLRewriter()
+    .on('[data-publish]', {
+      element(el) {
+        const when = el.getAttribute('data-publish');
+        if (when && when > today) el.remove();
+      },
+    })
+    .transform(res);
+}
+
+/* Offering a crawler a URL that answers 404 is the one way this scheme could
+   cost rankings rather than merely delay them. */
+async function filterSitemap(res) {
+  if (!res || res.status !== 200) return res;
+  const xml = await res.text();
+  const today = new Date().toISOString().slice(0, 10);
+  const kept = xml.replace(/[ \t]*<url>[\s\S]*?<\/url>\n?/g, (b) => {
+    const loc = b.match(/<loc>([^<]+)<\/loc>/);
+    if (!loc) return b;
+    const m = loc[1].match(/\/blog\/([a-z0-9-]+)\.html$/);
+    if (!m) return b;
+    const when = SCHEDULE[m[1]];
+    return (when && when > today) ? '' : b;
+  });
+  return new Response(kept, {
+    status: 200,
+    headers: { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=3600' },
+  });
+}
+
 const FROM = 'Zero Lines <scan@zerolines.life>';
 const REPLY_TO = 'info@zerolines.life';
 const SITE = 'https://zerolines.life';
@@ -382,6 +456,18 @@ export default {
     const legacy = LEGACY_DIR[url.pathname.replace(/\/+$/, '') || '/'];
     if (legacy) return Response.redirect(new URL(legacy, url).toString(), 301);
 
-    return serveAsset(request, env, url);
+    // A scheduled article does not exist until its date.
+    const slug = slugFromPath(url.pathname);
+    if (slug && !isPublished(slug)) {
+      const nf = await env.ASSETS.fetch(new Request(new URL('/404.html', url), { method: 'GET' }));
+      return new Response(nf.body, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+    }
+    if (url.pathname === '/sitemap.xml') return filterSitemap(await serveAsset(request, env, url));
+
+    // Every HTML page, because backlinks to unpublished articles can appear on
+    // any of them — not just the listings.
+    const res = await serveAsset(request, env, url);
+    const ct = res.headers.get('content-type') || '';
+    return ct.includes('text/html') ? hideUnpublished(res) : res;
   },
 };

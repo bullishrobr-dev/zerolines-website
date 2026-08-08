@@ -99,7 +99,7 @@ const SOFT = [
  * linter that flags them is a linter nobody runs. Look back a short window for a
  * negation, and forward for the question mark that makes a headline a question.
  */
-const NEGATED = /\b(no|not|nothing|never|n[o']t|without|hardly|rarely|isn|aren|doesn|don|won|cannot|can)\b[^.;:!?]{0,44}$/i;
+const NEGATED = /\b(no|not|nothing|never|n[o']t|without|hardly|rarely|isn|aren|doesn|don|won|cannot|can|rather than|instead of|far from|less than)\b[^.;:!?]{0,44}$/i;
 const RHETORICAL = /^[^.;!?]{0,30}\?/;
 
 function excused(body, start, end) {
@@ -122,6 +122,23 @@ function excused(body, start, end) {
   if (/\b(oestrogen|estrogen|hormones?|growth hormone|menopause|sleep|exercise|fibroblasts?|retinoids?|retinol|tretinoin|vitamin\s*c|microneedling|the\s+body|your\s+body)\b[^.;]{0,60}$/i.test(before)) {
     return 'subject is the body or a third-party category, not a Zero Lines formulation';
   }
+  /* Use versus mention. An article auditing the industry's unregulated phrases
+     has to be able to name them — "Clinically tested says a test happened" is
+     the heading of the section debunking the phrase, and a meta description
+     listing "dermatologically tested, hypoallergenic, non-comedogenic,
+     clinically tested" is the article's subject, not its claim. A linter that
+     cannot tell the difference forbids the house from writing about claims at
+     all, which is the opposite of what it is for.
+
+     The tell is deflationary language in the immediate neighbourhood: the
+     words phrase, wording, label, or a verb that defines rather than asserts.
+     A genuine claim does not sit next to "what each phrase commits a
+     manufacturer to". */
+  const window = body.slice(Math.max(0, start - 110), end + 110);
+  if (/\b(phrases?|wording|the words|label says|says a test|means less|commits? a manufacturer|is not shown|does not commit)\b/i.test(window)) {
+    return 'the phrase is being discussed, not claimed';
+  }
+
   /* Not all internal data is a claim about efficacy. Stability, batch and
      safety records are routine formulation artefacts that exist long before
      any trial does — "our own stability data" on the Story page is a
