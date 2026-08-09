@@ -101,6 +101,26 @@ function hideUnpublished(res) {
   if (!res || res.status !== 200) return res;
   const today = new Date().toISOString().slice(0, 10);
   return new HTMLRewriter()
+    /* A link in running prose to an article that has not published yet.
+
+       The [data-publish] handler below cannot do this job: it calls remove(),
+       which on an inline anchor deletes the words along with the tag and leaves
+       the sentence with a hole in it. removeAndKeepContent() drops the <a> and
+       keeps the text, so the sentence still reads and simply is not a link yet.
+
+       Matching on href rather than an attribute in the markup means this covers
+       all 23 such links without touching 23 files, covers any written later,
+       and needs no cleanup: the day the target publishes, the link becomes a
+       link on its own. */
+    .on('a[href]', {
+      element(el) {
+        const href = el.getAttribute('href') || '';
+        const m = href.match(/^(?:https:\/\/zerolines\.life)?(?:\.\.)?\/?blog\/([a-z0-9-]+)\.html(?:[#?].*)?$/);
+        if (!m) return;
+        const when = SCHEDULE[m[1]];
+        if (when && when > today) el.removeAndKeepContent();
+      },
+    })
     .on('[data-publish]', {
       element(el) {
         /* One calendar, not two. The element may carry a date, but schedule.json

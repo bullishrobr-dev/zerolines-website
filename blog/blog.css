@@ -1169,7 +1169,7 @@ a.zl-blog-category-btn { text-decoration: none; }
 .zl-blog-search-input::placeholder { color: var(--mist-2); }
 .zl-blog-search-input:focus { outline: none; border-bottom-color: var(--tiffany); }
 
-.zl-blog-most-read,
+.zl-blog-weekly-series,
 .zl-blog-editors-pick {
   width: 100%;
   max-width: var(--container);
