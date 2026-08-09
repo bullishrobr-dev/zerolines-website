@@ -48,7 +48,11 @@ let removed = 0;
     const p = path.join(dir, e.name);
     if (e.isDirectory()) { walk(p); continue; }
     // Handover notes and iCloud conflict copies.
-    if ((dir === OUT && e.name.endsWith('.md')) || / \d+\.[a-z]+$/i.test(e.name)) {
+    // ' 2.html' and also ' 2' — iCloud numbers the copy after the extension
+    // when there is one and after the name when there is not, and a bare
+    // '_headers 2' shipped in the bundle for days because the first pattern
+    // required an extension.
+    if ((dir === OUT && e.name.endsWith('.md')) || / \d+(\.[a-z0-9]+)?$/i.test(e.name)) {
       fs.rmSync(p); removed++;
     }
   }
