@@ -35,3 +35,13 @@
 # never found the analyser at all. They now go to the page itself.
 /analyser                   /analyser/                301
 /analyzer                   /analyser/                301
+
+# The applicator was renamed from "Precision Collagen Activation Syringe" to
+# "Precision Collagen Renewal Line Corrector". "Syringe" said the opposite of
+# what the product is — applied externally, never injected — and it is also a
+# customs classification for medical instruments. Anything already linking to
+# the old paths keeps working.
+/products/syringe           /products/line-corrector/          301
+/products/syringe/          /products/line-corrector/          301
+/products/syringe-refill    /products/line-corrector-refill/   301
+/products/syringe-refill/   /products/line-corrector-refill/   301

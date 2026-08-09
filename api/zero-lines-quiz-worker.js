@@ -76,7 +76,7 @@ function isRateLimited(ip) {
 const PRODUCTS = `THE RANGE — recommend only from these six, and respect the order.
 01 Renew · Bio-Renewal Peeling Gel — weekly exfoliation. Aloe vera, brown algae,
    citric acid complex. Clears the surface so what follows can work.
-02 Activate · Precision Collagen Activation Syringe — weekly, applied along
+02 Activate · Precision Collagen Renewal Line Corrector — weekly, applied along
    expression lines with a precision applicator (external; no needle, no
    injection). Hydrolysed collagen and botanical signal peptides.
 03 Signal · BioSignal Facial Serum — daily, morning and night. Botanical peptide
@@ -85,7 +85,7 @@ const PRODUCTS = `THE RANGE — recommend only from these six, and respect the o
    Pyrenean minerals, red algae, sweet almond. Not a sunscreen; SPF goes on top.
 05 Restore · Renewal and Repair Night Cream — every night. Niacinamide,
    hydrolysed collagen, lavender floral water, a restorative lipid matrix.
-06 Sustain · Precision Collagen Activation Refill — the cartridge that keeps
+06 Sustain · Precision Collagen Renewal Refill — the cartridge that keeps
    step 02 going. Requires the applicator from 02.`;
 
 const SYSTEM_PROMPT = `You are a senior skin consultant writing for Zero Lines, a clinical-luxury skincare house in Gibraltar, Andorra and Marbella. A client has sent one photograph and answered ten questions. Write their assessment.

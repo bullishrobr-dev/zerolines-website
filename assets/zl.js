@@ -102,7 +102,7 @@
     // The "already passed" half matters: a fast scroll or an anchor jump can
     // carry an element by before the observer fires, and there is nothing to
     // animate for content the visitor has gone past — leaving it invisible is
-    // the one genuinely broken outcome. Measured: fast-scrolling the syringe
+    // the one genuinely broken outcome. Measured: fast-scrolling the line corrector
     // page left 23 elements stranded before this.
     function sweepVisible() {
       var fold = window.innerHeight * 0.95;

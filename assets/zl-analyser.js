@@ -44,16 +44,16 @@
      Order matters: "Refill" and "Night" must be tested before "Activation"
      and "Renewal", or they resolve to the wrong page. */
   var PRODUCTS = [
-    { re: /refill|cartridge/i,        slug: 'syringe-refill', step: '06',
-      name: 'Precision Collagen Activation Refill', role: 'Sustain · Roughly once a year' },
+    { re: /refill|cartridge/i,        slug: 'line-corrector-refill', step: '06',
+      name: 'Precision Collagen Renewal Refill', role: 'Sustain · Roughly once a year' },
     { re: /night/i,                   slug: 'night-cream',    step: '05',
       name: 'Renewal and Repair Night Cream',       role: 'Restore · Every night' },
     { re: /day cream|shield|spf|sun protection/i, slug: 'day-cream', step: '04',
       name: 'Environmental Shield Day Cream',       role: 'Shield · Every morning' },
     { re: /peel|exfolia/i,            slug: 'peeling-gel',    step: '01',
       name: 'Bio-Renewal Peeling Gel',              role: 'Renew · One evening a week' },
-    { re: /syringe|activation/i,      slug: 'syringe',        step: '02',
-      name: 'Precision Collagen Activation Syringe', role: 'Activate · One evening a week' },
+    { re: /corrector|syringe|activation/i,      slug: 'line-corrector', step: '02',
+      name: 'Precision Collagen Renewal Line Corrector', role: 'Activate · One evening a week' },
     { re: /serum|signal/i,            slug: 'serum',          step: '03',
       name: 'BioSignal Facial Serum',               role: 'Signal · Morning and night' }
   ];
