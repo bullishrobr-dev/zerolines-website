@@ -54,3 +54,9 @@ blog/images/
 
 # Built asset directory for the Cloudflare Worker — produced from git HEAD
 cloudflare/public/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
