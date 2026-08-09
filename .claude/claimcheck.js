@@ -134,6 +134,23 @@ function excused(body, start, end) {
      words phrase, wording, label, or a verb that defines rather than asserts.
      A genuine claim does not sit next to "what each phrase commits a
      manufacturer to". */
+  /* "Botox-like" and "Botox in a bottle" are the dishonest claims this rule was
+     written to stop, and it still stops them. But "Botox alternative" is also
+     the phrase people type into a search box, and the journal now has a piece
+     whose entire subject is what that phrase does and does not mean — one that
+     concludes, in terms, that for lines caused by muscle there is no topical
+     alternative and the reader should talk to a doctor. Forbidding the house
+     from naming the question it is answering would forbid the most useful
+     article on the site.
+
+     The tell is framing language: people ASK FOR it, MEAN by it, SEARCH FOR
+     it. A product claiming to be one never sits next to those words — it sits
+     next to a product name. */
+  const askFrame = body.slice(Math.max(0, start - 60), start);
+  if (/\b(ask(?:ing|ed|s)?\s+for|actually mean|people mean|mean when|search(?:ing|es|ed)?\s+for|looking for)\b[^.;]{0,26}$/i.test(askFrame)) {
+    return 'the search phrase is the article subject, not a claim';
+  }
+
   const window = body.slice(Math.max(0, start - 110), end + 110);
   if (/\b(phrases?|wording|the words|label says|says a test|means less|commits? a manufacturer|is not shown|does not commit)\b/i.test(window)) {
     return 'the phrase is being discussed, not claimed';
