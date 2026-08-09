@@ -714,8 +714,16 @@ export default {
       return Response.redirect(url.toString(), 301);
     }
 
-    const legacy = LEGACY_DIR[url.pathname.replace(/\/+$/, '') || '/'];
-    if (legacy) return Response.redirect(new URL(legacy, url).toString(), 301);
+    /* Compare the destination against the RAW path, not the stripped one.
+       '/analyser' -> '/analyser/' is a legitimate entry: the extensionless form
+       should redirect to the real directory. But the lookup strips a trailing
+       slash, so '/analyser/' found its own key and redirected to itself,
+       forever. The analyser — the one page on this site whose entire job is
+       collecting an address — answered nothing but a redirect loop. Redirect
+       only when the destination actually differs from what was asked for. */
+    const asked = url.pathname;
+    const legacy = LEGACY_DIR[asked.replace(/\/+$/, '') || '/'];
+    if (legacy && legacy !== asked) return Response.redirect(new URL(legacy, url).toString(), 301);
 
     /* Normalise first, and send anything that was not already canonical to the
        canonical form. This closes the %2F bypass and stops the same page
