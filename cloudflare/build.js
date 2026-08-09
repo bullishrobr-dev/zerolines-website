@@ -46,7 +46,15 @@ let removed = 0;
 (function walk(dir) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, e.name);
-    if (e.isDirectory()) { walk(p); continue; }
+    /* Directories get conflict copies too, and the old filter only ever
+       deleted files — it recursed past 'blog 2/' and left the shell in the
+       bundle. They were empty this time. An empty 'blog 2/' ships nothing, but
+       a populated one would serve a stale duplicate of every article at a
+       second URL, and the publish gate only guards /blog/. */
+    if (e.isDirectory()) {
+      if (/ \d+$/.test(e.name)) { fs.rmSync(p, { recursive: true, force: true }); removed++; continue; }
+      walk(p); continue;
+    }
     // Handover notes and iCloud conflict copies.
     // ' 2.html' and also ' 2' — iCloud numbers the copy after the extension
     // when there is one and after the name when there is not, and a bare

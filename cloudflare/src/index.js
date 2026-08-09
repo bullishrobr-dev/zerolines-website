@@ -500,7 +500,13 @@ export default {
     if (canon !== url.pathname) {
       const to = new URL(url);
       to.pathname = canon;
-      return Response.redirect(to.toString(), 301);
+      /* Assigning .pathname re-encodes, so a path whose canonical form still
+         needs encoding — a literal space, an accent — renders straight back to
+         the URL we were handed, and redirecting there is an infinite loop.
+         /blog%202/x.html did exactly that: 301 to itself, forever. Only
+         redirect when the target genuinely differs; otherwise fall through and
+         let the gate below judge the canonical path anyway. */
+      if (to.pathname !== url.pathname) return Response.redirect(to.toString(), 301);
     }
 
     // A scheduled article does not exist until its date.
