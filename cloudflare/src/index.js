@@ -484,6 +484,33 @@ async function handleForm(request, env, ctx) {
      which pages convert is the whole reason to hold this data at all.
      Duplicate *emails* are prevented separately, below, where the problem
      actually is. */
+  /* ---- rate limit ------------------------------------------------------
+     Anybody who knows this address can post to it as fast as they like, and
+     two things follow. The lead table is the only asset this business has, and
+     it can be filled with rubbish — which matters far more at six real rows
+     than it would at six thousand. Worse, a Zero Lines-branded welcome goes to
+     whatever address is posted, so without a limit this endpoint will mail
+     strangers on request, which is how a sending domain gets blocklisted.
+
+     Counted against the salted ip_hash already on every row, so it needs no
+     new storage and no dashboard rule. Someone rotating addresses gets past
+     it; that is not what this is for. It stops the flood and it caps how much
+     mail one source can make us send. */
+  const RATE_MAX = 5;
+  const RATE_WINDOW_MIN = 15;
+  if (row.ip_hash) {
+    try {
+      const since = new Date(Date.now() - RATE_WINDOW_MIN * 60000).toISOString();
+      const recent = await env.ZL_LEADS.prepare(
+        `SELECT COUNT(*) AS n FROM leads WHERE ip_hash = ? AND created_at > ?`
+      ).bind(row.ip_hash, since).first();
+      if (recent && recent.n >= RATE_MAX) {
+        return new Response('{"error":"That is a lot of submissions in a short time. Please wait a few minutes."}',
+          { status: 429, headers: cors });
+      }
+    } catch (e) { /* the limiter must never be the reason a real lead is lost */ }
+  }
+
   let firstTime, ins;
   try {
     firstTime = await env.ZL_LEADS.prepare(
@@ -506,6 +533,20 @@ async function handleForm(request, env, ctx) {
   const rowId = ins && ins.meta && ins.meta.last_row_id;
   const alreadyWelcomed = !!(firstTime && firstTime.n > 0);
 
+  /* The unsubscribe page promises, in those words, that they will not hear
+     from us again. So a later submission of that same address sends nothing —
+     the row is still recorded, because Roberto should be able to see it, but
+     no mail goes out. This does mean a genuine change of mind has to be
+     handled by a human, which is the right way round: the alternative lets
+     anybody put a stranger back on the list by typing their address. */
+  let optedOut = false;
+  try {
+    const u = await env.ZL_LEADS.prepare(
+      `SELECT MAX(unsubscribed) AS u FROM leads WHERE email = ?`
+    ).bind(email).first();
+    optedOut = !!(u && u.u);
+  } catch (e) { /* if we cannot tell, fall through to the normal rules */ }
+
   if (env.RESEND_KEY) {
     // The alert always fires. Roberto wants to know about the second visit too.
     const notice = buildNotice(row);
@@ -518,7 +559,7 @@ async function handleForm(request, env, ctx) {
        need welcoming twice; and the analyser records its own leads here, having
        just sent that person a full written assessment — inviting them to go and
        take the analysis would be the house not paying attention. */
-    if (!alreadyWelcomed && row.source !== 'analyser' && row.source !== 'analyser-started') {
+    if (!alreadyWelcomed && !optedOut && row.source !== 'analyser' && row.source !== 'analyser-started') {
       const kind = form === 'contact' ? 'contact' : form === 'newsletter' ? 'newsletter' : 'waitlist';
       // A reply to an enquiry is not list mail, so it carries no unsubscribe.
       const unsub = kind === 'contact' ? '' : await unsubLink(email, env);
