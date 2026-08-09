@@ -45,3 +45,10 @@
 /products/syringe/          /products/line-corrector/          301
 /products/syringe-refill    /products/line-corrector-refill/   301
 /products/syringe-refill/   /products/line-corrector-refill/   301
+
+# NOTE: every rule above is ALSO in LEGACY_DIR in cloudflare/src/index.js, and
+# that is the one that actually fires. The assets binding follows a _redirects
+# rule internally and returns the destination's content with a 200 rather than
+# a 301, which left each of these live at two URLs at once — and broke entirely
+# for destinations that are directories, since html_handling is "none". These
+# stay as documentation and as a fallback for any host that reads this format.

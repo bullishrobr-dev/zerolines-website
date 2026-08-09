@@ -661,9 +661,40 @@ async function serveAsset(request, env, url) {
    a file at the directory path, finds none, and answers 404. Both are old
    addresses that may be in somebody's bookmarks, so they get a real redirect
    here, before the binding is consulted at all. */
+/* Short URLs, answered with a real 301.
+
+   These used to live only in _redirects, and that file does work — but not the
+   way it looks. The assets binding FOLLOWS its own redirect internally and
+   hands back the destination's content with a 200, so /shipping served the
+   shipping page while the address bar still said /shipping. Every one of these
+   was therefore live at two URLs at once: exactly the duplicate content the
+   %2F fix was about, arriving by a different door.
+
+   It also broke outright for the two renamed product pages, because their
+   destinations are directories and html_handling is "none" — the binding does
+   not resolve a directory to its index.html, so the internal follow found
+   nothing and returned the 404 page. /products/syringe/ answered 404 rather
+   than pointing at its new home.
+
+   Issuing the 301 here fixes both: the visitor's address bar updates, and a
+   crawler is told plainly that the old URL has moved, which is the only way
+   the old page's standing transfers to the new one.
+
+   Keys carry no trailing slash — the lookup strips it, so one entry covers
+   /products/syringe and /products/syringe/ alike. */
 const LEGACY_DIR = {
   '/journal': '/blog/',
+  '/analyser': '/analyser/',
   '/analyzer': '/analyser/',
+  '/faq': '/faq.html',
+  '/privacy': '/privacy.html',
+  '/terms': '/terms.html',
+  '/cookies': '/cookies.html',
+  '/accessibility': '/accessibility.html',
+  '/shipping': '/shipping-returns.html',
+  '/shipping-returns': '/shipping-returns.html',
+  '/products/syringe': '/products/line-corrector/',
+  '/products/syringe-refill': '/products/line-corrector-refill/',
 };
 
 export default {
