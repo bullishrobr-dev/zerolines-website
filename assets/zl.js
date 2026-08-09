@@ -574,10 +574,15 @@
     });
   }
 
-  /* ---------- 9. Netlify forms ------------------------------------------- */
+  /* ---------- 9. Forms ---------------------------------------------------- */
 
   function initForms() {
-    $('form[data-netlify]').forEach(function (form) {
+    /* Was form[data-netlify]. Netlify has been gone for weeks; the attribute
+       survived only because this selector depended on it, which made a piece of
+       dead vendor branding load-bearing — and meant a newly written form that
+       correctly omitted it silently lost its submit handler. Every form on the
+       site posts to /__forms, so that is what identifies one. */
+    $('form[action="/__forms"]').forEach(function (form) {
       form.addEventListener('submit', function (e) {
         e.preventDefault();   // progressive enhancement; without JS it posts normally
         var status = form.querySelector('.zl-form__status');
@@ -606,10 +611,16 @@
              wholesale enquiry was being told it had joined a mailing list —
              directly contradicting the promise fourteen lines below it that the
              message is used only to answer them. */
-          var isContact = (form.getAttribute('name') || '') === 'contact';
+          var name = form.getAttribute('name') || '';
+          var isContact = name === 'contact';
           ok.textContent = isContact
             ? 'Thank you — your message is with us. We reply within one working day.'
-            : 'Thank you — you are on the list. We will be in touch.';
+            : name === 'newsletter'
+              /* A journal subscriber has not joined a launch waitlist, and being
+                 told "we will be in touch" about nothing in particular is how a
+                 subscription starts feeling like a mailing list. */
+              ? 'Thank you — the next piece comes on Monday. Check your inbox for a note confirming it.'
+              : 'Thank you — you are on the list. We will be in touch.';
           wrap.appendChild(ok);
 
           /* Every waitlist form carries action="/thank-you/", and that page is

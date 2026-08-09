@@ -189,7 +189,7 @@ async function hashIp(ip, salt) {
    inline styles, Georgia standing in for Cormorant, no webfonts and no images,
    because that is what mail clients render the same way twice.
    --------------------------------------------------------------------------- */
-function buildWelcome(kind) {
+function buildWelcome(kind, unsubUrl) {
   const BONE = '#FAF7F2', INK = '#14181A', INK3 = '#3C4142';
   const HOUSE = '#1F4F4A', MID = '#17706D', CHAMP = '#C2A878';
   const p = (t, x) => `<p style="margin:0 0 14px;font:400 15px/1.75 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:${INK3};${x || ''}">${t}</p>`;
@@ -206,6 +206,26 @@ function buildWelcome(kind) {
     lines = ['WE HAVE YOUR MESSAGE', '',
       'Thank you for writing. Your message has reached us and someone will read it and answer personally.', '',
       'We use what you sent only to reply to you. It does not join a mailing list.'];
+  } else if (kind === 'newsletter') {
+    /* A journal subscriber is not a waitlist registrant. Before this branch
+       existed they got the waitlist letter — "when ordering opens you will hear
+       from us before anyone else" — which answers a question they did not ask
+       and says nothing about the writing they actually signed up for. */
+    subject = 'The next one comes on Monday';
+    body += `<h1 style="margin:0 0 6px;font:300 30px/1.2 Georgia,'Times New Roman',serif;color:${INK};letter-spacing:-.4px">The next one comes on Monday</h1>`
+      + `<p style="margin:0 0 26px;font:500 11px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">Zero Lines &middot; Gibraltar &middot; Andorra &middot; Marbella</p>`
+      + p('Thank you for subscribing. The journal publishes one piece a week, on Monday, and each one will arrive here as it goes out.', `font-size:16px;color:${INK};`)
+      + p('It is written to be useful whether or not you ever buy anything from us — what holds up, what does not, and how to tell the difference. One a week, and no more than that.')
+      + h2('While you wait')
+      + p('The skin analysis is free and open now. One photograph and ten questions; a written assessment comes back to this address, read zone by zone, with a note on what a single photograph honestly cannot show.')
+      + `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px 0 6px"><tr><td style="background:${HOUSE};padding:14px 26px">`
+      + `<a href="${SITE}/analyser/" style="color:#fff;text-decoration:none;font:500 12px/1 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2.4px;text-transform:uppercase">Begin the free analysis</a>`
+      + `</td></tr></table>`
+      + p('It takes about two minutes and needs no account.', 'font-size:12px;color:#636764;margin-top:10px;');
+    lines = ['THE NEXT ONE COMES ON MONDAY', '',
+      'Thank you for subscribing. The journal publishes one piece a week, on Monday, and each one will arrive here as it goes out.', '',
+      'It is written to be useful whether or not you ever buy anything from us — what holds up, what does not, and how to tell the difference.', '',
+      'While you wait, the skin analysis is free and open now: ' + SITE + '/analyser/'];
   } else {
     subject = 'You are on the list';
     body += `<h1 style="margin:0 0 6px;font:300 30px/1.2 Georgia,'Times New Roman',serif;color:${INK};letter-spacing:-.4px">You are on the list</h1>`
@@ -231,11 +251,18 @@ function buildWelcome(kind) {
 
   body += `<div style="border-top:1px solid #E2DCD2;margin-top:32px;padding-top:20px">`
     + p('The Zero Lines collection is in pre-launch and not yet available to purchase.', 'font-size:12px;color:#636764;')
-    + (kind === 'contact' ? '' : p('If you would rather not hear from us again, reply to this message and we will take you off the list. No form, no link, no questions.', 'font-size:12px;color:#636764;'))
+    /* This used to read "reply to this message and we will take you off the
+       list. No form, no link, no questions." Lawful, and pleasant, but the only
+       machinery behind it was somebody remembering. Now it is a link. */
+    + (kind === 'contact' || !unsubUrl ? '' : p(`If you would rather not hear from us again, <a href="${unsubUrl}" style="color:${MID}">unsubscribe here</a> — one click, no questions. Or simply reply and we will do it by hand.`, 'font-size:12px;color:#636764;'))
     + `</div>`;
 
   lines.push('', 'The Zero Lines collection is in pre-launch and not yet available to purchase.');
-  if (kind !== 'contact') lines.push('If you would rather not hear from us again, reply and we will take you off the list.');
+  if (kind !== 'contact') {
+    lines.push(unsubUrl
+      ? 'To stop hearing from us: ' + unsubUrl
+      : 'If you would rather not hear from us again, reply and we will take you off the list.');
+  }
   lines.push('', 'zerolines.life');
 
   const html = `<!doctype html><html><body style="margin:0;padding:0;background:${BONE}">`
@@ -249,11 +276,112 @@ function buildWelcome(kind) {
   return { subject, html, text: lines.join('\n') };
 }
 
-async function sendMail(env, to, subject, html, text, replyTo) {
+/* ---------------------------------------------------------------------------
+   Unsubscribe.
+
+   handleExport() has always filtered `WHERE unsubscribed = 0`, but nothing ever
+   wrote that column — the filter was decoration over a value that was 0 on
+   every row and always would be. The only opt-out actually offered was "reply
+   and we will take you off the list", which is lawful but has no mechanism
+   behind it beyond somebody remembering.
+
+   The token is an HMAC of the address under the hook secret. No table of
+   tokens has to exist, and every address ever collected already has a valid
+   link without a backfill. The address itself travels in the URL: it is the
+   recipient's own address, in a link sent to their own inbox, which is how
+   every mailing list on the internet does this. The page sets Referrer-Policy
+   no-referrer and loads nothing from any other host, so it goes no further.
+
+   GET does not unsubscribe anybody. Corporate mail scanners and link
+   previewers fetch every URL in a message, so a GET that mutates would quietly
+   remove people who never clicked. GET shows a button; POST does the work.
+   One-click (RFC 8058) arrives as a POST, so it still works without a visit.
+   --------------------------------------------------------------------------- */
+async function unsubToken(email, secret) {
+  const key = await crypto.subtle.importKey(
+    'raw', new TextEncoder().encode(secret || 'zl'),
+    { name: 'HMAC', hash: 'SHA-256' }, false, ['sign'],
+  );
+  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode('unsub:' + email));
+  return [...new Uint8Array(sig)].slice(0, 16).map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function unsubLink(email, env) {
+  return `${SITE}/unsubscribe?e=${encodeURIComponent(email)}&t=${await unsubToken(email, env.HOOK_SECRET)}`;
+}
+
+function unsubPage(heading, body, form) {
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8">`
+    + `<meta name="viewport" content="width=device-width,initial-scale=1">`
+    + `<meta name="robots" content="noindex,nofollow">`
+    + `<title>${esc(heading)} &mdash; Zero Lines</title>`
+    + `<link rel="stylesheet" href="/assets/zl.css"></head>`
+    + `<body style="background:#FAF7F2;margin:0">`
+    + `<main style="max-width:34rem;margin:0 auto;padding:5rem 1.5rem;font:400 16px/1.75 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#3C4142">`
+    + `<div style="font:500 15px/1 -apple-system,sans-serif;letter-spacing:5px;text-transform:uppercase;color:#14181A;padding-bottom:2rem">Zero Lines</div>`
+    + `<h1 style="font:300 30px/1.25 Georgia,'Times New Roman',serif;color:#14181A;margin:0 0 1rem;letter-spacing:-.4px">${esc(heading)}</h1>`
+    + body + (form || '')
+    + `<p style="margin-top:3rem;font-size:13px;color:#636764"><a href="${SITE}/" style="color:#17706D">zerolines.life</a></p>`
+    + `</main></body></html>`;
+}
+
+async function handleUnsubscribe(request, env, url) {
+  const headers = {
+    'Content-Type': 'text/html; charset=utf-8',
+    'Referrer-Policy': 'no-referrer',
+    'X-Robots-Tag': 'noindex, nofollow',
+    'Cache-Control': 'no-store',
+  };
+  const email = String(url.searchParams.get('e') || '').trim().toLowerCase();
+  const token = String(url.searchParams.get('t') || '').trim();
+  const valid = EMAIL_RE.test(email) && email.length <= 254
+    && safeEqual(token, await unsubToken(email, env.HOOK_SECRET));
+
+  if (!valid) {
+    return new Response(unsubPage('That link is not complete',
+      `<p>The link did not carry everything it needed &mdash; some mail clients break a long one across lines. Write to <a href="mailto:${REPLY_TO}" style="color:#17706D">${REPLY_TO}</a> and we will take you off by hand, the same day.</p>`),
+      { status: 400, headers });
+  }
+
+  if (request.method === 'POST') {
+    try {
+      await env.ZL_LEADS.prepare('UPDATE leads SET unsubscribed = 1 WHERE email = ?').bind(email).run();
+    } catch (e) {
+      return new Response(unsubPage('That did not save',
+        `<p>Something went wrong at our end and you are still on the list. Write to <a href="mailto:${REPLY_TO}" style="color:#17706D">${REPLY_TO}</a> and we will do it by hand.</p>`),
+        { status: 500, headers });
+    }
+    return new Response(unsubPage('You are off the list',
+      `<p><strong>${esc(email)}</strong> will not hear from us again. There is nothing else to do.</p>`
+      + `<p style="font-size:14px;color:#636764">If that was an accident, you can join again from any page on the site.</p>`),
+      { status: 200, headers });
+  }
+
+  return new Response(unsubPage('Unsubscribe',
+    `<p>This takes <strong>${esc(email)}</strong> off the Zero Lines list for good.</p>`,
+    `<form method="POST" action="/unsubscribe?e=${encodeURIComponent(email)}&amp;t=${esc(token)}" style="margin-top:1.75rem">`
+    + `<button type="submit" style="background:#1F4F4A;color:#fff;border:0;padding:15px 28px;font:500 12px/1 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2.4px;text-transform:uppercase;cursor:pointer">Unsubscribe</button>`
+    + `</form>`
+    + `<p style="margin-top:1.5rem;font-size:14px;color:#636764">We ask you to confirm because mail scanners follow links on their own, and we would rather not remove somebody who never clicked one.</p>`),
+    { status: 200, headers });
+}
+
+async function sendMail(env, to, subject, html, text, replyTo, unsubUrl) {
+  const payload = { from: FROM, to: [to], reply_to: replyTo || REPLY_TO, subject, html, text };
+  /* RFC 8058. With these present, Gmail and Outlook show their own unsubscribe
+     control at the top of the message, and a reader who uses it is not filing a
+     spam complaint — which is the difference that keeps a sending domain
+     healthy. List mail only: a reply to somebody's enquiry is not a list. */
+  if (unsubUrl) {
+    payload.headers = {
+      'List-Unsubscribe': `<${unsubUrl}>`,
+      'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+    };
+  }
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${env.RESEND_KEY}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from: FROM, to: [to], reply_to: replyTo || REPLY_TO, subject, html, text }),
+    body: JSON.stringify(payload),
   });
   return r.ok;
 }
@@ -391,8 +519,11 @@ async function handleForm(request, env, ctx) {
        just sent that person a full written assessment — inviting them to go and
        take the analysis would be the house not paying attention. */
     if (!alreadyWelcomed && row.source !== 'analyser' && row.source !== 'analyser-started') {
-      const w = buildWelcome(form === 'contact' ? 'contact' : 'waitlist');
-      ctx.waitUntil(sendMail(env, email, w.subject, w.html, w.text).then((ok) => mark(env, rowId, 'emailed', ok)));
+      const kind = form === 'contact' ? 'contact' : form === 'newsletter' ? 'newsletter' : 'waitlist';
+      // A reply to an enquiry is not list mail, so it carries no unsubscribe.
+      const unsub = kind === 'contact' ? '' : await unsubLink(email, env);
+      const w = buildWelcome(kind, unsub);
+      ctx.waitUntil(sendMail(env, email, w.subject, w.html, w.text, undefined, unsub).then((ok) => mark(env, rowId, 'emailed', ok)));
     } else {
       // Nothing to send, so nothing is owed. Recording it as handled keeps the
       // "have they been welcomed" question answerable from one column.
@@ -500,6 +631,7 @@ export default {
 
     if (url.pathname === '/__forms') return handleForm(request, env, ctx);
     if (url.pathname === '/__forms/export') return handleExport(url, env);
+    if (url.pathname === '/unsubscribe') return handleUnsubscribe(request, env, url);
 
     /* www and the apex are both attached to this Worker, so without this the
        whole site answers on two hostnames — Netlify used to 301 one to the

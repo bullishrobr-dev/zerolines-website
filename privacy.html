@@ -143,6 +143,7 @@
   .zl-notice { padding: 1.375rem 1.5rem; }
 }
 </style>
+  <link rel="stylesheet" href="/blog/blog.css">
 </head>
 
 <body>
@@ -202,7 +203,7 @@
         </p>
 
         <div class="zl-doc-meta" data-reveal style="--reveal-delay:620ms">
-          <span>Last updated · <b>May 2026</b></span>
+          <span>Last updated · <b>August 2026</b></span>
           <span>Controller · <b>Zero Lines, Gibraltar</b></span>
         </div>
 
@@ -231,13 +232,14 @@
 
     <nav class="zl-toc" aria-label="Sections of this policy" data-stagger>
       <a href="#collect"><i>01</i> Information we collect</a>
-      <a href="#use"><i>02</i> How we use your information</a>
-      <a href="#protection"><i>03</i> Data protection</a>
-      <a href="#rights"><i>04</i> Your rights</a>
-      <a href="#cookies"><i>05</i> Cookies</a>
-      <a href="#third-party"><i>06</i> Third-party services</a>
-      <a href="#changes"><i>07</i> Changes to this policy</a>
-      <a href="#contact"><i>08</i> Contact us</a>
+      <a href="#analyser"><i>02</i> The skin analyser</a>
+      <a href="#use"><i>03</i> How we use your information</a>
+      <a href="#protection"><i>04</i> Data protection</a>
+      <a href="#rights"><i>05</i> Your rights</a>
+      <a href="#cookies"><i>06</i> Cookies</a>
+      <a href="#third-party"><i>07</i> Third-party services</a>
+      <a href="#changes"><i>08</i> Changes to this policy</a>
+      <a href="#contact"><i>09</i> Contact us</a>
     </nav>
   </div>
 </section>
@@ -338,6 +340,13 @@
           processing and request data portability. To exercise these rights,
           contact us at <a href="mailto:privacy@zerolines.life">privacy@zerolines.life</a>.
         </p>
+        <p>
+          You do not have to ask us to stop emailing you. Every email we send
+          carries an unsubscribe link that works on its own and takes effect
+          immediately &mdash; and your mail app may show its own unsubscribe
+          button at the top of the message, which does the same thing. Replying
+          and asking still works if you would rather.
+        </p>
       </div>
     </div>
 
@@ -360,13 +369,17 @@
       <h2 class="zl-display-s">Third-party services</h2>
       <div class="zl-prose">
         <p>
-          We name them rather than describing them vaguely. <strong>Netlify</strong>
-          hosts this site and stores form submissions. <strong>Cloudflare</strong>
-          runs the analyser&rsquo;s backend and holds finished assessments for
-          thirty days. <strong>OpenRouter</strong> and <strong>OpenAI</strong>
-          read the analyser photograph, as set out in section 02.
-          <strong>Resend</strong> delivers our email. Each is bound by its own
-          data-processing terms, and we share with nobody else.
+          We name them rather than describing them vaguely.
+          <strong>Cloudflare</strong> hosts this site, stores what you send us in
+          a database located in Western Europe, runs the analyser&rsquo;s backend
+          and holds finished assessments for thirty days. <strong>OpenRouter</strong>
+          and <strong>OpenAI</strong> read the analyser photograph, as set out in
+          section 02. <strong>Resend</strong> delivers our email. Each is bound by
+          its own data-processing terms, and we share with nobody else.
+        </p>
+        <p>
+          This site was hosted by Netlify until August 2026, and this section said
+          so. It no longer is, and nothing of yours remains there.
         </p>
       </div>
     </div>
@@ -435,6 +448,25 @@
       <a href="/terms.html"><span class="zl-related__t">Terms of service</span><span class="zl-related__m">Conditions of use</span></a>
       <a href="/accessibility.html"><span class="zl-related__t">Accessibility</span><span class="zl-related__m">WCAG 2.1 AA</span></a>
       <a href="/shipping-returns.html"><span class="zl-related__t">Shipping &amp; returns</span><span class="zl-related__m">Delivery and refunds</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="zl-section--sm">
+  <div class="zl-container zl-container--narrow">
+    <div class="zl-blog-newsletter" data-reveal>
+      <h3 class="zl-blog-newsletter-title">A new piece every Monday</h3>
+      <p class="zl-blog-newsletter-text">The journal is written to be useful whether or not you ever buy anything from us &mdash; what holds up, what does not, and how to tell the difference. One piece a week, and no more than that.</p>
+      <form class="zl-blog-newsletter-form" method="POST" name="newsletter" action="/__forms">
+        <input type="hidden" name="form-name" value="newsletter">
+        <input type="hidden" name="source" value="privacy">
+        <p class="zl-hp" aria-hidden="true"><label>Do not fill this in: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <label class="zl-blog-newsletter-label" for="nl-email">Email Address</label>
+        <input id="nl-email" type="email" name="email" placeholder="your@email.com" required />
+        <button type="submit">Subscribe</button>
+        <span class="zl-form__status" role="status" aria-live="polite"></span>
+      </form>
+      <p class="zl-blog-newsletter-privacy">One email a week. Unsubscribe in one click from any of them &mdash; <a href="/privacy.html">how we handle your address</a>.</p>
     </div>
   </div>
 </section>

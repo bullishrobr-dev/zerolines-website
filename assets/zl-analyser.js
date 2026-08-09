@@ -66,6 +66,45 @@
 
   var state = { step: 0, reached: 0, answers: {}, photo: null, photoMeta: '', email: '' };
 
+  /* ---- keep the answers through a reload --------------------------------
+     Ten questions is two minutes of somebody's attention, and until now a
+     refresh, a back button or a phone locking and waking threw all of it away
+     and put them back on the intro panel. Nobody answers ten questions twice.
+
+     sessionStorage, not localStorage: this should survive a reload and die with
+     the tab, because a shared or borrowed device should not offer the next
+     person somebody else's answers about their own skin.
+
+     The photograph is deliberately NOT stored. It is a multi-megabyte data URL
+     that would blow the ~5MB quota on its own, and the promise made on this
+     page is that the image is read once and not kept — writing it to the
+     visitor's own disk is not what that promise means, but it is close enough
+     to it to be worth refusing. */
+  var SAVE_KEY = 'zl-a-progress';
+
+  function saveProgress() {
+    try {
+      sessionStorage.setItem(SAVE_KEY, JSON.stringify({
+        step: state.step, reached: state.reached,
+        answers: state.answers, email: state.email
+      }));
+    } catch (e) { /* private mode, or a full quota. Not worth interrupting for. */ }
+  }
+
+  function clearProgress() {
+    try { sessionStorage.removeItem(SAVE_KEY); } catch (e) {}
+  }
+
+  function loadProgress() {
+    try {
+      var raw = sessionStorage.getItem(SAVE_KEY);
+      if (!raw) return null;
+      var v = JSON.parse(raw);
+      if (!v || typeof v !== 'object' || !v.answers || typeof v.answers !== 'object') return null;
+      return v;
+    } catch (e) { return null; }
+  }
+
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   function $(id) { return document.getElementById(id); }
@@ -160,7 +199,7 @@
   function renderQuestion() {
     var q = QUESTIONS[state.step];
     if (!q) return;
-    if (state.step > state.reached) state.reached = state.step;
+    if (state.step > state.reached) { state.reached = state.step; saveProgress(); }
 
     if (count) count.textContent = 'Question ' + (state.step + 1) + ' of ' + QUESTIONS.length;
     if (stepName) stepName.textContent = q.short;
@@ -228,10 +267,12 @@
           state.answers[q.id] = arr;
           repaintOptions(q, list);
           syncNav(q);
+          saveProgress();
         } else {
           state.answers[q.id] = opt.value;
           repaintOptions(q, list);
           syncNav(q);
+          saveProgress();
           // single choices carry themselves forward — a consultation keeps moving
           window.setTimeout(function () {
             if (state.answers[q.id] === opt.value && el.quiz && !el.quiz.hidden) next();
@@ -827,6 +868,7 @@
   var restart = $('zl-a-restart');
   if (restart) restart.addEventListener('click', function () {
     state = { step: 0, reached: 0, answers: {}, photo: null, photoMeta: '', email: '' };
+    clearProgress();
     resetPhoto();
     updateRail();
     show('intro');
@@ -863,6 +905,9 @@
       state.email = emailField.value.trim();
       if (emailErr) emailErr.textContent = '';
       syncAnalyseBtn();
+      saveProgress();
+      // The box may have been ticked before the address was finished.
+      maybeRecordJournal();
     });
     emailField.addEventListener('blur', function () {
       if (emailErr) {
@@ -872,6 +917,41 @@
     });
   }
   window.zlSyncAnalyse = syncAnalyseBtn;
+
+  /* ---- the journal opt-in ----------------------------------------------
+     The server records an `analyser-started` row when the reading is actually
+     requested, which misses the person who answered everything, typed a real
+     address, then could not find a photograph they were willing to send. That
+     person is gone and we kept nothing.
+
+     This is the honest way to catch them: they have to tick a box that says
+     what it does. Recording an address that was typed but never offered would
+     not be. Sent once per address, on the tick, so unticking and re-ticking
+     does not write the row again. */
+  var journalBox = $('zl-a-journal');
+  var journalSent = '';
+
+  function maybeRecordJournal() {
+    if (!journalBox || !journalBox.checked) return;
+    if (!emailOk()) return;                       // wait for a complete address
+    var address = String(state.email).toLowerCase();
+    if (address === journalSent) return;
+    journalSent = address;
+    try {
+      var data = new URLSearchParams();
+      data.set('form-name', 'newsletter');
+      data.set('email', address);
+      data.set('source', 'analyser-journal');
+      fetch('/__forms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: data.toString(),
+        keepalive: true            // survives the page being closed straight after
+      }).catch(function () { journalSent = ''; });   // let a retry happen
+    } catch (e) { journalSent = ''; }
+  }
+
+  if (journalBox) journalBox.addEventListener('change', maybeRecordJournal);
 
   /* Record the address on the waitlist, but only once the mail service has
      accepted the message. A submission that never left is not a lead. */
@@ -926,12 +1006,42 @@
   var sentRetry = $('zl-a-sent-retry');
   if (sentRetry) sentRetry.addEventListener('click', function () {
     state = { step: 0, reached: 0, answers: {}, photo: null, photoMeta: '', email: '' };
+    clearProgress();
     resetPhoto();
     if (emailField) emailField.value = '';
     updateRail();
     show('intro');
   });
 
+  /* ---- pick up where they left off --------------------------------------
+     Only when there is something worth resuming: a saved state with no answers
+     is somebody who opened the page and left, and dropping them back on the
+     intro is right for them. The photograph is never restored, so anybody
+     resuming lands on the quiz and walks forward to the photo step as usual.
+
+     A reading opened from an email link (openFromLink) wins over any of this —
+     that visitor is here to read, not to answer. */
+  function resume() {
+    var saved = loadProgress();
+    if (!saved) return false;
+    var answered = Object.keys(saved.answers || {}).length;
+    if (!answered) return false;
+
+    state.answers = saved.answers;
+    state.email = typeof saved.email === 'string' ? saved.email : '';
+    // Clamp: QUESTIONS may have changed length since the tab was opened.
+    var last = QUESTIONS.length - 1;
+    state.reached = Math.min(Math.max(0, saved.reached | 0), last);
+    state.step = Math.min(Math.max(0, saved.step | 0), state.reached);
+
+    if (emailField && state.email) emailField.value = state.email;
+    buildRail();
+    renderQuestion();
+    show('quiz');
+    syncAnalyseBtn();
+    return true;
+  }
+
   buildRail();
-  if (!openFromLink()) show('intro');
+  if (!openFromLink() && !resume()) show('intro');
 })();

@@ -73,6 +73,12 @@
   "image": "https://zerolines.life/assets/og/story-barcelona-architecture.jpg",
   "email": "info@zerolines.life",
   "telephone": "+350-54005198",
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+    "opens": "09:00",
+    "closes": "19:00"
+  },
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "61 Main Street",
@@ -310,7 +316,6 @@
       </div>
 
       <form name="contact" method="POST" action="/__forms"
-            data-netlify="true" netlify-honeypot="bot-field"
             data-reveal="far" style="--reveal-delay:100ms">
         <input type="hidden" name="form-name" value="contact">
       <input type="hidden" name="source" value="contact">

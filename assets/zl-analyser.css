@@ -433,6 +433,21 @@
 .zl-a-deliver .zl-input { width: 100%; }
 .zl-a-deliver .zl-form__status:empty { display: none; }
 
+/* The journal opt-in. A checkbox and its wording sit on one baseline, with a
+   target big enough to hit on a phone — the whole label is clickable, which is
+   what the <label for> gives us. Muted on purpose: this is an offer, not the
+   thing the panel is asking for. */
+.zl-a-deliver__opt {
+  display: flex; align-items: flex-start; gap: .625rem;
+  margin-top: 1.125rem; cursor: pointer;
+  font-size: .875rem; line-height: 1.6; color: var(--ink-3);
+}
+.zl-a-deliver__opt input {
+  flex: 0 0 auto; width: 1.05rem; height: 1.05rem;
+  margin: .15rem 0 0; accent-color: var(--tiffany-deep); cursor: pointer;
+}
+.zl-a-deliver__opt:hover { color: var(--ink); }
+
 /* Shown only when the reading could not be mailed and is on screen instead. */
 .zl-a-sendfail[hidden] { display: none; }
 .zl-a-sendfail {

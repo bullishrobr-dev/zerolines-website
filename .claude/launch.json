@@ -4,8 +4,24 @@
     {
       "name": "zerolines",
       "runtimeExecutable": "node",
-      "runtimeArgs": [".claude/devserver.js"],
+      "runtimeArgs": [
+        ".claude/devserver.js"
+      ],
       "port": 8420
+    },
+    {
+      "name": "zerolines-worker",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "wrangler",
+        "dev",
+        "--port",
+        "8793",
+        "--local",
+        "--cwd",
+        "cloudflare"
+      ],
+      "port": 8793
     }
   ]
 }

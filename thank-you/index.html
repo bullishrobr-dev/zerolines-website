@@ -23,6 +23,7 @@
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-latin.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/cormorant-garamond-latin.woff2" crossorigin>
   <link rel="stylesheet" href="/assets/zl.css">
+  <link rel="stylesheet" href="/blog/blog.css">
 </head>
 <body>
   <a class="zl-skip" href="#main">Skip to main content</a>
@@ -76,7 +77,26 @@
 
       </div>
     </section>
-  </main>
+  <section class="zl-section--sm">
+  <div class="zl-container zl-container--narrow">
+    <div class="zl-blog-newsletter" data-reveal>
+      <h3 class="zl-blog-newsletter-title">A new piece every Monday</h3>
+      <p class="zl-blog-newsletter-text">The journal is written to be useful whether or not you ever buy anything from us &mdash; what holds up, what does not, and how to tell the difference. One piece a week, and no more than that.</p>
+      <form class="zl-blog-newsletter-form" method="POST" name="newsletter" action="/__forms">
+        <input type="hidden" name="form-name" value="newsletter">
+        <input type="hidden" name="source" value="thank-you">
+        <p class="zl-hp" aria-hidden="true"><label>Do not fill this in: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <label class="zl-blog-newsletter-label" for="nl-email">Email Address</label>
+        <input id="nl-email" type="email" name="email" placeholder="your@email.com" required />
+        <button type="submit">Subscribe</button>
+        <span class="zl-form__status" role="status" aria-live="polite"></span>
+      </form>
+      <p class="zl-blog-newsletter-privacy">One email a week. Unsubscribe in one click from any of them &mdash; <a href="/privacy.html">how we handle your address</a>.</p>
+    </div>
+  </div>
+</section>
+
+</main>
 
   <footer class="zl-footer zl-on-dark">
     <div class="zl-container">

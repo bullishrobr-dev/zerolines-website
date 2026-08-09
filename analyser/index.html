@@ -4,21 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Skin Analyser — Zero Lines | A Written Assessment of Your Skin</title>
-<meta name="description" content="Ten questions, one photograph, and an address to send it to. The Zero Lines analyser reads texture, tone, hydration, pores, pigmentation, lines, elasticity and sun exposure, then writes your assessment out in full and sends it to you.">
+<title>Free AI Skin Analysis — Zero Lines | A Written Assessment of Your Skin</title>
+<meta name="description" content="A free AI skin analysis. Ten questions, one photograph, and a written assessment across eight markers sent to your inbox &mdash; about two minutes, no account. Your photograph is read once and never stored.">
 <link rel="canonical" href="https://zerolines.life/analyser/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zero Lines">
-<meta property="og:title" content="Skin Analyser — Zero Lines">
-<meta property="og:description" content="See your skin as we see it. Ten questions, one photograph, a full written assessment across eight markers.">
+<meta property="og:title" content="Free AI Skin Analysis — Zero Lines">
+<meta property="og:description" content="A free AI skin analysis. Ten questions, one photograph, and a written assessment across eight markers sent to your inbox &mdash; about two minutes, no account. Your photograph is read once and never stored.">
 <meta property="og:url" content="https://zerolines.life/analyser/">
 <meta property="og:image" content="https://zerolines.life/assets/og/hero-editorial-1.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Skin Analyser — Zero Lines">
-<meta name="twitter:description" content="See your skin as we see it.">
+<meta name="twitter:title" content="Free AI Skin Analysis — Zero Lines">
+<meta name="twitter:description" content="A free AI skin analysis. Ten questions, one photograph, and a written assessment across eight markers sent to your inbox &mdash; about two minutes, no account. Your photograph is read once and never stored.">
 <meta name="twitter:image" content="https://zerolines.life/assets/og/hero-editorial-1.jpg">
 
 <link rel="icon" href="/assets/logo-mark.png">
@@ -180,7 +180,7 @@
     <div class="zl-container">
       <div class="zl-split zl-split--wide-txt" style="align-items:center">
         <div>
-          <span class="zl-eyebrow" data-reveal>The Skin Analysis</span>
+          <span class="zl-eyebrow" data-reveal>The Skin Analysis &middot; Free &middot; Read by AI</span>
 
           <h1 class="zl-display-xl" style="margin:1.5rem 0 0;max-width:11ch">
             <span class="zl-rise" style="--reveal-delay:80ms"><span>See your skin</span></span>
@@ -399,6 +399,19 @@
                  placeholder="your@email.com" autocomplete="email" required
                  aria-describedby="zl-a-email-err">
           <p class="zl-form__status" id="zl-a-email-err" data-state="err" role="alert"></p>
+
+          <!-- Unticked, and it stays unticked unless somebody ticks it. The
+               address is recorded the moment this is on and the address is
+               valid — deliberately, because a reader can answer all ten
+               questions, type a real address, fail to find a photograph they
+               are willing to use, and leave; without this we would have kept
+               nothing. Recording an address that was typed but never offered
+               would be the wrong way to solve that. This is the right one. -->
+          <label class="zl-a-deliver__opt" for="zl-a-journal">
+            <input type="checkbox" id="zl-a-journal">
+            <span>Send me the journal too &mdash; one piece a week, and nothing else.
+                  You can stop it in one click from any of them.</span>
+          </label>
         </div>
 
         <div class="zl-a-nav">

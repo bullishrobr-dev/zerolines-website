@@ -224,6 +224,21 @@
       </div>
     </div>
 
+    <div class="zl-blog-newsletter" data-reveal>
+      <h3 class="zl-blog-newsletter-title">A new piece every Monday</h3>
+      <p class="zl-blog-newsletter-text">The journal is written to be useful whether or not you ever buy anything from us &mdash; what holds up, what does not, and how to tell the difference. One piece a week, and no more than that.</p>
+      <form class="zl-blog-newsletter-form" method="POST" name="newsletter" action="/__forms">
+        <input type="hidden" name="form-name" value="newsletter">
+        <input type="hidden" name="source" value="blog/category-lifestyle">
+        <p class="zl-hp" aria-hidden="true"><label>Do not fill this in: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <label class="zl-blog-newsletter-label" for="nl-email">Email Address</label>
+        <input id="nl-email" type="email" name="email" placeholder="your@email.com" required />
+        <button type="submit">Subscribe</button>
+        <span class="zl-form__status" role="status" aria-live="polite"></span>
+      </form>
+      <p class="zl-blog-newsletter-privacy">One email a week. Unsubscribe in one click from any of them &mdash; <a href="/privacy.html">how we handle your address</a>.</p>
+    </div>
+
     <section class="zl-blog-explore" data-reveal>
       <h3>Explore Zero Lines</h3>
       <p>
