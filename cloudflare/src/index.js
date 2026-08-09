@@ -59,6 +59,36 @@ function slugFromPath(pathname) {
   return m ? m[1] : null;
 }
 
+/* One canonical spelling of every path, decided before anything routes on it.
+
+   new URL().pathname leaves %2F encoded, so /blog%2Fslug.html arrived as the
+   single segment "/blog%2Fslug.html" — which the publish gate's regex did not
+   match, so it never fired — and then the assets binding decoded it and served
+   the file. Every unpublished article was readable in full through that one
+   substitution. Nothing linked to it and nothing would have found it, but a
+   gate with a documented way around it is not a gate.
+
+   It is a duplicate-content problem for the published pages too: the same
+   article answering on two URLs is exactly what a canonical tag exists to
+   prevent, and better not to create the second URL at all. */
+function canonicalPath(pathname) {
+  let p = pathname;
+  for (let i = 0; i < 3; i++) {                 // %252F decodes to %2F decodes to /
+    let next = p;
+    try { next = decodeURIComponent(p); } catch (e) { break; }
+    if (next === p) break;
+    p = next;
+  }
+  p = p.replace(/\/{2,}/g, '/');                // collapse // and beyond
+  const parts = [];
+  for (const seg of p.split('/')) {             // resolve . and ..
+    if (seg === '.' || seg === '') continue;
+    if (seg === '..') { parts.pop(); continue; }
+    parts.push(seg);
+  }
+  return '/' + parts.join('/') + (p.endsWith('/') && parts.length ? '/' : '');
+}
+
 /* Hide anything the calendar has not reached yet.
 
    HTMLRewriter streams, so it cannot read a child and then remove the parent —
@@ -463,8 +493,18 @@ export default {
     const legacy = LEGACY_DIR[url.pathname.replace(/\/+$/, '') || '/'];
     if (legacy) return Response.redirect(new URL(legacy, url).toString(), 301);
 
+    /* Normalise first, and send anything that was not already canonical to the
+       canonical form. This closes the %2F bypass and stops the same page
+       answering on more than one URL. */
+    const canon = canonicalPath(url.pathname);
+    if (canon !== url.pathname) {
+      const to = new URL(url);
+      to.pathname = canon;
+      return Response.redirect(to.toString(), 301);
+    }
+
     // A scheduled article does not exist until its date.
-    const slug = slugFromPath(url.pathname);
+    const slug = slugFromPath(canon);
     if (slug && !isPublished(slug)) {
       const nf = await env.ASSETS.fetch(new Request(new URL('/404.html', url), { method: 'GET' }));
       return new Response(nf.body, { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8' } });
