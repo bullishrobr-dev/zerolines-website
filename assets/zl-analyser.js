@@ -70,9 +70,9 @@
   var state = { step: 0, reached: 0, answers: {}, photo: null, photoMeta: '', email: '' };
 
   /* ---- keep the answers through a reload --------------------------------
-     Ten questions is two minutes of somebody's attention, and until now a
+     Nine questions is two minutes of somebody's attention, and until now a
      refresh, a back button or a phone locking and waking threw all of it away
-     and put them back on the intro panel. Nobody answers ten questions twice.
+     and put them back on the intro panel. Nobody answers nine questions twice.
 
      sessionStorage, not localStorage: this should survive a reload and die with
      the tab, because a shared or borrowed device should not offer the next
@@ -86,6 +86,40 @@
   var SAVE_KEY = 'zl-a-progress';
 
   /* The human wording behind each stored value, for the assessor's prompt. */
+  /* A question whose options come from an earlier answer.
+
+     "Of those, which comes first?" used to restate all eight concerns in full,
+     thirty seconds after the visitor had read them — and it was not constrained
+     to what they had picked, so somebody could name lines and pores as their
+     concerns and then choose pigmentation as the priority, leaving the assessor
+     to reconcile a contradiction we had invited. It now offers only what they
+     chose, in the order they tapped it.
+
+     And when they chose exactly one, the question does not appear at all. A
+     question with a single possible answer is a tax on the person answering. */
+  function optionsFor(q) {
+    if (!q.derivesFrom) return q.options;
+    var chosen = state.answers[q.derivesFrom];
+    if (!Array.isArray(chosen) || !chosen.length) return q.options;
+    var keep = [];
+    chosen.forEach(function (v) {
+      for (var i = 0; i < q.options.length; i++) {
+        if (q.options[i].value === v) { keep.push(q.options[i]); return; }
+      }
+    });
+    return keep.length ? keep : q.options;
+  }
+
+  /* True when a derived question has nothing left to ask, answering itself on
+     the way past. */
+  function autoResolved(q) {
+    if (!q || !q.derivesFrom) return false;
+    var opts = optionsFor(q);
+    if (opts.length !== 1) return false;
+    state.answers[q.id] = opts[0].value;
+    return true;
+  }
+
   function labelledAnswers() {
     var out = {};
     QUESTIONS.forEach(function (q) {
@@ -254,7 +288,7 @@
 
     var hasAnswer = answered(q);
 
-    q.options.forEach(function (opt, idx) {
+    optionsFor(q).forEach(function (opt, idx) {
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'zl-a-option';
@@ -335,7 +369,7 @@
      an option is worse than none. But it left the viewport wherever the old
      options were, so on a phone, answering a question near the bottom of a long
      list rendered the next one with its heading above the fold: you were
-     looking at answers to a question you could not read. Ten questions, and it
+     looking at answers to a question you could not read. Nine questions, and it
      compounds every time.
 
      Only move when the panel is actually out of position, so someone answering
@@ -358,7 +392,7 @@
   function repaintOptions(q, list) {
     var opts = list.querySelectorAll('.zl-a-option');
     for (var i = 0; i < opts.length; i++) {
-      var sel = selected(q, q.options[i].value);
+      var sel = selected(q, optionsFor(q)[i].value);
       opts[i].setAttribute('aria-checked', sel ? 'true' : 'false');
       if (sel) opts[i].setAttribute('data-selected', 'true');
       else opts[i].removeAttribute('data-selected');
@@ -379,8 +413,12 @@
       if (navHint) navHint.textContent = q.multi ? 'Choose at least one to continue.' : 'Choose one to continue.';
       return;
     }
-    if (state.step < QUESTIONS.length - 1) {
-      state.step++;
+    /* Step past anything that answered itself. A loop, not one step, so
+       two derived questions in a row would still work. */
+    var i = state.step + 1;
+    while (i < QUESTIONS.length && autoResolved(QUESTIONS[i])) i++;
+    if (i < QUESTIONS.length) {
+      state.step = i;
       renderQuestion();
     } else {
       show('photo');
@@ -388,8 +426,13 @@
   }
 
   function back() {
-    if (state.step > 0) { state.step--; renderQuestion(); }
-    else show('intro');
+    // Skip back over a question that answered itself, or Back lands on a
+    // screen the visitor was never shown and cannot change.
+    if (state.step <= 0) { show('intro'); return; }
+    var j = state.step - 1;
+    while (j > 0 && autoResolved(QUESTIONS[j])) j--;
+    state.step = j;
+    renderQuestion();
   }
 
   /* ---------- the photograph ------------------------------------------------ */

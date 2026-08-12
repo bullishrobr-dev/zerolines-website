@@ -5,20 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Free Skin Analysis Online, No Account | Zero Lines</title>
-<meta name="description" content="Ten questions, one photograph, and a written reading of your skin across eight markers reaches your inbox in about two minutes. The photograph is not stored.">
+<meta name="description" content="Nine questions, one photograph, and a written reading of your skin across eight markers reaches your inbox in about two minutes. The photograph is not stored.">
 <link rel="canonical" href="https://zerolines.life/analyser/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zero Lines">
 <meta property="og:title" content="Free Skin Analysis Online, No Account | Zero Lines">
-<meta property="og:description" content="Ten questions, one photograph, and a written reading of your skin across eight markers reaches your inbox in about two minutes. The photograph is not stored.">
+<meta property="og:description" content="Nine questions, one photograph, and a written reading of your skin across eight markers reaches your inbox in about two minutes. The photograph is not stored.">
 <meta property="og:url" content="https://zerolines.life/analyser/">
 <meta property="og:image" content="https://zerolines.life/assets/og/hero-editorial-1.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Free Skin Analysis Online, No Account | Zero Lines">
-<meta name="twitter:description" content="Ten questions, one photograph, and a written reading of your skin across eight markers reaches your inbox in about two minutes. The photograph is not stored.">
+<meta name="twitter:description" content="Nine questions, one photograph, and a written reading of your skin across eight markers reaches your inbox in about two minutes. The photograph is not stored.">
 <meta name="twitter:image" content="https://zerolines.life/assets/og/hero-editorial-1.jpg">
 
 <link rel="icon" href="/assets/logo-mark.png">
@@ -82,9 +82,9 @@
   "inLanguage": "en-GB",
   "isAccessibleForFree": true,
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
-  "description": "A free written skin assessment. Ten questions and one photograph are read across eight appearance markers — texture, tone, hydration, pores, pigmentation, lines, elasticity and sun exposure. The assessment is written out in full and sent to your email address, with a private link to open it again and save it as a PDF.",
+  "description": "A free written skin assessment. Nine questions and one photograph are read across eight appearance markers — texture, tone, hydration, pores, pigmentation, lines, elasticity and sun exposure. The assessment is written out in full and sent to your email address, with a private link to open it again and save it as a PDF.",
   "featureList": [
-    "Ten questions about your skin and how you live",
+    "Nine questions about your skin and how you live",
     "One photograph, read once for visible appearance markers and not stored",
     "A written assessment across eight markers, delivered by email",
     "A private link to reopen the assessment and save it as a PDF",
@@ -105,7 +105,7 @@
       "@type": "HowToStep",
       "position": 1,
       "name": "You describe it",
-      "text": "Answer ten questions about how your skin behaves, what bothers you most, and how you live — sleep, sun, and routine."
+      "text": "Answer nine questions about how your skin behaves, what bothers you most, and how you live — sleep, sun, and routine."
     },
     {
       "@type": "HowToStep",
@@ -188,7 +188,7 @@
           </h1>
 
           <p class="zl-lead" data-reveal style="--reveal-delay:560ms;margin-top:1.75rem;max-width:44ch">
-            Ten questions, then one photograph. What comes back is a written
+            Nine questions, then one photograph. What comes back is a written
             assessment of how your skin presents today — read across eight
             markers, with what appears to be driving them and the formulations
             that follow.
@@ -282,7 +282,7 @@
   </section>
 </div>
 
-<!-- ════ 2. THE CONSULTATION — ten questions, one at a time ═══════════════ -->
+<!-- ════ 2. THE CONSULTATION — nine questions, one at a time ═══════════════ -->
 <div class="zl-a-panel" id="zl-a-quiz" hidden>
   <section class="zl-a-section">
     <div class="zl-container">
@@ -552,7 +552,7 @@
         </div>
 
         <!-- This is the highest-intent moment on the site: someone has just
-             answered ten questions and, often, photographed their own face. It
+             answered nine questions and, often, photographed their own face. It
              used to end with three buttons pointing away and a small text link
              to /#waitlist — a full navigation that discarded the report, because
              nothing here persists it. So the best lead-capture asset the brand
@@ -690,7 +690,7 @@
   </div>
 </div>
 
-<!-- The ten questions. This block is the live wording — .claude/build-analyser.js
+<!-- The nine questions. This block is the live wording — .claude/build-analyser.js
      generated this page once and has been overtaken by hand edits since, so
      re-running it would silently revert what is below. Edit here.
 
@@ -708,9 +708,90 @@
 <script type="application/json" id="zl-quiz-data">
 [
   {
+    "id": "concerns",
+    "short": "Concerns",
+    "prompt": "What would you change if you could?",
+    "options": [
+      {
+        "value": "lines",
+        "label": "Fine lines and wrinkles — visible with the face at rest"
+      },
+      {
+        "value": "firmness",
+        "label": "Loss of firmness — a softer, less defined jawline"
+      },
+      {
+        "value": "dullness",
+        "label": "Dullness and uneven tone — the light sits flat"
+      },
+      {
+        "value": "dryness",
+        "label": "Dryness — a tight, papery look after cleansing"
+      },
+      {
+        "value": "redness",
+        "label": "Redness — colour that is slow to settle"
+      },
+      {
+        "value": "pigmentation",
+        "label": "Dark spots — defined marks, not a general unevenness"
+      },
+      {
+        "value": "pores",
+        "label": "Enlarged pores — visible at conversational distance"
+      },
+      {
+        "value": "eyes",
+        "label": "Under-eye shadow and puffiness"
+      }
+    ],
+    "multi": true,
+    "max": 3
+  },
+  {
+    "id": "priority",
+    "short": "Priority",
+    "prompt": "Of those, which comes first?",
+    "options": [
+      {
+        "value": "lines",
+        "label": "Fine lines and wrinkles"
+      },
+      {
+        "value": "firmness",
+        "label": "Loss of firmness"
+      },
+      {
+        "value": "dullness",
+        "label": "Dullness and uneven tone"
+      },
+      {
+        "value": "dryness",
+        "label": "Dryness"
+      },
+      {
+        "value": "redness",
+        "label": "Redness"
+      },
+      {
+        "value": "pigmentation",
+        "label": "Dark spots"
+      },
+      {
+        "value": "pores",
+        "label": "Enlarged pores"
+      },
+      {
+        "value": "eyes",
+        "label": "Under-eye shadow and puffiness"
+      }
+    ],
+    "derivesFrom": "concerns"
+  },
+  {
     "id": "age",
-    "question": "Which decade are you in?",
-    "multi": false,
+    "short": "Age",
+    "prompt": "How old are you?",
     "options": [
       {
         "value": "under25",
@@ -732,13 +813,12 @@
         "value": "55+",
         "label": "55 or older"
       }
-    ],
-    "short": "Age"
+    ]
   },
   {
     "id": "skinType",
-    "question": "How does your skin usually behave?",
-    "multi": false,
+    "short": "Skin type",
+    "prompt": "How does your skin usually behave?",
     "options": [
       {
         "value": "dry",
@@ -760,150 +840,62 @@
         "value": "normal",
         "label": "Balanced — rarely gives me trouble"
       }
-    ],
-    "short": "Skin type"
-  },
-  {
-    "id": "concerns",
-    "question": "What would you change if you could?",
-    "multi": true,
-    "max": 3,
-    "options": [
-      {
-        "value": "lines",
-        "label": "Fine lines and wrinkles — creases that stay visible with the face at rest"
-      },
-      {
-        "value": "firmness",
-        "label": "Loss of firmness — a softer jawline, less definition through the cheek"
-      },
-      {
-        "value": "dullness",
-        "label": "Dullness and uneven tone — light sits flat, and colour varies across the face"
-      },
-      {
-        "value": "dryness",
-        "label": "Dryness and dehydration — a tight, papery look, most obvious after cleansing"
-      },
-      {
-        "value": "redness",
-        "label": "Redness and sensitivity — colour across the cheeks or nose that is slow to settle"
-      },
-      {
-        "value": "pigmentation",
-        "label": "Dark spots and pigmentation — defined darker marks rather than a general unevenness"
-      },
-      {
-        "value": "pores",
-        "label": "Enlarged or congested pores — openings visible at conversational distance"
-      },
-      {
-        "value": "eyes",
-        "label": "Under-eye circles and puffiness — darker shadow and a heavier look beneath the eye"
-      }
-    ],
-    "short": "Concerns"
-  },
-  {
-    "id": "priority",
-    "question": "And if you could only fix one of those?",
-    "multi": false,
-    "options": [
-      {
-        "value": "lines",
-        "label": "Fine lines and wrinkles — creases that stay visible with the face at rest"
-      },
-      {
-        "value": "firmness",
-        "label": "Loss of firmness — a softer jawline, less definition through the cheek"
-      },
-      {
-        "value": "dullness",
-        "label": "Dullness and uneven tone — light sits flat, and colour varies across the face"
-      },
-      {
-        "value": "dryness",
-        "label": "Dryness and dehydration — a tight, papery look, most obvious after cleansing"
-      },
-      {
-        "value": "redness",
-        "label": "Redness and sensitivity — colour across the cheeks or nose that is slow to settle"
-      },
-      {
-        "value": "pigmentation",
-        "label": "Dark spots and pigmentation — defined darker marks rather than a general unevenness"
-      },
-      {
-        "value": "pores",
-        "label": "Enlarged or congested pores — openings visible at conversational distance"
-      },
-      {
-        "value": "eyes",
-        "label": "Under-eye circles and puffiness — darker shadow and a heavier look beneath the eye"
-      }
-    ],
-    "short": "Priority"
+    ]
   },
   {
     "id": "sun",
-    "question": "How much sun does your face see?",
-    "multi": false,
+    "short": "Sun",
+    "prompt": "Over the years, how much sun has your face had?",
     "options": [
       {
         "value": "daily-spf",
-        "label": "Plenty — but I wear SPF every day"
+        "label": "A great deal — but I have worn SPF daily for years"
       },
       {
         "value": "daily-no-spf",
-        "label": "Plenty, and I rarely wear SPF"
+        "label": "A great deal, and rarely any SPF"
       },
       {
         "value": "moderate",
-        "label": "Some — mostly getting from A to B"
+        "label": "Some — ordinary daylight, getting from A to B"
       },
       {
         "value": "little",
-        "label": "Very little, I am indoors most days"
+        "label": "Very little — I am indoors most days"
       },
       {
         "value": "history",
-        "label": "A great deal in the past, less now"
+        "label": "A great deal when I was younger, much less now"
       }
-    ],
-    "short": "Sun"
+    ]
   },
   {
-    "id": "climate",
-    "question": "What is the weather like where you live?",
-    "multi": false,
+    "id": "recentSun",
+    "short": "Recent sun",
+    "prompt": "And in the last month?",
     "options": [
       {
-        "value": "humid",
-        "label": "Warm and humid"
+        "value": "none",
+        "label": "Nothing beyond ordinary daylight"
       },
       {
-        "value": "dry",
-        "label": "Dry — low humidity most of the year"
+        "value": "some",
+        "label": "Some — a few bright days"
       },
       {
-        "value": "temperate",
-        "label": "Temperate, four distinct seasons"
+        "value": "lots",
+        "label": "A good deal — a holiday, or time working outdoors"
       },
       {
-        "value": "urban",
-        "label": "City air, noticeable pollution"
-      },
-      {
-        "value": "coastal",
-        "label": "Coastal — salt air and wind"
+        "value": "colour",
+        "label": "Enough to colour, or to burn"
       }
-    ],
-    "short": "Climate"
+    ]
   },
   {
     "id": "routine",
-    "question": "What does your routine look like at the moment?",
-    "multi": false,
+    "short": "Routine",
+    "prompt": "What does your routine look like at the moment?",
     "options": [
       {
         "value": "none",
@@ -921,106 +913,77 @@
         "value": "advanced",
         "label": "A full routine, and I read the labels"
       }
-    ],
-    "short": "Routine"
+    ]
   },
   {
     "id": "treatments",
-    "question": "Anything you have tried before?",
-    "multi": true,
-    "optional": true,
+    "short": "On your skin now",
+    "prompt": "What is on your skin at the moment?",
     "options": [
       {
         "value": "retinol",
-        "label": "Retinol or retinoids"
+        "label": "Retinol or a retinoid — most nights, or working up to it"
       },
       {
         "value": "acids",
-        "label": "AHAs or BHAs"
+        "label": "Acids — AHA or BHA, at least weekly"
       },
       {
         "value": "vitaminc",
-        "label": "Vitamin C"
+        "label": "Vitamin C — most mornings"
       },
       {
         "value": "peptides",
-        "label": "Peptides or collagen creams"
+        "label": "Peptides or a collagen cream"
       },
       {
-        "value": "laser",
-        "label": "Laser or IPL"
-      },
-      {
-        "value": "facials",
-        "label": "Professional facials"
+        "value": "clinic",
+        "label": "A salon or clinic treatment in the last month — a facial, peel, laser or IPL"
       },
       {
         "value": "injectables",
-        "label": "Injectables"
+        "label": "Injectables in the last few months"
       },
       {
         "value": "none",
-        "label": "None of these"
+        "label": "Nothing regular"
       }
     ],
-    "short": "History"
-  },
-  {
-    "id": "sleep",
-    "question": "How well do you sleep?",
-    "multi": false,
-    "options": [
-      {
-        "value": "excellent",
-        "label": "Well — seven to nine hours, most nights"
-      },
-      {
-        "value": "good",
-        "label": "Reasonably — six or seven hours"
-      },
-      {
-        "value": "poor",
-        "label": "Badly — usually under six"
-      },
-      {
-        "value": "very-poor",
-        "label": "Very badly — broken or very little"
-      }
-    ],
-    "short": "Sleep"
+    "multi": true,
+    "optional": true
   },
   {
     "id": "lifestyle",
-    "question": "Anything else we should know?",
-    "multi": true,
-    "optional": true,
+    "short": "Anything else",
+    "prompt": "Anything else that shows on the skin?",
     "options": [
+      {
+        "value": "smoke",
+        "label": "I smoke, or I used to"
+      },
+      {
+        "value": "alcohol",
+        "label": "I drink most days"
+      },
       {
         "value": "stress",
         "label": "I am under a lot of stress"
       },
       {
-        "value": "smoke",
-        "label": "I smoke"
+        "value": "sleep",
+        "label": "I sleep badly — usually under six hours"
       },
       {
-        "value": "alcohol",
-        "label": "I drink regularly"
-      },
-      {
-        "value": "water",
-        "label": "I drink less than a litre of water a day"
-      },
-      {
-        "value": "travel",
-        "label": "I fly often"
+        "value": "dryair",
+        "label": "I am in dry air most of the day — air conditioning, central heating or cabins"
       },
       {
         "value": "none",
         "label": "None of these"
       }
     ],
-    "short": "Lifestyle"
+    "multi": true,
+    "optional": true
   }
 ]
     </script>
