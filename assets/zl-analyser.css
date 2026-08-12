@@ -522,3 +522,27 @@
   #zl-a-photo .zl-a-stage > .zl-a-guide,
   #zl-a-photo .zl-a-stage > .zl-a-avoid { order: 2; }
 }
+
+/* ---------------------------------------------------------------------------
+   Two things a visitor sees that are not meant to be there.
+
+   THE BOX ROUND THE QUESTION. Each new question moves focus to its own heading
+   so a screen reader announces it, which is right — but a browser paints its
+   focus ring on whatever holds focus, so a sighted visitor got a teal box drawn
+   round "Which decade are you in?" and reasonably read it as broken.
+   :focus-visible is the distinction: keyboard focus still shows a ring, focus
+   moved by script does not.
+
+   THE PANEL JUMPING. Question counts run 4, 5, 7 and 8, so the panel swung
+   between 320px and 639px from one question to the next and the buttons walked
+   up and down the screen under the cursor. A floor set from the tallest common
+   case holds the ground still. Not a fixed height: eight long options must
+   still be allowed to grow past it.
+   --------------------------------------------------------------------------- */
+.zl-a-q__title:focus { outline: none; }
+.zl-a-q__title:focus-visible {
+  outline: 2px solid var(--house);
+  outline-offset: 6px;
+}
+#zl-a-question { min-height: 30rem; }
+@media (max-width: 700px) { #zl-a-question { min-height: 26rem; } }

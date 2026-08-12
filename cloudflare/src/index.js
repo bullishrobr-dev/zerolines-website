@@ -1263,6 +1263,20 @@ const LEGACY_DIR = {
   '/accessibility': '/accessibility.html',
   '/shipping': '/shipping-returns.html',
   '/shipping-returns': '/shipping-returns.html',
+  /* The extensionless form of every directory. The analyser's own footer linked
+     /science, /protocol, /products, /story and /contact without the trailing
+     slash while all 80 other pages linked them with it — so each of those pages
+     was answering at two URLs, and the analyser was quietly voting for the
+     wrong one. The links are fixed; these entries stop anyone who types or
+     bookmarks the short form from landing on a duplicate. */
+  '/science': '/science/',
+  '/protocol': '/protocol/',
+  '/products': '/products/',
+  '/story': '/story/',
+  '/testimonials': '/testimonials/',
+  '/contact': '/contact/',
+  '/blog': '/blog/',
+  '/thank-you': '/thank-you/',
   '/products/syringe': '/products/line-corrector/',
   '/products/syringe-refill': '/products/line-corrector-refill/',
 };
