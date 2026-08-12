@@ -85,6 +85,23 @@
      to it to be worth refusing. */
   var SAVE_KEY = 'zl-a-progress';
 
+  /* The human wording behind each stored value, for the assessor's prompt. */
+  function labelledAnswers() {
+    var out = {};
+    QUESTIONS.forEach(function (q) {
+      var v = state.answers[q.id];
+      if (v === undefined || v === null) return;
+      var textOf = function (val) {
+        for (var i = 0; i < q.options.length; i++) {
+          if (q.options[i].value === val) return q.options[i].label;
+        }
+        return val;
+      };
+      out[q.id] = Array.isArray(v) ? v.map(textOf) : textOf(v);
+    });
+    return out;
+  }
+
   function saveProgress() {
     try {
       sessionStorage.setItem(SAVE_KEY, JSON.stringify({
@@ -572,7 +589,20 @@
     var opts = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ answers: state.answers, photoBase64: state.photo, email: state.email })
+      body: JSON.stringify({
+        answers: state.answers,
+        /* The assessor was only ever sent the stored slugs — "dry",
+           "combination", "daily-no-spf" — so every description written into an
+           option label was discarded one step before the only reader who could
+           use it. "Self-described skin type: dry" is what the model saw, when
+           the visitor had actually chosen "Dry — tight, sometimes flaky, drinks
+           up moisture". Slugs still travel, because they are what gets stored
+           and what keeps answers comparable over time; the labels travel
+           alongside them for the prompt. */
+        answerLabels: labelledAnswers(),
+        photoBase64: state.photo,
+        email: state.email
+      })
     };
     if (ctrl) opts.signal = ctrl.signal;
 

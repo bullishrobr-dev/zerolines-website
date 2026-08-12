@@ -483,7 +483,7 @@ export default {
       return json({ error: 'Could not read the request.' }, 400, cors);
     }
 
-    const { answers, photoBase64, email: rawEmail } = payload || {};
+    const { answers, answerLabels, photoBase64, email: rawEmail } = payload || {};
 
     /* An address is required before anything is written. This is the whole
        mechanism: the reading only ever arrives by email, so an address that
@@ -541,22 +541,31 @@ export default {
       return json({ error: 'The analysis service is not configured.' }, 500, cors);
     }
 
+    /* Prefer the wording the visitor actually read.
+
+       The questionnaire stores slugs — "dry", "daily-no-spf" — and until now
+       those slugs were what arrived here, so the assessor was told
+       "Self-described skin type: dry" while the visitor had chosen "Dry —
+       tight, sometimes flaky, drinks up moisture". Every description written
+       into an option was thrown away one step before the only reader who could
+       have used it. The browser now sends both; slugs remain the stored form,
+       labels are what goes into the prompt. Falls back to the slug so an older
+       cached page still produces a reading. */
+    const src = (answerLabels && typeof answerLabels === 'object') ? answerLabels : (answers || {});
     const list = (v) => (Array.isArray(v) ? v : v ? [v] : []);
     const field = (v, fallback) => (v && String(v).trim()) || fallback;
 
     const profile = [
-      `Age range: ${field(answers.age, 'not given')}`,
-      `Gender: ${field(answers.gender, 'not given')}`,
-      `Self-described skin type: ${field(answers.skinType, 'not given')}`,
-      `Climate: ${field(answers.climate, 'not given')}`,
-      `Main concerns: ${list(answers.concerns).join(', ') || 'none given'}`,
-      `Priority — the one thing they most want to change: ${field(answers.priority, 'not given')}`,
-      `Sun habit: ${field(answers.sun, 'not given')}`,
-      `Sleep: ${field(answers.sleep, 'not given')}`,
-      `Current routine: ${field(answers.routine, 'not given')}`,
-      `Tried before: ${list(answers.treatments).join(', ') || 'nothing reported'}`,
-      `How long these concerns have been present: ${field(answers.duration, 'not given')}`,
-      `Lifestyle factors: ${list(answers.lifestyle).join(', ') || 'none reported'}`,
+      `Age range: ${field(src.age, 'not given')}`,
+      `Self-described skin type: ${field(src.skinType, 'not given')}`,
+      `Climate: ${field(src.climate, 'not given')}`,
+      `Main concerns: ${list(src.concerns).join(', ') || 'none given'}`,
+      `Priority — the one thing they most want to change: ${field(src.priority, 'not given')}`,
+      `Sun habit: ${field(src.sun, 'not given')}`,
+      `Sleep: ${field(src.sleep, 'not given')}`,
+      `Current routine: ${field(src.routine, 'not given')}`,
+      `Tried before: ${list(src.treatments).join(', ') || 'nothing reported'}`,
+      `Lifestyle factors: ${list(src.lifestyle).join(', ') || 'none reported'}`,
     ].join('\n');
 
     const userPrompt = `${profile}
