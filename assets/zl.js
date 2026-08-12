@@ -613,8 +613,14 @@
              message is used only to answer them. */
           var name = form.getAttribute('name') || '';
           var isContact = name === 'contact';
+          /* An appointment request is neither a message nor a subscription.
+             Without this branch somebody asking to come into the Gibraltar
+             house on Thursday was told they were on a mailing list. */
+          var isAppointment = name === 'appointment';
           ok.textContent = isContact
             ? 'Thank you — your message is with us. We reply within one working day.'
+            : isAppointment
+              ? 'Thank you — your request is with the house. Someone will write back personally to settle a time. Nothing is booked yet.'
             : name === 'newsletter'
               /* A journal subscriber has not joined a launch waitlist, and being
                  told "we will be in touch" about nothing in particular is how a
@@ -629,7 +635,10 @@
              JavaScript had ever reached it — the highest-intent moment in the
              funnel ended in a full stop. Rather than navigate away from a page
              they may still be reading, offer the next step where they are. */
-          if (!isContact && !wrap.querySelector('[data-next-step]')) {
+          // Not after an appointment request either — they have asked to come
+          // in and be seen in person; offering the analyser instead reads as a
+          // brush-off.
+          if (!isContact && !isAppointment && !wrap.querySelector('[data-next-step]')) {
             var next = document.createElement('p');
             next.setAttribute('data-next-step', '');
             next.style.cssText = 'margin-top:1rem;font-size:.9375rem;line-height:1.7';

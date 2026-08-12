@@ -4,8 +4,11 @@
    Contract with the Cloudflare Worker is unchanged:
        POST { answers, photoBase64 }  ->  a structured report
 
-   Questions are injected as JSON by .claude/build-analyser.js so this file
-   stays generic and the wording cannot drift from .claude/quiz-questions.json.
+   Questions are read from a JSON block in the page, so this file stays generic.
+   That block was written once by .claude/build-analyser.js out of
+   .claude/quiz-questions.json and has been hand-edited since. The page is the
+   wording now; the JSON is stale, and re-running the generator would quietly
+   undo the edits. Change the questions in analyser/index.html.
 
    One rule above all others: this file NEVER fabricates a report. An earlier
    build shipped a hard-coded analysis behind a "Demo Mode" banner, which meant
@@ -953,14 +956,46 @@
 
   if (journalBox) journalBox.addEventListener('change', maybeRecordJournal);
 
+  /* ---- do the answers go with the address? -----------------------------
+     Off, and it stays off until the privacy policy says what becomes of them.
+
+     The case for on is a good one: every answer is formatted into the model
+     prompt and then dropped on the floor when the request finishes, and the
+     one moment it is known to belong to a real person is the moment the mail
+     service accepts the message. The plumbing below is written and tested and
+     costs about 230 bytes a lead.
+
+     The case for waiting is that the ten answers are not ten preferences.
+     Lifestyle collects "I smoke", "I drink regularly" and "recent hormonal
+     changes"; sleep collects how badly somebody sleeps. Filed against an email
+     address, that is a health profile, and /privacy.html tells this visitor
+     the opposite in as many words: of the whole analyser run, "only the
+     finished written assessment is kept". They gave those answers to get one
+     reading, not to be described in a database.
+
+     So this is a consent question, and consent is not this file's to give.
+     Flip it to true in the same change that adds the sentence to the privacy
+     policy — not before, and not as a follow-up. Until then the field is
+     simply not sent; the Worker also ignores it, which is belt and braces
+     rather than an excuse. */
+  var SEND_ANSWERS = false;
+
   /* Record the address on the waitlist, but only once the mail service has
-     accepted the message. A submission that never left is not a lead. */
+     accepted the message. A submission that never left is not a lead.
+
+     When the answers are sent they go as `answers`, JSON, keyed by question
+     id — and only what the visitor typed. The eight marker readings the model
+     writes about their face are never sent under any setting: a machine's
+     assessment of somebody's face, held against their address, is a further
+     decision again and would need its own line in the policy. */
   function recordLead(address) {
     try {
       var data = new URLSearchParams();
       data.set('form-name', 'waitlist');
       data.set('source', 'analyser');
       data.set('email', address);
+      // `answers` verbatim — the field name handleForm reads it under.
+      if (SEND_ANSWERS) data.set('answers', JSON.stringify(state.answers || {}));
       fetch('/__forms', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },

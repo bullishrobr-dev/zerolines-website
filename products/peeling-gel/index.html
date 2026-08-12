@@ -144,6 +144,75 @@
   .zl-hero__title { max-width: 12ch; }
   .zl-hero__lead  { max-width: none; }
 }
+
+/* 5. The comparison table.
+      Step 01 and step 02 land on the same evening, minutes apart, and that is
+      exactly why they get swapped: an exfoliant and a treatment feel like two
+      ways of doing the same thing until you see that one clears the surface
+      and the other is placed on it. Adjacent rows say it faster than either
+      page can. All six are compared on /products/.
+
+      A real <table>, because the relationship IS tabular. border-spacing
+      rather than border-collapse: collapsed borders belong to the table
+      rather than to the cell, so they scroll out from under the sticky first
+      column and the row loses its rule where the eye is relying on it. */
+.zl-cmp__scroll { overflow-x: auto; overscroll-behavior-x: contain; }
+/* Focusable so a keyboard can reach the columns past the right edge. */
+.zl-cmp__scroll:focus-visible { outline: 2px solid var(--house-mid); outline-offset: 3px; }
+.zl-cmp { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 54rem; text-align: left; }
+.zl-cmp th, .zl-cmp td {
+  vertical-align: top; text-align: left; font-weight: 400;
+  padding: 1.5rem 1.5rem 1.625rem 0; border-top: 1px solid var(--rule);
+}
+.zl-cmp thead th {
+  border-top: 0; border-bottom: 1px solid var(--rule); padding-top: 0; padding-bottom: 1rem;
+  font-size: var(--t-eyebrow); letter-spacing: .2em; text-transform: uppercase;
+  color: var(--mist); font-weight: 500;
+}
+/* The two columns the house exists to fill — marked, not shouted. Sea-teal
+   over the immediate half, champagne over the slow one. */
+.zl-cmp thead .zl-cmp__k { color: var(--house-mid); }
+.zl-cmp thead .zl-cmp__k::before { content: ""; display: block; width: 34px; height: 2px;
+  background: var(--signal); margin-bottom: .6875rem; }
+.zl-cmp thead .zl-cmp__k--slow::before { background: var(--champagne); }
+.zl-cmp td.zl-cmp__v { background: rgba(79, 179, 172, .07); padding-inline: 1.25rem; }
+.zl-cmp td.zl-cmp__v--slow { background: rgba(194, 168, 120, .10); }
+/* The row header stays put while the answers scroll past, so it has to be
+   opaque — it carries the surface of the section it is placed on. */
+.zl-cmp tbody th { position: sticky; left: 0; z-index: 1; background: var(--cmp-surface, var(--bone)); padding-right: 1.75rem; }
+.zl-cmp__n { display: block; font-size: var(--t-eyebrow); letter-spacing: .24em; color: var(--house-mid); }
+.zl-cmp__name { display: block; margin-top: .5rem; font-family: var(--font-display);
+  font-weight: 300; font-size: 1.25rem; line-height: 1.2; }
+.zl-cmp tbody th a { color: inherit; }
+.zl-cmp tbody th a:hover .zl-cmp__name { color: var(--house-mid); }
+.zl-cmp__here { display: block; margin-top: .5rem; font-size: var(--t-eyebrow); letter-spacing: .2em;
+  text-transform: uppercase; color: var(--mist); }
+.zl-cmp tr[aria-current] > * { border-top-color: var(--house-mid); }
+.zl-cmp td { font-size: .9375rem; line-height: 1.75; color: var(--ink-3); }
+/* On a phone the scroll port is around 340px, and a 54rem table leaves too
+   little beside the pinned name. Narrowing it trades cell height for a
+   readable column — the columns stay columns, which is the entire point. */
+@media (max-width: 700px) {
+  .zl-cmp { min-width: 42rem; }
+  .zl-cmp th, .zl-cmp td { padding: 1.125rem 1rem 1.25rem 0; }
+  .zl-cmp tbody th { padding-right: 1rem; }
+  .zl-cmp td.zl-cmp__v { padding-inline: .875rem; }
+  .zl-cmp__name { font-size: 1.0625rem; }
+}
+/* And the hint has to be true. .zl-rail-hint shows below 1100px, which is the
+   right threshold for the card rails on this page but not for this table: at
+   960px the container is exactly 54rem wide and the table has stopped
+   scrolling, so from there up the word "Swipe" would be an instruction to do
+   something that does nothing. */
+@media (min-width: 960px) { #compare .zl-rail-hint { display: none; } }
+
+/* 6. The interim ingredient disclosure. */
+.zl-inci { list-style: none; padding: 0; margin: 1.5rem 0 0; }
+.zl-inci li { padding: .875rem 0; border-top: 1px solid var(--rule); font-size: .9375rem; line-height: 1.75; color: var(--ink-3); }
+.zl-inci li:first-child { border-top: 0; padding-top: 0; }
+.zl-inci strong { display: block; font-weight: 500; color: var(--ink); }
+.zl-inci__h { font-size: var(--t-eyebrow); letter-spacing: .2em; text-transform: uppercase;
+  color: var(--house-mid); font-weight: 500; margin: 0; }
 </style>
 
 <script type="application/ld+json">
@@ -543,6 +612,82 @@
     <p data-reveal style="margin-top:clamp(2.5rem,6vh,3.5rem);font-size:.8125rem;letter-spacing:.02em;color:var(--ink-3)">
       50 ml · Formulated and made in Barcelona · One step of a six-part protocol
     </p>
+
+    <!-- ── The interim disclosure ──────────────────────────────────────────
+            The three above are the actives. This is everything else that can
+            be said honestly today — including the plain fact that the full
+            ingredient list does not exist yet, because the formulation is not
+            final. We publish a piece teaching people to read an INCI list; it
+            would be poor manners to teach that and hand them nothing to read.
+            Honest absence beats silence. ───────────────────────────────── -->
+    <div data-reveal style="margin-top:clamp(3.5rem,8vh,5rem);padding-top:clamp(2rem,5vh,3rem);border-top:1px solid var(--champagne)">
+      <span class="zl-eyebrow zl-eyebrow--bare">Ingredients, So Far</span>
+
+      <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-top:1.25rem;margin-bottom:clamp(2rem,5vh,3rem)">
+        <h3 class="zl-display-m" style="max-width:18ch">
+          The list we cannot publish <em class="zl-em--brand">yet</em>.
+        </h3>
+        <p class="zl-lead">
+          Three named actives and a reason for each is what we have. A complete
+          ingredient list is what you are entitled to, and it does not exist
+          yet. Both of those are true, so both are printed here.
+        </p>
+      </div>
+
+      <div class="zl-grid zl-grid--2">
+        <div>
+          <h4 class="zl-inci__h">What it deliberately does not contain</h4>
+          <ul class="zl-inci">
+            <li>
+              <strong>Not one abrasive particle</strong>
+              Nothing about the way it works depends on friction. A scrub takes
+              what it can reach by force and a little of the barrier with it
+              every time; once a week, for years, that is a poor trade.
+            </li>
+            <li>
+              <strong>No second acid</strong>
+              The citric acid complex is held at the strength a once-a-week
+              interval was written around. Other exfoliating acids and peels do
+              not belong on the same evening.
+            </li>
+            <li>
+              <strong>No artificial fragrance, drying alcohol, sulphate, paraben or silicone</strong>
+              The common irritants, avoided across all six, along with
+              retinoids, hydroquinone and salicylic acid.
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="zl-inci__h">What is not published yet</h4>
+          <ul class="zl-inci">
+            <li>
+              <strong>The complete list, in INCI order</strong>
+              The formulation is not final. A list published before it is would
+              be a work of fiction we would only have to correct.
+            </li>
+            <li>
+              <strong>Everything the order would tell you</strong>
+              Where each of the three sits, where the 1% line falls, and what
+              the preservative system is. Those are the parts worth reading,
+              and we do not have them to give you.
+            </li>
+            <li>
+              <strong>When it arrives</strong>
+              On the carton and on this site, when the formulations are final
+              and the collection goes on sale. Not before.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="zl-muted" style="margin-top:clamp(2rem,5vh,2.75rem);font-size:.8125rem;line-height:1.75;max-width:64ch">
+        If you would like to read a label properly in the meantime,
+        <a href="/blog/read-skincare-label.html" style="color:var(--house);text-decoration:underline;text-underline-offset:.2em">the method is in the Journal</a>,
+        and the questions about sensitivity, pregnancy and testing are answered
+        in <a href="/faq.html" style="color:var(--house);text-decoration:underline;text-underline-offset:.2em">the FAQ</a>.
+      </p>
+    </div>
   </div>
 </section>
 
@@ -684,11 +829,97 @@
 </section>
 
 
+<!-- ── 7b. Step 01 or step 02 — the two that share an evening ───────────────
+        They are used minutes apart, which is precisely why they get swapped.
+        One clears the surface; the other is placed on the surface once it is
+        clear. In that order, or neither works as intended. ───────────────── -->
+<section class="zl-section zl-wash" id="compare" aria-labelledby="compare-h" style="--cmp-surface:var(--tiffany-wash)">
+  <div class="zl-container">
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">06</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">Not To Be Confused With</span>
+    </div>
+
+    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(2.5rem,6vh,3.75rem)">
+      <h2 class="zl-display-l" id="compare-h" data-reveal="far" style="max-width:16ch">
+        The other half of the same <em class="zl-em--brand">evening</em>.
+      </h2>
+      <p class="zl-lead" data-reveal style="--reveal-delay:160ms">
+        Step 01 and step 02 are used minutes apart, which is exactly why they
+        get swapped. This one clears the surface. The other is placed on the
+        surface once it is clear. Reverse them and the second one is working
+        through a week of spent cells.
+      </p>
+    </div>
+
+    <span class="zl-rail-hint">Swipe</span>
+    <!-- The scroll port is a region of its own so a keyboard can reach the
+         columns past the right edge. It carries its own short name rather than
+         pointing at the section heading: the <section> is already labelled by
+         that heading, and two nested regions with the identical name is the
+         announcement a screen reader user does not need twice. -->
+    <div class="zl-cmp__scroll" tabindex="0" role="region" aria-label="The Peeling Gel compared with the Line Corrector" data-reveal="fade">
+      <table class="zl-cmp">
+        <caption class="zl-sr">
+          The Bio-Renewal Peeling Gel compared with the Precision Collagen
+          Renewal Line Corrector: when each is used, what each is for, what
+          shows immediately and what builds over weeks.
+        </caption>
+        <colgroup>
+          <col style="width:19%"><col style="width:17%"><col style="width:19%">
+          <col style="width:22%"><col style="width:23%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">Formulation</th>
+            <th scope="col">When it is used</th>
+            <th scope="col">What it is for</th>
+            <th scope="col" class="zl-cmp__k">Immediately</th>
+            <th scope="col" class="zl-cmp__k zl-cmp__k--slow">Over time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr aria-current="true">
+            <th scope="row">
+              <span class="zl-cmp__n">01 · Renew</span>
+              <span class="zl-cmp__name">Bio-Renewal Peeling Gel</span>
+              <span class="zl-cmp__here">This page</span>
+            </th>
+            <td>First. One evening a week, on cleansed dry skin, before anything else goes near the face.</td>
+            <td>Clearing the week that has settled on the surface, so what follows meets living skin.</td>
+            <td class="zl-cmp__v">Rinse and the surface is smoother under the fingers and visibly brighter, the same evening.</td>
+            <td class="zl-cmp__v zl-cmp__v--slow">Kept to a weekly rhythm, texture reads more even and more refined as the weeks accumulate.</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <a href="/products/line-corrector/">
+                <span class="zl-cmp__n">02 · Activate</span>
+                <span class="zl-cmp__name">Precision Collagen Renewal Line Corrector</span>
+              </a>
+            </th>
+            <td>Second, within minutes of the rinse, while the surface is at its most receptive.</td>
+            <td>A measured dose placed on the few square centimetres where expression has settled.</td>
+            <td class="zl-cmp__v">Expression lines look visibly smoother within minutes and hold that look through the day.</td>
+            <td class="zl-cmp__v zl-cmp__v--slow">Hydrolysed collagen and botanical signal peptides are formulated to support the skin’s own structure, so lines have less to return to.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p data-reveal style="margin-top:clamp(2rem,5vh,3rem);font-size:.9375rem;line-height:1.8;color:var(--ink-3);max-width:60ch">
+      Step one clears the canvas. It does not paint on it — that is the whole
+      distinction, and it is why the order is part of the formula.
+      <a href="/products/" style="color:var(--house);text-decoration:underline;text-underline-offset:.2em">All six compared</a>.
+    </p>
+  </div>
+</section>
+
+
 <!-- ── 8. FAQ — six questions, native <details> ──────────────────────────── -->
 <section class="zl-section">
   <div class="zl-container zl-container--mid">
     <div class="zl-index-rule" data-reveal>
-      <span class="zl-index-rule__num">06</span>
+      <span class="zl-index-rule__num">07</span>
       <span class="zl-eyebrow zl-eyebrow--bare">Questions</span>
     </div>
 
@@ -952,6 +1183,9 @@
           <a href="/story/">Story</a>
           <a href="/testimonials/">Testimonials</a>
           <a href="/blog/">Journal</a>
+          <a href="/evidence.html">Evidence</a>
+          <a href="/editorial-standards.html">Editorial Standards</a>
+          <a href="/appointment.html">Visit a House</a>
         </div>
       </div>
       <div>

@@ -152,6 +152,79 @@
   .zl-faq__item[open] > .zl-faq__answer { animation: zl-faq-open 620ms var(--ease); }
   @keyframes zl-faq-open { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { .zl-faq__item[open] > .zl-faq__answer { animation: none; } }
+
+  /* ── The comparison table ───────────────────────────────────────────────
+        Day cream against night cream is one of the two decisions a visitor
+        gets wrong, and until now it could only be settled by reading two long
+        pages in sequence and holding both in your head. Adjacent rows settle
+        it in a glance. The full six are compared on /products/.
+
+        A real <table>, because the relationship IS tabular — every cell is
+        the answer one column asks of one row. border-spacing rather than
+        border-collapse: collapsed borders belong to the table rather than to
+        the cell, so they scroll out from under the sticky first column and
+        the row loses its rule exactly where the eye is relying on it. */
+  .zl-cmp__scroll { overflow-x: auto; overscroll-behavior-x: contain; }
+  /* Focusable so a keyboard can reach the columns past the right edge; the
+     outline is what makes that focus visible. */
+  .zl-cmp__scroll:focus-visible { outline: 2px solid var(--house-mid); outline-offset: 3px; }
+  .zl-cmp { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 54rem; text-align: left; }
+  .zl-cmp th, .zl-cmp td {
+    vertical-align: top; text-align: left; font-weight: 400;
+    padding: 1.5rem 1.5rem 1.625rem 0; border-top: 1px solid var(--rule);
+  }
+  .zl-cmp thead th {
+    border-top: 0; border-bottom: 1px solid var(--rule); padding-top: 0; padding-bottom: 1rem;
+    font-size: var(--t-eyebrow); letter-spacing: .2em; text-transform: uppercase;
+    color: var(--mist); font-weight: 500;
+  }
+  /* The two columns the house exists to fill — marked, not shouted. Sea-teal
+     over the immediate half, champagne over the slow one: the same two
+     materials the rest of the site uses for now and for later. */
+  .zl-cmp thead .zl-cmp__k { color: var(--house-mid); }
+  .zl-cmp thead .zl-cmp__k::before {
+    content: ""; display: block; width: 34px; height: 2px;
+    background: var(--signal); margin-bottom: .6875rem;
+  }
+  .zl-cmp thead .zl-cmp__k--slow::before { background: var(--champagne); }
+  .zl-cmp td.zl-cmp__v { background: rgba(79, 179, 172, .07); padding-inline: 1.25rem; }
+  .zl-cmp td.zl-cmp__v--slow { background: rgba(194, 168, 120, .10); }
+  /* The row header stays put while the answers scroll past, so it has to be
+     opaque — it carries the surface of the section it is placed on. */
+  .zl-cmp tbody th { position: sticky; left: 0; z-index: 1; background: var(--cmp-surface, var(--bone)); padding-right: 1.75rem; }
+  .zl-cmp__n { display: block; font-size: var(--t-eyebrow); letter-spacing: .24em; color: var(--house-mid); }
+  .zl-cmp__name {
+    display: block; margin-top: .5rem;
+    font-family: var(--font-display); font-weight: 300; font-size: 1.25rem; line-height: 1.2;
+  }
+  .zl-cmp tbody th a { color: inherit; }
+  .zl-cmp tbody th a:hover .zl-cmp__name { color: var(--house-mid); }
+  .zl-cmp__here { display: block; margin-top: .5rem; font-size: var(--t-eyebrow); letter-spacing: .2em; text-transform: uppercase; color: var(--mist); }
+  .zl-cmp tr[aria-current] > * { border-top-color: var(--house-mid); }
+  .zl-cmp td { font-size: .9375rem; line-height: 1.75; color: var(--ink-3); }
+  /* On a phone the scroll port is around 340px, and a 54rem table leaves too
+     little beside the pinned name. Narrowing it trades cell height for a
+     readable column — the columns stay columns, which is the entire point. */
+  @media (max-width: 700px) {
+    .zl-cmp { min-width: 42rem; }
+    .zl-cmp th, .zl-cmp td { padding: 1.125rem 1rem 1.25rem 0; }
+    .zl-cmp tbody th { padding-right: 1rem; }
+    .zl-cmp td.zl-cmp__v { padding-inline: .875rem; }
+    .zl-cmp__name { font-size: 1.0625rem; }
+  }
+  /* And the hint has to be true. .zl-rail-hint shows below 1100px, which is the
+     right threshold for the card rails on this page but not for this table: at
+     960px the container is exactly 54rem wide and the table has stopped
+     scrolling, so from there up the word "Swipe" would be an instruction to do
+     something that does nothing. */
+  @media (min-width: 960px) { #compare .zl-rail-hint { display: none; } }
+
+  /* ── The interim ingredient disclosure ─────────────────────────────────── */
+  .zl-inci { list-style: none; padding: 0; margin: 1.5rem 0 0; }
+  .zl-inci li { padding: .875rem 0; border-top: 1px solid var(--rule); font-size: .9375rem; line-height: 1.75; color: var(--ink-3); }
+  .zl-inci li:first-child { border-top: 0; padding-top: 0; }
+  .zl-inci strong { display: block; font-weight: 500; color: var(--ink); }
+  .zl-inci__h { font-size: var(--t-eyebrow); letter-spacing: .2em; text-transform: uppercase; color: var(--house-mid); font-weight: 500; margin: 0; }
 </style>
 
 <script type="application/ld+json">
@@ -564,6 +637,89 @@
       Why the water matters:
       <a href="/blog/why-pyrenean-mineral-water.html" style="color:var(--house);text-decoration:underline;text-underline-offset:.2em">altitude, ionic balance and the springs</a>.
     </p>
+
+    <!-- ── The interim disclosure ──────────────────────────────────────────
+            The four above are the actives. This is everything else that can
+            be said honestly today — including the plain fact that the full
+            ingredient list does not exist yet, because the formulation is not
+            final. We publish a piece teaching people to read an INCI list; it
+            would be poor manners to teach that and hand them nothing to read.
+            Honest absence beats silence. ───────────────────────────────── -->
+    <div data-reveal style="margin-top:clamp(3.5rem,8vh,5rem);padding-top:clamp(2rem,5vh,3rem);border-top:1px solid var(--champagne)">
+      <span class="zl-eyebrow zl-eyebrow--bare">Ingredients, So Far</span>
+
+      <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-top:1.25rem;margin-bottom:clamp(2rem,5vh,3rem)">
+        <h3 class="zl-display-m" style="max-width:18ch">
+          The list we cannot publish <em class="zl-em--brand">yet</em>.
+        </h3>
+        <p class="zl-lead">
+          Four named actives and a reason for each is what we have. A complete
+          ingredient list is what you are entitled to, and it does not exist
+          yet. Both of those are true, so both are printed here.
+        </p>
+      </div>
+
+      <div class="zl-grid zl-grid--2">
+        <div>
+          <h4 class="zl-inci__h">What it deliberately does not contain</h4>
+          <ul class="zl-inci">
+            <li>
+              <strong>No SPF</strong>
+              Not an omission. Sun protection stays a separate, deliberate step,
+              chosen and applied at its own dose over the set cream — which is
+              also why the texture is written to be light enough to disappear
+              underneath it.
+            </li>
+            <li>
+              <strong>No artificial fragrance, drying alcohol, sulphate, paraben or silicone</strong>
+              The common irritants, avoided across all six formulations.
+            </li>
+            <li>
+              <strong>No retinoid, hydroquinone or salicylic acid</strong>
+              None of the six carries any of them.
+            </li>
+          </ul>
+          <!-- Outside the list on purpose. It is the one thing here the cream
+               DOES contain, and a heading that says "does not contain" is the
+               wrong roof to put it under — a person scanning for a nut
+               derivative is exactly the person who cannot afford to read that
+               heading and stop. -->
+          <p class="zl-muted" style="margin-top:1.25rem;font-size:.8125rem;line-height:1.7">
+            It does contain sweet almond oil, which is a tree-nut derivative.
+            Named plainly here for anyone who avoids them.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="zl-inci__h">What is not published yet</h4>
+          <ul class="zl-inci">
+            <li>
+              <strong>The complete list, in INCI order</strong>
+              The formulation is not final. A list published before it is would
+              be a work of fiction we would only have to correct.
+            </li>
+            <li>
+              <strong>Everything the order would tell you</strong>
+              Where each ingredient falls, where the 1% line sits, and what the
+              preservative system is. Those are the parts worth reading, and we
+              do not have them to give you.
+            </li>
+            <li>
+              <strong>When it arrives</strong>
+              On the carton and on this site, when the formulations are final
+              and the collection goes on sale. Not before.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="zl-muted" style="margin-top:clamp(2rem,5vh,2.75rem);font-size:.8125rem;line-height:1.75;max-width:64ch">
+        If you would like to read a label properly in the meantime,
+        <a href="/blog/read-skincare-label.html" style="color:var(--house);text-decoration:underline;text-underline-offset:.2em">the method is in the Journal</a>,
+        and the questions about sensitivity, pregnancy and testing are answered
+        in <a href="/faq.html" style="color:var(--house);text-decoration:underline;text-underline-offset:.2em">the FAQ</a>.
+      </p>
+    </div>
   </div>
 </section>
 
@@ -729,11 +885,97 @@
 </section>
 
 
+<!-- ── 7b. Day cream or night cream — the question this page exists beside ──
+        The two creams are the pair people ask us to separate, and the answer
+        has been buried in two long pages. Here they are on adjacent rows. ── -->
+<section class="zl-section zl-wash" id="compare" aria-labelledby="compare-h" style="--cmp-surface:var(--tiffany-wash)">
+  <div class="zl-container">
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">05</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">Not To Be Confused With</span>
+    </div>
+
+    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(2.5rem,6vh,3.75rem)">
+      <h2 class="zl-display-l" id="compare-h" data-reveal="far" style="max-width:16ch">
+        Day cream or night cream?
+      </h2>
+      <p class="zl-lead" data-reveal style="--reveal-delay:160ms">
+        Both, and at opposite ends of the day. They are not two strengths of
+        one cream: through daylight the skin is largely defending itself, and
+        overnight it moves into its own renewal. Each formulation is written
+        for one of those two states.
+      </p>
+    </div>
+
+    <span class="zl-rail-hint">Swipe</span>
+    <!-- The scroll port is a region of its own so a keyboard can reach the
+         columns past the right edge. It carries its own short name rather than
+         pointing at the section heading: the <section> is already labelled by
+         that heading, and two nested regions with the identical name is the
+         announcement a screen reader user does not need twice. -->
+    <div class="zl-cmp__scroll" tabindex="0" role="region" aria-label="Day cream and night cream compared" data-reveal="fade">
+      <table class="zl-cmp">
+        <caption class="zl-sr">
+          Environmental Shield Day Cream compared with Renewal and Repair Night
+          Cream: when each is used, what each is for, what shows immediately
+          and what builds over weeks.
+        </caption>
+        <colgroup>
+          <col style="width:19%"><col style="width:17%"><col style="width:19%">
+          <col style="width:22%"><col style="width:23%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">Formulation</th>
+            <th scope="col">When it is used</th>
+            <th scope="col">What it is for</th>
+            <th scope="col" class="zl-cmp__k">Immediately</th>
+            <th scope="col" class="zl-cmp__k zl-cmp__k--slow">Over time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr aria-current="true">
+            <th scope="row">
+              <span class="zl-cmp__n">04 · Shield</span>
+              <span class="zl-cmp__name">Environmental Shield Day Cream</span>
+              <span class="zl-cmp__here">This page</span>
+            </th>
+            <td>Every morning, over the serum, with sun protection on top of it.</td>
+            <td>The hours the skin spends defending itself: particulates, bright light, conditioned air.</td>
+            <td class="zl-cmp__v">Comfortable and even the moment it is on; two or three minutes later it is a base make-up sits down on.</td>
+            <td class="zl-cmp__v zl-cmp__v--slow">A standing daily barrier, with Pyrenean minerals beneath it as cofactors for the skin’s own antioxidant enzymes.</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <a href="/products/night-cream/">
+                <span class="zl-cmp__n">05 · Restore</span>
+                <span class="zl-cmp__name">Renewal and Repair Night Cream</span>
+              </a>
+            </th>
+            <td>Every night, over the serum, last of everything on the face.</td>
+            <td>The hours the skin spends rebuilding rather than defending.</td>
+            <td class="zl-cmp__v">You wake to skin that looks rested and reads smooth rather than tight. Visible the first morning.</td>
+            <td class="zl-cmp__v zl-cmp__v--slow">Night after night the barrier recovers a little more completely and the skin’s own structure is supported.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p data-reveal style="margin-top:clamp(2rem,5vh,3rem);font-size:.9375rem;line-height:1.8;color:var(--ink-3);max-width:60ch">
+      The practical difference is what goes on top. This one carries no SPF and
+      expects broad-spectrum sun protection over it; the night cream is the last
+      thing on the face and stays there.
+      <a href="/products/" style="color:var(--house);text-decoration:underline;text-underline-offset:.2em">All six compared</a>.
+    </p>
+  </div>
+</section>
+
+
 <!-- ── 8. FAQ — native <details>. Open state is the browser's own. ─────── -->
 <section class="zl-section zl-tint">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
-      <span class="zl-index-rule__num">05</span>
+      <span class="zl-index-rule__num">06</span>
       <span class="zl-eyebrow zl-eyebrow--bare">Questions</span>
     </div>
 
@@ -1005,6 +1247,9 @@
           <a href="/story/">Story</a>
           <a href="/testimonials/">Testimonials</a>
           <a href="/blog/">Journal</a>
+          <a href="/evidence.html">Evidence</a>
+          <a href="/editorial-standards.html">Editorial Standards</a>
+          <a href="/appointment.html">Visit a House</a>
         </div>
       </div>
       <div>

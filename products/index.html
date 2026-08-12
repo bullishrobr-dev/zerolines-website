@@ -28,6 +28,108 @@
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/cormorant-garamond-latin.woff2" crossorigin>
 <link rel="stylesheet" href="/assets/zl.css">
 
+<style>
+  /* ── Page-scoped only. Nothing here can disturb another page. ──────────── */
+
+  /* ── The comparison table ───────────────────────────────────────────────
+     The design system has no table, because until this page nothing on the
+     site genuinely belonged in one. This does. Two decisions — day cream or
+     night cream, Line Corrector or Refill — were left to be inferred from two
+     long pages read in sequence, and the only honest way to answer them is to
+     put the answers on adjacent rows where the difference is a glance.
+
+     A real <table>, because the relationships ARE tabular: every cell is the
+     answer a column asks of the row it sits in, and a screen reader should be
+     able to say which. border-spacing rather than border-collapse is
+     deliberate — collapsed borders belong to the table rather than to the
+     cell, so they scroll out from under the sticky first column and the row
+     loses its rule exactly where the eye is relying on it. */
+  .zl-cmp__scroll { overflow-x: auto; overscroll-behavior-x: contain; }
+  /* The scroll port is focusable so a keyboard can reach the columns off the
+     right edge; without the outline that focus would be invisible. */
+  .zl-cmp__scroll:focus-visible { outline: 2px solid var(--house-mid); outline-offset: 3px; }
+
+  .zl-cmp {
+    border-collapse: separate; border-spacing: 0;
+    width: 100%; min-width: 68rem; text-align: left;
+  }
+  .zl-cmp th, .zl-cmp td {
+    vertical-align: top; text-align: left; font-weight: 400;
+    padding: 1.5rem 1.5rem 1.625rem 0;
+    border-top: 1px solid var(--rule);
+  }
+  .zl-cmp thead th {
+    border-top: 0; border-bottom: 1px solid var(--rule);
+    padding-top: 0; padding-bottom: 1rem;
+    font-size: var(--t-eyebrow); letter-spacing: .2em; text-transform: uppercase;
+    color: var(--mist); font-weight: 500;
+  }
+  /* The two columns the house exists to fill. They are marked, not shouted:
+     a sea-teal tick over the immediate half, champagne over the slow one —
+     the same two materials the rest of the site uses for now and for later. */
+  .zl-cmp thead .zl-cmp__k { color: var(--house-mid); }
+  .zl-cmp thead .zl-cmp__k::before {
+    content: ""; display: block; width: 34px; height: 2px;
+    background: var(--signal); margin-bottom: .6875rem;
+  }
+  .zl-cmp thead .zl-cmp__k--slow::before { background: var(--champagne); }
+  .zl-cmp td.zl-cmp__v { background: rgba(79, 179, 172, .07); padding-inline: 1.25rem; }
+  .zl-cmp td.zl-cmp__v--slow { background: rgba(194, 168, 120, .10); }
+
+  /* Row header: the formulation itself, held against the left edge while the
+     answers scroll past it. It must be opaque or the scrolled cells show
+     through, so it carries the section's own surface colour — set by the
+     section in --cmp-surface, and bone here, which is what this one sits on.
+     The variable exists so the rule is identical on all seven pages and can be
+     lifted into zl.css unchanged. */
+  .zl-cmp tbody th {
+    position: sticky; left: 0; z-index: 1;
+    background: var(--cmp-surface, var(--bone)); padding-right: 1.75rem;
+  }
+  .zl-cmp__n { display: block; font-size: var(--t-eyebrow); letter-spacing: .24em; color: var(--house-mid); }
+  .zl-cmp__name {
+    display: block; margin-top: .5rem;
+    font-family: var(--font-display); font-weight: 300; font-size: 1.3125rem;
+    line-height: 1.2; letter-spacing: -0.005em;
+  }
+  .zl-cmp tbody th a { color: inherit; }
+  .zl-cmp tbody th a:hover .zl-cmp__name { color: var(--house-mid); }
+  .zl-cmp__role { display: block; margin-top: .4375rem; font-size: .75rem; color: var(--mist); }
+  .zl-cmp td { font-size: .9375rem; line-height: 1.75; color: var(--ink-3); }
+
+  /* On a phone the scroll port is around 340px, and a 68rem table shows a
+     sliver of it — measured at 390px, the pinned name took 174px and left 168
+     for the answer. Narrowing the table trades cell height for a readable
+     column: the name stays pinned at 123px and one whole effect column fits
+     beside it. The columns stay columns, which is the entire point. */
+  @media (max-width: 700px) {
+    .zl-cmp { min-width: 48rem; }
+    .zl-cmp th, .zl-cmp td { padding: 1.125rem 1rem 1.25rem 0; }
+    .zl-cmp tbody th { padding-right: 1rem; }
+    .zl-cmp td.zl-cmp__v { padding-inline: .875rem; }
+    .zl-cmp__name { font-size: 1.0625rem; }
+  }
+
+  /* And the hint has to be true. .zl-rail-hint is written for the card rails
+     and hides at 1100px, but this table is 68rem wide and the container is
+     90% of the viewport, so it is still scrolling until 1210px. Between those
+     two numbers the rail's threshold would hide the only sign that there are
+     two more columns. The #id selector is what lets the "flex" beat zl.css's
+     own min-width:1100px rule; the page's own 1210px rule then wins back. */
+  #compare .zl-rail-hint { display: flex; }
+  @media (min-width: 1210px) { #compare .zl-rail-hint { display: none; } }
+
+  /* ── The interim ingredient disclosure ──────────────────────────────────
+     Three columns because there are exactly three things to say: what is
+     named, what is deliberately absent, and what does not exist yet. The
+     third is the one that matters — a range that teaches label-reading and
+     then publishes nothing to read has taught nothing. */
+  .zl-inci { list-style: none; padding: 0; margin: 1.75rem 0 0; }
+  .zl-inci li { padding: .9375rem 0; border-top: 1px solid var(--rule); font-size: .9375rem; line-height: 1.75; color: var(--ink-3); }
+  .zl-inci li:first-child { border-top: 0; padding-top: 0; }
+  .zl-inci strong { display: block; font-weight: 500; color: var(--ink); }
+</style>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -373,6 +475,174 @@
   </div>
 </section>
 
+<!-- ── 3b. Side by side — the six against the six questions people ask ────
+        The two decisions a visitor gets wrong are day cream against night
+        cream, and Line Corrector against Refill. Both were answerable only by
+        reading two long pages in sequence and holding them in your head. Here
+        they are adjacent rows. ──────────────────────────────────────────── -->
+<section class="zl-section" id="compare" aria-labelledby="compare-h">
+  <div class="zl-container">
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">02</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">Side By Side</span>
+    </div>
+
+    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(3rem,7vh,4.5rem)">
+      <h2 class="zl-display-l" id="compare-h" style="max-width:16ch">
+        Six formulations, <em class="zl-em--brand">one table</em>.
+      </h2>
+      <p class="zl-lead" data-reveal style="--reveal-delay:220ms">
+        The last two columns are the ones the rest of this industry leaves
+        empty. What a formulation shows on the first day and what it only
+        builds over weeks are different things, and a range that will not
+        separate them is asking you to hope they are the same.
+      </p>
+    </div>
+
+    <span class="zl-rail-hint">Swipe</span>
+    <!-- The scroll port is a region of its own so a keyboard can reach the
+         columns past the right edge. It carries its own short name rather than
+         pointing at the section heading: the <section> is already labelled by
+         that heading, and two nested regions with the identical name is the
+         announcement a screen reader user does not need twice. -->
+    <div class="zl-cmp__scroll" tabindex="0" role="region" aria-label="The six formulations compared" data-reveal="fade">
+      <table class="zl-cmp">
+        <caption class="zl-sr">
+          The six Zero Lines formulations compared by protocol step, when they
+          are used, how often, what each is for, what shows immediately and
+          what builds over weeks.
+        </caption>
+        <colgroup>
+          <col style="width:16%"><col style="width:14%"><col style="width:10%">
+          <col style="width:18%"><col style="width:21%"><col style="width:21%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">Step</th>
+            <th scope="col">When it is used</th>
+            <th scope="col">How often</th>
+            <th scope="col">What it is for</th>
+            <th scope="col" class="zl-cmp__k">Immediately</th>
+            <th scope="col" class="zl-cmp__k zl-cmp__k--slow">Over time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">
+              <a href="/products/peeling-gel/">
+                <span class="zl-cmp__n">01 · Renew</span>
+                <span class="zl-cmp__name">Bio-Renewal Peeling Gel</span>
+                <span class="zl-cmp__role">Aloe vera juice · brown algae</span>
+              </a>
+            </th>
+            <td>One evening a week, on cleansed dry skin, before anything else.</td>
+            <td>Once a week.</td>
+            <td>Clearing the week that has settled on the surface, so what follows meets living skin.</td>
+            <td class="zl-cmp__v">Rinse and the surface is smoother under the fingers and visibly brighter, the same evening.</td>
+            <td class="zl-cmp__v zl-cmp__v--slow">Kept to a weekly rhythm, texture reads more even and more refined as the weeks accumulate.</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <a href="/products/line-corrector/">
+                <span class="zl-cmp__n">02 · Activate</span>
+                <span class="zl-cmp__name">Precision Collagen Renewal Line Corrector</span>
+                <span class="zl-cmp__role">Hydrolysed collagen · botanical complex</span>
+              </a>
+            </th>
+            <td>The same evening, within minutes of the rinse, placed on the lines themselves.</td>
+            <td>Once a week. Never more than once in a day.</td>
+            <td>A measured dose on the few square centimetres where expression has settled.</td>
+            <td class="zl-cmp__v">Expression lines look visibly smoother within minutes and hold that look through the day. Temporary, and it repeats with every application.</td>
+            <td class="zl-cmp__v zl-cmp__v--slow">Hydrolysed collagen and botanical signal peptides are formulated to support the skin’s own structure, so lines have less to return to.</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <a href="/products/serum/">
+                <span class="zl-cmp__n">03 · Signal</span>
+                <span class="zl-cmp__name">BioSignal Facial Serum</span>
+                <span class="zl-cmp__role">Rose + chamomile waters · mineral base</span>
+              </a>
+            </th>
+            <td>Morning and evening, on clean skin, before either cream.</td>
+            <td>Twice a day, every day.</td>
+            <td>Keeping the same instruction arriving on the days between the two weekly steps.</td>
+            <td class="zl-cmp__v">It absorbs in seconds; skin looks plumper and reads more luminous before the routine is finished.</td>
+            <td class="zl-cmp__v zl-cmp__v--slow">Daily repetition is the whole of it. Nothing here is meant to be visible in week one.</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <a href="/products/day-cream/">
+                <span class="zl-cmp__n">04 · Shield</span>
+                <span class="zl-cmp__name">Environmental Shield Day Cream</span>
+                <span class="zl-cmp__role">Sweet almond · red algae · zinc</span>
+              </a>
+            </th>
+            <td>Every morning, over the serum, with sun protection on top of it.</td>
+            <td>Once a day.</td>
+            <td>The hours the skin spends defending itself: particulates, bright light, conditioned air.</td>
+            <td class="zl-cmp__v">Comfortable and even the moment it is on; two or three minutes later it is a base make-up sits down on.</td>
+            <td class="zl-cmp__v zl-cmp__v--slow">A standing daily barrier, with Pyrenean minerals beneath it as cofactors for the skin’s own antioxidant enzymes.</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <a href="/products/night-cream/">
+                <span class="zl-cmp__n">05 · Restore</span>
+                <span class="zl-cmp__name">Renewal and Repair Night Cream</span>
+                <span class="zl-cmp__role">Niacinamide · lavender floral water</span>
+              </a>
+            </th>
+            <td>Every night, over the serum, last of everything.</td>
+            <td>Once a night.</td>
+            <td>The hours the skin spends rebuilding rather than defending.</td>
+            <td class="zl-cmp__v">You wake to skin that looks rested and reads smooth rather than tight. Visible the first morning.</td>
+            <td class="zl-cmp__v zl-cmp__v--slow">Night after night the barrier recovers a little more completely and the skin’s own structure is supported.</td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <a href="/products/line-corrector-refill/">
+                <span class="zl-cmp__n">06 · Sustain</span>
+                <span class="zl-cmp__name">Precision Collagen Renewal Refill</span>
+                <span class="zl-cmp__role">Hydrolysed collagen · precision cartridge</span>
+              </a>
+            </th>
+            <td>Into the applicator you already have, when the cartridge in it is spent.</td>
+            <td>Roughly once every twelve months. The weekly step itself does not change.</td>
+            <td>Continuity. The formulation is identical to step 02; only the applicator is missing.</td>
+            <td class="zl-cmp__v">Identical to the Line Corrector — smoother-looking lines within minutes, first cartridge to last.</td>
+            <td class="zl-cmp__v zl-cmp__v--slow">Identical again, and the only reason it exists: the slow half is worth nothing if the protocol stops.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- The two rows people read against each other, said in plain sentences
+         underneath. A table answers the question you already know to ask;
+         these are the two questions visitors ask us instead. -->
+    <div class="zl-grid zl-grid--2" data-stagger style="margin-top:clamp(3rem,7vh,4.5rem)">
+      <div style="border-top:1px solid var(--rule);padding-top:1.5rem">
+        <h3 class="zl-display-s" style="max-width:20ch">Day cream or night cream?</h3>
+        <p style="margin-top:1rem;font-size:.9375rem;line-height:1.8;color:var(--ink-3);max-width:44ch">
+          Both. They are not two strengths of one cream. Through daylight the
+          skin is largely defending itself; overnight it moves into its own
+          renewal, and the two formulations are written for those two states.
+          The day cream carries no SPF and expects sun protection over it; the
+          night cream is the last thing on the face and stays there.
+        </p>
+      </div>
+      <div style="border-top:1px solid var(--rule);padding-top:1.5rem">
+        <h3 class="zl-display-s" style="max-width:20ch">Line Corrector or Refill?</h3>
+        <p style="margin-top:1rem;font-size:.9375rem;line-height:1.8;color:var(--ink-3);max-width:44ch">
+          The formulation inside them is the same. The Line Corrector is the
+          precision applicator with its first cartridge already in it; the
+          Refill is a cartridge on its own and cannot be used without the
+          applicator. If you are starting the protocol, start with step 02. The
+          Refill is what step 02 becomes a year later.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── The consultation — the skin analyser, offered rather than advertised ── -->
 <section class="zl-concierge" aria-labelledby="analysis-collection">
   <div class="zl-container">
@@ -459,7 +729,7 @@
 <section class="zl-section" id="sequence">
   <div class="zl-container">
     <div class="zl-index-rule" data-reveal>
-      <span class="zl-index-rule__num">02</span>
+      <span class="zl-index-rule__num">03</span>
       <span class="zl-eyebrow zl-eyebrow--bare">Protocol Sequencing</span>
     </div>
 
@@ -607,6 +877,133 @@
   </div>
 </section>
 
+<!-- ── 6b. The ingredients, as far as they go today ──────────────────────
+        The Journal teaches readers to read an INCI list the way a formulator
+        does, and then offers three named actives and nothing to practise on.
+        The full list does not exist yet, because the formulations are not
+        final. So this section publishes what IS true — the actives, the
+        deliberate absences, and a plain statement of what is missing and
+        when it arrives. Honest absence beats silence. ────────────────────── -->
+<section class="zl-section zl-tint" id="ingredients" aria-labelledby="ingredients-h">
+  <div class="zl-container">
+    <div class="zl-index-rule" data-reveal>
+      <span class="zl-index-rule__num">04</span>
+      <span class="zl-eyebrow zl-eyebrow--bare">Ingredients, So Far</span>
+    </div>
+
+    <div class="zl-split zl-split--wide-txt" style="align-items:end;margin-bottom:clamp(3rem,7vh,4.5rem)">
+      <h2 class="zl-display-l" id="ingredients-h" style="max-width:17ch">
+        What we can tell you <em class="zl-em--brand">today</em>.
+      </h2>
+      <p class="zl-lead" data-reveal style="--reveal-delay:220ms">
+        We publish a piece teaching anyone to read an ingredient list the way a
+        formulator reads one. It would be poor manners to teach that and then
+        hand you nothing to practise on. Here is what is settled, what is
+        deliberately absent, and what does not exist yet.
+      </p>
+    </div>
+
+    <div class="zl-grid zl-grid--3" data-stagger>
+      <div>
+        <hr class="zl-rule zl-draw" style="background:var(--signal);height:2px;max-width:90px">
+        <h3 class="zl-display-s" style="margin:1.5rem 0 0">What is named</h3>
+        <ul class="zl-inci">
+          <li>
+            <strong>Hydrolysed collagen</strong>
+            Cut short enough to be read as a signal rather than sit on the
+            surface as a film. It runs through four of the six.
+          </li>
+          <li>
+            <strong>Botanical peptides</strong>
+            The half of the work you can see the same day. Named as signal
+            peptides carried on rose and chamomile flower waters in the Line
+            Corrector and its Refill; as a botanical peptide complex, from
+            watermelon extract, in the serum.
+          </li>
+          <li>
+            <strong>The botanical extract complex</strong>
+            Witch hazel, calendula, chamomile, horse chestnut, peppermint,
+            yarrow, mallow, linden and St John’s Wort, working on the look of
+            tone and fluid balance. In the Line Corrector and its Refill.
+          </li>
+          <li>
+            <strong>Pyrenean mineral water</strong>
+            The base of every one of the six. Zinc, selenium, copper and
+            magnesium in ionic balance — the cofactors the skin’s own
+            antioxidant enzymes need in order to work.
+          </li>
+        </ul>
+        <p class="zl-muted" style="margin-top:1.25rem;font-size:.8125rem;line-height:1.7">
+          Each formulation page names its own actives and what each one is
+          there to do.
+        </p>
+      </div>
+
+      <div>
+        <hr class="zl-rule zl-draw" style="background:var(--champagne);height:2px;max-width:90px">
+        <h3 class="zl-display-s" style="margin:1.5rem 0 0">What is deliberately absent</h3>
+        <ul class="zl-inci">
+          <li>
+            <strong>Across all six</strong>
+            No artificial fragrance, no drying alcohols, no sulphates, no
+            parabens, and no silicones. No retinoids, no hydroquinone and no
+            salicylic acid.
+          </li>
+          <li>
+            <strong>The Peeling Gel carries no abrasive particle</strong>
+            Not one, anywhere in it. A scrub takes a little of the barrier
+            every time, and once a week for years is a poor trade.
+          </li>
+          <li>
+            <strong>The Day Cream carries no SPF</strong>
+            So that sun protection stays a separate, deliberate step, applied
+            over the set cream at its own dose.
+          </li>
+          <li>
+            <strong>The Line Corrector has no needle</strong>
+            It borrows the shape of a clinical instrument for accuracy alone.
+            Nothing is injected, and nothing is intended to be.
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <hr class="zl-rule zl-draw" style="background:var(--rule);height:2px;max-width:90px">
+        <h3 class="zl-display-s" style="margin:1.5rem 0 0">What is not published yet</h3>
+        <ul class="zl-inci">
+          <li>
+            <strong>The complete list, in INCI order</strong>
+            For any of the six. The formulations are not final, and a list
+            published before they are would be a work of fiction we would only
+            have to correct.
+          </li>
+          <li>
+            <strong>Everything the order would tell you</strong>
+            Where each active falls, where the 1% line sits, and what the
+            preservative system is. Those are the things worth reading, and we
+            do not have them to give you yet.
+          </li>
+          <li>
+            <strong>When it arrives</strong>
+            The full list publishes on the carton and on this site when the
+            formulations are final and the collection goes on sale. Not before.
+          </li>
+          <li>
+            <strong>Certification as vegan</strong>
+            Not yet held. The peptide complexes are made by fermentation, and
+            the growth medium may involve trace dairy-derived substrates.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div data-reveal style="margin-top:clamp(2.5rem,6vh,3.5rem);display:flex;flex-wrap:wrap;gap:1.5rem 2.75rem">
+      <a class="zl-link" href="/blog/read-skincare-label.html">How to read any ingredient list <span class="zl-link__arrow" aria-hidden="true">→</span></a>
+      <a class="zl-link" href="/faq.html">Sensitivity, pregnancy and testing <span class="zl-link__arrow" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
 <!-- ── From the Journal — the collection, in longer form ───────────────── -->
 <section class="zl-section zl-section--sm" aria-labelledby="journal-collection">
   <div class="zl-container">
@@ -729,6 +1126,9 @@
           <a href="/story/">Story</a>
           <a href="/testimonials/">Testimonials</a>
           <a href="/blog/">Journal</a>
+          <a href="/evidence.html">Evidence</a>
+          <a href="/editorial-standards.html">Editorial Standards</a>
+          <a href="/appointment.html">Visit a House</a>
         </div>
       </div>
       <div>

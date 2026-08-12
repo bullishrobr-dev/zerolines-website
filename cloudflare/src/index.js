@@ -19,11 +19,21 @@
  * asking a vendor's permission.
  *
  * BINDINGS
- *   ASSETS      static site  (wrangler [assets] directory)
- *   ZL_LEADS    D1  — zl-leads, 16bb56f9-fbab-470c-a0d3-e6b94c10d8a4, WEUR
- *   RESEND_KEY  secret
- *   HOOK_SECRET secret — guards the CSV export
- *   ZL_NOTIFY   var — where submission alerts go (info@zerolines.life)
+ *   ASSETS       static site  (wrangler [assets] directory)
+ *   ZL_LEADS     D1  — zl-leads, 16bb56f9-fbab-470c-a0d3-e6b94c10d8a4, WEUR
+ *   RESEND_KEY   secret
+ *   HOOK_SECRET  secret — guards the export, the stats and the journal preview
+ *   ZL_NOTIFY    var — where submission alerts go (info@zerolines.life)
+ *   ZL_SEND_LIVE var — "yes" arms the Monday letter. Anything else, including
+ *                absent, and the cron does a dry run. It ships "no". See MONDAY.
+ *
+ * WHAT ANSWERS WHERE
+ *   /__forms           the four forms: waitlist, newsletter, contact, appointment
+ *   /__forms/export    every lead, as CSV               ?k=HOOK_SECRET
+ *   /__forms/stats     the same list counted, as JSON   ?k=HOOK_SECRET
+ *   /__forms/journal   a dry run of the Monday letter   ?k=HOOK_SECRET
+ *   /unsubscribe       GET asks, POST does it
+ *   everything else    the static site, publish-gated
  */
 
 import SCHEDULE_FILE from './schedule.json';
@@ -185,95 +195,182 @@ async function hashIp(ip, salt) {
 }
 
 /* ---------------------------------------------------------------------------
-   The confirmation email. Same visual grammar as the assessment: table spine,
-   inline styles, Georgia standing in for Cormorant, no webfonts and no images,
-   because that is what mail clients render the same way twice.
+   The parts every letter is made of. Same visual grammar as the assessment:
+   table spine, inline styles, Georgia standing in for Cormorant, no webfonts
+   and no images, because that is what mail clients render the same way twice.
+
+   All of this used to be private to buildWelcome, which was right while there
+   was one letter. There are two now — the welcome and the Monday journal letter
+   below — and the second is only convincing as the same house's post if it is
+   built from the same parts. Six hex values copied into a second function is
+   how two letters start to drift, and nobody notices until they are read side
+   by side in one inbox.
    --------------------------------------------------------------------------- */
-function buildWelcome(kind, unsubUrl) {
-  const BONE = '#FAF7F2', INK = '#14181A', INK3 = '#3C4142';
-  const HOUSE = '#1F4F4A', MID = '#17706D', CHAMP = '#C2A878';
-  const p = (t, x) => `<p style="margin:0 0 14px;font:400 15px/1.75 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:${INK3};${x || ''}">${t}</p>`;
-  const h2 = (t) => `<h2 style="margin:30px 0 12px;font:300 21px/1.3 Georgia,serif;color:${INK}">${t}</h2>`;
+const BONE = '#FAF7F2', INK = '#14181A', INK3 = '#3C4142';
+const HOUSE = '#1F4F4A', MID = '#17706D', CHAMP = '#C2A878';
+const HOUSES = 'Zero Lines &middot; Gibraltar &middot; Andorra &middot; Marbella';
 
-  let subject, body = '', lines = [];
+const mailP = (t, x) => `<p style="margin:0 0 14px;font:400 15px/1.75 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:${INK3};${x || ''}">${t}</p>`;
+const mailH2 = (t) => `<h2 style="margin:30px 0 12px;font:300 21px/1.3 Georgia,serif;color:${INK}">${t}</h2>`;
+const mailH1 = (t) => `<h1 style="margin:0 0 6px;font:300 30px/1.2 Georgia,'Times New Roman',serif;color:${INK};letter-spacing:-.4px">${t}</h1>`;
+const mailEyebrow = (t) => `<p style="margin:0 0 26px;font:500 11px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">${t}</p>`;
 
-  if (kind === 'contact') {
-    subject = 'We have your message';
-    body += `<h1 style="margin:0 0 6px;font:300 30px/1.2 Georgia,'Times New Roman',serif;color:${INK};letter-spacing:-.4px">We have your message</h1>`
-      + `<p style="margin:0 0 26px;font:500 11px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">Zero Lines &middot; Gibraltar &middot; Andorra &middot; Marbella</p>`
-      + p('Thank you for writing. Your message has reached us and someone will read it and answer personally.', `font-size:16px;color:${INK};`)
-      + p('We use what you sent only to reply to you. It does not join a mailing list, and this is the last automatic message you will get about it — the next one will be from a person.');
-    lines = ['WE HAVE YOUR MESSAGE', '',
-      'Thank you for writing. Your message has reached us and someone will read it and answer personally.', '',
-      'We use what you sent only to reply to you. It does not join a mailing list.'];
-  } else if (kind === 'newsletter') {
-    /* A journal subscriber is not a waitlist registrant. Before this branch
-       existed they got the waitlist letter — "when ordering opens you will hear
-       from us before anyone else" — which answers a question they did not ask
-       and says nothing about the writing they actually signed up for. */
-    subject = 'The next one comes on Monday';
-    body += `<h1 style="margin:0 0 6px;font:300 30px/1.2 Georgia,'Times New Roman',serif;color:${INK};letter-spacing:-.4px">The next one comes on Monday</h1>`
-      + `<p style="margin:0 0 26px;font:500 11px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">Zero Lines &middot; Gibraltar &middot; Andorra &middot; Marbella</p>`
-      + p('Thank you for subscribing. The journal publishes one piece a week, on Monday, and each one will arrive here as it goes out.', `font-size:16px;color:${INK};`)
-      + p('It is written to be useful whether or not you ever buy anything from us — what holds up, what does not, and how to tell the difference. One a week, and no more than that.')
-      + h2('While you wait')
-      + p('The skin analysis is free and open now. One photograph and ten questions; a written assessment comes back to this address, read zone by zone, with a note on what a single photograph honestly cannot show.')
-      + `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px 0 6px"><tr><td style="background:${HOUSE};padding:14px 26px">`
-      + `<a href="${SITE}/analyser/" style="color:#fff;text-decoration:none;font:500 12px/1 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2.4px;text-transform:uppercase">Begin the free analysis</a>`
-      + `</td></tr></table>`
-      + p('It takes about two minutes and needs no account.', 'font-size:12px;color:#636764;margin-top:10px;');
-    lines = ['THE NEXT ONE COMES ON MONDAY', '',
-      'Thank you for subscribing. The journal publishes one piece a week, on Monday, and each one will arrive here as it goes out.', '',
-      'It is written to be useful whether or not you ever buy anything from us — what holds up, what does not, and how to tell the difference.', '',
-      'While you wait, the skin analysis is free and open now: ' + SITE + '/analyser/'];
-  } else {
-    subject = 'You are on the list';
-    body += `<h1 style="margin:0 0 6px;font:300 30px/1.2 Georgia,'Times New Roman',serif;color:${INK};letter-spacing:-.4px">You are on the list</h1>`
-      + `<p style="margin:0 0 26px;font:500 11px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">Zero Lines &middot; Gibraltar &middot; Andorra &middot; Marbella</p>`
-      + p('Thank you for registering. When ordering opens you will hear from us before anyone else — that is the entire purpose of the list, and it is the only list we keep.', `font-size:16px;color:${INK};`)
-      + p('We have not set a date, and we would rather say that plainly than guess at one.')
-      + h2('You do not have to wait for us')
-      + p('The skin analysis is free, open now, and does not depend on the launch. One photograph and ten questions; a written assessment comes back to this address — read zone by zone, with a note on what a single photograph honestly cannot show.')
-      + `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px 0 6px"><tr><td style="background:${HOUSE};padding:14px 26px">`
-      + `<a href="${SITE}/analyser/" style="color:#fff;text-decoration:none;font:500 12px/1 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2.4px;text-transform:uppercase">Begin the free analysis</a>`
-      + `</td></tr></table>`
-      + p('It takes about two minutes and needs no account.', 'font-size:12px;color:#636764;margin-top:10px;')
-      + `<table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-top:2px solid ${CHAMP};margin:30px 0 0"><tr><td style="padding:18px 0 0">`
-      + `<div style="font:500 11px/1.6 -apple-system,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">What we are building</div>`
-      + p('Every Zero Lines formulation is made to do two things at once. There is an immediate effect, visible the same day. And there is a lasting one, which builds quietly over weeks of consistent use. Most of the industry sells the first and implies the second. We would rather tell you which is which.', 'margin-top:10px;')
-      + `</td></tr></table>`;
-    lines = ['YOU ARE ON THE LIST', '',
-      'Thank you for registering. When ordering opens you will hear from us before anyone else — that is the entire purpose of the list, and it is the only list we keep.', '',
-      'We have not set a date, and we would rather say that plainly than guess at one.', '',
-      'The skin analysis is free and open now: ' + SITE + '/analyser/', '',
-      'Every Zero Lines formulation is made to do two things at once — an immediate effect, visible the same day, and a lasting one that builds over weeks.'];
-  }
-
-  body += `<div style="border-top:1px solid #E2DCD2;margin-top:32px;padding-top:20px">`
-    + p('The Zero Lines collection is in pre-launch and not yet available to purchase.', 'font-size:12px;color:#636764;')
+/* The two lines every letter ends on: what the house is (pre-launch, nothing
+   for sale) and how to stop hearing from it. Pass no URL and the second is
+   omitted — a reply to somebody's enquiry is not list mail. */
+function mailFoot(unsubUrl) {
+  return `<div style="border-top:1px solid #E2DCD2;margin-top:32px;padding-top:20px">`
+    + mailP('The Zero Lines collection is in pre-launch and not yet available to purchase.', 'font-size:12px;color:#636764;')
     /* This used to read "reply to this message and we will take you off the
        list. No form, no link, no questions." Lawful, and pleasant, but the only
        machinery behind it was somebody remembering. Now it is a link. */
-    + (kind === 'contact' || !unsubUrl ? '' : p(`If you would rather not hear from us again, <a href="${unsubUrl}" style="color:${MID}">unsubscribe here</a> — one click, no questions. Or simply reply and we will do it by hand.`, 'font-size:12px;color:#636764;'))
+    + (unsubUrl ? mailP(`If you would rather not hear from us again, <a href="${unsubUrl}" style="color:${MID}">unsubscribe here</a> — one click, no questions. Or simply reply and we will do it by hand.`, 'font-size:12px;color:#636764;') : '')
     + `</div>`;
+}
 
-  lines.push('', 'The Zero Lines collection is in pre-launch and not yet available to purchase.');
-  if (kind !== 'contact') {
-    lines.push(unsubUrl
-      ? 'To stop hearing from us: ' + unsubUrl
-      : 'If you would rather not hear from us again, reply and we will take you off the list.');
-  }
-  lines.push('', 'zerolines.life');
-
-  const html = `<!doctype html><html><body style="margin:0;padding:0;background:${BONE}">`
+/* Bone page, one 600px white card, the wordmark above the letter and the
+   address line under it. */
+function mailShell(body) {
+  return `<!doctype html><html><body style="margin:0;padding:0;background:${BONE}">`
     + `<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:${BONE}"><tr><td align="center" style="padding:32px 16px">`
     + `<table role="presentation" cellpadding="0" cellspacing="0" width="600" style="max-width:600px;background:#fff;padding:36px 34px">`
     + `<tr><td><div style="font:500 15px/1 -apple-system,sans-serif;letter-spacing:5px;text-transform:uppercase;color:${INK};padding-bottom:28px">Zero Lines</div>${body}</td></tr>`
     + `</table>`
     + `<div style="font:400 12px/1.7 -apple-system,sans-serif;color:#636764;padding-top:18px;max-width:600px">Zero Lines &middot; Gibraltar &middot; Andorra &middot; Marbella &middot; <a href="${SITE}" style="color:${MID}">zerolines.life</a></div>`
     + `</td></tr></table></body></html>`;
+}
 
-  return { subject, html, text: lines.join('\n') };
+/* ---------------------------------------------------------------------------
+   The confirmation email.
+
+   `piece` is the journal article the person was reading when they left their
+   address, or null. handleForm has always stored a per-page `source` on every
+   row and this letter has always ignored it, so somebody who subscribed at the
+   foot of a two-thousand-word article got the same letter as somebody who
+   typed their address into the homepage footer — a letter that gives no sign
+   anyone noticed where they were. One paragraph now says so. Only one: the
+   letter is the house's, not the article's, and a version per source is a
+   maintenance problem pretending to be personalisation.
+
+   `appt` is the house and the timing asked for, on the appointment branch
+   only. That branch is not a welcome at all; see its own note below.
+   --------------------------------------------------------------------------- */
+function buildWelcome(kind, unsubUrl, piece, appt) {
+  /* Named only when it is a journal article. The other fifty-odd sources are
+     pages — /faq, /products/serum, the homepage — and "you subscribed from
+     Frequently Asked Questions" is worse than saying nothing at all. */
+  const named = !!(piece && piece.title);
+  const fromPara = (verb) => named
+    ? mailP(`You ${verb} from <a href="${piece.url}" style="color:${MID}">${esc(piece.title)}</a>. It stays where it is, should you want to finish it.`)
+    : '';
+  const fromLines = (verb) => named
+    ? ['', `You ${verb} from ` + piece.title + ' — ' + piece.url]
+    : [];
+
+  let subject, body = '', lines = [];
+
+  if (kind === 'contact') {
+    subject = 'We have your message';
+    body += mailH1('We have your message')
+      + mailEyebrow(HOUSES)
+      + mailP('Thank you for writing. Your message has reached us and someone will read it and answer personally.', `font-size:16px;color:${INK};`)
+      + mailP('We use what you sent only to reply to you. It does not join a mailing list, and this is the last automatic message you will get about it — the next one will be from a person.');
+    lines = ['WE HAVE YOUR MESSAGE', '',
+      'Thank you for writing. Your message has reached us and someone will read it and answer personally.', '',
+      'We use what you sent only to reply to you. It does not join a mailing list.'];
+  } else if (kind === 'appointment') {
+    /* A receipt, not a confirmation, and certainly not a welcome. Somebody who
+       has asked to be let into a room deserves to know the request arrived —
+       but nothing is booked until a person answers, and a letter that reads
+       like a booking would be the house promising something it has not agreed
+       to. So it says both, in that order, and repeats back what was asked for
+       so that a wrong house or a wrong week can be spotted the same minute.
+       No unsubscribe link: this is a reply to their own request, not list mail,
+       and offering to remove them from a list they are not on would only
+       suggest they had joined one. */
+    const asked = [
+      appt && appt.house ? `<strong style="color:${INK3}">House</strong>&nbsp; ${esc(appt.house)}` : null,
+      appt && appt.timing ? `<strong style="color:${INK3}">When</strong>&nbsp; ${esc(appt.timing)}` : null,
+    ].filter(Boolean);
+    subject = 'We have your request to visit';
+    body += mailH1('We have your request')
+      + mailEyebrow(HOUSES)
+      + mailP('Thank you. It has reached the house, and someone will write back personally to settle a time. Nothing is booked yet — this is a note to say the request arrived, not a confirmation.', `font-size:16px;color:${INK};`)
+      + (asked.length
+        ? `<table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-top:2px solid ${CHAMP};margin:26px 0"><tr><td style="padding:16px 0 0">`
+          + mailP(asked.join('<br>'), 'margin-bottom:0;')
+          + `</td></tr></table>`
+        : '')
+      + mailP('The houses are consultation rooms rather than shops. The collection is in pre-launch, so nothing is sold in them yet; a visit is a conversation about your skin and what would follow from it.')
+      + mailP('We use what you sent only to arrange this. It does not join a mailing list.');
+    lines = ['WE HAVE YOUR REQUEST', '',
+      'Thank you. It has reached the house, and someone will write back personally to settle a time. Nothing is booked yet — this is a note to say the request arrived, not a confirmation.', '']
+      .concat(appt && appt.house ? ['House: ' + appt.house] : [],
+        appt && appt.timing ? ['When: ' + appt.timing] : [], ['',
+        'The houses are consultation rooms rather than shops. The collection is in pre-launch, so nothing is sold in them yet.', '',
+        'We use what you sent only to arrange this. It does not join a mailing list.']);
+  } else if (kind === 'newsletter') {
+    /* A journal subscriber is not a waitlist registrant. Before this branch
+       existed they got the waitlist letter — "when ordering opens you will hear
+       from us before anyone else" — which answers a question they did not ask
+       and says nothing about the writing they actually signed up for. */
+    subject = 'The next one comes on Monday';
+    body += mailH1('The next one comes on Monday')
+      + mailEyebrow(HOUSES)
+      + mailP('Thank you for subscribing. The journal publishes one piece a week, on Monday, and each one will arrive here as it goes out.', `font-size:16px;color:${INK};`)
+      + fromPara('subscribed')
+      + mailP('It is written to be useful whether or not you ever buy anything from us — what holds up, what does not, and how to tell the difference. One a week, and no more than that.')
+      + mailH2('While you wait')
+      + mailP('The skin analysis is free and open now. One photograph and ten questions; a written assessment comes back to this address, read zone by zone, with a note on what a single photograph honestly cannot show.')
+      + `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px 0 6px"><tr><td style="background:${HOUSE};padding:14px 26px">`
+      + `<a href="${SITE}/analyser/" style="color:#fff;text-decoration:none;font:500 12px/1 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2.4px;text-transform:uppercase">Begin the free analysis</a>`
+      + `</td></tr></table>`
+      + mailP('It takes about two minutes and needs no account.', 'font-size:12px;color:#636764;margin-top:10px;');
+    lines = ['THE NEXT ONE COMES ON MONDAY', '',
+      'Thank you for subscribing. The journal publishes one piece a week, on Monday, and each one will arrive here as it goes out.']
+      .concat(fromLines('subscribed'), ['',
+        'It is written to be useful whether or not you ever buy anything from us — what holds up, what does not, and how to tell the difference.', '',
+        'While you wait, the skin analysis is free and open now: ' + SITE + '/analyser/']);
+  } else {
+    subject = 'You are on the list';
+    body += mailH1('You are on the list')
+      + mailEyebrow(HOUSES)
+      + mailP('Thank you for registering. When ordering opens you will hear from us before anyone else — that is the entire purpose of the list, and it is the only list we keep.', `font-size:16px;color:${INK};`)
+      + mailP('We have not set a date, and we would rather say that plainly than guess at one.')
+      + fromPara('joined the list')
+      + mailH2('You do not have to wait for us')
+      + mailP('The skin analysis is free, open now, and does not depend on the launch. One photograph and ten questions; a written assessment comes back to this address — read zone by zone, with a note on what a single photograph honestly cannot show.')
+      + `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px 0 6px"><tr><td style="background:${HOUSE};padding:14px 26px">`
+      + `<a href="${SITE}/analyser/" style="color:#fff;text-decoration:none;font:500 12px/1 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2.4px;text-transform:uppercase">Begin the free analysis</a>`
+      + `</td></tr></table>`
+      + mailP('It takes about two minutes and needs no account.', 'font-size:12px;color:#636764;margin-top:10px;')
+      + `<table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-top:2px solid ${CHAMP};margin:30px 0 0"><tr><td style="padding:18px 0 0">`
+      + `<div style="font:500 11px/1.6 -apple-system,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">What we are building</div>`
+      + mailP('Every Zero Lines formulation is made to do two things at once. There is an immediate effect, visible the same day. And there is a lasting one, which builds quietly over weeks of consistent use. Most of the industry sells the first and implies the second. We would rather tell you which is which.', 'margin-top:10px;')
+      + `</td></tr></table>`;
+    lines = ['YOU ARE ON THE LIST', '',
+      'Thank you for registering. When ordering opens you will hear from us before anyone else — that is the entire purpose of the list, and it is the only list we keep.', '',
+      'We have not set a date, and we would rather say that plainly than guess at one.']
+      .concat(fromLines('joined the list'), ['',
+        'The skin analysis is free and open now: ' + SITE + '/analyser/', '',
+        'Every Zero Lines formulation is made to do two things at once — an immediate effect, visible the same day, and a lasting one that builds over weeks.']);
+  }
+
+  /* An answer to somebody's own enquiry is not list mail. It carries no
+     unsubscribe in either part — offering to take them off a list they never
+     joined would tell them they had joined one. */
+  const transactional = kind === 'contact' || kind === 'appointment';
+  body += mailFoot(transactional ? '' : unsubUrl);
+
+  lines.push('', 'The Zero Lines collection is in pre-launch and not yet available to purchase.');
+  if (!transactional) {
+    lines.push(unsubUrl
+      ? 'To stop hearing from us: ' + unsubUrl
+      : 'If you would rather not hear from us again, reply and we will take you off the list.');
+  }
+  lines.push('', 'zerolines.life');
+
+  return { subject, html: mailShell(body), text: lines.join('\n') };
 }
 
 /* ---------------------------------------------------------------------------
@@ -392,6 +489,7 @@ async function sendMail(env, to, subject, html, text, replyTo, unsubUrl) {
 function buildNotice(row) {
   const rows = [
     ['Form', row.form], ['Email', row.email], ['Name', row.name],
+    ['Preferred house', row.house], ['Preferred timing', row.timing],
     ['Message', row.message], ['Source', row.source], ['Referrer', row.referrer],
     ['Country', row.country], ['When', row.created_at],
   ].filter(([, v]) => v);
@@ -402,8 +500,13 @@ function buildNotice(row) {
      glance: what a contact actually wrote, or where a signup came from. */
   const preheader = row.form === 'contact'
     ? (row.message || 'No message text.').replace(/\s+/g, ' ').slice(0, 110)
-    : ['from ' + (row.source || 'an unknown page'), row.country, row.referrer && row.referrer.replace(/^https?:\/\/[^/]+/, '') || null]
-        .filter(Boolean).join(' · ').slice(0, 110);
+    /* An appointment is answered by a person picking a time, so the glance has
+       to carry the two things that decide it: which house, and when. */
+    : row.form === 'appointment'
+      ? [row.house || 'no house given', row.timing || 'no timing given', row.name]
+          .filter(Boolean).join(' · ').slice(0, 110)
+      : ['from ' + (row.source || 'an unknown page'), row.country, row.referrer && row.referrer.replace(/^https?:\/\/[^/]+/, '') || null]
+          .filter(Boolean).join(' · ').slice(0, 110);
 
   const html = `<div style="font:400 15px/1.7 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#14181A">`
     // Hidden, then padded so the real content cannot leak into the snippet.
@@ -414,7 +517,9 @@ function buildNotice(row) {
     + rows.map(([k, v]) => `<tr><td style="padding:5px 18px 5px 0;color:#636764;vertical-align:top;white-space:nowrap">${esc(k)}</td><td style="padding:5px 0">${esc(v)}</td></tr>`).join('')
     + `</table></div>`;
   return {
-    subject: `${row.form === 'contact' ? 'Message' : 'Waitlist'}: ${row.email}`,
+    // An appointment needs answering by a person, today, and it should not be
+    // filed alongside the signups by a subject line that calls it one.
+    subject: `${row.form === 'contact' ? 'Message' : row.form === 'appointment' ? 'Appointment' : 'Waitlist'}: ${row.email}`,
     html,
     text: preheader + '\n\n' + rows.map(([k, v]) => `${k}: ${v}`).join('\n'),
   };
@@ -456,7 +561,7 @@ async function handleForm(request, env, ctx) {
   if (get('bot-field')) return new Response('{"ok":true}', { status: 200, headers: cors });
 
   const form = (get('form-name') || get('form') || 'waitlist').toLowerCase();
-  if (!['waitlist', 'contact', 'newsletter'].includes(form)) {
+  if (!['waitlist', 'contact', 'newsletter', 'appointment'].includes(form)) {
     return new Response('{"error":"Unknown form."}', { status: 400, headers: cors });
   }
   const email = get('email').toLowerCase();
@@ -476,6 +581,32 @@ async function handleForm(request, env, ctx) {
     ua: (request.headers.get('user-agent') || '').slice(0, 300) || null,
     ip_hash: await hashIp(request.headers.get('CF-Connecting-IP'), env.HOOK_SECRET || 'zl'),
   };
+
+  /* ---- an appointment request -------------------------------------------
+     Somebody asking to be seen at one of the houses is not a signup, and until
+     now the only way to ask was a WhatsApp link on the contact page — which
+     wants a stranger's phone number before anybody has said a word to them.
+
+     Two fields the other forms do not have: which house, and when would suit.
+     They are folded into `message` rather than given columns of their own,
+     because this repository has no migration tooling — the schema is whatever
+     was typed into the D1 console once — and a lazy ALTER TABLE in the request
+     path is a worse thing to own than two labelled lines of text. The export
+     is a CSV a person reads; a person can read this.
+
+     `row.message` itself keeps the visitor's own words, so the alert to the
+     house can show the three things separately and the person's sentence is
+     not buried between two labels. */
+  if (form === 'appointment') {
+    row.house = (get('house') || get('preferred-house') || get('location')).slice(0, 80) || null;
+    row.timing = (get('timing') || get('preferred-timing') || get('when')).slice(0, 120) || null;
+  }
+  const stored = form === 'appointment'
+    ? ([row.house ? 'Preferred house: ' + row.house : null,
+        row.timing ? 'Preferred timing: ' + row.timing : null,
+        row.message ? '\n' + row.message : null]
+        .filter(Boolean).join('\n').slice(0, 5000) || null)
+    : row.message;
 
   /* Every submission is kept. An earlier draft deduped on (form, email, day)
      and immediately swallowed a real event: one visitor joined from the
@@ -525,7 +656,7 @@ async function handleForm(request, env, ctx) {
     ins = await env.ZL_LEADS.prepare(
       `INSERT INTO leads (created_at, form, email, name, message, source, referrer, country, ua, ip_hash, emailed)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)`
-    ).bind(row.created_at, row.form, row.email, row.name, row.message, row.source,
+    ).bind(row.created_at, row.form, row.email, row.name, stored, row.source,
            row.referrer, row.country, row.ua, row.ip_hash).run();
   } catch (e) {
     return new Response('{"error":"Could not record that. Please try again."}', { status: 500, headers: cors });
@@ -555,16 +686,49 @@ async function handleForm(request, env, ctx) {
         .then((ok) => mark(env, rowId, 'notified', ok))
     );
 
+    /* An appointment request is answered, and it is answered with a receipt.
+       Not the waitlist letter — "you are on the list" to somebody who asked to
+       be seen in Gibraltar on Thursday would be both wrong and a little
+       insulting, and they have joined no list. What goes back says the request
+       arrived, repeats the house and the week so a mistake can be caught, and
+       says plainly that nothing is booked until a person writes. It carries no
+       unsubscribe and no offer, because it is a reply to their own request.
+
+       Every request gets one, not only the first: `alreadyWelcomed` asks
+       whether somebody has been introduced to the house, which is the wrong
+       question to ask of a second visit in March. The opt-out is still
+       honoured, on the same reasoning as the contact form below it. */
+    if (form === 'appointment') {
+      if (!optedOut) {
+        ctx.waitUntil((async () => {
+          const w = buildWelcome('appointment', '', null, { house: row.house, timing: row.timing });
+          const ok = await sendMail(env, email, w.subject, w.html, w.text);
+          await mark(env, rowId, 'emailed', ok);
+        })());
+      } else {
+        ctx.waitUntil(mark(env, rowId, 'emailed', true));
+      }
     /* Two reasons to stay quiet. Someone who has written to us before does not
        need welcoming twice; and the analyser records its own leads here, having
        just sent that person a full written assessment — inviting them to go and
        take the analysis would be the house not paying attention. */
-    if (!alreadyWelcomed && !optedOut && row.source !== 'analyser' && row.source !== 'analyser-started') {
+    } else if (!alreadyWelcomed && !optedOut
+        && row.source !== 'analyser' && row.source !== 'analyser-started') {
       const kind = form === 'contact' ? 'contact' : form === 'newsletter' ? 'newsletter' : 'waitlist';
-      // A reply to an enquiry is not list mail, so it carries no unsubscribe.
-      const unsub = kind === 'contact' ? '' : await unsubLink(email, env);
-      const w = buildWelcome(kind, unsub);
-      ctx.waitUntil(sendMail(env, email, w.subject, w.html, w.text, undefined, unsub).then((ok) => mark(env, rowId, 'emailed', ok)));
+      /* The article they were reading, if they were reading one. Fetched inside
+         waitUntil rather than before it, because it is a subrequest to the
+         assets binding and nobody's "thank you" should wait on it. Not fetched
+         at all for a contact reply, which never names the piece: the letter
+         would have thrown the answer away, and a subrequest nobody reads is
+         still a subrequest. */
+      ctx.waitUntil((async () => {
+        // A reply to an enquiry is not list mail, so it carries no unsubscribe.
+        const unsub = kind === 'contact' ? '' : await unsubLink(email, env);
+        const piece = kind === 'contact' ? null : await pieceFromSource(env, row.source);
+        const w = buildWelcome(kind, unsub, piece);
+        const ok = await sendMail(env, email, w.subject, w.html, w.text, undefined, unsub);
+        await mark(env, rowId, 'emailed', ok);
+      })());
     } else {
       // Nothing to send, so nothing is owed. Recording it as handled keeps the
       // "have they been welcomed" question answerable from one column.
@@ -578,7 +742,9 @@ async function handleForm(request, env, ctx) {
   if ((request.headers.get('accept') || '').includes('text/html')) {
     return Response.redirect(SITE + '/thank-you/', 303);
   }
-  return new Response(JSON.stringify({ ok: true, recorded: inserted }), { status: 200, headers: cors });
+  // `form` is echoed so a caller can tell an appointment request from a signup
+  // without having to look at its own markup for the answer.
+  return new Response(JSON.stringify({ ok: true, recorded: inserted, form }), { status: 200, headers: cors });
 }
 
 /* The list, as a file, on demand. Netlify owned this view; now it is a URL the
@@ -601,6 +767,410 @@ async function handleExport(url, env) {
       'Content-Disposition': 'attachment; filename="zero-lines-leads.csv"',
       'Cache-Control': 'no-store',
     },
+  });
+}
+
+/* ---------------------------------------------------------------------------
+   The same list, counted.
+
+   Every form on the site has posted a `source` since the day the endpoint was
+   written — seventy-odd of them, one per page — and nothing has ever read the
+   column. So the question the field exists to answer ("does the piece on
+   alternatives bring people in, or is it all the homepage?") could only be
+   answered by downloading the CSV and counting by hand.
+
+   Aggregates only, deliberately. The export already hands over the addresses to
+   whoever holds the key; this returns shapes, so it can be left open in a tab
+   without a lead list sitting on the screen.
+   --------------------------------------------------------------------------- */
+async function handleStats(url, env) {
+  if (!env.HOOK_SECRET || !safeEqual(url.searchParams.get('k') || '', env.HOOK_SECRET)) {
+    return new Response('Not found.', { status: 404 });
+  }
+  const all = (sql, ...bind) => env.ZL_LEADS.prepare(sql).bind(...bind).all().then((r) => r.results || []);
+  const one = (sql, ...bind) => env.ZL_LEADS.prepare(sql).bind(...bind).first();
+
+  /* Rows and people are different numbers and both matter: one person who
+     joined from the homepage and then finished the analyser is two rows and one
+     address, and reading the first as reach would overstate it. */
+  const [byForm, bySource, byDay, totals, unsubbed, newsletter] = await Promise.all([
+    all(`SELECT form, COUNT(*) AS rows_n, COUNT(DISTINCT email) AS people
+           FROM leads GROUP BY form ORDER BY rows_n DESC`),
+    /* One row per page, with the forms as columns rather than as extra rows.
+       The question is "which page brings people in", and a source split across
+       four rows has to be added up by eye before it can be compared with the
+       homepage. */
+    all(`SELECT COALESCE(source, '(none)') AS source,
+                COUNT(*) AS rows_n, COUNT(DISTINCT email) AS people,
+                SUM(CASE WHEN form = 'waitlist'    THEN 1 ELSE 0 END) AS waitlist,
+                SUM(CASE WHEN form = 'newsletter'  THEN 1 ELSE 0 END) AS newsletter,
+                SUM(CASE WHEN form = 'contact'     THEN 1 ELSE 0 END) AS contact,
+                SUM(CASE WHEN form = 'appointment' THEN 1 ELSE 0 END) AS appointment
+           FROM leads GROUP BY source ORDER BY rows_n DESC, source`),
+    // Ninety days is as far back as a weekly rhythm is legible on one screen.
+    all(`SELECT substr(created_at, 1, 10) AS day, COUNT(*) AS rows_n, COUNT(DISTINCT email) AS people
+           FROM leads GROUP BY day ORDER BY day DESC LIMIT 90`),
+    one(`SELECT COUNT(*) AS rows_n, COUNT(DISTINCT email) AS people, MIN(created_at) AS first_at, MAX(created_at) AS last_at FROM leads`),
+    one(`SELECT COUNT(DISTINCT email) AS people FROM leads WHERE unsubscribed = 1`),
+    one(`SELECT COUNT(DISTINCT email) AS people FROM leads
+          WHERE form = 'newsletter' AND email NOT IN (SELECT email FROM leads WHERE unsubscribed = 1)`),
+  ]);
+
+  /* The ledger may not exist yet — it is created by the first journal run, not
+     by a migration — and a missing table must not take the whole page down. */
+  let journal = [];
+  try {
+    journal = await all(`SELECT slug, COUNT(*) AS sent, MAX(sent_at) AS last_at
+                           FROM sends GROUP BY slug ORDER BY last_at DESC`);
+  } catch (e) { journal = []; }
+
+  const body = {
+    generated_at: new Date().toISOString(),
+    totals: {
+      rows: (totals && totals.rows_n) || 0,
+      people: (totals && totals.people) || 0,
+      unsubscribed_people: (unsubbed && unsubbed.people) || 0,
+      journal_list: (newsletter && newsletter.people) || 0,
+      first_at: (totals && totals.first_at) || null,
+      last_at: (totals && totals.last_at) || null,
+    },
+    by_form: byForm,
+    by_source: bySource,
+    by_day: byDay,
+    journal_sends: journal,
+  };
+  return new Response(JSON.stringify(body, null, 2), {
+    headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' },
+  });
+}
+
+/* ---------------------------------------------------------------------------
+   MONDAY.
+
+   Sixty-six forms on this site subscribe people to a weekly journal letter, and
+   the welcome mail says so in those words — "each one will arrive here as it
+   goes out". Nothing on the account was capable of sending it. Articles
+   published themselves on their date, week after week, and the people who had
+   asked to be told heard nothing: the one promise the site makes with no
+   machinery behind it.
+
+   The cron in wrangler.toml wakes this at 08:00 UTC on Mondays. It looks up the
+   article dated today in the same schedule.json the publish gate reads — one
+   calendar, still — reads that article's own headline and standfirst off its
+   own page, and writes a short letter round them. Nothing about the piece is
+   retyped here: if the article's words change, so do the letter's.
+
+   IT SHIPS DISARMED, AND THAT IS DELIBERATE.
+
+   ZL_SEND_LIVE defaults to "no" in wrangler.toml. In that state this function
+   does everything except the one irreversible part: it selects the recipients,
+   builds the letter, works out each person's unsubscribe link, and writes the
+   lot to the log — then returns without calling Resend. Mail to real people is
+   the owner's decision and the owner's alone. Set the var to "yes" only when
+   somebody has read a dry run and wants it to go.
+   --------------------------------------------------------------------------- */
+
+/* One invocation on the free plan may make 50 subrequests to the open internet,
+   and each send is one. (Calls to D1 and to the assets binding go to Cloudflare
+   services and are counted separately, against a much larger allowance, so it
+   is only the sends that have to fit.) Forty leaves headroom and the list is
+   nowhere near it.
+
+   Read the deferral honestly, though: nothing re-runs by itself. The ledger
+   makes a second run *safe* — it would pick up exactly the people the first did
+   not reach and nobody twice — but the next cron is next Monday with the next
+   article, and the preview below cannot send. So a run that defers anybody
+   leaves that remainder unsent until somebody does something about it, and the
+   report says how many, which is the point of reporting it. Before this number
+   is anywhere near being reached, the run wants splitting across days. */
+const JOURNAL_MAX_PER_RUN = 40;
+
+/* Resend's default allowance is a couple of requests a second, and a burst that
+   trips it fails the sends rather than queueing them. Wall-clock waiting is not
+   CPU time, and a cron has fifteen minutes. */
+const JOURNAL_GAP_MS = 550;
+
+/* The calendar answers a second question now: not only "has this article's day
+   come" but "whose day is today". One article per date, which is what the
+   manifest has always held; if two ever shared one, the first wins and the
+   second is never announced, so do not put two on a Monday. */
+function slugForDate(date) {
+  for (const slug of Object.keys(SCHEDULE)) if (SCHEDULE[slug] === date) return slug;
+  return null;
+}
+
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'];
+const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+/* "Monday 10 August 2026". Written out here rather than left to toLocaleDateString,
+   which on a Worker can answer in whatever locale the runtime feels like. */
+function longDate(iso) {
+  const d = new Date(iso + 'T00:00:00Z');
+  if (isNaN(d.getTime())) return iso;
+  return `${DAYS[d.getUTCDay()]} ${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+}
+
+/* The handful of entities the site's own titles actually contain. A title read
+   out of <title> arrives HTML-encoded and would be encoded twice by esc(); a
+   headline read out of JSON-LD arrives as plain text and must not be touched.
+   This decodes the first so both take the same path. */
+function decodeEntities(s) {
+  return String(s || '')
+    .replace(/&(amp|lt|gt|quot|apos|nbsp|mdash|ndash|hellip|rsquo|lsquo|ldquo|rdquo);/g, (m, n) => ({
+      amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ',
+      mdash: '—', ndash: '–', hellip: '…', rsquo: '’', lsquo: '‘', ldquo: '“', rdquo: '”',
+    }[n]))
+    .replace(/&#(\d{1,5});/g, (m, n) => String.fromCharCode(parseInt(n, 10)));
+}
+
+/* What an article says about itself.
+ *
+ * The letter must not contain a sentence about the piece that the piece does
+ * not contain about itself. Every article already carries a BlogPosting
+ * headline and description written and checked with the article; taking them
+ * from the page at send time means the claim checker has already seen every
+ * word that goes out, and a correction to an article corrects the letter too.
+ * A second copy of twenty-five headlines in this file would be a second thing
+ * to keep true. */
+async function articleMeta(env, slug) {
+  if (!/^[a-z0-9-]+$/.test(slug || '')) return null;
+  let html;
+  try {
+    const r = await env.ASSETS.fetch(new Request(`${SITE}/blog/${slug}.html`, { method: 'GET' }));
+    if (!r || r.status !== 200) return null;
+    html = await r.text();
+  } catch (e) {
+    return null;
+  }
+
+  let title = null, standfirst = null;
+  for (const block of html.match(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g) || []) {
+    try {
+      const data = JSON.parse(block.replace(/^<script[^>]*>/, '').replace(/<\/script>$/, ''));
+      if (data && data['@type'] === 'BlogPosting') {
+        title = data.headline || null;
+        standfirst = data.description || null;
+        break;
+      }
+    } catch (e) { /* one unparseable block must not lose the others */ }
+  }
+  if (!title) {
+    const t = html.match(/<title>([^<]*)<\/title>/i);
+    // The <title> is written for a search result, so it carries the house name.
+    if (t) title = decodeEntities(t[1]).replace(/\s*[|—-]\s*Zero Lines\s*$/, '').trim();
+  }
+  if (!standfirst) {
+    const d = html.match(/<meta\s+name="description"\s+content="([^"]*)"/i);
+    if (d) standfirst = decodeEntities(d[1]).trim();
+  }
+  if (!title) return null;
+  return {
+    slug,
+    url: `${SITE}/blog/${slug}.html`,
+    title: title.slice(0, 160),
+    standfirst: (standfirst || '').slice(0, 320) || null,
+  };
+}
+
+/* A `source` names a page, and only some pages are pieces. Category hubs and
+   the journal index are lists of writing, not writing. */
+async function pieceFromSource(env, source) {
+  const m = /^blog\/([a-z0-9-]+)$/.exec(String(source || ''));
+  if (!m || m[1].indexOf('category-') === 0) return null;
+  return articleMeta(env, m[1]);
+}
+
+/* The Monday letter. Deliberately shorter than the welcome: it exists to say
+   what is up and step out of the way. Same parts, so it arrives as post from
+   the same house. */
+function buildJournalLetter(piece, date, unsubUrl) {
+  const body = mailH1(esc(piece.title))
+    + mailEyebrow(`The journal &middot; ${esc(longDate(date))}`)
+    + (piece.standfirst ? mailP(esc(piece.standfirst), `font-size:16px;color:${INK};`) : '')
+    + `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px 0 6px"><tr><td style="background:${HOUSE};padding:14px 26px">`
+    + `<a href="${piece.url}" style="color:#fff;text-decoration:none;font:500 12px/1 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2.4px;text-transform:uppercase">Read this week&rsquo;s piece</a>`
+    + `</td></tr></table>`
+    + mailP('It is free to read and asks nothing of you.', 'font-size:12px;color:#636764;margin-top:10px;')
+    + mailP('One piece a week, on Monday, and no more than that. It is written to be useful whether or not you ever buy anything from us — what holds up, what does not, and how to tell the difference.')
+    + mailFoot(unsubUrl);
+
+  const text = [
+    (piece.title || '').toUpperCase(), '',
+    'The journal — ' + longDate(date), '',
+    piece.standfirst || '', '',
+    'Read it: ' + piece.url, '',
+    'One piece a week, on Monday, and no more than that. It is written to be useful whether or not you ever buy anything from us — what holds up, what does not, and how to tell the difference.', '',
+    'The Zero Lines collection is in pre-launch and not yet available to purchase.',
+    unsubUrl ? 'To stop hearing from us: ' + unsubUrl : '', '',
+    'zerolines.life',
+  ].filter((l, i, a) => !(l === '' && a[i - 1] === '')).join('\n');
+
+  return { subject: piece.title, html: mailShell(body), text };
+}
+
+/* The whole run, in one function so that the cron and the preview cannot drift.
+   opts.date  — which day's article to announce (defaults to today, UTC)
+   opts.dry   — force a dry run whatever the environment says */
+async function sendJournal(env, opts) {
+  const o = opts || {};
+  const date = o.date || new Date().toISOString().slice(0, 10);
+  const slug = slugForDate(date);
+  /* Three separate reasons to stay quiet, and the report names which one, so
+     that a Monday on which nothing arrived can be explained without reading the
+     code. An armed var with no RESEND_KEY behind it is the one worth naming
+     loudest: it looks exactly like a live run from the outside. */
+  const why = o.dry ? 'this run was asked for as a dry run'
+    : env.ZL_SEND_LIVE !== 'yes' ? 'ZL_SEND_LIVE is not "yes"'
+      : !env.RESEND_KEY ? 'ZL_SEND_LIVE is "yes" but there is no RESEND_KEY to send with'
+        : null;
+  const live = why === null;
+  const report = { date, slug, live, article: null, considered: 0, already_sent: 0, sent: 0, failed: 0, deferred: 0, recipients: [] };
+  if (!live) report.dry_run_because = why;
+
+  if (!slug) {
+    /* The calendar currently ends on 25 January 2027, and the cron will go on
+       firing every Monday after that. A Monday with nothing dated to it is the
+       ordinary case, not a fault: no letter goes, and the log says why. */
+    report.note = 'No article is dated ' + date + '. Nothing to announce.';
+    return report;
+  }
+  const piece = await articleMeta(env, slug);
+  if (!piece) {
+    report.note = 'The page for ' + slug + ' could not be read, so nothing was sent.';
+    return report;
+  }
+  report.article = { slug: piece.slug, title: piece.title, url: piece.url };
+
+  /* The ledger. It exists so that a second run — a retry, a hand-triggered
+     catch-up, a cron that fired twice — cannot send the same piece to the same
+     person again. There is no migration tooling in this repository, so the
+     table makes itself; CREATE TABLE IF NOT EXISTS is cheap and idempotent, and
+     the unique index makes the double send impossible rather than unlikely. */
+  await env.ZL_LEADS.prepare(
+    `CREATE TABLE IF NOT EXISTS sends (
+       id INTEGER PRIMARY KEY AUTOINCREMENT,
+       email TEXT NOT NULL,
+       slug TEXT NOT NULL,
+       sent_at TEXT NOT NULL)`
+  ).run();
+  await env.ZL_LEADS.prepare(
+    `CREATE UNIQUE INDEX IF NOT EXISTS sends_email_slug ON sends (email, slug)`
+  ).run();
+
+  const done = await env.ZL_LEADS.prepare(`SELECT COUNT(*) AS n FROM sends WHERE slug = ?`).bind(slug).first();
+  report.already_sent = (done && done.n) || 0;
+
+  /* Newsletter subscribers only.
+     A waitlist registration was answered with "when ordering opens you will
+     hear from us before anyone else — that is the entire purpose of the list".
+     Sending that person a weekly letter about skincare writing is precisely the
+     thing they were promised would not happen, and the fact that they might
+     enjoy it is not the point. They can subscribe; every page offers it.
+
+     unsubscribed is set on every row belonging to an address, so one exclusion
+     covers a person who registered from four different pages. */
+  const { results } = await env.ZL_LEADS.prepare(
+    `SELECT DISTINCT email FROM leads
+      WHERE form = 'newsletter'
+        AND email NOT IN (SELECT email FROM leads WHERE unsubscribed = 1)
+        AND email NOT IN (SELECT email FROM sends WHERE slug = ?)
+      ORDER BY email`
+  ).bind(slug).all();
+
+  let list = results || [];
+  report.considered = list.length;
+  if (list.length > JOURNAL_MAX_PER_RUN) {
+    report.deferred = list.length - JOURNAL_MAX_PER_RUN;
+    list = list.slice(0, JOURNAL_MAX_PER_RUN);
+  }
+
+  /* The letter is the same for everybody except the unsubscribe link, so a dry
+     run logs it once in full and then, per recipient, the parts that differ.
+     Between the two, the log holds exactly what each person would have been
+     sent — without five hundred copies of the same HTML in it. */
+  if (!live) {
+    const sample = buildJournalLetter(piece, date, `${SITE}/unsubscribe?e=…&t=…`);
+    console.log('journal DRY RUN — nothing was sent, because ' + why + '.');
+    console.log('journal letter subject: ' + sample.subject);
+    console.log('journal letter text:\n' + sample.text);
+    console.log('journal letter html:\n' + sample.html);
+  }
+
+  for (let i = 0; i < list.length; i++) {
+    const to = list[i].email;
+    const unsub = await unsubLink(to, env);
+    const entry = {
+      to,
+      subject: piece.title,
+      unsubscribe: unsub,
+      // What sendMail() puts on the wire for a list message. RFC 8058.
+      headers: { 'List-Unsubscribe': `<${unsub}>`, 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click' },
+      sent: false,
+    };
+    if (!live) {
+      entry.dry_run = true;
+      console.log('journal would send: ' + JSON.stringify(entry));
+      report.recipients.push(entry);
+      continue;
+    }
+    const letter = buildJournalLetter(piece, date, unsub);
+    const ok = await sendMail(env, to, letter.subject, letter.html, letter.text, undefined, unsub);
+    entry.sent = ok;
+    if (ok) {
+      report.sent++;
+      /* Written after the send, not before. A row inserted first would mark
+         somebody as reached by a message that failed, and nothing would ever
+         try again — the same shape of bug the `emailed` column was carrying
+         until it was fixed. The narrow risk left is a send that succeeds and a
+         write that fails; that costs one duplicate, which is the cheaper of the
+         two mistakes. */
+      try {
+        await env.ZL_LEADS.prepare(
+          `INSERT OR IGNORE INTO sends (email, slug, sent_at) VALUES (?, ?, ?)`
+        ).bind(to, slug, new Date().toISOString()).run();
+      } catch (e) {
+        console.log('journal: sent to ' + to + ' but could not record it');
+      }
+    } else {
+      report.failed++;
+      console.log('journal: send failed for ' + to + ' — it will be retried on the next run');
+    }
+    report.recipients.push(entry);
+    if (i < list.length - 1) await new Promise((res) => setTimeout(res, JOURNAL_GAP_MS));
+  }
+  return report;
+}
+
+/* A dry run on demand, so that "it ships disarmed" is something a person can
+   check on a Tuesday rather than a claim in a comment. Same key as the export.
+   It cannot send: the dry flag is set here, not read from the environment.
+     /__forms/journal?k=SECRET                 — today's letter, as JSON
+     /__forms/journal?k=SECRET&date=2026-08-17 — any Monday's
+     /__forms/journal?k=SECRET&html=1          — the letter itself, to look at */
+async function handleJournalPreview(url, env) {
+  if (!env.HOOK_SECRET || !safeEqual(url.searchParams.get('k') || '', env.HOOK_SECRET)) {
+    return new Response('Not found.', { status: 404 });
+  }
+  const date = (url.searchParams.get('date') || '').match(/^\d{4}-\d{2}-\d{2}$/)
+    ? url.searchParams.get('date') : undefined;
+
+  if (url.searchParams.get('html')) {
+    /* Read the clock once. Called twice, a preview opened in the last second of
+       a Sunday could look up one day's article and date the letter to another. */
+    const day = date || new Date().toISOString().slice(0, 10);
+    const slug = slugForDate(day);
+    const piece = slug && await articleMeta(env, slug);
+    if (!piece) return new Response('No article is dated that day.', { status: 404, headers: { 'Cache-Control': 'no-store' } });
+    const letter = buildJournalLetter(piece, day, `${SITE}/unsubscribe?e=you@example.com&t=preview`);
+    return new Response(letter.html, {
+      headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex, nofollow' },
+    });
+  }
+
+  const report = await sendJournal(env, { date, dry: true });
+  return new Response(JSON.stringify(report, null, 2), {
+    headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' },
   });
 }
 
@@ -703,6 +1273,8 @@ export default {
 
     if (url.pathname === '/__forms') return handleForm(request, env, ctx);
     if (url.pathname === '/__forms/export') return handleExport(url, env);
+    if (url.pathname === '/__forms/stats') return handleStats(url, env);
+    if (url.pathname === '/__forms/journal') return handleJournalPreview(url, env);
     if (url.pathname === '/unsubscribe') return handleUnsubscribe(request, env, url);
 
     /* www and the apex are both attached to this Worker, so without this the
@@ -754,5 +1326,29 @@ export default {
     const res = await serveAsset(request, env, url);
     const ct = res.headers.get('content-type') || '';
     return ct.includes('text/html') ? hideUnpublished(res) : res;
+  },
+
+  /* Mondays, 08:00 UTC, from the cron in wrangler.toml.
+   *
+   * The date comes from the event rather than the clock so that a replay of a
+   * missed trigger announces the article that trigger was for, not whichever
+   * one happens to be current when Cloudflare gets round to it.
+   *
+   * A dry run is the default and is not an error; see sendJournal above. To
+   * exercise this without waiting for Monday, either open
+   * /__forms/journal?k=HOOK_SECRET, or run
+   *   npx wrangler dev --test-scheduled   then   curl "localhost:8787/__scheduled"
+   */
+  async scheduled(event, env, ctx) {
+    const date = new Date(event.scheduledTime || Date.now()).toISOString().slice(0, 10);
+    try {
+      const report = await sendJournal(env, { date });
+      console.log('journal run: ' + JSON.stringify({ ...report, recipients: report.recipients.length }));
+    } catch (e) {
+      /* Rethrown so the trigger is recorded as failed. A cron that swallows its
+         own errors reports a healthy week in which nobody was written to. */
+      console.log('journal run failed: ' + (e && e.message ? e.message : e));
+      throw e;
+    }
   },
 };

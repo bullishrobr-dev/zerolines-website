@@ -45,6 +45,26 @@ database_id = "16bb56f9-fbab-470c-a0d3-e6b94c10d8a4"
 
 [vars]
 ZL_NOTIFY = "info@zerolines.life"
+# THE WEEKLY LETTER IS DISARMED. Leave this alone unless you mean it.
+#
+# The cron below wakes the Worker every Monday and it builds the letter for
+# whichever article publishes that day. With ZL_SEND_LIVE anything other than
+# "yes" it stops one step short of Resend: it selects the recipients, renders
+# the letter, works out each person's unsubscribe link and writes all of it to
+# the log, then returns. Nothing leaves the account.
+#
+# Read a dry run first — `npx wrangler tail`, or open
+# /__forms/journal?k=HOOK_SECRET, which forces a dry run whatever this says.
+# Then, when you have read what would go out and want it to go, change this to
+# "yes" and deploy. Changing it in the dashboard works too, but only until the
+# next deploy: every var here is written over the live ones each time.
+ZL_SEND_LIVE = "no"
+
+# Monday, 08:00 UTC. schedule.json dates every article to a Monday, and an
+# article is live from midnight UTC on its date, so by eight it has been
+# readable for eight hours — the letter never arrives before the page does.
+[triggers]
+crons = ["0 8 * * 1"]
 
 # CUTOVER — blocked on one manual step, then uncomment both.
 #
