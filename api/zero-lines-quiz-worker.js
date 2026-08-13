@@ -88,7 +88,7 @@ const PRODUCTS = `THE RANGE — recommend only from these six, and respect the o
 06 Sustain · Precision Collagen Renewal Refill — the cartridge that keeps
    step 02 going. Requires the applicator from 02.`;
 
-const SYSTEM_PROMPT = `You are a senior skin consultant writing for Zero Lines, a clinical-luxury skincare house in Gibraltar, Andorra and Marbella. A client has sent one photograph and answered nine questions. Write their assessment.
+const SYSTEM_PROMPT = `You are a senior skin consultant writing for Zero Lines, a clinical-luxury skincare house in Gibraltar, Andorra and Marbella. A client has sent one photograph and answered sixteen questions. Write their assessment.
 
 HOW TO READ THE PHOTOGRAPH
 The photograph is your primary evidence; the questionnaire is context that explains what you see. Where they disagree, describe what is visible and note the discrepancy plainly — for example, "you describe your skin as dry, though the T-zone here reads oily" — without lecturing.
@@ -312,7 +312,7 @@ function buildWelcome(kind) {
       + p('We have not set a date, and we would rather say that plainly than guess at one.');
 
     body += h2('You do not have to wait for us')
-      + p('The skin analysis is free, open now, and does not depend on the launch. One photograph and nine questions; a written assessment comes back to this address — read zone by zone, with a note on what a single photograph honestly cannot show.')
+      + p('The skin analysis is free, open now, and does not depend on the launch. One photograph and sixteen questions; a written assessment comes back to this address — read zone by zone, with a note on what a single photograph honestly cannot show.')
       + `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px 0 6px"><tr>`
       + `<td style="background:${HOUSE};padding:14px 26px">`
       + `<a href="${SITE}/analyser/" style="color:#fff;text-decoration:none;font:500 12px/1 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2.4px;text-transform:uppercase">Begin the analysis</a>`
@@ -328,7 +328,7 @@ function buildWelcome(kind) {
       'Thank you for registering. When ordering opens you will hear from us before anyone else — that is the entire purpose of the list, and it is the only list we keep.', '',
       'We have not set a date, and we would rather say that plainly than guess at one.', '',
       'YOU DO NOT HAVE TO WAIT FOR US', '',
-      'The skin analysis is free, open now, and does not depend on the launch. One photograph and nine questions; a written assessment comes back to this address.', '',
+      'The skin analysis is free, open now, and does not depend on the launch. One photograph and sixteen questions; a written assessment comes back to this address.', '',
       'Begin the analysis: ' + SITE + '/analyser/', 'It takes about two minutes and needs no account.', '',
       'WHAT WE ARE BUILDING', '',
       'Every Zero Lines formulation is made to do two things at once. There is an immediate effect, visible the same day. And there is a lasting one, which builds quietly over weeks of consistent use. Most of the industry sells the first and implies the second. We would rather tell you which is which.'];
@@ -557,18 +557,21 @@ export default {
 
     const profile = [
       `Age range: ${field(src.age, 'not given')}`,
-      `Self-described skin type: ${field(src.skinType, 'not given')}`,
+      `How the skin feels half an hour after washing: ${field(src.skinType, 'not given')}`,
+      `Reactivity to unfamiliar products — their own account, not a diagnosis: ${field(src.sensitivity, 'not given')}`,
+      `What the skin does in strong sun — use this as the baseline for tone, and read redness and pigment against it rather than against an average face: ${field(src.sunReaction, 'not given')}`,
       `Main concerns: ${list(src.concerns).join(', ') || 'none given'}`,
       `Priority — the one thing they most want to change: ${field(src.priority, 'not given')}`,
+      `How strongly that priority registers to them: ${field(src.intensity, 'not given')}`,
       `Sun over the years: ${field(src.sun, 'not given')}`,
-      /* Recent exposure is not the same fact as a lifetime of it, and the
-         difference decides how pigmentation should be read: a face
-         photographed a fortnight after a holiday shows transient colour
-         that would otherwise be written up as settled. */
       `Sun in the last month: ${field(src.recentSun, 'not given')}`,
-      `Current routine: ${field(src.routine, 'not given')}`,
       `On their skin at the moment: ${list(src.treatments).join(', ') || 'nothing reported'}`,
+      `How long those have been in the routine: ${field(src.activeTenure, 'not given')}`,
+      `Current routine: ${field(src.routine, 'not given')}`,
       `Lifestyle factors: ${list(src.lifestyle).join(', ') || 'none reported'}`,
+      `Climate and surroundings: ${field(src.climate, 'not given')}`,
+      `Shaving or facial hair removal: ${field(src.shaving, 'not given')}`,
+      `On the face in this photograph: ${field(src.bareFace, 'not given')}`,
     ].join('\n');
 
     const userPrompt = `${profile}

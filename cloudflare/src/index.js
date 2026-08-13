@@ -321,7 +321,7 @@ function buildWelcome(kind, unsubUrl, piece, appt) {
       + fromPara('subscribed')
       + mailP('It is written to be useful whether or not you ever buy anything from us — what holds up, what does not, and how to tell the difference. One a week, and no more than that.')
       + mailH2('While you wait')
-      + mailP('The skin analysis is free and open now. One photograph and nine questions; a written assessment comes back to this address, read zone by zone, with a note on what a single photograph honestly cannot show.')
+      + mailP('The skin analysis is free and open now. One photograph and sixteen questions; a written assessment comes back to this address, read zone by zone, with a note on what a single photograph honestly cannot show.')
       + `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px 0 6px"><tr><td style="background:${HOUSE};padding:14px 26px">`
       + `<a href="${SITE}/analyser/" style="color:#fff;text-decoration:none;font:500 12px/1 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2.4px;text-transform:uppercase">Begin the free analysis</a>`
       + `</td></tr></table>`
@@ -339,7 +339,7 @@ function buildWelcome(kind, unsubUrl, piece, appt) {
       + mailP('We have not set a date, and we would rather say that plainly than guess at one.')
       + fromPara('joined the list')
       + mailH2('You do not have to wait for us')
-      + mailP('The skin analysis is free, open now, and does not depend on the launch. One photograph and nine questions; a written assessment comes back to this address — read zone by zone, with a note on what a single photograph honestly cannot show.')
+      + mailP('The skin analysis is free, open now, and does not depend on the launch. One photograph and sixteen questions; a written assessment comes back to this address — read zone by zone, with a note on what a single photograph honestly cannot show.')
       + `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px 0 6px"><tr><td style="background:${HOUSE};padding:14px 26px">`
       + `<a href="${SITE}/analyser/" style="color:#fff;text-decoration:none;font:500 12px/1 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2.4px;text-transform:uppercase">Begin the free analysis</a>`
       + `</td></tr></table>`

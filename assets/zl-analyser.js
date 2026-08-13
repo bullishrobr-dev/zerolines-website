@@ -70,9 +70,9 @@
   var state = { step: 0, reached: 0, answers: {}, photo: null, photoMeta: '', email: '' };
 
   /* ---- keep the answers through a reload --------------------------------
-     Nine questions is two minutes of somebody's attention, and until now a
+     Sixteen questions is two minutes of somebody's attention, and until now a
      refresh, a back button or a phone locking and waking threw all of it away
-     and put them back on the intro panel. Nobody answers nine questions twice.
+     and put them back on the intro panel. Nobody answers sixteen questions twice.
 
      sessionStorage, not localStorage: this should survive a reload and die with
      the tab, because a shared or borrowed device should not offer the next
@@ -113,7 +113,20 @@
   /* True when a derived question has nothing left to ask, answering itself on
      the way past. */
   function autoResolved(q) {
-    if (!q || !q.derivesFrom) return false;
+    if (!q) return false;
+
+    /* Nothing to ask about. activeTenure asks how long the actives have been in
+       the routine; put to somebody who has just said there are none, it is the
+       exact species of question that makes a questionnaire feel machine-made.
+       Answer it for them and move on. */
+    if (q.skipIfEmpty) {
+      var prior = state.answers[q.skipIfEmpty];
+      var empty = !Array.isArray(prior) || prior.length === 0
+        || (prior.length === 1 && prior[0] === 'none');
+      if (empty) { state.answers[q.id] = q.skipValue || 'none'; return true; }
+    }
+
+    if (!q.derivesFrom) return false;
     var opts = optionsFor(q);
     if (opts.length !== 1) return false;
     state.answers[q.id] = opts[0].value;
@@ -198,7 +211,20 @@
   function buildRail() {
     if (!rail) return;
     rail.innerHTML = '';
+    /* Sixteen items in one flat column reads as a form. The same sixteen under
+       three headings reads as a consultation with a shape to it, and somebody
+       who can see they are inside "Your skin" is being told something more
+       useful than item nine of sixteen. */
+    var lastSection = null;
     QUESTIONS.forEach(function (q, i) {
+      if (q.section && q.section !== lastSection) {
+        lastSection = q.section;
+        var head = document.createElement('li');
+        head.className = 'zl-a-rail__section';
+        head.setAttribute('aria-hidden', 'true');
+        head.textContent = q.section;
+        rail.appendChild(head);
+      }
       var li = document.createElement('li');
       var b = document.createElement('button');
       b.type = 'button';
@@ -369,7 +395,7 @@
      an option is worse than none. But it left the viewport wherever the old
      options were, so on a phone, answering a question near the bottom of a long
      list rendered the next one with its heading above the fold: you were
-     looking at answers to a question you could not read. Nine questions, and it
+     looking at answers to a question you could not read. Sixteen questions, and it
      compounds every time.
 
      Only move when the panel is actually out of position, so someone answering

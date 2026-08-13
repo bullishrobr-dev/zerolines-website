@@ -28,7 +28,7 @@ Six steps, one fixed order. Full sequence: https://zerolines.life/protocol/
 
 ## Skin Analyser
 
-- [Skin Analyser](https://zerolines.life/analyser/): nine questions and one photograph; reads texture, tone, hydration, pores, pigmentation, lines, elasticity and sun exposure, then returns a written assessment and the protocol that follows from it.
+- [Skin Analyser](https://zerolines.life/analyser/): sixteen questions and one photograph; reads texture, tone, hydration, pores, pigmentation, lines, elasticity and sun exposure, then returns a written assessment and the protocol that follows from it.
 - It is free, needs no account and no payment, and is available now rather than at launch. An email address is required: the assessment is written out and sent there, and does not appear on the page. The email carries a private link to reopen it and save it as a PDF, valid for thirty days.
 - The photograph is read once by the analysis service the house contracts, is not stored, is never attached to a name, and is not sent in the email.
 - It does not diagnose, does not remember you between visits, and does not track change over time.

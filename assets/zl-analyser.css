@@ -546,3 +546,16 @@
 }
 #zl-a-question { min-height: 30rem; }
 @media (max-width: 700px) { #zl-a-question { min-height: 26rem; } }
+
+/* The rail's section headings. Quiet — they orient, they do not compete with
+   the step they sit above. */
+.zl-a-rail__section {
+  list-style: none;
+  margin: 1.35rem 0 .5rem;
+  padding-left: 0;
+  font: 600 .64rem/1.4 var(--font-sans, -apple-system, sans-serif);
+  letter-spacing: .17em;
+  text-transform: uppercase;
+  color: var(--stone, #9aa3a1);
+}
+.zl-a-rail__section:first-child { margin-top: 0; }

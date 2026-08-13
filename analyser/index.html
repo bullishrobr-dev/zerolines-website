@@ -5,20 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Free Skin Analysis Online, No Account | Zero Lines</title>
-<meta name="description" content="Nine questions, one photograph, and a written reading of your skin across eight markers reaches your inbox in about two minutes. The photograph is not stored.">
+<meta name="description" content="Sixteen questions, one photograph, and a written reading of your skin across eight markers reaches your inbox in about two minutes. The photograph is not stored.">
 <link rel="canonical" href="https://zerolines.life/analyser/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zero Lines">
 <meta property="og:title" content="Free Skin Analysis Online, No Account | Zero Lines">
-<meta property="og:description" content="Nine questions, one photograph, and a written reading of your skin across eight markers reaches your inbox in about two minutes. The photograph is not stored.">
+<meta property="og:description" content="Sixteen questions, one photograph, and a written reading of your skin across eight markers reaches your inbox in about two minutes. The photograph is not stored.">
 <meta property="og:url" content="https://zerolines.life/analyser/">
 <meta property="og:image" content="https://zerolines.life/assets/og/hero-editorial-1.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Free Skin Analysis Online, No Account | Zero Lines">
-<meta name="twitter:description" content="Nine questions, one photograph, and a written reading of your skin across eight markers reaches your inbox in about two minutes. The photograph is not stored.">
+<meta name="twitter:description" content="Sixteen questions, one photograph, and a written reading of your skin across eight markers reaches your inbox in about two minutes. The photograph is not stored.">
 <meta name="twitter:image" content="https://zerolines.life/assets/og/hero-editorial-1.jpg">
 
 <link rel="icon" href="/assets/logo-mark.png">
@@ -82,9 +82,9 @@
   "inLanguage": "en-GB",
   "isAccessibleForFree": true,
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
-  "description": "A free written skin assessment. Nine questions and one photograph are read across eight appearance markers — texture, tone, hydration, pores, pigmentation, lines, elasticity and sun exposure. The assessment is written out in full and sent to your email address, with a private link to open it again and save it as a PDF.",
+  "description": "A free written skin assessment. Sixteen questions and one photograph are read across eight appearance markers — texture, tone, hydration, pores, pigmentation, lines, elasticity and sun exposure. The assessment is written out in full and sent to your email address, with a private link to open it again and save it as a PDF.",
   "featureList": [
-    "Nine questions about your skin and how you live",
+    "Sixteen questions about your skin and how you live",
     "One photograph, read once for visible appearance markers and not stored",
     "A written assessment across eight markers, delivered by email",
     "A private link to reopen the assessment and save it as a PDF",
@@ -105,7 +105,7 @@
       "@type": "HowToStep",
       "position": 1,
       "name": "You describe it",
-      "text": "Answer nine questions about how your skin behaves, what bothers you most, and how you live — sleep, sun, and routine."
+      "text": "Answer sixteen questions about how your skin behaves, what bothers you most, and how you live — sleep, sun, and routine."
     },
     {
       "@type": "HowToStep",
@@ -188,7 +188,7 @@
           </h1>
 
           <p class="zl-lead" data-reveal style="--reveal-delay:560ms;margin-top:1.75rem;max-width:44ch">
-            Nine questions, then one photograph. What comes back is a written
+            Sixteen questions, then one photograph. What comes back is a written
             assessment of how your skin presents today — read across eight
             markers, with what appears to be driving them and the formulations
             that follow.
@@ -282,7 +282,7 @@
   </section>
 </div>
 
-<!-- ════ 2. THE CONSULTATION — nine questions, one at a time ═══════════════ -->
+<!-- ════ 2. THE CONSULTATION — sixteen questions, one at a time ═══════════════ -->
 <div class="zl-a-panel" id="zl-a-quiz" hidden>
   <section class="zl-a-section">
     <div class="zl-container">
@@ -552,7 +552,7 @@
         </div>
 
         <!-- This is the highest-intent moment on the site: someone has just
-             answered nine questions and, often, photographed their own face. It
+             answered sixteen questions and, often, photographed their own face. It
              used to end with three buttons pointing away and a small text link
              to /#waitlist — a full navigation that discarded the report, because
              nothing here persists it. So the best lead-capture asset the brand
@@ -690,7 +690,7 @@
   </div>
 </div>
 
-<!-- The nine questions. This block is the live wording — .claude/build-analyser.js
+<!-- The sixteen questions. This block is the live wording — .claude/build-analyser.js
      generated this page once and has been overtaken by hand edits since, so
      re-running it would silently revert what is below. Edit here.
 
@@ -707,6 +707,118 @@
      given once is a definition given to whoever happened to read it. -->
 <script type="application/json" id="zl-quiz-data">
 [
+  {
+    "id": "age",
+    "short": "Age",
+    "prompt": "How old are you?",
+    "options": [
+      {
+        "value": "under25",
+        "label": "18 to 24"
+      },
+      {
+        "value": "25-34",
+        "label": "25 to 34"
+      },
+      {
+        "value": "35-44",
+        "label": "35 to 44"
+      },
+      {
+        "value": "45-54",
+        "label": "45 to 54"
+      },
+      {
+        "value": "55+",
+        "label": "55 or older"
+      }
+    ],
+    "section": "Your skin"
+  },
+  {
+    "id": "skinType",
+    "short": "Skin type",
+    "prompt": "Half an hour after washing your face, with nothing on it, how does it feel?",
+    "options": [
+      {
+        "value": "dry",
+        "label": "Dry — tight or papery, and it stays that way"
+      },
+      {
+        "value": "oily",
+        "label": "Oily — comfortable within minutes, shining again by midday"
+      },
+      {
+        "value": "combination",
+        "label": "Combination — tight across the cheeks, shine returning through the T-zone"
+      },
+      {
+        "value": "normal",
+        "label": "Balanced — comfortable soon after, and steady all day"
+      },
+      {
+        "value": "notsure",
+        "label": "Not sure — I have never paid attention to it"
+      }
+    ],
+    "section": "Your skin"
+  },
+  {
+    "id": "sensitivity",
+    "short": "Reactivity",
+    "prompt": "When you put something on your face that your skin does not know, what usually happens?",
+    "options": [
+      {
+        "value": "rarely",
+        "label": "Nothing much — my skin takes most things"
+      },
+      {
+        "value": "sometimes",
+        "label": "A little colour or tightness for an hour or so, then it settles"
+      },
+      {
+        "value": "often",
+        "label": "Often colour or discomfort, and it takes a day or two to settle"
+      },
+      {
+        "value": "mostly",
+        "label": "Almost always — I have stopped experimenting"
+      },
+      {
+        "value": "unknown",
+        "label": "I do not try new things, so I could not say"
+      }
+    ],
+    "section": "Your skin"
+  },
+  {
+    "id": "sunReaction",
+    "short": "In strong sun",
+    "prompt": "In an hour of strong sun with nothing on your face, what does your skin do?",
+    "options": [
+      {
+        "value": "burns",
+        "label": "Reddens and stays sore — it does not really tan"
+      },
+      {
+        "value": "burns-then-tans",
+        "label": "Reddens first, then settles into a tan"
+      },
+      {
+        "value": "tans",
+        "label": "Tans readily, and seldom reddens"
+      },
+      {
+        "value": "deepens",
+        "label": "Deepens quickly and evenly — reddening is rare"
+      },
+      {
+        "value": "unknown",
+        "label": "I keep it out of the sun, so I could not say"
+      }
+    ],
+    "section": "Your skin"
+  },
   {
     "id": "concerns",
     "short": "Concerns",
@@ -745,6 +857,7 @@
         "label": "Under-eye shadow and puffiness"
       }
     ],
+    "section": "Your skin",
     "multi": true,
     "max": 3
   },
@@ -786,61 +899,36 @@
         "label": "Under-eye shadow and puffiness"
       }
     ],
+    "section": "Your skin",
     "derivesFrom": "concerns"
   },
   {
-    "id": "age",
-    "short": "Age",
-    "prompt": "How old are you?",
+    "id": "intensity",
+    "short": "How much",
+    "prompt": "How much does that one register?",
     "options": [
       {
-        "value": "under25",
-        "label": "Under 25"
+        "value": "faint",
+        "label": "Faintly — I notice it, others probably do not"
       },
       {
-        "value": "25-34",
-        "label": "25 to 34"
+        "value": "mild",
+        "label": "Mildly — visible in unkind light"
       },
       {
-        "value": "35-44",
-        "label": "35 to 44"
+        "value": "moderate",
+        "label": "Moderately — visible in most light, in the mirror and in photographs"
       },
       {
-        "value": "45-54",
-        "label": "45 to 54"
+        "value": "marked",
+        "label": "Markedly — it is the first thing I see"
       },
       {
-        "value": "55+",
-        "label": "55 or older"
+        "value": "dominant",
+        "label": "Constantly — I plan around it"
       }
-    ]
-  },
-  {
-    "id": "skinType",
-    "short": "Skin type",
-    "prompt": "How does your skin usually behave?",
-    "options": [
-      {
-        "value": "dry",
-        "label": "Dry — tight, sometimes flaky, drinks up moisture"
-      },
-      {
-        "value": "oily",
-        "label": "Oily — shine returns by midday, pores show"
-      },
-      {
-        "value": "combination",
-        "label": "Combination — oily through the T-zone, drier on the cheeks"
-      },
-      {
-        "value": "sensitive",
-        "label": "Sensitive — flushes easily, stings with new products"
-      },
-      {
-        "value": "normal",
-        "label": "Balanced — rarely gives me trouble"
-      }
-    ]
+    ],
+    "section": "Your skin"
   },
   {
     "id": "sun",
@@ -867,7 +955,8 @@
         "value": "history",
         "label": "A great deal when I was younger, much less now"
       }
-    ]
+    ],
+    "section": "What your skin has had"
   },
   {
     "id": "recentSun",
@@ -890,30 +979,8 @@
         "value": "colour",
         "label": "Enough to colour, or to burn"
       }
-    ]
-  },
-  {
-    "id": "routine",
-    "short": "Routine",
-    "prompt": "What does your routine look like at the moment?",
-    "options": [
-      {
-        "value": "none",
-        "label": "Barely anything — soap and water"
-      },
-      {
-        "value": "minimal",
-        "label": "Cleanser and a moisturiser"
-      },
-      {
-        "value": "moderate",
-        "label": "A few steps, including a serum"
-      },
-      {
-        "value": "advanced",
-        "label": "A full routine, and I read the labels"
-      }
-    ]
+    ],
+    "section": "What your skin has had"
   },
   {
     "id": "treatments",
@@ -949,8 +1016,63 @@
         "label": "Nothing regular"
       }
     ],
+    "section": "What your skin has had",
     "multi": true,
     "optional": true
+  },
+  {
+    "id": "activeTenure",
+    "short": "How long",
+    "prompt": "How long have those been part of your routine?",
+    "options": [
+      {
+        "value": "none",
+        "label": "Nothing in that list is a regular part of my routine"
+      },
+      {
+        "value": "weeks",
+        "label": "A few weeks — I am still at the beginning of it"
+      },
+      {
+        "value": "months",
+        "label": "A few months"
+      },
+      {
+        "value": "year",
+        "label": "Six months to two years"
+      },
+      {
+        "value": "years",
+        "label": "More than two years"
+      }
+    ],
+    "section": "What your skin has had",
+    "skipIfEmpty": "treatments",
+    "skipValue": "none"
+  },
+  {
+    "id": "routine",
+    "short": "Routine",
+    "prompt": "What does your routine look like at the moment?",
+    "options": [
+      {
+        "value": "none",
+        "label": "Barely anything — soap and water"
+      },
+      {
+        "value": "minimal",
+        "label": "Cleanser and a moisturiser"
+      },
+      {
+        "value": "moderate",
+        "label": "A few steps, including a serum"
+      },
+      {
+        "value": "advanced",
+        "label": "A full routine, and I read the labels"
+      }
+    ],
+    "section": "Everything around it"
   },
   {
     "id": "lifestyle",
@@ -982,8 +1104,89 @@
         "label": "None of these"
       }
     ],
+    "section": "Everything around it",
     "multi": true,
     "optional": true
+  },
+  {
+    "id": "climate",
+    "short": "Where you live",
+    "prompt": "Which of these is closest to where you live and spend your days?",
+    "options": [
+      {
+        "value": "humid",
+        "label": "Warm and humid — the air holds moisture most of the year"
+      },
+      {
+        "value": "dry",
+        "label": "Dry — low humidity, indoors and out"
+      },
+      {
+        "value": "temperate",
+        "label": "Temperate — four distinct seasons, nothing extreme"
+      },
+      {
+        "value": "urban",
+        "label": "City air — traffic and pollution part of the daily routine"
+      },
+      {
+        "value": "coastal",
+        "label": "Coastal — salt air and wind"
+      }
+    ],
+    "section": "Everything around it"
+  },
+  {
+    "id": "shaving",
+    "short": "Shaving",
+    "prompt": "Do you shave, or otherwise remove hair from your face?",
+    "options": [
+      {
+        "value": "daily",
+        "label": "Most days, with a blade"
+      },
+      {
+        "value": "weekly",
+        "label": "Once or twice a week"
+      },
+      {
+        "value": "occasional",
+        "label": "Now and then"
+      },
+      {
+        "value": "other",
+        "label": "By other means — waxing, threading, laser"
+      },
+      {
+        "value": "never",
+        "label": "No"
+      }
+    ],
+    "section": "Everything around it"
+  },
+  {
+    "id": "bareFace",
+    "short": "Right now",
+    "prompt": "What is on your face at this moment?",
+    "options": [
+      {
+        "value": "bare",
+        "label": "Nothing — it is bare and clean"
+      },
+      {
+        "value": "skincare",
+        "label": "Skincare or SPF, but no make-up"
+      },
+      {
+        "value": "light",
+        "label": "A little make-up — tinted moisturiser, concealer, brows"
+      },
+      {
+        "value": "full",
+        "label": "Full make-up — foundation or a base"
+      }
+    ],
+    "section": "Everything around it"
   }
 ]
     </script>
