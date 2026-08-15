@@ -559,3 +559,33 @@
   color: var(--stone, #9aa3a1);
 }
 .zl-a-rail__section:first-child { margin-top: 0; }
+
+/* ---------------------------------------------------------------------------
+   On a phone, Continue was below the fold on every question.
+
+   Measured at 375x812: the button sat at 843px on the shortest screen and at
+   1051px on Concerns. On a single-choice question that hardly matters, because
+   tapping an option carries you forward by itself. On Concerns it matters a
+   great deal — it is a multi-select, Continue is the ONLY way out, and it was
+   the one screen in the set where the only way out could not be seen without
+   scrolling for it.
+
+   So the nav sits on the bottom edge on small screens. Sticky rather than
+   fixed, so it releases at the end of the panel instead of hovering over the
+   footer, and with a solid ground behind it so option text does not read
+   through. The padding underneath the panel keeps the last option clear of it.
+   --------------------------------------------------------------------------- */
+@media (max-width: 700px) {
+  .zl-a-nav {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    margin-top: 1.75rem;
+    padding: .875rem 0 max(.875rem, env(safe-area-inset-bottom));
+    background: var(--bone, #FAF7F2);
+    border-top: 1px solid var(--rule, #E2DCD2);
+  }
+  .zl-a-nav .zl-btn { flex: 1 1 auto; justify-content: center; }
+  .zl-a-nav__hint { flex-basis: 100%; order: 3; margin-top: .25rem; }
+  #zl-a-quiz .zl-a-options { padding-bottom: .5rem; }
+}
