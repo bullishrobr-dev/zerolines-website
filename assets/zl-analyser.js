@@ -172,6 +172,9 @@
     } catch (e) { return null; }
   }
 
+  /* The pending single-choice advance, so it can be cancelled. */
+  var autoAdvance = null;
+
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   function $(id) { return document.getElementById(id); }
@@ -353,8 +356,19 @@
           repaintOptions(q, list);
           syncNav(q);
           saveProgress();
-          // single choices carry themselves forward — a consultation keeps moving
-          window.setTimeout(function () {
+          /* Single choices carry themselves forward — a consultation keeps
+             moving. But the 420ms it waits is a live trap: Continue is enabled
+             the instant the answer lands, so anybody whose hand is already
+             travelling toward it gets TWO advances, the click and the timer,
+             and the question in between is never seen. It bites hardest on an
+             optional question, which Continue will happily skip.
+
+             So the pending advance is held, and cancelled by any manual
+             navigation. Found by walking the flow with a script fast enough to
+             do what an impatient person does. */
+          if (autoAdvance) window.clearTimeout(autoAdvance);
+          autoAdvance = window.setTimeout(function () {
+            autoAdvance = null;
             if (state.answers[q.id] === opt.value && el.quiz && !el.quiz.hidden) next();
           }, 420);
         }
@@ -433,6 +447,7 @@
   }
 
   function next() {
+      if (autoAdvance) { window.clearTimeout(autoAdvance); autoAdvance = null; }
     var q = QUESTIONS[state.step];
     if (!q) return;
     if (!skippable(q) && !answered(q)) {
@@ -452,6 +467,7 @@
   }
 
   function back() {
+      if (autoAdvance) { window.clearTimeout(autoAdvance); autoAdvance = null; }
     // Skip back over a question that answered itself, or Back lands on a
     // screen the visitor was never shown and cannot change.
     if (state.step <= 0) { show('intro'); return; }
