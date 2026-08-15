@@ -70,7 +70,7 @@
   var state = { step: 0, reached: 0, answers: {}, photo: null, photoMeta: '', email: '' };
 
   /* ---- keep the answers through a reload --------------------------------
-     Sixteen questions is two minutes of somebody's attention, and until now a
+     Sixteen questions is several minutes of somebody's attention, and until now a
      refresh, a back button or a phone locking and waking threw all of it away
      and put them back on the intro panel. Nobody answers sixteen questions twice.
 

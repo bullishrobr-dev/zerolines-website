@@ -325,7 +325,7 @@ function buildWelcome(kind, unsubUrl, piece, appt) {
       + `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px 0 6px"><tr><td style="background:${HOUSE};padding:14px 26px">`
       + `<a href="${SITE}/analyser/" style="color:#fff;text-decoration:none;font:500 12px/1 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2.4px;text-transform:uppercase">Begin the free analysis</a>`
       + `</td></tr></table>`
-      + mailP('It takes about two minutes and needs no account.', 'font-size:12px;color:#636764;margin-top:10px;');
+      + mailP('It takes about four minutes and needs no account.', 'font-size:12px;color:#636764;margin-top:10px;');
     lines = ['THE NEXT ONE COMES ON MONDAY', '',
       'Thank you for subscribing. The journal publishes one piece a week, on Monday, and each one will arrive here as it goes out.']
       .concat(fromLines('subscribed'), ['',
@@ -343,7 +343,7 @@ function buildWelcome(kind, unsubUrl, piece, appt) {
       + `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px 0 6px"><tr><td style="background:${HOUSE};padding:14px 26px">`
       + `<a href="${SITE}/analyser/" style="color:#fff;text-decoration:none;font:500 12px/1 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2.4px;text-transform:uppercase">Begin the free analysis</a>`
       + `</td></tr></table>`
-      + mailP('It takes about two minutes and needs no account.', 'font-size:12px;color:#636764;margin-top:10px;')
+      + mailP('It takes about four minutes and needs no account.', 'font-size:12px;color:#636764;margin-top:10px;')
       + `<table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-top:2px solid ${CHAMP};margin:30px 0 0"><tr><td style="padding:18px 0 0">`
       + `<div style="font:500 11px/1.6 -apple-system,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">What we are building</div>`
       + mailP('Every Zero Lines formulation is made to do two things at once. There is an immediate effect, visible the same day. And there is a lasting one, which builds quietly over weeks of consistent use. Most of the industry sells the first and implies the second. We would rather tell you which is which.', 'margin-top:10px;')

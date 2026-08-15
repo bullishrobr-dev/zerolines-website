@@ -317,7 +317,7 @@ function buildWelcome(kind) {
       + `<td style="background:${HOUSE};padding:14px 26px">`
       + `<a href="${SITE}/analyser/" style="color:#fff;text-decoration:none;font:500 12px/1 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:2.4px;text-transform:uppercase">Begin the analysis</a>`
       + `</td></tr></table>`
-      + p('It takes about two minutes and needs no account.', 'font-size:12px;color:#636764;margin-top:10px;');
+      + p('It takes about four minutes and needs no account.', 'font-size:12px;color:#636764;margin-top:10px;');
 
     body += `<table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-top:2px solid ${CHAMP};margin:30px 0 0"><tr><td style="padding:18px 0 0">`
       + `<div style="font:500 11px/1.6 -apple-system,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">What we are building</div>`
@@ -329,7 +329,7 @@ function buildWelcome(kind) {
       'We have not set a date, and we would rather say that plainly than guess at one.', '',
       'YOU DO NOT HAVE TO WAIT FOR US', '',
       'The skin analysis is free, open now, and does not depend on the launch. One photograph and sixteen questions; a written assessment comes back to this address.', '',
-      'Begin the analysis: ' + SITE + '/analyser/', 'It takes about two minutes and needs no account.', '',
+      'Begin the analysis: ' + SITE + '/analyser/', 'It takes about four minutes and needs no account.', '',
       'WHAT WE ARE BUILDING', '',
       'Every Zero Lines formulation is made to do two things at once. There is an immediate effect, visible the same day. And there is a lasting one, which builds quietly over weeks of consistent use. Most of the industry sells the first and implies the second. We would rather tell you which is which.'];
   }
