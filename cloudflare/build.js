@@ -20,6 +20,12 @@ const DROP = [
   '.claude', 'node_modules', 'api', 'cloudflare', '.venv',
   'assets/_do-not-use', '.gitignore', 'package.json', 'package-lock.json',
   'netlify.toml',
+  /* Working imagery, not site imagery. assets/generated holds the raw PNGs the
+     image generator produced and assets/mockups holds the owner's product
+     mockups plus test shots — the WebP files cut from them are what the pages
+     reference. Shipping the sources sextupled the bundle (11MB -> 66MB) for
+     files nothing links to. */
+  'assets/generated', 'assets/mockups',
 ];
 
 /* Source is HEAD, not the working tree — deliberately, so an experiment left
