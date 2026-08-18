@@ -58,7 +58,7 @@
     { re: /corrector|syringe|activation/i,      slug: 'line-corrector', step: '02',
       name: 'Precision Collagen Renewal Line Corrector', role: 'Activate · One evening a week' },
     { re: /serum|signal/i,            slug: 'serum',          step: '03',
-      name: 'BioSignal Facial Serum',               role: 'Signal · Morning and night' }
+      name: 'Bio-Signal Face Serum',               role: 'Signal · Morning and night' }
   ];
 
   var PANELS = ['intro', 'quiz', 'photo', 'working', 'sent', 'results', 'error'];

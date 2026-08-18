@@ -79,7 +79,7 @@ const PRODUCTS = `THE RANGE — recommend only from these six, and respect the o
 02 Activate · Precision Collagen Renewal Line Corrector — weekly, applied along
    expression lines with a precision applicator (external; no needle, no
    injection). Hydrolysed collagen and botanical signal peptides.
-03 Signal · BioSignal Facial Serum — daily, morning and night. Botanical peptide
+03 Signal · Bio-Signal Face Serum — daily, morning and night. Botanical peptide
    complex on a Pyrenean mineral water base. The step that compounds.
 04 Shield · Environmental Shield Day Cream — every morning, after the serum.
    Pyrenean minerals, red algae, sweet almond. Not a sunscreen; SPF goes on top.
