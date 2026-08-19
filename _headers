@@ -54,6 +54,11 @@
 /assets/*.webp
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 
+# Imagery now lives under /assets/img/<category>/. Same policy, stated explicitly
+# rather than relying on the splat above to reach into subfolders.
+/assets/img/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
 /assets/*.png
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 
