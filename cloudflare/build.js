@@ -26,6 +26,8 @@ const DROP = [
      reference. Shipping the sources sextupled the bundle (11MB -> 66MB) for
      files nothing links to. */
   'assets/generated', 'assets/mockups',
+  /* Replaced imagery, kept in the repo for reference but linked from nowhere. */
+  'assets/img/_archive',
 ];
 
 /* Source is HEAD, not the working tree — deliberately, so an experiment left
@@ -78,6 +80,38 @@ const rd = path.join(OUT, '_redirects');
 if (fs.existsSync(rd)) {
   const proxied = fs.readFileSync(rd, 'utf8').split('\n').filter((l) => /\s200!?\s*$/.test(l) && /^\s*\/.*https?:/.test(l));
   if (proxied.length) console.warn(`  ! ${proxied.length} proxy rewrite(s) in _redirects — Cloudflare will not honour these`);
+}
+
+/* Spare imagery. The image runs produce more cuts than the pages use — the
+   spares stay in the repo as future stock, but a file no page, stylesheet or
+   feed references has no business in the deploy. Collect every /assets/img/
+   reference in the shipped text files, then prune the WebP files nothing
+   names. Recomputed each build, so placing a spare on a page is enough to
+   ship it. */
+{
+  const referenced = new Set();
+  (function scan(dir) {
+    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      const p = path.join(dir, e.name);
+      if (e.isDirectory()) { scan(p); continue; }
+      if (!/\.(html|css|js|xml|txt|json)$/.test(e.name)) continue;
+      const s = fs.readFileSync(p, 'utf8');
+      for (const m of s.matchAll(/\/assets\/(img\/[^"')\s>,]+\.webp)/g)) referenced.add(m[1]);
+    }
+  })(OUT);
+  let pruned = 0, prunedBytes = 0;
+  (function prune(dir) {
+    if (!fs.existsSync(dir)) return;
+    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      const p = path.join(dir, e.name);
+      if (e.isDirectory()) { prune(p); continue; }
+      const rel = path.relative(path.join(OUT, 'assets'), p);
+      if (rel.endsWith('.webp') && !referenced.has(rel)) {
+        prunedBytes += fs.statSync(p).size; fs.rmSync(p); pruned++;
+      }
+    }
+  })(path.join(OUT, 'assets', 'img'));
+  if (pruned) console.log(`  pruned ${pruned} unreferenced image(s), ${(prunedBytes / 1048576).toFixed(1)}MB`);
 }
 
 let files = 0, bytes = 0;
