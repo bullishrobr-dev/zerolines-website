@@ -1217,6 +1217,26 @@ async function serveAsset(request, env, url) {
     if (viaIndex.status !== 404) return viaIndex;
   }
 
+  /* Until August 2026 every image lived flat in /assets/. They now sit in
+     /assets/img/<section>/, and the in-article figures gained a blog- prefix.
+     The old URLs were live long enough to be indexed, so a miss at the old
+     address is looked for in each new home and answered with a permanent
+     redirect rather than a 404. Five HEAD-cheap asks, only on a path that
+     already missed. */
+  const flat = p.match(/^\/assets\/([^/]+\.(?:webp|png|jpg))$/i);
+  if (flat) {
+    const name = flat[1];
+    const names = [name];
+    if (/-inline-\d\.webp$/.test(name) && !name.startsWith('blog-')) names.push('blog-' + name);
+    for (const dir of ['products', 'people', 'journal', 'pages', '_archive']) {
+      for (const n of names) {
+        const where = `/assets/img/${dir}/${n}`;
+        const r = await ask(where);
+        if (r.status !== 404) return Response.redirect(new URL(where, url).toString(), 301);
+      }
+    }
+  }
+
   // Genuinely missing. Serve the house's own 404 page, with a 404 status.
   const notFound = await ask('/404.html');
   return new Response(notFound.body, {
