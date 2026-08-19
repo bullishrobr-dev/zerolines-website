@@ -227,12 +227,13 @@
   grid-template-columns:
     [text-start wide-start] min(var(--measure), 100%) [text-end]
     minmax(0, 1fr) [wide-end];
-  /* Dense, so a figure placed in the side track and spanning several rows is
-     backfilled by the paragraphs that follow it — the prose runs on beside the
-     picture instead of stacking under it. Without dense the next paragraph
-     waits for the row after the figure and the side track is wasted. Nothing
-     else has a hole to fall into, so the reading order is unchanged. */
-  grid-auto-flow: row dense;
+  /* NOT dense. Dense was tried first and it pulled every side figure up to the
+     first empty side cell — beside the lede at the top of the article, nowhere
+     near its heading. Sparse placement puts the figure in the row after its h2
+     and, because it spans seven rows, the paragraphs that follow take the text
+     cells beside it. The one cost is that the figure starts a row above the
+     first paragraph, which reads as intended rather than as a fault. */
+  grid-auto-flow: row;
   font-size: 1.0625rem;
   line-height: 1.8;
   color: var(--ink-3);
