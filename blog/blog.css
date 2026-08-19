@@ -227,6 +227,12 @@
   grid-template-columns:
     [text-start wide-start] min(var(--measure), 100%) [text-end]
     minmax(0, 1fr) [wide-end];
+  /* Dense, so a figure placed in the side track and spanning several rows is
+     backfilled by the paragraphs that follow it — the prose runs on beside the
+     picture instead of stacking under it. Without dense the next paragraph
+     waits for the row after the figure and the side track is wasted. Nothing
+     else has a hole to fall into, so the reading order is unchanged. */
+  grid-auto-flow: row dense;
   font-size: 1.0625rem;
   line-height: 1.8;
   color: var(--ink-3);
@@ -1376,4 +1382,58 @@ section.zl-blog-ai-analyst {
 @media (max-width: 560px) {
   .zl-blog-breadcrumbs span[aria-current] { display: none; }
   .zl-blog-share-btn { width: 36px; height: 36px; }
+}
+
+
+/* ---------- IN-ARTICLE IMAGERY ------------------------------------------
+   Roberto opened a handful of articles and said they read "like an assignment
+   somebody wrote in class" — one stack of same-width paragraphs, no white
+   space, no pictures. He wants them to move like the Formulations page, with
+   elements arriving from the left and the right. Three devices, used per
+   article by a script at the h2 the image belongs to:
+
+   --aside   a 4:5 figure in the empty side track, spanning rows, so the prose
+             that follows runs on beside it. The Formulations "split" feel.
+   --wide    a 16:9 figure across both tracks — the full editorial width.
+   pull      a pull-quote set large in Cormorant with a turquoise rule on its
+             left edge, taken from that article's own "In short" — so it comes
+             in from the left, and it is always something the piece actually
+             says.
+   On narrow screens the side track is gone and the aside simply takes the
+   text width, which is still a picture between paragraphs rather than none. */
+.zl-blog-content > .zl-blog-figure { margin: .35rem 0 1.75rem; }
+.zl-blog-figure img { display: block; width: 100%; height: auto; }
+.zl-blog-figure figcaption {
+  margin-top: .65rem; font-size: .8125rem; line-height: 1.55; color: var(--mist-2);
+}
+.zl-blog-content > .zl-blog-figure--aside {
+  grid-column: text-end / wide-end;
+  grid-row: span 7;
+  align-self: start;
+  padding-left: clamp(1.25rem, 3vw, 2.5rem);
+  margin-top: .5rem;
+}
+.zl-blog-figure--aside img { aspect-ratio: 4 / 5; object-fit: cover; }
+.zl-blog-content > .zl-blog-figure--wide {
+  grid-column: wide;
+  margin: 1.25rem 0 2.25rem;
+}
+.zl-blog-figure--wide img { aspect-ratio: 16 / 9; object-fit: cover; }
+.zl-blog-content > .zl-blog-pull {
+  grid-column: text;
+  margin: .75rem 0 2rem;
+  padding: .35rem 0 .35rem 1.5rem;
+  border-left: 2px solid var(--tiffany-deep, #17706D);
+  font-family: var(--font-display, 'Cormorant Garamond', serif);
+  font-weight: 300;
+  font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+  line-height: 1.35;
+  color: var(--ink);
+  max-width: 30ch;
+}
+.zl-blog-pull p { margin: 0; }
+@media (max-width: 1024px) {
+  .zl-blog-content > .zl-blog-figure--aside {
+    grid-column: text; grid-row: auto; padding-left: 0; margin: 1rem 0 1.75rem;
+  }
 }
