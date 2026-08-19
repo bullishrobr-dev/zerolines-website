@@ -14,8 +14,12 @@ for slug, spec in m.items():
     f = f'blog/{slug}.html'
     try: s = io.open(f, encoding='utf-8').read()
     except FileNotFoundError: print("  missing", f); continue
-    if 'zl-blog-figure' in s: skipped += 1; continue
+    # additive: only place what the article does not already carry
     i1, i2 = spec.get('inline1'), spec.get('inline2')
+    if 'zl-blog-figure--aside' in s: i1 = None
+    if 'zl-blog-figure--wide'  in s: i2 = None
+    if not i1 and not i2: skipped += 1; continue
+    has_pull = 'zl-blog-pull' in s
     # first In-short bullet, for the pull
     pull = ''
     mm = re.search(r'class="zl-blog-inshort".*?<li>(.*?)</li>', s, re.S)
@@ -40,7 +44,7 @@ for slug, spec in m.items():
         edits.append((h2_end(i1['after']), fig))
         # the pull after the next h2
         k = ids.index(i1['after'])
-        if pull and k+1 < len(ids):
+        if pull and not has_pull and k+1 < len(ids):
             edits.append((h2_end(ids[k+1]), f'\n      <blockquote class="zl-blog-pull" data-reveal="fade"><p>{html.escape(pull)}</p></blockquote>\n'))
     if i2 and i2['after'] in ids:
         end = section_end(i2['after'])
