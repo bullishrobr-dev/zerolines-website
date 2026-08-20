@@ -96,7 +96,7 @@ if (fs.existsSync(rd)) {
       if (e.isDirectory()) { scan(p); continue; }
       if (!/\.(html|css|js|xml|txt|json)$/.test(e.name)) continue;
       const s = fs.readFileSync(p, 'utf8');
-      for (const m of s.matchAll(/\/assets\/(img\/[^"')\s>,]+\.webp)/g)) referenced.add(m[1]);
+      for (const m of s.matchAll(/\/assets\/((?:img|og)\/[^"')\s>,]+\.(?:webp|jpg))/g)) referenced.add(m[1]);
     }
   })(OUT);
   let pruned = 0, prunedBytes = 0;
@@ -106,11 +106,21 @@ if (fs.existsSync(rd)) {
       const p = path.join(dir, e.name);
       if (e.isDirectory()) { prune(p); continue; }
       const rel = path.relative(path.join(OUT, 'assets'), p);
-      if (rel.endsWith('.webp') && !referenced.has(rel)) {
+      if (/\.(webp|jpg)$/.test(rel) && !referenced.has(rel)) {
         prunedBytes += fs.statSync(p).size; fs.rmSync(p); pruned++;
       }
     }
   })(path.join(OUT, 'assets', 'img'));
+  (function prune(dir) {
+    if (!fs.existsSync(dir)) return;
+    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      const p = path.join(dir, e.name);
+      const rel = path.relative(path.join(OUT, 'assets'), p);
+      if (e.isFile() && /\.(webp|jpg)$/.test(rel) && !referenced.has(rel)) {
+        prunedBytes += fs.statSync(p).size; fs.rmSync(p); pruned++;
+      }
+    }
+  })(path.join(OUT, 'assets', 'og'));
   if (pruned) console.log(`  pruned ${pruned} unreferenced image(s), ${(prunedBytes / 1048576).toFixed(1)}MB`);
 }
 
