@@ -625,7 +625,14 @@ async function screenSubmission(env, row, token, ip, relayOk) {
      person, and the one measure here that a headless browser cannot simply
      pace itself under. It is off until TURNSTILE_SECRET exists, so the site
      keeps working untouched until the keys are made. */
-  if (env.TURNSTILE_SECRET && !relayOk) {
+  /* Both halves, or neither. The widget cannot render without the site key, so
+     a secret set on its own asks every visitor for a token that nothing on the
+     page can issue — and refuses all four forms, site-wide, until somebody
+     notices. The two are set in different places by different commands, one in
+     wrangler.toml and one through `wrangler secret put`, which is exactly the
+     kind of pair that gets done half at a time from a phone on a Sunday. Half
+     configured now means not configured. */
+  if (env.TURNSTILE_SECRET && env.TURNSTILE_SITEKEY && !relayOk) {
     if (!token) return 'no-challenge';
     try {
       const v = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
