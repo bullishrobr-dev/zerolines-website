@@ -366,7 +366,13 @@
           <span class="zl-a-drop__label">Choose a photograph, or drag one here</span>
           <span class="zl-a-drop__hint">JPG, PNG or HEIC — resized in your browser before it is sent</span>
         </div>
-        <input type="file" id="zl-a-file" accept="image/*" class="zl-sr">
+        <!-- The drop zone above is the control: it carries role="button", a label and its own
+           keydown handler, and clicking it opens this input programmatically. Left in the tab
+           order, this input was a second stop for the same job with no accessible name at
+           all — a screen reader announced "button, choose a photograph…" and then, one tab
+           later, an unnamed file field. One control, named once. -->
+        <input type="file" id="zl-a-file" accept="image/*" class="zl-sr" tabindex="-1"
+               aria-label="Choose a photograph of your face to upload">
 
         <div class="zl-a-preview" id="zl-a-preview" hidden>
           <div class="zl-a-frame">
