@@ -1047,6 +1047,16 @@
      not be. Sent once per address, on the tick, so unticking and re-ticking
      does not write the row again. */
   var journalBox = $('zl-a-journal');
+  /* The token Turnstile has issued for this page, if it is running at all.
+     Absent when no site key is configured, which is exactly when the Worker is
+     not asking for one either. */
+  function challengeToken() {
+    try {
+      if (typeof turnstile === 'undefined') return '';
+      return turnstile.getResponse() || '';
+    } catch (e) { return ''; }
+  }
+
   var journalSent = '';
 
   function maybeRecordJournal() {
@@ -1060,6 +1070,8 @@
       data.set('form-name', 'newsletter');
       data.set('email', address);
       data.set('source', 'analyser-journal');
+      var tok = challengeToken();
+      if (tok) data.set('cf-turnstile-response', tok);
       fetch('/__forms', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -1111,6 +1123,8 @@
       data.set('email', address);
       // `answers` verbatim — the field name handleForm reads it under.
       if (SEND_ANSWERS) data.set('answers', JSON.stringify(state.answers || {}));
+      var tok = challengeToken();
+      if (tok) data.set('cf-turnstile-response', tok);
       fetch('/__forms', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },

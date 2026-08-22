@@ -418,6 +418,12 @@
             <span>Send me the journal too &mdash; one piece a week, and nothing else.
                   You can stop it in one click from any of them.</span>
           </label>
+
+          <!-- The analyser has no <form>: it posts its three leads from
+               JavaScript. addChallenge in the Worker fills this in when a
+               Turnstile site key exists and leaves it empty when none does, so
+               the page is unchanged until the keys are made. -->
+          <div id="zl-challenge"></div>
         </div>
 
         <div class="zl-a-nav">

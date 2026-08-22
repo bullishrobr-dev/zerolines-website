@@ -600,7 +600,20 @@
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: new URLSearchParams(new FormData(form)).toString()
         }).then(function (r) {
-          if (!r.ok) throw new Error('HTTP ' + r.status);
+          /* The endpoint refuses two ways. A heuristic refusal still answers
+             200 and is deliberately indistinguishable from success, so a bot
+             cannot learn which rule it hit. A challenge refusal answers 400
+             with a sentence written for a person — a Turnstile token expires
+             after about five minutes, so anybody who took their time writing
+             will meet it — and that sentence is worth far more than 'something
+             went wrong'. */
+          if (!r.ok) {
+            return r.json().catch(function () { return {}; }).then(function (b) {
+              var e = new Error((b && b.error) || ('HTTP ' + r.status));
+              e.fromServer = !!(b && b.error);
+              throw e;
+            });
+          }
           var wrap = form.parentNode;
           form.remove();
           var ok = document.createElement('p');
@@ -647,11 +660,13 @@
               + 'reading is written out and sent to you.';
             wrap.appendChild(next);
           }
-        }).catch(function () {
+        }).catch(function (err) {
           if (btn) { btn.disabled = false; btn.textContent = original; }
           if (status) {
             status.setAttribute('data-state', 'err');
-            status.textContent = 'Something went wrong. Please email info@zerolines.life and we will add you.';
+            status.textContent = (err && err.fromServer && err.message)
+              ? err.message
+              : 'Something went wrong. Please email info@zerolines.life and we will add you.';
           }
         });
       });

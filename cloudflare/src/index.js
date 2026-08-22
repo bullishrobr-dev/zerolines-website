@@ -132,6 +132,17 @@ function addChallenge(res, env) {
         el.append(`<div class="cf-turnstile" data-sitekey="${key}" data-theme="light" data-size="flexible"></div>`, { html: true });
       },
     })
+    /* The analyser has no form element — it posts its three leads from
+       JavaScript — so the widget has nowhere to be appended and would have been
+       silently absent. Every one of those posts would then have arrived without
+       a token, been refused, stored flagged, and vanished from the export and
+       the stats without a word. The analyser is the best lead this site has;
+       arming the challenge without this would have switched it off. */
+    .on('#zl-challenge', {
+      element(el) {
+        el.setInnerContent(`<div class="cf-turnstile" data-sitekey="${key}" data-theme="light" data-size="flexible" data-callback="zlChallengeReady"></div>`, { html: true });
+      },
+    })
     .transform(res);
 }
 
@@ -609,12 +620,12 @@ const THROWAWAY_DOMAINS = [
   'fakeinbox.com', 'spam4.me', 'throwawaymail.com', 'moakt.com', 'emailondeck.com',
 ];
 
-async function screenSubmission(env, row, token, ip) {
+async function screenSubmission(env, row, token, ip, relayOk) {
   /* Turnstile, if it is configured. Cloudflare's own challenge: invisible to a
      person, and the one measure here that a headless browser cannot simply
      pace itself under. It is off until TURNSTILE_SECRET exists, so the site
      keeps working untouched until the keys are made. */
-  if (env.TURNSTILE_SECRET) {
+  if (env.TURNSTILE_SECRET && !relayOk) {
     if (!token) return 'no-challenge';
     try {
       const v = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
@@ -737,6 +748,36 @@ async function handleForm(request, env, ctx) {
   if (!['waitlist', 'contact', 'newsletter', 'appointment'].includes(form)) {
     return new Response('{"error":"Unknown form."}', { status: 400, headers: cors });
   }
+
+  /* ---- who is allowed to knock, and on which door ------------------------
+
+     `workers_dev = true` means this same code also answers on
+     zerolines.<account>.workers.dev: the same database, the same Resend key,
+     the same daily ceiling. Every edge control Cloudflare offers — WAF rules,
+     Rate Limiting Rules, Bot Fight Mode, IP access rules — is scoped to a zone
+     you own, and workers.dev is not one. So a form endpoint reachable there is
+     a form endpoint permanently outside anything that could ever be put in
+     front of it.
+
+     One caller legitimately is not a browser. The analyser Worker records the
+     address as soon as it is typed, before the photograph step, so that
+     somebody who gives up at the camera is not lost — a Worker-to-Worker POST,
+     with no browser anywhere in it and therefore no challenge token it could
+     ever hold. It gets an authenticated door instead: both Workers already
+     share HOOK_SECRET.
+
+     Until that Worker is redeployed with the header, its old shape is still
+     admitted here: a waitlist row from analyser-started with no message. That
+     narrow shape cannot be used to mail a stranger — `analyser-started` is
+     already one of the two sources the welcome letter deliberately skips — so
+     the worst it buys anybody is a row and an alert, and both are capped. */
+  const relayOk = !!(env.HOOK_SECRET && safeEqual(request.headers.get('x-zl-relay') || '', env.HOOK_SECRET));
+  const host = new URL(request.url).hostname;
+  const onSite = ['zerolines.life', 'www.zerolines.life', 'localhost', '127.0.0.1'].includes(host);
+  if (!onSite && !relayOk) {
+    const legacyRelay = form === 'waitlist' && get('source') === 'analyser-started' && !get('message');
+    if (!legacyRelay) return new Response('{"error":"Not found."}', { status: 404, headers: cors });
+  }
   const email = get('email').toLowerCase();
   if (!EMAIL_RE.test(email) || email.length > 254) {
     return new Response('{"error":"That email address does not look complete."}', { status: 400, headers: cors });
@@ -822,7 +863,7 @@ async function handleForm(request, env, ctx) {
      stats, and no mail of any kind goes out for it. */
   const verdict = await screenSubmission(
     env, { ...row, message: stored }, get('cf-turnstile-response'),
-    request.headers.get('CF-Connecting-IP'));
+    request.headers.get('CF-Connecting-IP'), relayOk);
 
   let firstTime, ins;
   try {
@@ -843,6 +884,25 @@ async function handleForm(request, env, ctx) {
   } catch (e) {
     return new Response('{"error":"Could not record that. Please try again."}', { status: 500, headers: cors });
   }
+  /* Two kinds of refusal, and they must not be answered the same way.
+
+     A heuristic refusal — a cap, a link, a gateway address — keeps the 200 and
+     the thank-you, because an error here tells a bot exactly which rule it hit
+     and how to step around it. The row is kept and can be retrieved.
+
+     A challenge refusal is different: it is the one a real person hits. A
+     Turnstile token expires after five minutes, so somebody who opened the
+     contact page, thought about what to say, and wrote three careful
+     paragraphs will fail it — and until now was told "your message is with
+     us", while the message went nowhere anybody would look. They are told the
+     truth and given the one instruction that fixes it. Nothing is leaked: a
+     bot that never loaded the widget learns only that the widget exists. */
+  if (verdict === 'no-challenge' || verdict === 'challenge-failed') {
+    return new Response(JSON.stringify({
+      error: 'That verification did not go through — it expires after a few minutes. Please send the message again.',
+    }), { status: 400, headers: cors });
+  }
+
   const rowId = ins && ins.meta && ins.meta.last_row_id;
   const alreadyWelcomed = !!(firstTime && firstTime.n > 0);
 

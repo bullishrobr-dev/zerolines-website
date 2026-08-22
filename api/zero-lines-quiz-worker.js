@@ -516,15 +516,24 @@ export default {
       started.set('email', email);
       started.set('source', 'analyser-started');
       ctx.waitUntil(
-        /* The site Worker's own hostname, not zerolines.life. Until the DNS
-           switch the apex is still Netlify, which has no /__forms — so
-           defaulting to the live domain would quietly record nothing during
-           exactly the window this was written to protect. The workers.dev
-           hostname is the same Worker and answers on both sides of the
-           cutover. ZL_FORMS overrides it if that ever changes. */
-        fetch((env.ZL_FORMS || 'https://zerolines.bullishrobr.workers.dev').replace(/\/+$/, '') + '/__forms', {
+        /* The apex, now that it is this Worker and not Netlify. The old
+           default was the workers.dev hostname, chosen while the cutover was
+           still in progress; it outlived its reason, and a form endpoint
+           answering on workers.dev sits permanently outside every WAF and rate
+           limit Cloudflare can put in front of a zone.
+
+           X-ZL-Relay is how the site Worker knows this is us. There is no
+           browser in this request and so no Turnstile token it could ever
+           carry: without the header, the moment the challenge is armed this
+           early capture would be refused and silently discarded. Both Workers
+           already hold HOOK_SECRET, so the header costs nothing to add and
+           needs no new secret. */
+        fetch((env.ZL_FORMS || 'https://zerolines.life').replace(/\/+$/, '') + '/__forms', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-ZL-Relay': env.HOOK_SECRET || '',
+          },
           body: started.toString(),
         }).catch(() => {})
       );
