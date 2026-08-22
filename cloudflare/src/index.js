@@ -229,7 +229,14 @@ function safeEqual(a, b) {
    to recover the address or to be personal data worth breaching. */
 async function hashIp(ip, salt) {
   if (!ip) return null;
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(salt + ':' + ip));
+  /* IPv6 is handed out by the /64, so one ordinary connection owns about
+     eighteen quintillion addresses. Hashing the whole address made every cap
+     here free to walk past: a new address per submission, a new bucket per
+     submission, no limit ever reached. The first four groups are the
+     allocation; everything after them is the same customer. IPv4 is
+     unaffected — a v4 address is already the unit that is handed out. */
+  const key = ip.includes(':') ? ip.toLowerCase().split(':').slice(0, 4).join(':') + '::/64' : ip;
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(salt + ':' + key));
   return [...new Uint8Array(buf)].slice(0, 8).map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
@@ -641,7 +648,21 @@ async function screenSubmission(env, row, token, ip, relayOk) {
         body: JSON.stringify({ secret: env.TURNSTILE_SECRET, response: token, remoteip: ip || undefined }),
       });
       const out = await v.json();
-      if (!out.success) return 'challenge-failed';
+      if (!out.success) {
+        /* Cloudflare distinguishes "this visitor did not pass" from "your
+           configuration is wrong", and the difference decides who suffers. A
+           mistyped or unset secret returns invalid-input-secret, and treating
+           that as a failed visitor refuses every person who comes to the site
+           until somebody notices — from a typo, in a value pasted by hand,
+           into a terminal, once. Configuration faults fail open: the caps and
+           the domain checks still apply, and the fault is recorded on the row
+           so /__forms/stats names it instead of leaving a silent hole. */
+        const codes = out['error-codes'] || [];
+        const misconfigured = codes.some((c) =>
+          c === 'invalid-input-secret' || c === 'missing-input-secret' || c === 'bad-request');
+        if (misconfigured) return null;
+        return 'challenge-failed';
+      }
     } catch (e) {
       /* Cloudflare unreachable. Let it through rather than lose a real enquiry;
          the limits below still apply. */
@@ -1421,10 +1442,18 @@ async function sendJournal(env, opts) {
 
      unsubscribed is set on every row belonging to an address, so one exclusion
      covers a person who registered from four different pages. */
+  /* `spam IS NULL`, and on the subquery too. The export and the stats learned
+     to ignore refused rows and this query did not, so an address the screen
+     had already declined to write to once would have been picked up by the
+     Monday letter and written to every week from then on — the exact harm the
+     screen exists to prevent, arriving on a schedule. The second exclusion
+     covers the other direction: an address that ever came in flagged is not a
+     subscriber, whatever else it did. */
   const { results } = await env.ZL_LEADS.prepare(
     `SELECT DISTINCT email FROM leads
-      WHERE form = 'newsletter'
+      WHERE form = 'newsletter' AND spam IS NULL
         AND email NOT IN (SELECT email FROM leads WHERE unsubscribed = 1)
+        AND email NOT IN (SELECT email FROM leads WHERE spam IS NOT NULL)
         AND email NOT IN (SELECT email FROM sends WHERE slug = ?)
       ORDER BY email`
   ).bind(slug).all();
