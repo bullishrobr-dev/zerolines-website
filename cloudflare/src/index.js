@@ -107,6 +107,34 @@ function canonicalPath(pathname) {
    article[data-publish] because the same gate hides the backlinks the original
    twenty-five carry into articles that have not published: without it, adding
    old-to-new links would point a reader at a 404 for up to six months. */
+/* Turnstile, injected rather than written into the pages.
+
+   Eighty-three files carry a form between them, and a site key pasted into all
+   of them is eighty-three places to edit when it changes and eighty-three ways
+   to have one page still posting without a challenge. It rides in from here
+   instead, on the same stream that hides unpublished articles, and it appears
+   the moment TURNSTILE_SITEKEY is set and vanishes if it is unset. Nothing to
+   undo, and the forms keep working either way. */
+function addChallenge(res, env) {
+  if (!env.TURNSTILE_SITEKEY || !res || res.status !== 200) return res;
+  const key = env.TURNSTILE_SITEKEY;
+  return new HTMLRewriter()
+    .on('head', {
+      element(el) {
+        el.append('<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>', { html: true });
+      },
+    })
+    /* Before the submit button rather than after the last field: Turnstile
+       renders an empty div until it decides it needs to show something, and a
+       stray gap above a button reads as spacing rather than as a fault. */
+    .on('form[action="/__forms"]', {
+      element(el) {
+        el.append(`<div class="cf-turnstile" data-sitekey="${key}" data-theme="light" data-size="flexible"></div>`, { html: true });
+      },
+    })
+    .transform(res);
+}
+
 function hideUnpublished(res) {
   if (!res || res.status !== 200) return res;
   const today = new Date().toISOString().slice(0, 10);
@@ -535,6 +563,109 @@ async function mark(env, rowId, column, ok) {
   } catch (e) { /* the row matters; the flag is bookkeeping */ }
 }
 
+/* ---- is there a person at the other end? -----------------------------------
+
+   On 21 August 2026 this endpoint took 190 contact submissions in fourteen
+   hours, all from one address in Romania, behind five rotating desktop user
+   agents and eighty-six harvested email addresses, carrying one sentence —
+   "Hi, I wanted to know your price" — machine-translated into forty languages.
+
+   The honeypot did not catch it: the bot renders the form and leaves the
+   hidden field alone. The rate limit did not catch it either, and that is the
+   instructive part — it ran at roughly four submissions per fifteen minutes
+   against a limit of five per fifteen. It had measured the limit and sat under
+   it. A burst limit only stops bursts.
+
+   Two things went wrong and only one of them was noise in an inbox. Every new
+   address gets a Zero Lines welcome, so the house sent eighty-six unsolicited
+   letters to strangers whose addresses had been harvested from somewhere else.
+   That is how a sending domain gets blocklisted, and it is the more expensive
+   failure by far.
+
+   So the screen is layered, cheapest first, and nothing that fails it is ever
+   mailed — not the house, and above all not the address that was typed in. */
+
+async function screenSubmission(env, row, token, ip) {
+  /* Turnstile, if it is configured. Cloudflare's own challenge: invisible to a
+     person, and the one measure here that a headless browser cannot simply
+     pace itself under. It is off until TURNSTILE_SECRET exists, so the site
+     keeps working untouched until the keys are made. */
+  if (env.TURNSTILE_SECRET) {
+    if (!token) return 'no-challenge';
+    try {
+      const v = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ secret: env.TURNSTILE_SECRET, response: token, remoteip: ip || undefined }),
+      });
+      const out = await v.json();
+      if (!out.success) return 'challenge-failed';
+    } catch (e) {
+      /* Cloudflare unreachable. Let it through rather than lose a real enquiry;
+         the limits below still apply. */
+    }
+  }
+
+  /* A day's worth, from one address. The burst limit above catches a machine
+     going flat out; this catches one pacing itself. Real use of this site runs
+     at one to four submissions a day across every form, so ten from a single
+     address in twenty-four hours is already far outside anything a person
+     does — including a shared office or a household behind one NAT. */
+  const day = new Date(Date.now() - 86400000).toISOString();
+  if (row.ip_hash) {
+    try {
+      const r = await env.ZL_LEADS.prepare(
+        `SELECT COUNT(*) AS n FROM leads WHERE ip_hash = ? AND created_at > ?`
+      ).bind(row.ip_hash, day).first();
+      if (r && r.n >= 10) return 'ip-daily-cap';
+    } catch (e) { /* never the reason a real lead is lost */ }
+  }
+
+  /* The same address, over and over. Ten of the eighty-six came back ten times
+     each. Nobody writes to a shop four times in a day; the one who genuinely
+     needs to can reply to the letter they were already sent. */
+  try {
+    const r = await env.ZL_LEADS.prepare(
+      `SELECT COUNT(*) AS n FROM leads WHERE email = ? AND created_at > ?`
+    ).bind(row.email, day).first();
+    if (r && r.n >= 3) return 'email-daily-cap';
+  } catch (e) { /* as above */ }
+
+  /* Link spam. Deliberately two, not one: a person may well paste the page
+     they are asking about, and no real enquiry to a skincare house carries a
+     pair of URLs. No attempt is made to read the sentence itself — the flood
+     above asked, in perfect Lithuanian, exactly what a customer would ask, and
+     a filter that catches it catches the customer too. */
+  const msg = row.message || '';
+  if ((msg.match(/https?:\/\/|www\./gi) || []).length >= 2) return 'links';
+  if (/\[url=|\[link=|<a\s+href/i.test(msg)) return 'markup';
+
+  return null;
+}
+
+/* Resend's free plan allows a hundred messages a day, and on 21 August this
+   endpoint tried to send about two hundred and seventy-six. The screen above
+   is what stops that happening; this is what makes it impossible.
+
+   Counted from what was actually sent rather than from submissions, and
+   tiered: the reply to a visitor is suppressed before the alert to the house,
+   because a missed alert is a lost lead while a missed auto-reply is only a
+   silence the house can fill by hand. */
+async function mailBudget(env) {
+  const max = Number(env.MAIL_DAILY_MAX || 70);
+  try {
+    const since = new Date(Date.now() - 86400000).toISOString();
+    const r = await env.ZL_LEADS.prepare(
+      `SELECT COALESCE(SUM(emailed),0) + COALESCE(SUM(notified),0) AS n
+         FROM leads WHERE created_at > ?`
+    ).bind(since).first();
+    const sent = (r && r.n) || 0;
+    return { reply: sent < max * 0.7, notice: sent < max, sent, max };
+  } catch (e) {
+    return { reply: true, notice: true, sent: 0, max };
+  }
+}
+
 async function handleForm(request, env, ctx) {
   const cors = {
     'Access-Control-Allow-Origin': '*',
@@ -642,6 +773,15 @@ async function handleForm(request, env, ctx) {
     } catch (e) { /* the limiter must never be the reason a real lead is lost */ }
   }
 
+  /* Everything the burst limiter cannot see. A submission that fails is still
+     written down — the caps above count rows, so a screen that dropped them
+     would lose its own memory between requests, and Roberto should be able to
+     look at what arrived. It is flagged, kept out of the export and the
+     stats, and no mail of any kind goes out for it. */
+  const verdict = await screenSubmission(
+    env, { ...row, message: stored }, get('cf-turnstile-response'),
+    request.headers.get('CF-Connecting-IP'));
+
   let firstTime, ins;
   try {
     firstTime = await env.ZL_LEADS.prepare(
@@ -654,10 +794,10 @@ async function handleForm(request, env, ctx) {
        as welcomed forever: they had heard nothing, and nothing would ever try
        again. The flag now records what actually happened. */
     ins = await env.ZL_LEADS.prepare(
-      `INSERT INTO leads (created_at, form, email, name, message, source, referrer, country, ua, ip_hash, emailed)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)`
+      `INSERT INTO leads (created_at, form, email, name, message, source, referrer, country, ua, ip_hash, emailed, spam)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?)`
     ).bind(row.created_at, row.form, row.email, row.name, stored, row.source,
-           row.referrer, row.country, row.ua, row.ip_hash).run();
+           row.referrer, row.country, row.ua, row.ip_hash, verdict || null).run();
   } catch (e) {
     return new Response('{"error":"Could not record that. Please try again."}', { status: 500, headers: cors });
   }
@@ -678,13 +818,20 @@ async function handleForm(request, env, ctx) {
     optedOut = !!(u && u.u);
   } catch (e) { /* if we cannot tell, fall through to the normal rules */ }
 
-  if (env.RESEND_KEY) {
+  /* Nothing that failed the screen is mailed — not the alert, and above all
+     not the address that was typed in, which on 21 August belonged to
+     eighty-six strangers who had never heard of this house. */
+  const budget = env.RESEND_KEY && !verdict ? await mailBudget(env) : { reply: false, notice: false };
+
+  if (env.RESEND_KEY && !verdict) {
+   if (budget.notice) {
     // The alert always fires. Roberto wants to know about the second visit too.
     const notice = buildNotice(row);
     ctx.waitUntil(
       sendMail(env, env.ZL_NOTIFY || REPLY_TO, notice.subject, notice.html, notice.text, email)
         .then((ok) => mark(env, rowId, 'notified', ok))
     );
+   }
 
     /* An appointment request is answered, and it is answered with a receipt.
        Not the waitlist letter — "you are on the list" to somebody who asked to
@@ -699,7 +846,7 @@ async function handleForm(request, env, ctx) {
        question to ask of a second visit in March. The opt-out is still
        honoured, on the same reasoning as the contact form below it. */
     if (form === 'appointment') {
-      if (!optedOut) {
+      if (!optedOut && budget.reply) {
         ctx.waitUntil((async () => {
           const w = buildWelcome('appointment', '', null, { house: row.house, timing: row.timing });
           const ok = await sendMail(env, email, w.subject, w.html, w.text);
@@ -712,7 +859,7 @@ async function handleForm(request, env, ctx) {
        need welcoming twice; and the analyser records its own leads here, having
        just sent that person a full written assessment — inviting them to go and
        take the analysis would be the house not paying attention. */
-    } else if (!alreadyWelcomed && !optedOut
+    } else if (!alreadyWelcomed && !optedOut && budget.reply
         && row.source !== 'analyser' && row.source !== 'analyser-started') {
       const kind = form === 'contact' ? 'contact' : form === 'newsletter' ? 'newsletter' : 'waitlist';
       /* The article they were reading, if they were reading one. Fetched inside
@@ -753,9 +900,13 @@ async function handleExport(url, env) {
   if (!env.HOOK_SECRET || !safeEqual(url.searchParams.get('k') || '', env.HOOK_SECRET)) {
     return new Response('Not found.', { status: 404 });
   }
+  /* `spam IS NULL` rather than a flag to set by hand: the screen writes the
+     reason it refused into that column, so the export is every row no
+     automated check objected to, and the objections stay readable in the
+     database for anyone who wants to know what was turned away. */
   const { results } = await env.ZL_LEADS.prepare(
     `SELECT created_at, form, email, name, message, source, referrer, country
-       FROM leads WHERE unsubscribed = 0 ORDER BY created_at DESC`
+       FROM leads WHERE unsubscribed = 0 AND spam IS NULL ORDER BY created_at DESC`
   ).all();
   const cell = (v) => `"${String(v == null ? '' : v).replace(/"/g, '""')}"`;
   const csv = ['created_at,form,email,name,message,source,referrer,country']
@@ -795,7 +946,7 @@ async function handleStats(url, env) {
      address, and reading the first as reach would overstate it. */
   const [byForm, bySource, byDay, totals, unsubbed, newsletter] = await Promise.all([
     all(`SELECT form, COUNT(*) AS rows_n, COUNT(DISTINCT email) AS people
-           FROM leads GROUP BY form ORDER BY rows_n DESC`),
+           FROM leads WHERE spam IS NULL GROUP BY form ORDER BY rows_n DESC`),
     /* One row per page, with the forms as columns rather than as extra rows.
        The question is "which page brings people in", and a source split across
        four rows has to be added up by eye before it can be compared with the
@@ -806,14 +957,14 @@ async function handleStats(url, env) {
                 SUM(CASE WHEN form = 'newsletter'  THEN 1 ELSE 0 END) AS newsletter,
                 SUM(CASE WHEN form = 'contact'     THEN 1 ELSE 0 END) AS contact,
                 SUM(CASE WHEN form = 'appointment' THEN 1 ELSE 0 END) AS appointment
-           FROM leads GROUP BY source ORDER BY rows_n DESC, source`),
+           FROM leads WHERE spam IS NULL GROUP BY source ORDER BY rows_n DESC, source`),
     // Ninety days is as far back as a weekly rhythm is legible on one screen.
     all(`SELECT substr(created_at, 1, 10) AS day, COUNT(*) AS rows_n, COUNT(DISTINCT email) AS people
-           FROM leads GROUP BY day ORDER BY day DESC LIMIT 90`),
-    one(`SELECT COUNT(*) AS rows_n, COUNT(DISTINCT email) AS people, MIN(created_at) AS first_at, MAX(created_at) AS last_at FROM leads`),
-    one(`SELECT COUNT(DISTINCT email) AS people FROM leads WHERE unsubscribed = 1`),
+           FROM leads WHERE spam IS NULL GROUP BY day ORDER BY day DESC LIMIT 90`),
+    one(`SELECT COUNT(*) AS rows_n, COUNT(DISTINCT email) AS people, MIN(created_at) AS first_at, MAX(created_at) AS last_at FROM leads WHERE spam IS NULL`),
+    one(`SELECT COUNT(DISTINCT email) AS people FROM leads WHERE unsubscribed = 1 AND spam IS NULL`),
     one(`SELECT COUNT(DISTINCT email) AS people FROM leads
-          WHERE form = 'newsletter' AND email NOT IN (SELECT email FROM leads WHERE unsubscribed = 1)`),
+          WHERE form = 'newsletter' AND spam IS NULL AND email NOT IN (SELECT email FROM leads WHERE unsubscribed = 1)`),
   ]);
 
   /* The ledger may not exist yet — it is created by the first journal run, not
@@ -826,6 +977,11 @@ async function handleStats(url, env) {
 
   const body = {
     generated_at: new Date().toISOString(),
+    /* What the screen refused, and why. Not noise to hide: if this number ever
+       runs close to the real one, the thresholds are wrong in one direction or
+       the other, and this is where that shows. */
+    screened_out: await all(`SELECT spam AS reason, COUNT(*) AS rows_n FROM leads
+                              WHERE spam IS NOT NULL GROUP BY spam ORDER BY rows_n DESC`),
     totals: {
       rows: (totals && totals.rows_n) || 0,
       people: (totals && totals.people) || 0,
@@ -1359,7 +1515,7 @@ export default {
     // any of them — not just the listings.
     const res = await serveAsset(request, env, url);
     const ct = res.headers.get('content-type') || '';
-    return ct.includes('text/html') ? hideUnpublished(res) : res;
+    return ct.includes('text/html') ? addChallenge(hideUnpublished(res), env) : res;
   },
 
   /* Mondays, 08:00 UTC, from the cron in wrangler.toml.
