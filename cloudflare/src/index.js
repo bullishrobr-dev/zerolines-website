@@ -585,6 +585,30 @@ async function mark(env, rowId, column, ok) {
    So the screen is layered, cheapest first, and nothing that fails it is ever
    mailed — not the house, and above all not the address that was typed in. */
 
+/* Addresses that are not inboxes.
+
+   Six of the eighty-six the bot submitted ended in @vtext.com — Verizon's
+   SMS gateway, where a message to 4702184072@vtext.com arrives as a text on
+   somebody's telephone. Three of those people got one, signed Zero Lines.
+
+   That is the whole attack in one line. The bot was not writing to Roberto; it
+   was using this form as a mailer, and the payload was the welcome letter the
+   site sends to any new address. Nobody buys face cream through a carrier SMS
+   gateway, and nobody legitimate reaches a skincare house from a ten-minute
+   throwaway, so neither is worth the argument. */
+const GATEWAY_DOMAINS = [
+  'vtext.com', 'vzwpix.com', 'txt.att.net', 'mms.att.net', 'tmomail.net',
+  'messaging.sprintpcs.com', 'pm.sprint.com', 'msg.fi.google.com', 'vmobl.com',
+  'email.uscc.net', 'mymetropcs.com', 'sms.cricketwireless.net', 'mmst5.tracfone.com',
+  'myboostmobile.com', 'text.republicwireless.com', 'page.nextel.com',
+];
+const THROWAWAY_DOMAINS = [
+  'mailinator.com', 'guerrillamail.com', 'guerrillamailblock.com', 'sharklasers.com',
+  'grr.la', '10minutemail.com', 'yopmail.com', 'temp-mail.org', 'tempmail.com',
+  'trashmail.com', 'dispostable.com', 'maildrop.cc', 'getnada.com', 'mohmal.com',
+  'fakeinbox.com', 'spam4.me', 'throwawaymail.com', 'moakt.com', 'emailondeck.com',
+];
+
 async function screenSubmission(env, row, token, ip) {
   /* Turnstile, if it is configured. Cloudflare's own challenge: invisible to a
      person, and the one measure here that a headless browser cannot simply
@@ -610,14 +634,26 @@ async function screenSubmission(env, row, token, ip) {
      going flat out; this catches one pacing itself. Real use of this site runs
      at one to four submissions a day across every form, so ten from a single
      address in twenty-four hours is already far outside anything a person
-     does — including a shared office or a household behind one NAT. */
+     does — including a shared office or a household behind one NAT.
+
+     Three, not ten. Ten was the number that felt safely above human use;
+     Roberto's question was why a bot should be allowed ten free shots at all,
+     and there is no good answer. Three weeks of real traffic is fifteen
+     submissions from twelve people across every form on the site, so three in
+     a day from one address is still far more headroom than anybody has ever
+     needed, and it cuts what a single machine can extract by seventy per
+     cent. */
+  const domain = row.email.slice(row.email.indexOf('@') + 1);
+  if (GATEWAY_DOMAINS.includes(domain)) return 'sms-gateway';
+  if (THROWAWAY_DOMAINS.includes(domain)) return 'throwaway-address';
+
   const day = new Date(Date.now() - 86400000).toISOString();
   if (row.ip_hash) {
     try {
       const r = await env.ZL_LEADS.prepare(
         `SELECT COUNT(*) AS n FROM leads WHERE ip_hash = ? AND created_at > ?`
       ).bind(row.ip_hash, day).first();
-      if (r && r.n >= 10) return 'ip-daily-cap';
+      if (r && r.n >= 3) return 'ip-daily-cap';
     } catch (e) { /* never the reason a real lead is lost */ }
   }
 
