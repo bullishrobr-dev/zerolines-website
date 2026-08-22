@@ -1042,6 +1042,87 @@ async function handleStats(url, env) {
     by_day: byDay,
     journal_sends: journal,
   };
+  /* A page rather than a payload, when asked for one.
+
+     The JSON above is the honest record and it is what a script should read.
+     It is also four hundred lines of it, and the moment this actually mattered
+     — a bot hammering the form while Roberto was out with only a telephone —
+     the answer to "is it still happening" was buried in it. So: the same
+     numbers, one screen, no dependencies, readable at arm's length on a phone.
+
+     Deliberately the last twenty-four hours first. Lifetime totals are for
+     deciding things; the only question anybody opens this on a phone to ask is
+     what is happening right now. */
+  if (url.searchParams.get('html')) {
+    const esc = (v) => String(v == null ? '' : v).replace(/[&<>"]/g, (c) =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const since = new Date(Date.now() - 86400000).toISOString();
+    const [today, blocked, spend, latest] = await Promise.all([
+      one(`SELECT COUNT(*) AS n, COUNT(DISTINCT email) AS people FROM leads
+            WHERE created_at > ? AND spam IS NULL`, since),
+      all(`SELECT spam AS reason, COUNT(*) AS n FROM leads
+            WHERE created_at > ? AND spam IS NOT NULL GROUP BY spam ORDER BY n DESC`, since),
+      one(`SELECT COALESCE(SUM(emailed),0)+COALESCE(SUM(notified),0) AS n FROM leads
+            WHERE created_at > ? AND spam IS NULL`, since),
+      all(`SELECT created_at, form, email, name, substr(message,1,150) AS message, source
+             FROM leads WHERE spam IS NULL ORDER BY created_at DESC LIMIT 15`),
+    ]);
+    const max = Number(env.MAIL_DAILY_MAX || 70);
+    const sent = (spend && spend.n) || 0;
+    const stopped = blocked.reduce((t, b) => t + b.n, 0);
+    const when = (t) => esc(String(t).replace('T', ' ').slice(0, 16));
+    const card = (label, value, note) =>
+      `<div class=c><div class=l>${esc(label)}</div><div class=v>${esc(value)}</div>` +
+      (note ? `<div class=n>${esc(note)}</div>` : '') + `</div>`;
+    const html = `<!doctype html><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noindex,nofollow">
+<title>Zero Lines — the last 24 hours</title>
+<style>
+:root{color-scheme:light dark}
+body{font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+     margin:0;padding:1.25rem;background:#faf9f7;color:#1c1c1c}
+@media (prefers-color-scheme:dark){body{background:#111;color:#eee}}
+h1{font-size:1.05rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;margin:0 0 .25rem}
+.sub{opacity:.55;font-size:.8rem;margin:0 0 1.5rem}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr));gap:.6rem;margin-bottom:1.75rem}
+.c{background:#fff;border:1px solid #0001;border-radius:.7rem;padding:.85rem}
+@media (prefers-color-scheme:dark){.c{background:#1b1b1b;border-color:#fff2}}
+.l{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;opacity:.55}
+.v{font-size:1.9rem;font-variant-numeric:tabular-nums;line-height:1.15;margin-top:.15rem}
+.n{font-size:.72rem;opacity:.55;margin-top:.1rem}
+h2{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;opacity:.55;
+   margin:0 0 .5rem;font-weight:600}
+ul{list-style:none;margin:0 0 1.75rem;padding:0}
+li{background:#fff;border:1px solid #0001;border-radius:.7rem;padding:.7rem .85rem;margin-bottom:.4rem}
+@media (prefers-color-scheme:dark){li{background:#1b1b1b;border-color:#fff2}}
+.m{font-size:.72rem;opacity:.55}
+.e{word-break:break-all}
+.q{font-size:.86rem;opacity:.8;margin-top:.3rem}
+.ok{color:#1a7f4f}.warn{color:#b45309}
+</style>
+<h1>Zero Lines</h1>
+<p class=sub>The last 24 hours &middot; ${when(new Date().toISOString())} UTC</p>
+<div class=g>
+${card('Real enquiries', (today && today.n) || 0, `${(today && today.people) || 0} people`)}
+${card('Turned away', stopped, stopped ? blocked.map((b) => b.reason).join(', ') : 'nothing')}
+${card('Mail sent', `${sent} / ${max}`, sent >= max ? 'ceiling reached' : 'within the ceiling')}
+</div>
+<h2>The last fifteen real submissions</h2>
+<ul>${latest.length ? latest.map((r) => `<li>
+<div class=m>${when(r.created_at)} &middot; ${esc(r.form)}${r.source ? ' &middot; ' + esc(r.source) : ''}</div>
+<div class=e><strong>${esc(r.name || '—')}</strong> &middot; ${esc(r.email)}</div>
+${r.message ? `<div class=q>${esc(r.message)}</div>` : ''}
+</li>`).join('') : '<li class=m>Nothing yet.</li>'}</ul>
+<h2>Everything, since the beginning</h2>
+<ul>${body.by_form.map((f) => `<li><div class=e>${esc(f.form)} &mdash; <strong>${f.rows_n}</strong> from ${f.people} ${f.people === 1 ? 'person' : 'people'}</div></li>`).join('')}
+<li class=m>${body.totals.people} people in total &middot; ${body.totals.unsubscribed_people} unsubscribed &middot; ${body.totals.journal_list} on the Monday letter</li>
+${body.screened_out.length ? `<li class=m>Turned away, all time: ${body.screened_out.map((x) => esc(x.reason) + ' ' + x.rows_n).join(' &middot; ')}</li>` : ''}</ul>`;
+    return new Response(html, {
+      headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' },
+    });
+  }
+
   return new Response(JSON.stringify(body, null, 2), {
     headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' },
   });
