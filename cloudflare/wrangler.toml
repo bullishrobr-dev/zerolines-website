@@ -45,6 +45,23 @@ database_id = "16bb56f9-fbab-470c-a0d3-e6b94c10d8a4"
 
 [vars]
 ZL_NOTIFY = "info@zerolines.life"
+
+# The most mail this site may send in any 24 hours, counted across alerts to
+# the house and replies to visitors. Resend's free plan allows a hundred a day
+# and on 21 August 2026 a single bot made this endpoint try to send 306, which
+# is both how the allowance ran out and how eighty-six strangers received an
+# unsolicited letter from Zero Lines. Replies stop at 70% of this figure and
+# alerts at 100%, so the last messages through the door are the ones telling
+# Roberto that somebody wrote. Raise it when the plan is raised.
+MAIL_DAILY_MAX = "70"
+
+# Cloudflare Turnstile. Both blank until the widget is made at
+# dash.cloudflare.com -> Turnstile -> Add widget (domain zerolines.life).
+# The site key is public and belongs here; the secret is not and belongs in
+# `wrangler secret put TURNSTILE_SECRET`. With neither set the challenge never
+# appears and the rest of the screen still applies, so the forms work either
+# way and there is nothing to undo if it is ever switched back off.
+TURNSTILE_SITEKEY = ""
 # THE WEEKLY LETTER IS DISARMED. Leave this alone unless you mean it.
 #
 # The cron below wakes the Worker every Monday and it builds the letter for

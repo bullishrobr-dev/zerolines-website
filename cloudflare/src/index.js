@@ -116,7 +116,7 @@ function canonicalPath(pathname) {
    the moment TURNSTILE_SITEKEY is set and vanishes if it is unset. Nothing to
    undo, and the forms keep working either way. */
 function addChallenge(res, env) {
-  if (!env.TURNSTILE_SITEKEY || !res || res.status !== 200) return res;
+  if (!env.TURNSTILE_SITEKEY || !res || res.status !== 200) return res;   // '' reads as off
   const key = env.TURNSTILE_SITEKEY;
   return new HTMLRewriter()
     .on('head', {
@@ -655,9 +655,15 @@ async function mailBudget(env) {
   const max = Number(env.MAIL_DAILY_MAX || 70);
   try {
     const since = new Date(Date.now() - 86400000).toISOString();
+    /* Screened rows are excluded even though the flood of 21 August genuinely
+       did consume the allowance: those rows will never be mailed again, and
+       counting yesterday's spend against them would hold the house silent for
+       a day after every attack — exactly when a real enquiry is most likely to
+       be missed. The ceiling exists to stop us generating a flood, not to
+       punish the present for one already survived. */
     const r = await env.ZL_LEADS.prepare(
       `SELECT COALESCE(SUM(emailed),0) + COALESCE(SUM(notified),0) AS n
-         FROM leads WHERE created_at > ?`
+         FROM leads WHERE created_at > ? AND spam IS NULL`
     ).bind(since).first();
     const sent = (r && r.n) || 0;
     return { reply: sent < max * 0.7, notice: sent < max, sent, max };
@@ -876,11 +882,16 @@ async function handleForm(request, env, ctx) {
         const ok = await sendMail(env, email, w.subject, w.html, w.text, undefined, unsub);
         await mark(env, rowId, 'emailed', ok);
       })());
-    } else {
+    } else if (budget.reply) {
       // Nothing to send, so nothing is owed. Recording it as handled keeps the
       // "have they been welcomed" question answerable from one column.
       ctx.waitUntil(mark(env, rowId, 'emailed', true));
     }
+    /* Deliberately not marked when the ceiling is what stopped the reply.
+       `emailed` carries two meanings — this address has been written to, and
+       this row needs nothing further — and the budget above counts it as the
+       first. Writing it here for a letter that was never sent would inflate
+       the meter with its own suppressions and hold the ceiling down. */
   }
   const inserted = true;
 
