@@ -61,7 +61,7 @@ MAIL_DAILY_MAX = "70"
 # `wrangler secret put TURNSTILE_SECRET`. With neither set the challenge never
 # appears and the rest of the screen still applies, so the forms work either
 # way and there is nothing to undo if it is ever switched back off.
-TURNSTILE_SITEKEY = ""
+TURNSTILE_SITEKEY = "0x4AAAAAAEZCRPmhV7jaLiCl"
 # THE WEEKLY LETTER IS DISARMED. Leave this alone unless you mean it.
 #
 # The cron below wakes the Worker every Monday and it builds the letter for
