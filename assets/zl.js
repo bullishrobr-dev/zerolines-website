@@ -665,14 +665,27 @@
           /* A Turnstile token is single-use and the failed attempt has spent
              it, so without this the retry posts the same dead token, is
              refused again, and the visitor is in a loop they can only leave by
-             reloading the page — while every attempt writes a row that used to
-             count against their own daily cap. Reset the widget that belongs
-             to THIS form: two forms share the appointment page and resetting
-             them both would throw away the other one's good token. */
+             reloading the page.
+
+             Replaced rather than reset. turnstile.reset() looks like the right
+             call and is not: measured against the live widget it tears the
+             challenge down and mints nothing back — eight seconds later the
+             token is still empty and the iframe is gone — so a retry after a
+             reset carries no token at all, which is worse than carrying a
+             spent one. A fresh element rendered in its place does issue a new
+             token. Only this form's widget is touched; two forms share the
+             appointment page and the other one's token is still good. */
           try {
             if (typeof turnstile !== 'undefined') {
-              var w = form.querySelector('.cf-turnstile');
-              if (w) turnstile.reset(w);
+              var old = form.querySelector('.cf-turnstile');
+              var key = old && old.getAttribute('data-sitekey');
+              if (key) {
+                var fresh = document.createElement('div');
+                fresh.className = 'cf-turnstile';
+                fresh.setAttribute('data-sitekey', key);
+                old.parentNode.replaceChild(fresh, old);
+                turnstile.render(fresh, { sitekey: key, size: 'flexible' });
+              }
             }
           } catch (e) { /* the message below is what matters */ }
           if (status) {

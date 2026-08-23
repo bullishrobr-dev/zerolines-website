@@ -1050,36 +1050,53 @@
   /* A Turnstile token is single-use, and this page spends two.
 
      The analyser posts twice: once when the journal box is ticked, once when
-     the reading is finished. Both read turnstile.getResponse(), which returns
-     the SAME token every time — so Cloudflare accepted the first and answered
-     timeout-or-duplicate for the second, and the second is the one that
-     carries the actual lead. Anybody who ticked "send me the journal too" was
+     the reading is finished. Both used to read turnstile.getResponse(), which
+     returns the SAME token every time — Cloudflare accepted the first and
+     answered timeout-or-duplicate for the second, and the second is the one
+     carrying the actual lead. Anybody who ticked "send me the journal too" was
      quietly costing us their own registration.
 
-     So: take the token, immediately reset the widget so a fresh one is minted
-     for next time, and if none has arrived yet, wait for it rather than
-     posting without one — a post with no token is now refused outright.
-     Asynchronous by necessity, since minting is not instant. */
+     turnstile.reset() is the obvious repair and it does not work: measured
+     against the live widget it tears the challenge down and mints nothing
+     back, so eight seconds later there is no token and no iframe. Nor does
+     execute() revive it. What does work — measured the same way, two calls,
+     two different tokens — is rendering a fresh widget for each post and
+     taking it away again afterwards. */
   function challengeToken(done) {
-    if (typeof turnstile === 'undefined') return done('');
-    var read = function () { try { return turnstile.getResponse() || ''; } catch (e) { return ''; } };
-    var spend = function (t) {
-      /* Reset before the caller posts, not after: the next mint takes a moment
-         and the second post may follow closely. */
-      try { turnstile.reset(); } catch (e) { /* nothing left to reset */ }
-      done(t);
+    var host = document.getElementById('zl-challenge');
+    var w = host && host.querySelector('.cf-turnstile');
+    var key = w && w.getAttribute('data-sitekey');
+    if (typeof turnstile === 'undefined' || !key) return done('');
+
+    /* The widget the page rendered on load already holds a good token. Spend
+       that one first rather than minting a second and wasting it. */
+    if (!challengeToken.spent) {
+      var have = '';
+      try { have = turnstile.getResponse(w) || ''; } catch (e) { have = ''; }
+      if (have) { challengeToken.spent = true; return done(have); }
+    }
+
+    var slot = document.createElement('div');
+    host.appendChild(slot);
+    var id, settled = false;
+    var finish = function (tok) {
+      if (settled) return;
+      settled = true;
+      try { turnstile.remove(id); } catch (e) { /* already gone */ }
+      slot.parentNode && slot.parentNode.removeChild(slot);
+      done(tok || '');
     };
-    var t = read();
-    if (t) return spend(t);
-    /* No token yet — the widget is still working, or has just been reset.
-       Ten seconds is far longer than a managed challenge needs and still short
-       enough that a lead is never left hanging on it. */
-    var tries = 0;
-    var iv = setInterval(function () {
-      var v = read();
-      if (v) { clearInterval(iv); return spend(v); }
-      if (++tries > 40) { clearInterval(iv); done(''); }
-    }, 250);
+    try {
+      id = turnstile.render(slot, {
+        sitekey: key,
+        size: 'flexible',
+        callback: finish,
+        'error-callback': function () { finish(''); },
+        'expired-callback': function () { finish(''); }
+      });
+    } catch (e) { return finish(''); }
+    // Never leave a lead waiting on a challenge that is not coming.
+    setTimeout(function () { finish(''); }, 12000);
   }
 
   var journalSent = '';
