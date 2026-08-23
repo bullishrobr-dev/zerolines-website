@@ -6,7 +6,10 @@
  *
  * DEPLOY: dash.cloudflare.com -> Workers & Pages -> lively-surf-87db -> Edit
  * code -> replace all -> Deploy.
- *   Secrets:  OPENROUTER_KEY, RESEND_KEY
+ *   Secrets:  OPENROUTER_KEY, RESEND_KEY, HOOK_SECRET
+ *             HOOK_SECRET must match the site Worker's. It signs the
+ *             early-capture relay below, which has no browser and so can
+ *             never carry a Turnstile token of its own.
  *   Binding:  KV namespace "zl-assessments" bound as ZL_ASSESSMENTS
  *   Optional: ZL_MODEL, ZL_MAX_TOKENS, ZL_FROM, ZL_SITE
  *
@@ -525,9 +528,13 @@ export default {
            X-ZL-Relay is how the site Worker knows this is us. There is no
            browser in this request and so no Turnstile token it could ever
            carry: without the header, the moment the challenge is armed this
-           early capture would be refused and silently discarded. Both Workers
-           already hold HOOK_SECRET, so the header costs nothing to add and
-           needs no new secret. */
+           early capture would be refused and silently discarded.
+
+           HOOK_SECRET has to be added to THIS Worker — it holds OPENROUTER_KEY
+           and RESEND_KEY and nothing else — and it must be the same value the
+           site Worker holds. Until it is, the site admits this request by its
+           shape instead and records it as `legacy-relay`, so nothing breaks
+           while the two halves are done by hand. */
         fetch((env.ZL_FORMS || 'https://zerolines.life').replace(/\/+$/, '') + '/__forms', {
           method: 'POST',
           headers: {

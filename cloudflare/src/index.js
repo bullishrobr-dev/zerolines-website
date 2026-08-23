@@ -800,11 +800,26 @@ async function handleForm(request, env, ctx) {
      already one of the two sources the welcome letter deliberately skips — so
      the worst it buys anybody is a row and an alert, and both are capped. */
   const relayOk = !!(env.HOOK_SECRET && safeEqual(request.headers.get('x-zl-relay') || '', env.HOOK_SECRET));
+
+  /* The analyser Worker as it stands deployed today: it holds OPENROUTER_KEY
+     and RESEND_KEY and nothing else, so it cannot sign anything yet, and it
+     still posts to the workers.dev name. Both of those are fixed by pasting the
+     updated file and adding HOOK_SECRET to it — but those are two actions, done
+     by hand, in either order, and if the challenge were armed in between, the
+     early capture would go silent with nothing to say so.
+
+     So its exact shape is admitted on its own: a waitlist row, from
+     analyser-started, with no message. That shape cannot be used to mail a
+     stranger — analyser-started is already one of the two sources the welcome
+     letter skips — so the most it buys anybody is a row and an alert, both
+     capped. It is recorded as `legacy-relay` rather than waved through
+     unmarked, so /__forms/stats shows it falling to zero once the signed
+     version is live, and shows it plainly if it never does. */
+  const legacyRelay = form === 'waitlist' && get('source') === 'analyser-started' && !get('message');
   const host = new URL(request.url).hostname;
   const onSite = ['zerolines.life', 'www.zerolines.life', 'localhost', '127.0.0.1'].includes(host);
-  if (!onSite && !relayOk) {
-    const legacyRelay = form === 'waitlist' && get('source') === 'analyser-started' && !get('message');
-    if (!legacyRelay) return new Response('{"error":"Not found."}', { status: 404, headers: cors });
+  if (!onSite && !relayOk && !legacyRelay) {
+    return new Response('{"error":"Not found."}', { status: 404, headers: cors });
   }
   const email = get('email').toLowerCase();
   if (!EMAIL_RE.test(email) || email.length > 254) {
@@ -889,9 +904,9 @@ async function handleForm(request, env, ctx) {
      would lose its own memory between requests, and Roberto should be able to
      look at what arrived. It is flagged, kept out of the export and the
      stats, and no mail of any kind goes out for it. */
-  const verdict = await screenSubmission(
+  let verdict = await screenSubmission(
     env, { ...row, message: stored }, get('cf-turnstile-response'),
-    request.headers.get('CF-Connecting-IP'), relayOk);
+    request.headers.get('CF-Connecting-IP'), relayOk || legacyRelay);
 
   let firstTime, ins;
   try {
