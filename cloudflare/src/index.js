@@ -116,7 +116,14 @@ function canonicalPath(pathname) {
    the moment TURNSTILE_SITEKEY is set and vanishes if it is unset. Nothing to
    undo, and the forms keep working either way. */
 function addChallenge(res, env) {
-  if (!env.TURNSTILE_SITEKEY || !res || res.status !== 200) return res;   // '' reads as off
+  /* Not `status === 200`. The house 404 page carries the Monday-letter form
+     like every other page, and it is served with a 404 status — so the guard
+     that was here injected the widget everywhere except the one page where a
+     visitor arrives already slightly lost. Their signup was then refused, with
+     a message telling them their verification had expired, forever, however
+     many times they tried. */
+  if (!env.TURNSTILE_SITEKEY || !res) return res;                       // '' reads as off
+  if (res.status !== 200 && res.status !== 404) return res;
   const key = env.TURNSTILE_SITEKEY;
   return new HTMLRewriter()
     .on('head', {
@@ -659,7 +666,8 @@ async function screenSubmission(env, row, token, ip, relayOk) {
            so /__forms/stats names it instead of leaving a silent hole. */
         const codes = out['error-codes'] || [];
         const misconfigured = codes.some((c) =>
-          c === 'invalid-input-secret' || c === 'missing-input-secret' || c === 'bad-request');
+          c === 'invalid-input-secret' || c === 'missing-input-secret'
+          || c === 'bad-request' || c === 'internal-error');
         if (misconfigured) return null;
         return 'challenge-failed';
       }
@@ -686,11 +694,20 @@ async function screenSubmission(env, row, token, ip, relayOk) {
   if (GATEWAY_DOMAINS.includes(domain)) return 'sms-gateway';
   if (THROWAWAY_DOMAINS.includes(domain)) return 'throwaway-address';
 
+  /* Counting only what a person actually managed to send.
+
+     The caps used to count every row, including the ones this screen wrote
+     when it refused something — which turns a single bad minute into a
+     day-long lockout. A visitor whose challenge token expired while they were
+     writing gets refused; the refusal is stored; they try again twice more and
+     are now over a three-a-day cap made entirely of their own rejections, and
+     the site is shut to them until tomorrow. Refusals are excluded, so the cap
+     measures what got through, which is what it was always meant to mean. */
   const day = new Date(Date.now() - 86400000).toISOString();
   if (row.ip_hash) {
     try {
       const r = await env.ZL_LEADS.prepare(
-        `SELECT COUNT(*) AS n FROM leads WHERE ip_hash = ? AND created_at > ?`
+        `SELECT COUNT(*) AS n FROM leads WHERE ip_hash = ? AND created_at > ? AND spam IS NULL`
       ).bind(row.ip_hash, day).first();
       if (r && r.n >= 3) return 'ip-daily-cap';
     } catch (e) { /* never the reason a real lead is lost */ }
@@ -701,7 +718,7 @@ async function screenSubmission(env, row, token, ip, relayOk) {
      needs to can reply to the letter they were already sent. */
   try {
     const r = await env.ZL_LEADS.prepare(
-      `SELECT COUNT(*) AS n FROM leads WHERE email = ? AND created_at > ?`
+      `SELECT COUNT(*) AS n FROM leads WHERE email = ? AND created_at > ? AND spam IS NULL`
     ).bind(row.email, day).first();
     if (r && r.n >= 3) return 'email-daily-cap';
   } catch (e) { /* as above */ }
@@ -911,7 +928,7 @@ async function handleForm(request, env, ctx) {
     try {
       const since = new Date(Date.now() - RATE_WINDOW_MIN * 60000).toISOString();
       const recent = await env.ZL_LEADS.prepare(
-        `SELECT COUNT(*) AS n FROM leads WHERE ip_hash = ? AND created_at > ?`
+        `SELECT COUNT(*) AS n FROM leads WHERE ip_hash = ? AND created_at > ? AND spam IS NULL`
       ).bind(row.ip_hash, since).first();
       if (recent && recent.n >= RATE_MAX) {
         return new Response('{"error":"That is a lot of submissions in a short time. Please wait a few minutes."}',
@@ -931,8 +948,15 @@ async function handleForm(request, env, ctx) {
 
   let firstTime, ins;
   try {
+    /* `spam IS NULL` and not the analyser relay. The relay writes a waitlist
+       row the moment an address is typed into the analyser, and marks it
+       emailed = 1 because that source deliberately sends nothing. Read back
+       without these two exclusions it says "this person has been welcomed",
+       so somebody who started an analysis, gave up at the camera, and later
+       joined the list properly would never receive the welcome letter. */
     firstTime = await env.ZL_LEADS.prepare(
-      `SELECT COUNT(*) AS n FROM leads WHERE email = ? AND form = ? AND emailed = 1`
+      `SELECT COUNT(*) AS n FROM leads WHERE email = ? AND form = ? AND emailed = 1
+         AND spam IS NULL AND COALESCE(source, '') != 'analyser-started'`
     ).bind(email, form).first();
     /* emailed starts at 0. It used to be written as 1 in the same statement
        that creates the row, while the SELECT above reads that column to decide
@@ -1018,7 +1042,12 @@ async function handleForm(request, env, ctx) {
           const ok = await sendMail(env, email, w.subject, w.html, w.text);
           await mark(env, rowId, 'emailed', ok);
         })());
-      } else {
+      } else if (budget.reply) {
+        /* `budget.reply` again, for the reason already fixed on the other
+           branch below: `emailed` means both "this address has been written
+           to" and "this row needs nothing further", and mailBudget counts it
+           as the first. Marking it here for a letter the ceiling stopped would
+           feed the meter its own suppressions and hold the ceiling down. */
         ctx.waitUntil(mark(env, rowId, 'emailed', true));
       }
     /* Two reasons to stay quiet. Someone who has written to us before does not
@@ -1135,7 +1164,9 @@ async function handleStats(url, env) {
     one(`SELECT COUNT(*) AS rows_n, COUNT(DISTINCT email) AS people, MIN(created_at) AS first_at, MAX(created_at) AS last_at FROM leads WHERE spam IS NULL`),
     one(`SELECT COUNT(DISTINCT email) AS people FROM leads WHERE unsubscribed = 1 AND spam IS NULL`),
     one(`SELECT COUNT(DISTINCT email) AS people FROM leads
-          WHERE form = 'newsletter' AND spam IS NULL AND email NOT IN (SELECT email FROM leads WHERE unsubscribed = 1)`),
+          WHERE form = 'newsletter' AND spam IS NULL
+            AND email NOT IN (SELECT email FROM leads WHERE unsubscribed = 1)
+            AND email NOT IN (SELECT email FROM leads WHERE spam IS NOT NULL)`),
   ]);
 
   /* The ledger may not exist yet — it is created by the first journal run, not
@@ -1720,6 +1751,26 @@ const LEGACY_DIR = {
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+
+    /* iCloud conflict copies, refused at the door.
+
+       This repository lives on an iCloud-synced Desktop, and iCloud resolves a
+       sync conflict by writing a second file beside the first with a number
+       appended — 'index 2.html', 'sitemap 2.xml', 'products 3/'. build.js has
+       stripped them from the bundle for weeks, and today thirty of them were
+       live anyway, because the stripping happens at build time and iCloud
+       writes the copies afterwards, into a directory it is still syncing. So
+       /sitemap%202.xml answered 200 with a full duplicate of the sitemap, and
+       twelve pages had a byte-identical twin at a second URL — which is
+       duplicate content served to crawlers under our own name.
+
+       A rule at request time cannot be raced by a file system. No legitimate
+       URL on this site contains a space, so the pattern is unambiguous, and it
+       costs one regex on a path that would otherwise 404 anyway. The real
+       repair is still to move the repository off iCloud. */
+    if (/ \d+(\.[a-z0-9]+)?(\/|$)/i.test(decodeURIComponent(url.pathname))) {
+      return new Response('Not found.', { status: 404, headers: { 'Cache-Control': 'no-store' } });
+    }
 
     if (url.pathname === '/__forms') return handleForm(request, env, ctx);
     if (url.pathname === '/__forms/export') return handleExport(url, env);

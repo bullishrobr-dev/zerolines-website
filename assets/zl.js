@@ -662,6 +662,19 @@
           }
         }).catch(function (err) {
           if (btn) { btn.disabled = false; btn.textContent = original; }
+          /* A Turnstile token is single-use and the failed attempt has spent
+             it, so without this the retry posts the same dead token, is
+             refused again, and the visitor is in a loop they can only leave by
+             reloading the page — while every attempt writes a row that used to
+             count against their own daily cap. Reset the widget that belongs
+             to THIS form: two forms share the appointment page and resetting
+             them both would throw away the other one's good token. */
+          try {
+            if (typeof turnstile !== 'undefined') {
+              var w = form.querySelector('.cf-turnstile');
+              if (w) turnstile.reset(w);
+            }
+          } catch (e) { /* the message below is what matters */ }
           if (status) {
             status.setAttribute('data-state', 'err');
             status.textContent = (err && err.fromServer && err.message)
