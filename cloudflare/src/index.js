@@ -812,9 +812,14 @@ async function handleForm(request, env, ctx) {
      analyser-started, with no message. That shape cannot be used to mail a
      stranger — analyser-started is already one of the two sources the welcome
      letter skips — so the most it buys anybody is a row and an alert, both
-     capped. It is recorded as `legacy-relay` rather than waved through
-     unmarked, so /__forms/stats shows it falling to zero once the signed
-     version is live, and shows it plainly if it never does. */
+     capped.
+
+     The row is NOT flagged. An earlier draft of this comment said it was, and
+     flagging would have been the wrong call: analyser-started rows exist to be
+     counted against the analyser rows, and the gap between the two is the
+     abandonment rate at the camera — the number that decides whether asking
+     for a photograph is worth what it costs. A flag would have taken them out
+     of the export and the stats and quietly deleted that measurement. */
   const legacyRelay = form === 'waitlist' && get('source') === 'analyser-started' && !get('message');
   const host = new URL(request.url).hostname;
   const onSite = ['zerolines.life', 'www.zerolines.life', 'localhost', '127.0.0.1'].includes(host);
@@ -904,7 +909,7 @@ async function handleForm(request, env, ctx) {
      would lose its own memory between requests, and Roberto should be able to
      look at what arrived. It is flagged, kept out of the export and the
      stats, and no mail of any kind goes out for it. */
-  let verdict = await screenSubmission(
+  const verdict = await screenSubmission(
     env, { ...row, message: stored }, get('cf-turnstile-response'),
     request.headers.get('CF-Connecting-IP'), relayOk || legacyRelay);
 
