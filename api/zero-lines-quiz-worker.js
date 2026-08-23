@@ -6,10 +6,11 @@
  *
  * DEPLOY: dash.cloudflare.com -> Workers & Pages -> lively-surf-87db -> Edit
  * code -> replace all -> Deploy.
- *   Secrets:  OPENROUTER_KEY, RESEND_KEY, HOOK_SECRET
- *             HOOK_SECRET must match the site Worker's. It signs the
- *             early-capture relay below, which has no browser and so can
- *             never carry a Turnstile token of its own.
+ *   Secrets:  OPENROUTER_KEY, RESEND_KEY
+ *   Optional: ZL_RELAY_SECRET — the same value set on the site Worker. It
+ *             signs the early-capture relay below, which has no browser and so
+ *             can never carry a Turnstile token of its own. Without it the
+ *             relay still works: the site admits it by its shape instead.
  *   Binding:  KV namespace "zl-assessments" bound as ZL_ASSESSMENTS
  *   Optional: ZL_MODEL, ZL_MAX_TOKENS, ZL_FROM, ZL_SITE
  *
@@ -530,16 +531,18 @@ export default {
            carry: without the header, the moment the challenge is armed this
            early capture would be refused and silently discarded.
 
-           HOOK_SECRET has to be added to THIS Worker — it holds OPENROUTER_KEY
-           and RESEND_KEY and nothing else — and it must be the same value the
-           site Worker holds. Until it is, the site admits this request by its
-           shape instead and records it as `legacy-relay`, so nothing breaks
-           while the two halves are done by hand. */
+           ZL_RELAY_SECRET is a value generated once and pasted into both
+           Workers. Deliberately not HOOK_SECRET: that one signs every
+           unsubscribe link the site has posted, and Cloudflare will not let
+           anybody read a secret back out, so depending on it meant either
+           knowing an unknowable value or rotating a load-bearing one. Until
+           this is set the relay still works — the site admits it by its shape
+           — so nothing waits on it. */
         fetch((env.ZL_FORMS || 'https://zerolines.life').replace(/\/+$/, '') + '/__forms', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-            'X-ZL-Relay': env.HOOK_SECRET || '',
+            'X-ZL-Relay': env.ZL_RELAY_SECRET || env.HOOK_SECRET || '',
           },
           body: started.toString(),
         }).catch(() => {})

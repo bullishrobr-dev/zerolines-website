@@ -799,7 +799,23 @@ async function handleForm(request, env, ctx) {
      narrow shape cannot be used to mail a stranger — `analyser-started` is
      already one of the two sources the welcome letter deliberately skips — so
      the worst it buys anybody is a row and an alert, and both are capped. */
-  const relayOk = !!(env.HOOK_SECRET && safeEqual(request.headers.get('x-zl-relay') || '', env.HOOK_SECRET));
+  /* Its own secret, not HOOK_SECRET.
+
+     Reusing HOOK_SECRET was my shortcut and it was the wrong one twice over.
+     That value already has four jobs — it guards the export, the stats and the
+     journal preview, it is the HMAC key behind every unsubscribe link this
+     site has ever posted, and it salts the IP hashes — and a secret cannot be
+     read back out of Cloudflare once it is set. So making the relay depend on
+     it meant either knowing a value nobody can retrieve, or rotating one that
+     would kill the unsubscribe link in every message already sitting in
+     somebody's inbox. Neither is a reasonable thing to ask.
+
+     ZL_RELAY_SECRET has one job. It can be generated fresh, pasted into both
+     Workers, and rotated whenever, with nothing else depending on it.
+     HOOK_SECRET is still accepted underneath, so a deployment that already
+     matched on that value keeps working and nothing has to be done at once. */
+  const relaySecret = env.ZL_RELAY_SECRET || env.HOOK_SECRET;
+  const relayOk = !!(relaySecret && safeEqual(request.headers.get('x-zl-relay') || '', relaySecret));
 
   /* The analyser Worker as it stands deployed today: it holds OPENROUTER_KEY
      and RESEND_KEY and nothing else, so it cannot sign anything yet, and it
