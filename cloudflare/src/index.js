@@ -683,13 +683,20 @@ async function screenSubmission(env, row, token, ip, relayOk) {
      address in twenty-four hours is already far outside anything a person
      does — including a shared office or a household behind one NAT.
 
-     Three, not ten. Ten was the number that felt safely above human use;
-     Roberto's question was why a bot should be allowed ten free shots at all,
-     and there is no good answer. Three weeks of real traffic is fifteen
-     submissions from twelve people across every form on the site, so three in
-     a day from one address is still far more headroom than anybody has ever
-     needed, and it cuts what a single machine can extract by seventy per
-     cent. */
+     Eight. It has moved twice and both moves were right at the time. Ten was
+     the first guess. Three came next, when Roberto asked why a bot should get
+     ten free shots — a fair question while the challenge was still dark and
+     this cap was carrying the whole load on its own.
+
+     The challenge carries it now, and that changes what this number is for. It
+     is no longer the thing stopping a flood; it is a backstop, and its only
+     remaining cost is the customer it turns away by mistake. Mobile carriers
+     put thousands of people behind one address, so at three a day a genuine
+     enquiry can be refused because strangers on the same network wrote in
+     first — and it is refused silently, because a heuristic refusal
+     deliberately looks like success so that a bot learns nothing. Eight is
+     still far above anything the real traffic has ever done, and it puts a
+     shared address well out of accidental range. */
   const domain = row.email.slice(row.email.indexOf('@') + 1);
   if (GATEWAY_DOMAINS.includes(domain)) return 'sms-gateway';
   if (THROWAWAY_DOMAINS.includes(domain)) return 'throwaway-address';
@@ -709,7 +716,7 @@ async function screenSubmission(env, row, token, ip, relayOk) {
       const r = await env.ZL_LEADS.prepare(
         `SELECT COUNT(*) AS n FROM leads WHERE ip_hash = ? AND created_at > ? AND spam IS NULL`
       ).bind(row.ip_hash, day).first();
-      if (r && r.n >= 3) return 'ip-daily-cap';
+      if (r && r.n >= 8) return 'ip-daily-cap';
     } catch (e) { /* never the reason a real lead is lost */ }
   }
 
