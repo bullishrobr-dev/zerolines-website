@@ -456,6 +456,73 @@ async function unsubToken(email, secret) {
   return [...new Uint8Array(sig)].slice(0, 16).map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
+/* ---- confirmed opt-in ------------------------------------------------------
+
+   The 21 August flood worked because this site would send a Zero Lines letter
+   to any address a stranger typed. Eighty-six people who had never heard of
+   the house received one; one of them reported it as spam, and that complaint
+   is now on the domain's record permanently.
+
+   Rate limits make that harder. They do not make it wrong-shaped. The thing
+   that does is refusing to write to anybody who has not shown they own the
+   address — which is also what Mailchimp, Klaviyo, Substack and Ghost all do,
+   and what a GDPR consent record is supposed to look like.
+
+   So a new registration now gets a short note asking them to confirm, and
+   nothing else. The welcome letter, the Monday journal, everything the house
+   actually says — none of it goes anywhere until somebody has clicked. An
+   address harvested from somewhere else never clicks, so the flood's payload
+   becomes one plain sentence to a stranger instead of a branded letter, and
+   the list is only ever people who asked to be on it.
+
+   Deliberately NOT applied to the contact and appointment forms: a reply to
+   somebody who has just written to you is not list mail, and making a customer
+   confirm their address before you will answer their question is the kind of
+   thing that reads as contempt. Those two are guarded by the challenge. */
+
+async function confirmToken(email, secret) {
+  const key = await crypto.subtle.importKey(
+    'raw', new TextEncoder().encode(secret || 'zl'),
+    { name: 'HMAC', hash: 'SHA-256' }, false, ['sign'],
+  );
+  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode('confirm:' + email));
+  return [...new Uint8Array(sig)].slice(0, 16).map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function confirmLink(email, env) {
+  return `${SITE}/confirm?e=${encodeURIComponent(email)}&t=${await confirmToken(email, env.HOOK_SECRET)}`;
+}
+
+/* Short on purpose. It is not the welcome — the welcome is the reward for
+   clicking — and anything longer sent to somebody who did not sign up is a
+   larger imposition for no gain. */
+function buildConfirm(link) {
+  const BONE = '#FAF7F2', INK = '#14181A', INK3 = '#3C4142', HOUSE = '#1F4F4A', MID = '#17706D';
+  const html = `<!doctype html><html><body style="margin:0;padding:0;background:${BONE}">`
+    + `<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:${BONE}"><tr><td align="center" style="padding:32px 16px">`
+    + `<table role="presentation" cellpadding="0" cellspacing="0" width="600" style="max-width:600px;background:#fff;padding:36px 34px">`
+    + `<tr><td><div style="font:500 15px/1 -apple-system,sans-serif;letter-spacing:5px;text-transform:uppercase;color:${INK};padding-bottom:28px">Zero Lines</div>`
+    + `<h1 style="margin:0 0 6px;font:300 30px/1.2 Georgia,'Times New Roman',serif;color:${INK};letter-spacing:-.4px">One click and you are on the list</h1>`
+    + `<p style="margin:0 0 26px;font:500 11px/1.6 -apple-system,sans-serif;letter-spacing:2px;text-transform:uppercase;color:${MID}">Zero Lines &middot; Gibraltar &middot; Andorra &middot; Marbella</p>`
+    + `<p style="margin:0 0 14px;font:400 16px/1.75 -apple-system,sans-serif;color:${INK}">Somebody entered this address on zerolines.life. If it was you, confirm it below and we will write properly.</p>`
+    + `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px 0 6px"><tr>`
+    + `<td style="background:${HOUSE};padding:14px 26px">`
+    + `<a href="${esc(link)}" style="color:#fff;text-decoration:none;font:500 12px/1 -apple-system,sans-serif;letter-spacing:2.4px;text-transform:uppercase">Yes, that was me</a>`
+    + `</td></tr></table>`
+    + `<p style="margin:18px 0 0;font:400 13px/1.7 -apple-system,sans-serif;color:#636764">If it was not you, ignore this. Nothing further will be sent, and the address is not on any list until that button is pressed.</p>`
+    + `<div style="border-top:1px solid #E2DCD2;margin-top:32px;padding-top:20px">`
+    + `<p style="margin:0;font:400 12px/1.7 -apple-system,sans-serif;color:#636764">The Zero Lines collection is in pre-launch and not yet available to purchase.</p></div>`
+    + `</td></tr></table>`
+    + `<div style="font:400 12px/1.7 -apple-system,sans-serif;color:#636764;padding-top:18px;max-width:600px">zerolines.life</div>`
+    + `</td></tr></table></body></html>`;
+  const text = ['ONE CLICK AND YOU ARE ON THE LIST', '',
+    'Somebody entered this address on zerolines.life. If it was you, confirm it here and we will write properly:', '',
+    link, '',
+    'If it was not you, ignore this. Nothing further will be sent, and the address is not on any list until that link is opened.', '',
+    'zerolines.life'].join('\n');
+  return { subject: 'Is this you?', html, text };
+}
+
 async function unsubLink(email, env) {
   return `${SITE}/unsubscribe?e=${encodeURIComponent(email)}&t=${await unsubToken(email, env.HOOK_SECRET)}`;
 }
@@ -473,6 +540,148 @@ function unsubPage(heading, body, form) {
     + body + (form || '')
     + `<p style="margin-top:3rem;font-size:13px;color:#636764"><a href="${SITE}/" style="color:#17706D">zerolines.life</a></p>`
     + `</main></body></html>`;
+}
+
+/* The click. GET shows a button and changes nothing; POST is what writes.
+
+   Same shape as the unsubscribe page below, for the same reason: corporate
+   mail scanners open every link in a message before it reaches the person, so
+   a GET that confirmed would let a scanner opt somebody in — which is exactly
+   the consent this whole mechanism exists to establish. A button press cannot
+   be made by a scanner. */
+/* ---- what the mail actually did after we sent it ---------------------------
+
+   Until now the house learned about a bounce or a spam complaint by somebody
+   going and looking. The 21 August flood produced one complaint and a hard
+   bounce, and both sat unread on Resend's side for two days — the complaint
+   being the more serious of the two by a distance, because a complaint rate is
+   the number Gmail and Yahoo actually enforce against, and the threshold is
+   nearer one in a thousand than one in a hundred.
+
+   Resend will post these events as they happen. Verified the Svix way, which
+   is what Resend uses: the signature is an HMAC over id.timestamp.body, base64,
+   possibly several space-separated versions, and the timestamp is checked so a
+   captured request cannot be replayed a week later.
+
+   A hard bounce or a complaint marks the address unsubscribed, which every
+   sending path here already honours, so the address is out of the list within
+   seconds of the event rather than at the next time somebody remembers to
+   look. */
+async function handleResendHook(request, env, ctx) {
+  if (request.method !== 'POST') return new Response('Method not allowed', { status: 405 });
+  const secret = env.RESEND_WEBHOOK_SECRET;
+  if (!secret) return new Response('Not found.', { status: 404 });
+
+  const body = await request.text();
+  const id = request.headers.get('svix-id') || '';
+  const ts = request.headers.get('svix-timestamp') || '';
+  const sigHeader = request.headers.get('svix-signature') || '';
+  if (!id || !ts || !sigHeader) return new Response('Bad request', { status: 400 });
+
+  // Five minutes either way, the tolerance Svix itself uses.
+  const age = Math.abs(Date.now() / 1000 - Number(ts));
+  if (!Number.isFinite(age) || age > 300) return new Response('Stale', { status: 400 });
+
+  const raw = secret.startsWith('whsec_') ? secret.slice(6) : secret;
+  let keyBytes;
+  try { keyBytes = Uint8Array.from(atob(raw), (c) => c.charCodeAt(0)); }
+  catch (e) { return new Response('Server misconfigured', { status: 500 }); }
+  const key = await crypto.subtle.importKey('raw', keyBytes, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const mac = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(`${id}.${ts}.${body}`));
+  const expected = btoa(String.fromCharCode(...new Uint8Array(mac)));
+  const offered = sigHeader.split(' ').map((p) => (p.split(',')[1] || '')).filter(Boolean);
+  if (!offered.some((v) => safeEqual(v, expected))) return new Response('Bad signature', { status: 401 });
+
+  let evt;
+  try { evt = JSON.parse(body); } catch (e) { return new Response('Unreadable', { status: 400 }); }
+  const type = String(evt.type || '');
+  const to = []
+    .concat((evt.data && evt.data.to) || [])
+    .map((x) => String(x || '').trim().toLowerCase())
+    .filter((x) => EMAIL_RE.test(x));
+
+  /* A soft bounce is a full mailbox or a bad afternoon and must not cost
+     somebody their place; only a hard bounce and a complaint do. */
+  const hard = type === 'email.complained'
+    || (type === 'email.bounced' && String((evt.data && evt.data.bounce && evt.data.bounce.type) || 'hard').toLowerCase() !== 'soft');
+
+  if (hard && to.length) {
+    for (const addr of to) {
+      try {
+        await env.ZL_LEADS.prepare('UPDATE leads SET unsubscribed = 1 WHERE email = ?').bind(addr).run();
+      } catch (e) { /* the alert below still goes */ }
+    }
+    if (env.RESEND_KEY) {
+      const what = type === 'email.complained' ? 'reported one of our messages as spam' : 'bounced permanently';
+      const note = type === 'email.complained'
+        ? 'A complaint is the number Gmail and Yahoo enforce against, and the threshold is nearer one in a thousand than one in a hundred. If these start arriving in twos and threes, stop sending and tell Claude.'
+        : 'The address does not exist. It is off the list; nothing else is needed.';
+      const html = `<p style="font:400 15px/1.7 -apple-system,sans-serif">`
+        + `<strong>${esc(to.join(', '))}</strong> ${esc(what)}.</p>`
+        + `<p style="font:400 15px/1.7 -apple-system,sans-serif">The address has been taken off the list automatically.</p>`
+        + `<p style="font:400 13px/1.7 -apple-system,sans-serif;color:#636764">${esc(note)}</p>`;
+      ctx.waitUntil(sendMail(env, env.ZL_NOTIFY || REPLY_TO,
+        type === 'email.complained' ? 'A spam complaint against zerolines.life' : 'A hard bounce from zerolines.life',
+        html, `${to.join(', ')} ${what}. Removed from the list.\n\n${note}`));
+    }
+  }
+  return new Response(JSON.stringify({ ok: true, type, acted: hard }), {
+    status: 200, headers: { 'Content-Type': 'application/json' },
+  });
+}
+
+async function handleConfirm(request, env, url) {
+  const headers = {
+    'Content-Type': 'text/html; charset=utf-8',
+    'Referrer-Policy': 'no-referrer',
+    'X-Robots-Tag': 'noindex, nofollow',
+    'Cache-Control': 'no-store',
+  };
+  const email = String(url.searchParams.get('e') || '').trim().toLowerCase();
+  const token = String(url.searchParams.get('t') || '').trim();
+  const valid = EMAIL_RE.test(email) && email.length <= 254
+    && safeEqual(token, await confirmToken(email, env.HOOK_SECRET));
+
+  if (!valid) {
+    return new Response(unsubPage('That link is not complete',
+      `<p>The link did not carry everything it needed &mdash; some mail clients break a long one across lines. Write to <a href="mailto:${REPLY_TO}" style="color:#17706D">${REPLY_TO}</a> and we will add you by hand.</p>`),
+      { status: 400, headers });
+  }
+
+  if (request.method === 'POST') {
+    let already = false;
+    try {
+      const r = await env.ZL_LEADS.prepare(
+        'SELECT MAX(confirmed) AS c FROM leads WHERE email = ? AND spam IS NULL'
+      ).bind(email).first();
+      already = !!(r && r.c);
+      await env.ZL_LEADS.prepare(
+        'UPDATE leads SET confirmed = 1 WHERE email = ? AND spam IS NULL'
+      ).bind(email).run();
+    } catch (e) {
+      return new Response(unsubPage('That did not save',
+        `<p>Something went wrong at our end. Write to <a href="mailto:${REPLY_TO}" style="color:#17706D">${REPLY_TO}</a> and we will add you by hand.</p>`),
+        { status: 500, headers });
+    }
+
+    /* The welcome letter, at last, and only now. Sent once: pressing the
+       button twice should not produce two letters. */
+    if (!already && env.RESEND_KEY) {
+      const unsub = await unsubLink(email, env);
+      const w = buildWelcome('waitlist', unsub, null);
+      request.__ctx && request.__ctx.waitUntil(
+        sendMail(env, email, w.subject, w.html, w.text, undefined, unsub));
+    }
+    return new Response(unsubPage('You are on the list',
+      `<p>Thank you &mdash; that is confirmed. When ordering opens you will hear from us before anyone else.</p>`
+      + `<p style="margin-top:1rem">The skin analysis is free and open now, and does not wait for the launch. <a href="${SITE}/analyser/" style="color:#17706D">Begin the analysis</a>.</p>`),
+      { status: 200, headers });
+  }
+
+  return new Response(unsubPage('Confirm your address',
+    `<p>Press the button and you are on the list. Nothing has been sent to this address yet, and nothing will be until you do.</p>`,
+    `<form method="POST"><button class="zl-btn" type="submit">Yes, that was me</button></form>`),
+    { status: 200, headers });
 }
 
 async function handleUnsubscribe(request, env, url) {
@@ -1007,6 +1216,16 @@ async function handleForm(request, env, ctx) {
      no mail goes out. This does mean a genuine change of mind has to be
      handled by a human, which is the right way round: the alternative lets
      anybody put a stranger back on the list by typing their address. */
+  /* Somebody who confirmed months ago and signs up again from another page
+     should not be asked to confirm a second time. */
+  let alreadyConfirmed = false;
+  try {
+    const c = await env.ZL_LEADS.prepare(
+      'SELECT MAX(confirmed) AS c FROM leads WHERE email = ? AND spam IS NULL'
+    ).bind(email).first();
+    alreadyConfirmed = !!(c && c.c);
+  } catch (e) { /* ask again rather than stay silent */ }
+
   let optedOut = false;
   try {
     const u = await env.ZL_LEADS.prepare(
@@ -1061,7 +1280,7 @@ async function handleForm(request, env, ctx) {
        need welcoming twice; and the analyser records its own leads here, having
        just sent that person a full written assessment — inviting them to go and
        take the analysis would be the house not paying attention. */
-    } else if (!alreadyWelcomed && !optedOut && budget.reply
+    } else if (!alreadyWelcomed && !optedOut && budget.reply && !alreadyConfirmed
         && row.source !== 'analyser' && row.source !== 'analyser-started') {
       const kind = form === 'contact' ? 'contact' : form === 'newsletter' ? 'newsletter' : 'waitlist';
       /* The article they were reading, if they were reading one. Fetched inside
@@ -1071,11 +1290,23 @@ async function handleForm(request, env, ctx) {
          would have thrown the answer away, and a subrequest nobody reads is
          still a subrequest. */
       ctx.waitUntil((async () => {
-        // A reply to an enquiry is not list mail, so it carries no unsubscribe.
-        const unsub = kind === 'contact' ? '' : await unsubLink(email, env);
-        const piece = kind === 'contact' ? null : await pieceFromSource(env, row.source);
-        const w = buildWelcome(kind, unsub, piece);
-        const ok = await sendMail(env, email, w.subject, w.html, w.text, undefined, unsub);
+        /* A contact enquiry is answered. A list signup is asked to confirm.
+
+           The difference is who started it. Somebody who wrote to us gets a
+           reply, and asking them to prove they own the address before we will
+           answer their question would read as contempt. Somebody who typed an
+           address into a signup box has claimed something we cannot verify —
+           and on 21 August a bot claimed it eighty-six times on behalf of
+           strangers, all of whom got a branded letter and one of whom reported
+           it. That letter now waits for a click. */
+        if (kind === 'contact') {
+          const w = buildWelcome('contact', '', null);
+          const ok = await sendMail(env, email, w.subject, w.html, w.text);
+          await mark(env, rowId, 'emailed', ok);
+          return;
+        }
+        const c = buildConfirm(await confirmLink(email, env));
+        const ok = await sendMail(env, email, c.subject, c.html, c.text);
         await mark(env, rowId, 'emailed', ok);
       })());
     } else if (budget.reply) {
@@ -1171,7 +1402,7 @@ async function handleStats(url, env) {
     one(`SELECT COUNT(*) AS rows_n, COUNT(DISTINCT email) AS people, MIN(created_at) AS first_at, MAX(created_at) AS last_at FROM leads WHERE spam IS NULL`),
     one(`SELECT COUNT(DISTINCT email) AS people FROM leads WHERE unsubscribed = 1 AND spam IS NULL`),
     one(`SELECT COUNT(DISTINCT email) AS people FROM leads
-          WHERE form = 'newsletter' AND spam IS NULL
+          WHERE form = 'newsletter' AND spam IS NULL AND confirmed = 1
             AND email NOT IN (SELECT email FROM leads WHERE unsubscribed = 1)
             AND email NOT IN (SELECT email FROM leads WHERE spam IS NOT NULL)`),
   ]);
@@ -1525,7 +1756,7 @@ async function sendJournal(env, opts) {
      subscriber, whatever else it did. */
   const { results } = await env.ZL_LEADS.prepare(
     `SELECT DISTINCT email FROM leads
-      WHERE form = 'newsletter' AND spam IS NULL
+      WHERE form = 'newsletter' AND spam IS NULL AND confirmed = 1
         AND email NOT IN (SELECT email FROM leads WHERE unsubscribed = 1)
         AND email NOT IN (SELECT email FROM leads WHERE spam IS NOT NULL)
         AND email NOT IN (SELECT email FROM sends WHERE slug = ?)
@@ -1784,6 +2015,8 @@ export default {
     if (url.pathname === '/__forms/stats') return handleStats(url, env);
     if (url.pathname === '/__forms/journal') return handleJournalPreview(url, env);
     if (url.pathname === '/unsubscribe') return handleUnsubscribe(request, env, url);
+    if (url.pathname === '/confirm') { request.__ctx = ctx; return handleConfirm(request, env, url); }
+    if (url.pathname === '/__hooks/resend') return handleResendHook(request, env, ctx);
 
     /* www and the apex are both attached to this Worker, so without this the
        whole site answers on two hostnames — Netlify used to 301 one to the
