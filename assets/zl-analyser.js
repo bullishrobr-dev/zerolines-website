@@ -297,7 +297,13 @@
     h.className = 'zl-a-q__title zl-display-m';
     h.id = 'zl-a-qtitle';
     h.tabIndex = -1;
-    h.textContent = q.question;
+    /* `prompt`, not `question`. The rebuilt sixteen-question set writes the
+       wording under `prompt`; this line asked for `q.question`, which does not
+       exist on any of them — so every question on the analyser has been
+       rendering its heading empty, and a visitor saw a numbered step, a set of
+       options, and nothing telling them what was being asked. `question` is
+       still honoured in case an older cached page is in the wild. */
+    h.textContent = q.prompt || q.question || '';
     wrap.appendChild(h);
 
     if (q.multi) {
