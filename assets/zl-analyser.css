@@ -71,10 +71,23 @@
 .zl-a-rail__label {
   display: block; font-size: var(--t-eyebrow); font-weight: 500;
   letter-spacing: .28em; text-transform: uppercase; color: var(--mist-2);
-  padding-bottom: .875rem; border-bottom: 1px solid var(--rule); margin-bottom: 1.125rem;
+  /* No rule under it. A full-width hairline sitting directly on top of the
+     vertical hairline made a corner that read as the edge of a table rather
+     than as a heading, which is what Roberto was seeing. Space does the same
+     work and does not draw itself. */
+  padding-bottom: 0; border-bottom: 0; margin-bottom: 1.5rem;
 }
-.zl-a-rail__list {
-  position: relative; list-style: none; margin: 0; padding: 0 0 0 1.25rem;
+/* `ul.` and not just the class.
+
+   zl.css carries `ul[class], ol[class] { padding: 0 }` as a reset, and an
+   element-plus-attribute selector outranks a single class however the sheets
+   are ordered. So this rail's left padding was being zeroed, which put the
+   hairline exactly where the text begins — a line struck through "Your skin"
+   and every step label — and left the dots hanging in the margin outside it.
+   Matching the element as well restores the gutter the dots are supposed to
+   sit in. */
+ul.zl-a-rail__list {
+  position: relative; list-style: none; margin: 0; padding: 0 0 0 1.5rem;
 }
 .zl-a-rail__list::before,
 .zl-a-rail__list::after {
@@ -551,14 +564,26 @@
    the step they sit above. */
 .zl-a-rail__section {
   list-style: none;
-  margin: 1.35rem 0 .5rem;
+  position: relative;
+  /* Air above, so the three groups read as three groups. The hairline runs
+     behind this and must not touch it, which the gutter now guarantees. */
+  margin: 2rem 0 .75rem;
   padding-left: 0;
-  font: 600 .64rem/1.4 var(--font-sans, -apple-system, sans-serif);
-  letter-spacing: .17em;
+  font: 600 .625rem/1.4 var(--font-sans, -apple-system, sans-serif);
+  letter-spacing: .2em;
   text-transform: uppercase;
   color: var(--stone, #9aa3a1);
 }
-.zl-a-rail__section:first-child { margin-top: 0; }
+.zl-a-rail__section:first-child { margin-top: .25rem; }
+
+/* The section heading breaks the line rather than crossing it: a short bone
+   gap where the heading sits, so the rail reads as three runs instead of one
+   unbroken sixteen. */
+.zl-a-rail__section::before {
+  content: ""; position: absolute; left: -1.5rem; top: -.35rem;
+  width: 1px; height: 1.6rem;
+  background: var(--bone, #FAF7F2);
+}
 
 /* ---------------------------------------------------------------------------
    On a phone, Continue was below the fold on every question.
