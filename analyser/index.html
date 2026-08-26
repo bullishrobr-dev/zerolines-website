@@ -374,6 +374,35 @@
         <input type="file" id="zl-a-file" accept="image/*" class="zl-sr" tabindex="-1"
                aria-label="Choose a photograph of your face to upload">
 
+        <!-- Taking one now, rather than going to find one.
+
+             On a phone the native picker already offers the camera, so this is
+             mostly for the laptop, where a file dialog was the only way in — an
+             odd thing to insist on for a photograph of your own face that you
+             are being asked to take plainly and without makeup.
+
+             The button prefers a live camera in the page. Where that is not
+             available or is refused, the capture input below hands off to the
+             device camera instead, which is the whole of the answer on iOS and
+             Android. -->
+        <div class="zl-a-or" id="zl-a-or">
+          <span class="zl-a-or__rule" aria-hidden="true"></span>
+          <button type="button" class="zl-a-or__btn" id="zl-a-camera">Or take one now</button>
+        </div>
+        <input type="file" id="zl-a-capture" accept="image/*" capture="user" class="zl-sr" tabindex="-1"
+               aria-label="Take a photograph of your face with the camera">
+
+        <div class="zl-a-cam" id="zl-a-cam" hidden>
+          <div class="zl-a-cam__frame">
+            <video id="zl-a-cam-video" playsinline autoplay muted></video>
+          </div>
+          <p class="zl-a-cam__hint">Face a window, hold the camera at eye level, and keep your expression relaxed.</p>
+          <div class="zl-a-cam__nav">
+            <button type="button" class="zl-btn zl-btn--brand" id="zl-a-cam-shoot">Take the photograph</button>
+            <button type="button" class="zl-btn zl-btn--ghost" id="zl-a-cam-cancel">Cancel</button>
+          </div>
+        </div>
+
         <div class="zl-a-preview" id="zl-a-preview" hidden>
           <div class="zl-a-frame">
             <img id="zl-a-preview-img" alt="The photograph you have chosen" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">

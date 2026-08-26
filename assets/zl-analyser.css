@@ -87,7 +87,7 @@
    Matching the element as well restores the gutter the dots are supposed to
    sit in. */
 ul.zl-a-rail__list {
-  position: relative; list-style: none; margin: 0; padding: 0 0 0 1.5rem;
+  position: relative; list-style: none; margin: 0; padding: 0 0 0 1.75rem;
 }
 .zl-a-rail__list::before,
 .zl-a-rail__list::after {
@@ -102,8 +102,12 @@ ul.zl-a-rail__list {
   font-size: .8125rem; line-height: 1.5; color: var(--mist-2);
   transition: color 420ms var(--ease);
 }
+/* The dot has to sit ON the line, and the two were set from different numbers:
+   the gutter was 1.25rem while the list padding had moved, so every dot rode
+   four pixels off the track and the column read as two ragged things instead
+   of one. Both are driven from the same value now. */
 .zl-a-rail__item::before {
-  content: ""; position: absolute; left: -1.25rem; top: .92em;
+  content: ""; position: absolute; left: -1.75rem; top: .92em;
   width: 5px; height: 5px; border-radius: 50%; background: var(--stone);
   transform: translateX(-2px);
   transition: background-color 420ms var(--ease), transform 420ms var(--ease);
@@ -113,6 +117,7 @@ ul.zl-a-rail__list {
 .zl-a-rail__item[data-state="current"] { color: var(--ink); }
 .zl-a-rail__item[data-state="current"]::before {
   background: var(--house); transform: translateX(-2px) scale(1.45);
+  box-shadow: 0 0 0 3px var(--bone, #FAF7F2);
 }
 .zl-a-rail__item:not(:disabled):hover { color: var(--ink); }
 .zl-a-rail__item:disabled { cursor: default; }
@@ -580,7 +585,7 @@ ul.zl-a-rail__list {
    gap where the heading sits, so the rail reads as three runs instead of one
    unbroken sixteen. */
 .zl-a-rail__section::before {
-  content: ""; position: absolute; left: -1.5rem; top: -.35rem;
+  content: ""; position: absolute; left: -1.75rem; top: -.35rem;
   width: 1px; height: 1.6rem;
   background: var(--bone, #FAF7F2);
 }
@@ -614,3 +619,42 @@ ul.zl-a-rail__list {
   .zl-a-nav__hint { flex-basis: 100%; order: 3; margin-top: .25rem; }
   #zl-a-quiz .zl-a-options { padding-bottom: .5rem; }
 }
+
+
+/* ---------------------------------------------------------------------------
+   Taking the photograph here, instead of going to find one.
+   --------------------------------------------------------------------------- */
+.zl-a-or {
+  display: flex; align-items: center; gap: 1rem;
+  margin-top: 1.125rem;
+}
+.zl-a-or__rule { flex: 1; height: 1px; background: var(--rule); }
+.zl-a-or__btn {
+  flex: none; border: 0; background: transparent; cursor: pointer;
+  font: 500 .75rem/1 var(--font-sans, -apple-system, sans-serif);
+  letter-spacing: .16em; text-transform: uppercase; color: var(--house);
+  padding: .5rem .25rem;
+  border-bottom: 1px solid transparent;
+  transition: border-color 300ms var(--ease), color 300ms var(--ease);
+}
+.zl-a-or__btn:hover { border-bottom-color: var(--house); }
+.zl-a-or__btn:focus-visible { outline: 2px solid var(--house); outline-offset: 4px; }
+
+.zl-a-cam { margin-top: 1.5rem; }
+.zl-a-cam__frame {
+  position: relative; overflow: hidden;
+  background: var(--ink); border-radius: 2px;
+  aspect-ratio: 4 / 5; max-width: 22rem;
+}
+.zl-a-cam__frame video {
+  width: 100%; height: 100%; object-fit: cover;
+  /* Mirrored to look at, because an unmirrored live view of your own face is
+     disorienting. The frame that is actually captured is not mirrored — the
+     reading should see the face the way a room does. */
+  transform: scaleX(-1);
+}
+.zl-a-cam__hint {
+  margin: .875rem 0 0; font-size: .8125rem; color: var(--mist-2); max-width: 34ch;
+}
+.zl-a-cam__nav { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.125rem; }
+@media (max-width: 700px) { .zl-a-cam__frame { max-width: 100%; } }

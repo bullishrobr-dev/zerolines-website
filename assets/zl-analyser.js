@@ -565,6 +565,8 @@
     state.photo = null;
     state.photoMeta = '';
     if (fileInput) fileInput.value = '';
+    var ci = $('zl-a-capture');
+    if (ci) ci.value = '';
     if (preview) preview.hidden = true;
     if (dropZone) dropZone.hidden = false;
     if (analyseBtn) analyseBtn.disabled = true;
@@ -588,6 +590,88 @@
     });
   }
   if (fileInput) fileInput.addEventListener('change', function () { acceptFile(fileInput.files[0]); });
+
+  /* ---- taking one now -----------------------------------------------------
+
+     acceptFile is the single door every photograph goes through — the picker,
+     a drag, and now the camera — so the resize, the preview, the size guard
+     and the error copy are all shared and none of it is written twice.
+
+     Three routes, cheapest first. A live camera in the page is the good one on
+     a laptop, where the only way in was otherwise a file dialog. Where
+     getUserMedia is missing or the permission is refused, the capture input
+     hands off to the device camera, which is what a phone wants anyway. If
+     even that is not there, nothing is offered and the picker is still the
+     way. */
+  var camBtn = $('zl-a-camera');
+  var camPanel = $('zl-a-cam');
+  var camVideo = $('zl-a-cam-video');
+  var camShoot = $('zl-a-cam-shoot');
+  var camCancel = $('zl-a-cam-cancel');
+  var captureInput = $('zl-a-capture');
+  var camStream = null;
+
+  function camStop() {
+    if (camStream) {
+      try { camStream.getTracks().forEach(function (t) { t.stop(); }); } catch (e) { /* already gone */ }
+      camStream = null;
+    }
+    if (camVideo) camVideo.srcObject = null;
+    if (camPanel) camPanel.hidden = true;
+  }
+
+  function camFallback() {
+    camStop();
+    if (captureInput) captureInput.click();
+    else if (fileInput) fileInput.click();
+  }
+
+  function camOpen() {
+    if (photoErr) photoErr.textContent = '';
+    var md = navigator.mediaDevices;
+    if (!md || typeof md.getUserMedia !== 'function') return camFallback();
+    md.getUserMedia({ video: { facingMode: 'user', width: { ideal: 1440 }, height: { ideal: 1800 } }, audio: false })
+      .then(function (stream) {
+        camStream = stream;
+        if (camVideo) { camVideo.srcObject = stream; camVideo.play().catch(function () {}); }
+        if (camPanel) camPanel.hidden = false;
+        if (camShoot) camShoot.focus();
+      })
+      .catch(function () {
+        /* Refused, or no camera on this machine. Not an error worth a red
+           message — the picker and the device camera both still work. */
+        camFallback();
+      });
+  }
+
+  function camCapture() {
+    if (!camVideo || !camStream) return camStop();
+    var w = camVideo.videoWidth, h = camVideo.videoHeight;
+    if (!w || !h) return;
+    var c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    // Drawn unmirrored on purpose: the preview is flipped to look at, the
+    // photograph that is read is not.
+    c.getContext('2d').drawImage(camVideo, 0, 0, w, h);
+    camStop();
+    if (c.toBlob) {
+      c.toBlob(function (blob) {
+        if (!blob) return;
+        var f;
+        try { f = new File([blob], 'photograph.jpg', { type: 'image/jpeg' }); }
+        catch (e) { f = blob; f.name = 'photograph.jpg'; }
+        acceptFile(f);
+      }, 'image/jpeg', 0.92);
+    }
+  }
+
+  if (camBtn) camBtn.addEventListener('click', camOpen);
+  if (camShoot) camShoot.addEventListener('click', camCapture);
+  if (camCancel) camCancel.addEventListener('click', camStop);
+  if (captureInput) captureInput.addEventListener('change', function () { acceptFile(captureInput.files[0]); });
+  // A camera left running because somebody navigated away is a light on a
+  // laptop nobody asked for.
+  window.addEventListener('pagehide', camStop);
 
   var retake = $('zl-a-retake');
   if (retake) retake.addEventListener('click', function () {
@@ -1141,7 +1225,7 @@
      service accepts the message. The plumbing below is written and tested and
      costs about 230 bytes a lead.
 
-     The case for waiting is that the ten answers are not ten preferences.
+     The case for waiting is that the sixteen answers are not sixteen preferences.
      Lifestyle collects "I smoke", "I drink regularly" and "recent hormonal
      changes"; sleep collects how badly somebody sleeps. Filed against an email
      address, that is a health profile, and /privacy.html tells this visitor
