@@ -508,6 +508,20 @@
 
   function initCookies() {
     var banner = document.getElementById('zl-cookie');
+
+    /* Publish the notice's height so anything else pinned to the bottom edge
+       can sit clear of it. The analyser's Continue button is sticky at the
+       bottom on a phone and was being covered — which on a multi-select
+       question is the only way forward, so the quiz simply stopped. Measured
+       rather than assumed, because the notice wraps to two lines on a narrow
+       screen. */
+    function publishCookieHeight() {
+      var h = 0;
+      if (banner && banner.getAttribute('data-open') === 'true') {
+        h = Math.ceil(banner.getBoundingClientRect().height) || 0;
+      }
+      document.documentElement.style.setProperty('--zl-cookie-h', h + 'px');
+    }
     var KEY = CONSENT_KEY;
 
     /* Withdrawing consent is handled on cookies.html, which owns the control
@@ -534,7 +548,7 @@
       banner.setAttribute('data-open', 'true');
       document.body.setAttribute('data-cookie-open', 'true');
       window.removeEventListener('scroll', onScroll);
-      requestAnimationFrame(reserveSpace);
+      requestAnimationFrame(function () { reserveSpace(); publishCookieHeight(); });
     }
 
     function close() {
@@ -542,7 +556,10 @@
       banner.setAttribute('data-open', 'false');
       document.body.removeAttribute('data-cookie-open');
       document.body.style.paddingBottom = '';
+      publishCookieHeight();
     }
+
+    window.addEventListener('resize', publishCookieHeight);
 
     // Held back until the visitor scrolls — shown on first paint it competes with
     // the hero, and on narrow viewports it lands on the hero's own buttons.

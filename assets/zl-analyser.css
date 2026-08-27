@@ -608,8 +608,20 @@ ul.zl-a-rail__list {
 @media (max-width: 700px) {
   .zl-a-nav {
     position: sticky;
-    bottom: 0;
-    z-index: 5;
+    /* Above the cookie notice, not underneath it.
+
+       The notice is position:fixed, bottom:0, z-index:95. This nav is sticky
+       at bottom:0 with z-index:5, so on a phone the notice was painted over
+       Continue — and on a multi-select, Continue is the only way out of the
+       question. A first-time visitor on a phone tapped it, nothing happened,
+       and the one control they could actually reach was "Back to the start".
+
+       zl.js measures the notice and publishes its height, so this sits just
+       clear of it and returns to the bottom edge the moment it is dismissed.
+       The z-index only has to beat the notice for the rare overlap while both
+       are on screen. */
+    bottom: var(--zl-cookie-h, 0px);
+    z-index: 96;
     margin-top: 1.75rem;
     padding: .875rem 0 max(.875rem, env(safe-area-inset-bottom));
     background: var(--bone, #FAF7F2);
