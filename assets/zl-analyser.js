@@ -284,6 +284,19 @@
     if (!q) return;
     if (state.step > state.reached) { state.reached = state.step; saveProgress(); }
 
+    /* Sixteen questions were one page view. Cloudflare Web Analytics counts
+       navigations, and this quiz never navigates — so the whole consultation
+       registered as a single hit on /analyser/ and there was no way to see
+       which question people abandon at, which is the one number that would
+       tell us whether sixteen is too many. replaceState rather than pushState:
+       the quiz keeps its own back button and hijacking the browser's would
+       take somebody out of the flow rather than back a step. */
+    try {
+      if (window.history && history.replaceState) {
+        history.replaceState(history.state, '', '/analyser/#q' + pad(state.step + 1) + '-' + (q.id || ''));
+      }
+    } catch (e) { /* analytics is never worth an exception */ }
+
     if (count) count.textContent = 'Question ' + (state.step + 1) + ' of ' + QUESTIONS.length;
     if (stepName) stepName.textContent = q.short;
     if (meter) meter.style.setProperty('--p', (((state.step + 1) / QUESTIONS.length) * 100).toFixed(1) + '%');

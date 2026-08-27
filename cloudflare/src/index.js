@@ -354,13 +354,13 @@ function buildWelcome(kind, unsubUrl, piece, appt) {
           + mailP(asked.join('<br>'), 'margin-bottom:0;')
           + `</td></tr></table>`
         : '')
-      + mailP('The houses are consultation rooms rather than shops. The collection is in pre-launch, so nothing is sold in them yet; a visit is a conversation about your skin and what would follow from it.')
+      + mailP('The Zero Lines collection is in pre-launch, so our own six formulations are not on the shelf yet. The house itself is open and trading as usual, and a visit is a conversation about your skin and what would follow from it.')
       + mailP('We use what you sent only to arrange this. It does not join a mailing list.');
     lines = ['WE HAVE YOUR REQUEST', '',
       'Thank you. It has reached the house, and someone will write back personally to settle a time. Nothing is booked yet — this is a note to say the request arrived, not a confirmation.', '']
       .concat(appt && appt.house ? ['House: ' + appt.house] : [],
         appt && appt.timing ? ['When: ' + appt.timing] : [], ['',
-        'The houses are consultation rooms rather than shops. The collection is in pre-launch, so nothing is sold in them yet.', '',
+        'The Zero Lines collection is in pre-launch, so our own six formulations are not on the shelf yet. The house itself is open and trading as usual.', '',
         'We use what you sent only to arrange this. It does not join a mailing list.']);
   } else if (kind === 'newsletter') {
     /* A journal subscriber is not a waitlist registrant. Before this branch
