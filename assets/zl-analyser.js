@@ -1202,6 +1202,19 @@
     setTimeout(function () { finish(''); }, 12000);
   }
 
+  /* The counter this tablet is standing on.
+
+     Each of the four rooms runs the analyser from its own URL —
+     /analyser/?s=gib61 and so on — and the slug rides along on everything the
+     page records, so four counters produce four numbers instead of one. The
+     Worker whitelists it; this only has to carry it. */
+  var ROOM = (function () {
+    try {
+      var m = location.search.match(/[?&]s=([a-z0-9-]{1,16})/i);
+      return m ? m[1].toLowerCase() : '';
+    } catch (e) { return ''; }
+  })();
+
   var journalSent = '';
 
   function maybeRecordJournal() {
@@ -1215,6 +1228,7 @@
       data.set('form-name', 'newsletter');
       data.set('email', address);
       data.set('source', 'analyser-journal');
+      if (ROOM) data.set('room', ROOM);
       challengeToken(function (tok) {
         if (tok) data.set('cf-turnstile-response', tok);
         fetch('/__forms', {
@@ -1266,9 +1280,12 @@
       var data = new URLSearchParams();
       data.set('form-name', 'waitlist');
       data.set('source', 'analyser');
+      if (ROOM) data.set('room', ROOM);
       data.set('email', address);
       // `answers` verbatim — the field name handleForm reads it under.
       if (SEND_ANSWERS) data.set('answers', JSON.stringify(state.answers || {}));
+      var lb = document.getElementById('zl-a-launch');
+      if (lb && lb.checked) data.set('launch', '1');
       challengeToken(function (tok) {
         if (tok) data.set('cf-turnstile-response', tok);
         fetch('/__forms', {

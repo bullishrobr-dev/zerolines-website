@@ -1091,6 +1091,24 @@ async function handleForm(request, env, ctx) {
     country: request.headers.get('CF-IPCountry') || null,
     ua: (request.headers.get('user-agent') || '').slice(0, 300) || null,
     ip_hash: await hashIp(request.headers.get('CF-Connecting-IP'), env.HOOK_SECRET || 'zl'),
+    /* Which counter this came from.
+
+       Four rooms, and Roberto is standing in at most one of them on any given
+       day. Without this the whole of the shop-floor effort arrives as one
+       undifferentiated number and there is no way to tell the room that is
+       asking well from the room that has left the tablet face down. A short
+       slug from the tablet's URL, whitelisted rather than trusted, because it
+       arrives from a query string. */
+    room: (function (v) {
+      return ['gib61', 'gib247', 'andorra', 'marbella'].indexOf(v) >= 0 ? v : null;
+    })(get('room') || get('s')),
+    /* A separate, narrower permission than the journal.
+
+       Somebody who wants a weekly essay has not agreed to be sold to, and
+       Gibraltar, Spain and Andorra all want consent that names its purpose.
+       This is the one that makes the launch email lawful, and it is recorded
+       apart from everything else so that list can be pulled on its own. */
+    wants_launch: (function (v) { return v === '1' || v === 'on' || v === 'true' ? 1 : 0; })(get('launch')),
   };
 
   /* ---- an appointment request -------------------------------------------
@@ -1181,10 +1199,11 @@ async function handleForm(request, env, ctx) {
        as welcomed forever: they had heard nothing, and nothing would ever try
        again. The flag now records what actually happened. */
     ins = await env.ZL_LEADS.prepare(
-      `INSERT INTO leads (created_at, form, email, name, message, source, referrer, country, ua, ip_hash, emailed, spam)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?)`
+      `INSERT INTO leads (created_at, form, email, name, message, source, referrer, country, ua, ip_hash, emailed, spam, room, wants_launch)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?)`
     ).bind(row.created_at, row.form, row.email, row.name, stored, row.source,
-           row.referrer, row.country, row.ua, row.ip_hash, verdict || null).run();
+           row.referrer, row.country, row.ua, row.ip_hash, verdict || null,
+           row.room, row.wants_launch).run();
   } catch (e) {
     return new Response('{"error":"Could not record that. Please try again."}', { status: 500, headers: cors });
   }
@@ -1450,15 +1469,37 @@ async function handleStats(url, env) {
     const esc = (v) => String(v == null ? '' : v).replace(/[&<>"]/g, (c) =>
       ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
     const since = new Date(Date.now() - 86400000).toISOString();
-    const [today, blocked, spend, latest] = await Promise.all([
+    const week = new Date(Date.now() - 7 * 86400000).toISOString();
+    const prevWeek = new Date(Date.now() - 14 * 86400000).toISOString();
+    const ROOMS = { gib61: '61 Main Street', gib247: '247 Main Street', andorra: 'Andorra', marbella: 'Marbella' };
+    const [today, blocked, spend, latest, rooms, listNow, listPrev, unanswered] = await Promise.all([
       one(`SELECT COUNT(*) AS n, COUNT(DISTINCT email) AS people FROM leads
             WHERE created_at > ? AND spam IS NULL`, since),
       all(`SELECT spam AS reason, COUNT(*) AS n FROM leads
             WHERE created_at > ? AND spam IS NOT NULL GROUP BY spam ORDER BY n DESC`, since),
       one(`SELECT COALESCE(SUM(emailed),0)+COALESCE(SUM(notified),0) AS n FROM leads
             WHERE created_at > ? AND spam IS NULL`, since),
-      all(`SELECT created_at, form, email, name, substr(message,1,150) AS message, source
+      all(`SELECT created_at, form, email, name, substr(message,1,150) AS message, source, room
              FROM leads WHERE spam IS NULL ORDER BY created_at DESC LIMIT 15`),
+      /* Four counters, four numbers. The whole point of the tablets is to be
+         able to tell the room that is asking from the room that is not, and
+         that is invisible in any total. */
+      all(`SELECT room, COUNT(*) AS week_n,
+                  SUM(CASE WHEN created_at > ? THEN 1 ELSE 0 END) AS day_n
+             FROM leads WHERE spam IS NULL AND room IS NOT NULL AND created_at > ?
+            GROUP BY room ORDER BY week_n DESC`, since, week),
+      one(`SELECT COUNT(DISTINCT email) AS people,
+                  COUNT(DISTINCT CASE WHEN confirmed = 1 THEN email END) AS confirmed,
+                  COUNT(DISTINCT CASE WHEN wants_launch = 1 THEN email END) AS launch
+             FROM leads WHERE spam IS NULL AND unsubscribed = 0`),
+      one(`SELECT COUNT(DISTINCT email) AS people FROM leads
+            WHERE spam IS NULL AND unsubscribed = 0 AND created_at < ?`, week),
+      /* The thing that is easy to lose. A contact enquiry is somebody waiting
+         for a person, and one sat unanswered for a fortnight in August because
+         the alert arrived in a week of noise. */
+      all(`SELECT created_at, email, name, substr(message,1,120) AS message
+             FROM leads WHERE spam IS NULL AND form = 'contact'
+               AND created_at > ? ORDER BY created_at DESC LIMIT 5`, prevWeek),
     ]);
     const max = Number(env.MAIL_DAILY_MAX || 70);
     const sent = (spend && spend.n) || 0;
@@ -1495,7 +1536,33 @@ li{background:#fff;border:1px solid #0001;border-radius:.7rem;padding:.7rem .85r
 .ok{color:#1a7f4f}.warn{color:#b45309}
 </style>
 <h1>Zero Lines</h1>
-<p class=sub>The last 24 hours &middot; ${when(new Date().toISOString())} UTC</p>
+<p class=sub>${when(new Date().toISOString())} UTC</p>
+
+<h2>The list &mdash; the only thing being built right now</h2>
+<div class=g>
+${card('People', (listNow && listNow.people) || 0,
+   (() => { const g = ((listNow && listNow.people) || 0) - ((listPrev && listPrev.people) || 0);
+            return g > 0 ? `+${g} this week` : 'no change this week'; })())}
+${card('Confirmed', (listNow && listNow.confirmed) || 0, 'clicked the link')}
+${card('Want the launch', (listNow && listNow.launch) || 0, 'may be written to when stock lands')}
+</div>
+
+<h2>The four counters &middot; last 7 days</h2>
+<div class=g>
+${Object.keys(ROOMS).map((k) => {
+  const r = rooms.find((x) => x.room === k);
+  return card(ROOMS[k], (r && r.week_n) || 0, (r && r.day_n) ? `${r.day_n} today` : 'nothing today');
+}).join('')}
+</div>
+${rooms.length === 0 ? '<p class=m style="margin:-1rem 0 1.75rem">No counter has recorded anything yet. Each tablet needs its own address &mdash; /analyser/?s=gib61, ?s=gib247, ?s=andorra, ?s=marbella.</p>' : ''}
+
+${unanswered.length ? `<h2>Waiting for a person</h2><ul>${unanswered.map((r) => `<li>
+<div class=m>${when(r.created_at)}</div>
+<div class=e><strong>${esc(r.name || '—')}</strong> &middot; ${esc(r.email)}</div>
+${r.message ? `<div class=q>${esc(r.message)}</div>` : ''}
+</li>`).join('')}</ul>` : ''}
+
+<h2>The last 24 hours</h2>
 <div class=g>
 ${card('Real enquiries', (today && today.n) || 0, `${(today && today.people) || 0} people`)}
 ${card('Turned away', stopped, stopped ? blocked.map((b) => b.reason).join(', ') : 'nothing')}
@@ -1503,7 +1570,7 @@ ${card('Mail sent', `${sent} / ${max}`, sent >= max ? 'ceiling reached' : 'withi
 </div>
 <h2>The last fifteen real submissions</h2>
 <ul>${latest.length ? latest.map((r) => `<li>
-<div class=m>${when(r.created_at)} &middot; ${esc(r.form)}${r.source ? ' &middot; ' + esc(r.source) : ''}</div>
+<div class=m>${when(r.created_at)} &middot; ${esc(r.form)}${r.source ? ' &middot; ' + esc(r.source) : ''}${r.room ? ' &middot; ' + esc(ROOMS[r.room] || r.room) : ''}</div>
 <div class=e><strong>${esc(r.name || '—')}</strong> &middot; ${esc(r.email)}</div>
 ${r.message ? `<div class=q>${esc(r.message)}</div>` : ''}
 </li>`).join('') : '<li class=m>Nothing yet.</li>'}</ul>
